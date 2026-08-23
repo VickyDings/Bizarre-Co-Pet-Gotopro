@@ -12,7 +12,25 @@ js/main.js          nav, header scroll, cart, animations, smooth scroll
 js/blog.js          reading progress, TOC scrollspy, FAQ, checklist, post filter
 blog/index.html             care-guide hub
 blog/<slug>.html            one file per guide
+blog/feed.xml               RSS - regenerate when a post is added
+sitemap.xml  robots.txt     regenerate sitemap when a post is added
+CNAME  .nojekyll            GitHub Pages: custom domain, skip Jekyll
+.github/workflows/pages.yml deploys the repo as-is on push to the default branch
 ```
+
+Published guides: `axolotl-care-guide`, `bearded-dragon-care-guide`,
+`guinea-pig-nutrition-guide`.
+
+## Publishing
+
+There is no CMS and no admin UI. A post is a hand-written `.html` file; it goes
+live when the branch merges and the Pages workflow runs. Adding a post means
+touching four things: the new `blog/<slug>.html`, a card in `blog/index.html`,
+an entry in `sitemap.xml`, and an item in `blog/feed.xml`.
+
+**The repo's default branch is `claude/website-redesign-collectibles-pets-OpNSz`,
+not `main`** — the deploy workflow lists it explicitly. If it is ever renamed,
+update `.github/workflows/pages.yml`.
 
 ---
 
@@ -81,6 +99,12 @@ Numbered `<h2>` sections, each with a `.section-lede` one-liner underneath:
 
 Then, outside the numbered sections: `.takeaways` → `.author-box` → `.sources`,
 then `.related` post grid, newsletter, shared footer.
+
+**Single-topic guides** (e.g. a nutrition guide rather than a full care guide)
+keep the same 12-section shape and all the same components, but swap sections
+3–8 for that topic's breakdown — see `blog/guinea-pig-nutrition-guide.html`,
+which runs hay → vitamin C → pellets → veg → calcium → routine. Product count
+scales with scope: ~20 for a full care guide, ~10 for a single-topic one.
 
 ## The product section
 
