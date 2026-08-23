@@ -1,241 +1,145 @@
-# Bizarre Co / Pet GoToPro
+# Pet GoToPro — blog guides
 
-Static marketing + content site. No build step, no framework, no package manager —
-plain HTML, one shared stylesheet, one shared JS file. Open any `.html` in a browser
-and it works.
+**Read `docs/reference/post-template.html` before writing a post.** It carries the
+real markup, copied from the live guinea pig nutrition guide.
 
-```
-index.html  collectibles.html  pets.html  about.html  contact.html
-css/styles.css      shared design system for the whole site
-css/blog.css        care-guide / blog layer (loaded AFTER styles.css)
-js/main.js          nav, header scroll, cart, animations, smooth scroll
-js/blog.js          reading progress, TOC scrollspy, FAQ, checklist, post filter
-blog/index.html             care-guide hub
-blog/<slug>.html            one file per guide
-blog/feed.xml               RSS - regenerate when a post is added
-sitemap.xml  robots.txt     regenerate sitemap when a post is added
-netlify.toml                deploy config - no build step, serves the repo as-is
-```
+## Where posts actually go
 
-Published guides: `axolotl-care-guide`, `bearded-dragon-care-guide`,
-`guinea-pig-nutrition-guide`.
+`pet-gotopro.com` runs a **custom CMS** — not WordPress (`/wp-admin` 404s). A post
+is hand-written HTML pasted into the editor:
 
-## Publishing
+1. Upload photos in **Admin → Media**. Each one shows a number.
+2. Open the post → click the **`</>` HTML button**.
+3. Paste the HTML, swapping every `src="/media/00"` for the real number.
+4. Hit **Update without switching back to the visual editor** — the visual editor
+   strips the custom markup.
 
-There is no CMS and no admin UI, and that is deliberate. A post is a hand-written
-`.html` file. Hosting is **Netlify**, connected to this repo:
+So the deliverable for a new guide is a **paste-ready HTML fragment**: no
+`<!doctype>`, no `<head>`, no `<body>`, no `<link>` to stylesheets. The theme
+already styles every class listed below.
 
-- **Push to a branch and open a PR** → Netlify builds a deploy preview at its own
-  URL. That preview *is* the draft: the real page, on a real URL, not an editor
-  approximation.
-- **Merge the PR** → production updates. That is the publish button.
+**Images are the owner's own photos, placed via `/media/NN`.** Do not generate
+inline SVG illustrations or any other AI artwork for posts — they were tried and
+rejected. Instead leave `src="/media/00"` placeholders with alt text describing
+the photo that belongs there, and list them at the end so the owner knows what to
+upload.
 
-So the review flow is: Claude writes the guide → PR → open the preview URL and
-read it → merge, or comment and Claude revises.
+**Never write a guide that duplicates one already live.** Check the site first.
+Guinea pig nutrition is already published and is the reference post — do not
+rewrite it.
 
-Adding a post means touching four things: the new `blog/<slug>.html`, a card in
-`blog/index.html`, an entry in `sitemap.xml`, and an item in `blog/feed.xml`.
-Regenerate the last two rather than hand-editing them.
+## Colour theme — keep this identical across the whole site
 
-Note the repo's default branch is `claude/website-redesign-collectibles-pets-OpNSz`
-rather than `main`. Netlify treats the default branch as production, so this works
-as-is, but renaming it to `main` would be less confusing.
+Warm, natural, earthy. **Not** the purple/gold of the Bizarre Co static repo.
+Declared in every post's shop block; reuse these exact values anywhere you write
+inline CSS.
 
----
+| Token | Hex | Use |
+|---|---|---|
+| `--ink` | `#1a1410` | headings, near-black brown |
+| `--ink-soft` | `#3d322a` | body copy |
+| `--ink-mute` | `#6f6055` | captions, sub-labels, disclaimers |
+| `--cream` | `#faf6ef` | page/section background |
+| `--cream-deep` | `#f3ead9` | alternate background |
+| `--paper` | `#ffffff` | cards |
+| `--amber` | `#c8822b` | badges, accents |
+| `--amber-deep` | `#a86618` | buttons |
+| `--forest` | `#3d5c3a` | prices, the "our pick" badge, positive signals |
+| `--line` | `#e8dcc4` | warm borders and rules |
 
-# Pet care guide house style
+## Sections and column layouts
 
-**Every new blog post follows this. It is the format of `blog/axolotl-care-guide.html` —
-copy that file as the starting point rather than building from scratch.**
+`docs/reference/section-layouts.css` goes in the theme once; then any post can use
+these. `.pgp-section` uses `display:flow-root`, which is what stops an image
+dropped between two sections being absorbed into the previous one.
 
-Live reference: <https://pet-gotopro.com/blog/guinea-pig-nutrition-guide>
+- `.pgp-section` (+ `--cream` `--tint` `--paper` `--rule`) — an independent band
+- `.pgp-grid` + `--2` `--3` `--4` `--wide-left` `--wide-right` `--rows`, plus
+  `--even` to make cards end level. All collapse to one column below 760px.
+- `.pgp-cell` — holds an image, text, or a product card
+- `.pgp-prod` — compact product card that works inside a column
+- `.pgp-cap` — caption under a cell image
 
-## Who we write for
+Grid tracks are `minmax(0, 1fr)`, never plain `1fr` — plain `1fr` lets a wide
+table push the column past the viewport on phones.
 
-Absolute beginners who have not bought the animal yet, or bought it last week and are
-worried. Assume zero prior knowledge, never talk down. The reader should be able to set
-the animal up correctly having read only this page.
+Paste-ready blocks for every combination: `docs/reference/section-layouts.html`.
+
+## Components (theme-styled — use these class names exactly)
+
+- `.quick-facts` > `h3` + `.qf-grid` > `.qf-item` > `.qf-label` + `.qf-value`
+- `.vet-tip` > `h4` (💚 emoji) — guidance, technique, myth corrections
+- `.vet-warning` > `h4` (⚠️ emoji) — toxic foods, hard nevers, emergencies
+- `.funfact` > `.ff-label` (🎉) + `p`
+- `.table-wrap` > `table.compare` > `thead`/`tbody`
+- `details.faq-item` > `summary` + `p` — native accordion, **no JavaScript**
+- `.pgp-figure` + `.pgp-img`, sizes `img-sm|md|lg|full`, align `img-left|right|center`,
+  extras `img-frame`, `no-zoom`
+- `.download-card` > `.dl-thumb` + `.dl-body` > `.dl-tag` `.dl-btn` `.dl-note`
+- Product cards: scoped `<style>` + `#xxshop` wrapper > `.gp-card` > `.gp-badge`
+  (`.pick` = green) / `.gp-img` / `.gp-name` / `.gp-price` / `.gp-disc` / `.gp-onelink`
+- CTA links use `class="cta-btn"` (theme-styled), **not** `.gp-btn`
+
+## Structure
+
+1. `<h2>` hook — the thing that goes wrong, stated plainly
+2. `<h3>` expanding it, then a paragraph on why the internet gets it wrong
+3. `.quick-facts` panel
+4. Emoji-prefixed `<h2>` sections — 🌾 🥗 🌶️ ⚖️ 🚫 🔍 💊 📅 🔄 🚑
+5. **A myth-correction section** — two or three `.vet-tip` boxes naming specific
+   wrong advice found online and correcting it with a source
+6. Product shop block, grouped by category, each with a "why this brand" intro
+7. Emergency/before-you-need-it section where the species warrants one
+8. Sample day table
+9. `.funfact`
+10. Free printable + `.download-card`
+11. `details.faq-item` FAQ
+12. `.vet-tip` cross-link to a sibling guide
+13. `<h2>The Bottom Line</h2>` — the guide compressed to a few numbers
 
 ## Voice
 
-- Direct and warm. Second person. Short sentences. Contractions are fine.
-- **Lead with the thing that kills the animal.** Every species has one or two — say so
-  early and repeat it. (Axolotls: warm water and gravel.)
-- Give the number, not the vibe: "60–68°F", not "cool water". Always dual units
-  (°F/°C, in/cm, gal/L where useful).
-- Be honest about trade-offs and price. Say when something is optional. Say when a
-  popular product is a bad idea.
-- No hype, no "amazing", no fake urgency, no invented statistics.
-- Never fabricate third-party review counts or ratings. Product star ratings are
-  **our own editorial score**, labelled "Our score".
-- Flag anything that needs a vet. Tell readers to verify local law themselves.
+- Direct, warm, second person. Short sentences. British-leaning register.
+- **Lead with what kills or harms the animal**, and give the number, not the vibe.
+- Cite named authorities (PDSA, vet sources) when correcting a myth.
+- Be explicit that a supplement is not a treatment and a symptom is not a diagnosis.
+- Never invent review counts or ratings.
+- Say when a popular product is a bad idea, and why.
 
-## Legal and medical claims — research them, don't recall them
+## Affiliate links
 
-Anything a reader could act on and get fined for, or that could hurt an animal, gets
-checked against sources at write time and **date-stamped in the post**. Never write
-legality from memory: it changes, and "banned" vs "permit required" vs "permit exists
-but is never granted" are three different things a reader needs to tell apart.
+**Amazon Associates store ID: `petgo2pro-20`.** Live posts use **amzn.to SiteStripe
+short links** (e.g. `https://amzn.to/4xYwjTx`), not search URLs. Claude cannot
+generate these — write a tagged Amazon search URL as a working placeholder and
+flag it for the owner to replace with the SiteStripe link.
 
-Present restrictions as a `.data-table` with a Where / Status / Detail shape and
-`pill-bad` / `pill-ok` / `pill-good` statuses, preceded by a danger callout saying it
-is a starting point rather than legal advice. Always name the agency the reader should
-confirm with.
+Every product card carries, in order: badge → image → name → price range →
+`*Price starts from and is subject to change` → reasoning → `cta-btn` →
+the OneLink availability note.
 
-Axolotl legality was verified August 2026 — banned in California and Washington D.C.;
-banned in practice in Maine and New Jersey (permits exist but are not issued to
-hobbyists); permit required in Hawaii and New Mexico; every other US state fine. In
-Canada, illegal in BC, New Brunswick and PEI, permit in Nova Scotia, city ban in
-Winnipeg. UK needs no licence. Australia varies: prohibited in NT, permit in Tasmania.
-Re-check before republishing.
+Brand strategy: pick one trusted brand per species where possible (Oxbow for
+small animals) and say plainly why.
 
-## Required section order
+---
 
-Numbered `<h2>` sections, each with a `.section-lede` one-liner underneath:
+# The static repo
 
-1. **<Species> at a Glance** — `.quickfacts` panel + a one-sentence-version callout
-2. **What Exactly Is a \<Species\>?** — biology, temperament, notable facts, morphs/varieties
-3. **Legality & Where to Buy** — restrictions, green flags / red flags `.dos-donts`
-4. **Habitat & Setup** — labelled cross-section diagram + numbered `.steps` legend, sizing, substrate and temperature tables
-5. **Water Quality / Environment** — parameter table, plus the "safe for X, lethal for this species" danger callout
-6. **Diet & Feeding** — food tier-list table, feeding-schedule-by-age table, technique
-7. **Health: Signs, Problems & First Aid** — healthy vs stressed figures, troubleshooting table, treatment protocols
-8. **Daily, Weekly & Monthly Care** — maintenance table, handling, growth timeline
-9. **What It Actually Costs** — three `.budget-card`s + startup breakdown table
-10. **Our Recommended Products** — the money section, see below
-11. **Beginner Mistakes to Avoid** — ~10 `.steps` with an ✕ marker
-12. **FAQ** — 10–12 questions, mirrored into FAQPage JSON-LD
+This repo is a separate **Bizarre Co** static site — plain HTML, no build step,
+purple `#6C2BD9` / gold `#F59E0B` palette, its own design system in
+`css/styles.css` and `css/blog.css`. It is **not** what serves pet-gotopro.com.
 
-Then, outside the numbered sections: `.takeaways` → `.author-box` → `.sources`,
-then `.related` post grid, newsletter, shared footer.
-
-**Single-topic guides** (e.g. a nutrition guide rather than a full care guide)
-keep the same 12-section shape and all the same components, but swap sections
-3–8 for that topic's breakdown — see `blog/guinea-pig-nutrition-guide.html`,
-which runs hay → vitamin C → pellets → veg → calcium → routine. Product count
-scales with scope: ~20 for a full care guide, ~10 for a single-topic one.
-
-## The product section
-
-This is why the post exists. Three sub-sections, in this order, each with an `<h3>`:
-
-- **Best \<Species\> Food** (`#picks-food`)
-- **Best Supplements & Water Care** (`#picks-supp`)
-- **Best Supplies & Habitat Gear** (`#picks-supplies`)
-
-Preceded by `.product-section-nav` jump chips. Followed by a "products to leave on the
-shelf" danger callout and the `.checklist` shopping list.
-
-Every sub-section opens with **one `.pick.pick-featured` Editor's Choice** (wide, two-column)
-then 4–11 standard `.pick` cards. Aim for ~20+ products total.
-
-Each `.pick` card carries, in order: ribbon → SVG illustration → category → name →
-our score → **"why we recommend it" paragraph (3–5 sentences, real reasoning)** →
-3–4 `.pick-specs` rows → price range → CTA.
-
-Ribbon classes: `ribbon-best` (gold, Editor's Choice), `ribbon-staple` (purple),
-`ribbon-value` (green), `ribbon-vet` (teal, essentials/health).
-
-### Affiliate links — the rule
-
-**Amazon Associates store ID: `petgo2pro-20`.** Every product CTA must carry it.
-
-Default to an Amazon **search URL** rather than a single-product URL: a search link
-still earns commission, but it can never go dead when an ASIN is discontinued or
-relisted. Use a specific-product SiteStripe link only where the recommendation is
-genuinely that one item and you have verified the ASIN.
-
-```html
-<a href="https://www.amazon.com/s?k=seachem+prime+water+conditioner&amp;tag=petgo2pro-20&amp;linkCode=ll2&amp;language=en_US"
-   class="btn btn-primary btn-sm" target="_blank"
-   rel="nofollow sponsored noopener" data-affiliate="live">
-   <i class="fas fa-cart-shopping"></i> Check Price</a>
+```
+index.html  collectibles.html  pets.html  about.html  contact.html
+css/styles.css  css/blog.css   js/main.js  js/blog.js
+blog/index.html  blog/<slug>.html
+sitemap.xml  robots.txt  blog/feed.xml  netlify.toml
+docs/reference/    the real pet-gotopro house style
 ```
 
-- Escape the query separators as `&amp;` — a bare `&language=` risks being parsed as
-  the `&lang` character reference.
-- Always `target="_blank"` and `rel="nofollow sponsored noopener"`.
-- `data-affiliate="live"` once tagged (`"pending"` only while drafting). Audit with
-  `grep -rn 'data-affiliate' blog/`.
+Guides in it (`axolotl-care-guide`, `bearded-dragon-care-guide`) were written in
+the Bizarre Co style with inline SVG illustrations, before the real pet-gotopro
+style was known. Their **research and copy are sound**; their wrapper and artwork
+are not what pet-gotopro uses.
 
-The `.affiliate-bar` disclosure sits directly under the hero on every post with product
-links, and **must** contain the sentence *"As an Amazon Associate we earn from
-qualifying purchases."* — Amazon's Operating Agreement requires it, clearly displayed.
-It is not optional.
-
-## Illustrations
-
-**All artwork is inline SVG. Never hotlink an external image, never use stock photos
-of specific products.** Reasons: nothing can 404, no licensing questions, no pretending
-an illustration is a photo of a named product, and it renders offline.
-
-Each guide carries a `<symbol>` sprite immediately after `<body>` (two `<svg width="0"
-height="0">` blocks: editorial figures, then products). Reuse it by copying from
-`blog/axolotl-care-guide.html` — the product symbols (`#p-tank`, `#p-conditioner`,
-`#p-testkit`, `#p-sand`, `#p-hide`, `#p-tongs`, `#p-siphon`, `#p-light`, `#p-plants`,
-`#p-pellets`, `#p-frozen`, `#p-salt`, `#p-leaves`, `#p-minerals`, `#p-bacteria`,
-`#p-worms`, `#p-pouch`, `#p-gel`, `#p-chiller`, `#p-sponge`, `#p-canister`,
-`#p-thermometer`, `#p-tub`) are species-agnostic and shared.
-
-Per-species figures to draw fresh: a hero animal, a labelled habitat cross-section, a
-recolourable mini silhouette for the morph/variety row, and a healthy-vs-stressed pair.
-Product illustrations: 200×160 viewBox, flat style, item centred, brand palette,
-soft ellipse shadow at `cy≈146`.
-
-## Design system
-
-Do not introduce new colours or fonts. Everything comes from `css/styles.css` tokens:
-
-| | |
-|---|---|
-| Primary | `--primary` `#6C2BD9`, `--primary-light` `#8B5CF6`, `--primary-dark` `#5521B5` |
-| Accent / Go Pro | `--gold` `#F59E0B` |
-| Blog semantics | `--sage` `#0E9F6E` good · `--rose` `#E02424` danger · `--aqua` `#0694A2` info |
-| Headings | Playfair Display (`--font-display`) on `h1`, `.prose h2`, `.bc-value` |
-| Body / UI | Poppins (`--font-primary`) |
-| Icons | Font Awesome 6.5.1 |
-
-Blog components in `css/blog.css`: `.blog-hero` `.affiliate-bar` `.article-layout`
-`.toc` / `.toc-mobile` `.prose` `.quickfacts` `.callout` (`-tip -warning -danger -info -pro`)
-`.table-wrap`/`.data-table`/`.pill` `.dos-donts` `.steps` `.pick`/`.pick-featured`
-`.budget-card` `.checklist` `.faq-item` `.takeaways` `.author-box` `.sources`
-`.post-card` `.featured-post` `.filter-chip`.
-
-### Layout gotchas
-
-- Single-column grid tracks must be `minmax(0, 1fr)`, never `1fr` — plain `1fr` lets
-  wide tables blow the column past the viewport on phones.
-- `.prose` needs `min-width: 0` for the same reason.
-- Wide tables always go inside `.table-wrap` (`overflow-x: auto`).
-- `html { overflow-x: hidden }` is load-bearing: the off-canvas mobile menu sits at
-  `right: -100%`.
-
-## Required per page
-
-- `<title>`, meta description, keywords, author, canonical, OG + Twitter tags
-- JSON-LD `@graph` with **Article + BreadcrumbList + FAQPage** (FAQ entries must match
-  the visible accordion text)
-- `.read-progress` div as the first element in `<body>`
-- Breadcrumb: Home › Care Guides › \<Guide\>
-- Sidebar `.toc` **and** the `.toc-mobile` `<details>` duplicate — keep both lists in sync
-- `../js/main.js` then `../js/blog.js` at the end of `<body>`
-- Add the post to `blog/index.html`: the `.post-grid` (with `data-tags`), and promote it
-  to `.featured-post` if it's the newest. Add a matching `.filter-chip` if it needs a new category.
-- Cross-link 2–3 sibling guides in the `.related` grid.
-
-## Before publishing
-
-```bash
-# structure, anchors, symbols, links
-python3 - <<'EOF'
-import re,html.parser,json,os
-f='blog/<slug>.html'; s=open(f).read()
-json.loads(re.search(r'<script type="application/ld\+json">(.*?)</script>',s,re.S).group(1))
-syms=set(re.findall(r'<symbol id="([^"]+)"',s)); uses=set(re.findall(r'<use href="#([^"]+)"',s))
-ids=set(re.findall(r'\sid="([^"]+)"',s)); frag=set(re.findall(r'href="#([^"]+)"',s))
-print('missing symbols',uses-syms,'| broken anchors',frag-ids-syms)
-EOF
-```
-
-Then eyeball it at 1440px **and 390px**. Check: no horizontal scroll, TOC scrollspy
-highlights, FAQ opens, checklist persists across reload, every CTA opens in a new tab.
+`drafts/*.cms.html` holds paste-ready pet-gotopro versions — fragments, house
+style, `/media/00` image placeholders. That is the format to deliver in.
