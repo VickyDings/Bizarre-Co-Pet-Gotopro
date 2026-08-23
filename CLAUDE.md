@@ -14,8 +14,7 @@ blog/index.html             care-guide hub
 blog/<slug>.html            one file per guide
 blog/feed.xml               RSS - regenerate when a post is added
 sitemap.xml  robots.txt     regenerate sitemap when a post is added
-CNAME  .nojekyll            GitHub Pages: custom domain, skip Jekyll
-.github/workflows/pages.yml deploys the repo as-is on push to the default branch
+netlify.toml                deploy config - no build step, serves the repo as-is
 ```
 
 Published guides: `axolotl-care-guide`, `bearded-dragon-care-guide`,
@@ -23,14 +22,24 @@ Published guides: `axolotl-care-guide`, `bearded-dragon-care-guide`,
 
 ## Publishing
 
-There is no CMS and no admin UI. A post is a hand-written `.html` file; it goes
-live when the branch merges and the Pages workflow runs. Adding a post means
-touching four things: the new `blog/<slug>.html`, a card in `blog/index.html`,
-an entry in `sitemap.xml`, and an item in `blog/feed.xml`.
+There is no CMS and no admin UI, and that is deliberate. A post is a hand-written
+`.html` file. Hosting is **Netlify**, connected to this repo:
 
-**The repo's default branch is `claude/website-redesign-collectibles-pets-OpNSz`,
-not `main`** — the deploy workflow lists it explicitly. If it is ever renamed,
-update `.github/workflows/pages.yml`.
+- **Push to a branch and open a PR** → Netlify builds a deploy preview at its own
+  URL. That preview *is* the draft: the real page, on a real URL, not an editor
+  approximation.
+- **Merge the PR** → production updates. That is the publish button.
+
+So the review flow is: Claude writes the guide → PR → open the preview URL and
+read it → merge, or comment and Claude revises.
+
+Adding a post means touching four things: the new `blog/<slug>.html`, a card in
+`blog/index.html`, an entry in `sitemap.xml`, and an item in `blog/feed.xml`.
+Regenerate the last two rather than hand-editing them.
+
+Note the repo's default branch is `claude/website-redesign-collectibles-pets-OpNSz`
+rather than `main`. Netlify treats the default branch as production, so this works
+as-is, but renaming it to `main` would be less confusing.
 
 ---
 
