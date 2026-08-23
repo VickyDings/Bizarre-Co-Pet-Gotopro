@@ -43,6 +43,25 @@ the animal up correctly having read only this page.
   **our own editorial score**, labelled "Our score".
 - Flag anything that needs a vet. Tell readers to verify local law themselves.
 
+## Legal and medical claims — research them, don't recall them
+
+Anything a reader could act on and get fined for, or that could hurt an animal, gets
+checked against sources at write time and **date-stamped in the post**. Never write
+legality from memory: it changes, and "banned" vs "permit required" vs "permit exists
+but is never granted" are three different things a reader needs to tell apart.
+
+Present restrictions as a `.data-table` with a Where / Status / Detail shape and
+`pill-bad` / `pill-ok` / `pill-good` statuses, preceded by a danger callout saying it
+is a starting point rather than legal advice. Always name the agency the reader should
+confirm with.
+
+Axolotl legality was verified August 2026 — banned in California and Washington D.C.;
+banned in practice in Maine and New Jersey (permits exist but are not issued to
+hobbyists); permit required in Hawaii and New Mexico; every other US state fine. In
+Canada, illegal in BC, New Brunswick and PEI, permit in Nova Scotia, city ban in
+Winnipeg. UK needs no licence. Australia varies: prohibited in NT, permit in Tasmania.
+Re-check before republishing.
+
 ## Required section order
 
 Numbered `<h2>` sections, each with a `.section-lede` one-liner underneath:
@@ -86,21 +105,30 @@ Ribbon classes: `ribbon-best` (gold, Editor's Choice), `ribbon-staple` (purple),
 
 ### Affiliate links — the rule
 
-CTAs point at a **retailer search URL**, never a specific product URL, so a link can
-never go dead. Every one is marked:
+**Amazon Associates store ID: `petgo2pro-20`.** Every product CTA must carry it.
+
+Default to an Amazon **search URL** rather than a single-product URL: a search link
+still earns commission, but it can never go dead when an ASIN is discontinued or
+relisted. Use a specific-product SiteStripe link only where the recommendation is
+genuinely that one item and you have verified the ASIN.
 
 ```html
-<a href="https://www.amazon.com/s?k=seachem+prime+water+conditioner"
+<a href="https://www.amazon.com/s?k=seachem+prime+water+conditioner&amp;tag=petgo2pro-20&amp;linkCode=ll2&amp;language=en_US"
    class="btn btn-primary btn-sm" target="_blank"
-   rel="nofollow sponsored noopener" data-affiliate="pending">
+   rel="nofollow sponsored noopener" data-affiliate="live">
    <i class="fas fa-cart-shopping"></i> Check Price</a>
 ```
 
-To monetise: `grep -rn 'data-affiliate' blog/`, swap each `href` for the tagged URL,
-set the attribute to `"live"`. Keep `rel="nofollow sponsored noopener"`.
+- Escape the query separators as `&amp;` — a bare `&language=` risks being parsed as
+  the `&lang` character reference.
+- Always `target="_blank"` and `rel="nofollow sponsored noopener"`.
+- `data-affiliate="live"` once tagged (`"pending"` only while drafting). Audit with
+  `grep -rn 'data-affiliate' blog/`.
 
-The `.affiliate-bar` disclosure sits directly under the hero on every post that has
-product links. It is not optional.
+The `.affiliate-bar` disclosure sits directly under the hero on every post with product
+links, and **must** contain the sentence *"As an Amazon Associate we earn from
+qualifying purchases."* — Amazon's Operating Agreement requires it, clearly displayed.
+It is not optional.
 
 ## Illustrations
 
