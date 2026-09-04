@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pet-Go'to'Pro | Trusted Care Guides for Every Pet</title>
-<meta name="description" content="Vet-reviewed husbandry, health and gear advice for dogs, cats, birds, reptiles, fish, small animals and invertebrates.">
+<title>Gear | Pet-Go'to'Pro</title>
+<meta name="description" content="How we test pet gear, and what we actually recommend — including the products we think you should avoid.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap">
@@ -62,7 +62,7 @@
     <button class="burger" type="button" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
-    <div class="nav-links"><a href="species.html">Species</a><a href="guides.html">Care Guides</a><a href="gear.html">Gear</a><a href="about.html">About</a><a href="contact.html">Ask a Pro</a></div>
+    <div class="nav-links"><a href="species.html">Species</a><a href="guides.html">Care Guides</a><a href="gear.html" class="active">Gear</a><a href="about.html">About</a><a href="contact.html">Ask a Pro</a></div>
     <div class="nav-end">
       <a class="btn btn-ghost" href="contact.html">Ask a Pro</a>
       <a class="btn btn-solid" href="#subscribe">Subscribe</a>
@@ -71,100 +71,11 @@
 </header>
 
 <main id="main">
-<section class="hero">
-  <div class="shell hero-grid">
-    <div>
-      <div class="hero-eyebrow">
-        <span class="dashes" aria-hidden="true"><i style="background:var(--dog)"></i><i style="background:var(--cat)"></i><i style="background:var(--small)"></i><i style="background:var(--bird)"></i><i style="background:var(--reptile)"></i></span>
-        <span class="label">Every animal you keep</span>
-      </div>
-      <h1 class="display d-xl">Straight answers,<br>whatever lives<br><span class="it">in your house.</span></h1>
-      <p class="lede">Husbandry, health and honest gear reviews &mdash; written for dogs and cats, and for the birds, reptiles, fish, rabbits and invertebrates that most pet sites quietly ignore.</p>
-      <form class="search" role="search" data-ack="Search is coming soon &mdash; browse the care guides meanwhile.">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path>
-        </svg>
-        <input type="search" placeholder="crested gecko humidity" aria-label="Search care guides">
-        <button class="btn btn-solid" type="submit">Search</button>
-      </form>
-      <p class="hero-note"><b>1,240 guides</b> &middot; every one reviewed by a vet or a specialist keeper before it publishes</p>
-    </div>
-    <div class="hero-media">
-      <div class="hero-glow" aria-hidden="true"></div>
-      <div class="shot"><img src="https://images.unsplash.com/photo-1769986289575-d402e93d5885?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=800&h=1000" alt="Crested gecko resting on driftwood" fetchpriority="high"></div>
-      <div class="floatcard">
-        <div class="label">Quick reference</div>
-        <h4>Crested gecko</h4>
-        <div class="spec-row"><span>Humidity, night</span><b>80%</b></div>
-        <div class="spec-row"><span>Humidity, day</span><b>50&ndash;60%</b></div>
-        <div class="spec-row"><span>Ambient temp</span><b>72&ndash;78&deg;F</b></div>
-        <div class="spec-row"><span>Adult enclosure</span><b>18&times;18&times;24"</b></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="species">
+<section class="pagehead">
   <div class="shell">
-    <div class="species-head"><span class="label">Start with your animal</span></div>
-    <div class="species-row" role="group" aria-label="Filter by species">
-      <button class="sp on" type="button" data-species="dogs" aria-pressed="true"><i style="background:var(--dog)"></i>Dogs</button>
-      <button class="sp" type="button" data-species="cats" aria-pressed="false"><i style="background:var(--cat)"></i>Cats</button>
-      <button class="sp" type="button" data-species="small" aria-pressed="false"><i style="background:var(--small)"></i>Small Animals</button>
-      <button class="sp" type="button" data-species="birds" aria-pressed="false"><i style="background:var(--bird)"></i>Birds</button>
-      <button class="sp" type="button" data-species="reptiles" aria-pressed="false"><i style="background:var(--reptile)"></i>Reptiles &amp; Amphibians</button>
-      <button class="sp" type="button" data-species="aquatics" aria-pressed="false"><i style="background:var(--aqua)"></i>Aquatics</button>
-      <button class="sp" type="button" data-species="bugs" aria-pressed="false"><i style="background:var(--bug)"></i>Crustaceans &amp; Arthropods</button>
-      </div>
-  </div>
-</section>
-
-<section class="feature">
-  <div class="shell">
-    <div class="sec-head">
-      <span class="label">This week</span>
-      <h2 class="display d-lg">Guides worth your evening</h2>
-    </div>
-    <div class="feat-grid">
-      <a class="story lead" href="guides.html">
-        <div class="shot"><img src="https://images.unsplash.com/photo-1636045466232-539c7bd7817e?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=760&h=580" alt="" loading="lazy"></div>
-        <div class="story-body">
-          <span class="story-tag" style="color:var(--aqua)"><i style="background:var(--aqua)"></i>Aquatics</span>
-          <h3 class="display d-md">Cycling a tank without fish: ammonia dosing, day by day</h3>
-          <p>Four weeks, one table you can print, and the nitrite stall on day twelve that makes almost everyone panic and start over. Don't start over.</p>
-          <div class="story-meta"><span class="chk">&#10003; Vet-reviewed</span><span>&middot;</span><span>11 min read</span></div>
-        </div>
-      </a>
-      <div class="stack">
-        <a class="story side" href="guides.html">
-        <div class="shot"><img src="https://images.unsplash.com/photo-1693218722743-eba71402ab37?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=420&h=420" alt="" loading="lazy"></div>
-        <div class="story-body">
-          <span class="story-tag" style="color:var(--bird)"><i style="background:var(--bird)"></i>Birds</span>
-          <h3 class="display d-md">The kitchen fumes that kill parrots</h3>
-          <p>Non-stick pans, scented candles, aerosols &mdash; why avian lungs fail first, and what to use instead.</p>
-          <div class="story-meta"><span class="chk">&#10003; Vet-reviewed</span><span>&middot;</span><span>7 min read</span></div>
-        </div>
-      </a>
-        <a class="story side" href="guides.html">
-        <div class="shot"><img src="https://images.unsplash.com/photo-1596854372745-0906a0593bca?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=420&h=420" alt="" loading="lazy"></div>
-        <div class="story-body">
-          <span class="story-tag" style="color:var(--cat)"><i style="background:var(--cat)"></i>Cats</span>
-          <h3 class="display d-md">Litter box refusal, in clinic order</h3>
-          <p>Before you buy a second box, rule out these seven &mdash; in the order a vet actually rules them out.</p>
-          <div class="story-meta"><span class="chk">&#10003; Vet-reviewed</span><span>&middot;</span><span>9 min read</span></div>
-        </div>
-      </a>
-        <a class="story side" href="guides.html">
-        <div class="shot"><img src="https://images.unsplash.com/photo-1596710658461-dcf5a63c482e?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=420&h=420" alt="" loading="lazy"></div>
-        <div class="story-body">
-          <span class="story-tag" style="color:var(--bug)"><i style="background:var(--bug)"></i>Arthropods</span>
-          <h3 class="display d-md">Your tarantula is moulting, not dying</h3>
-          <p>A spider on its back looks alarming. Here's the only genuinely fragile window, and what never to touch.</p>
-          <div class="story-meta"><span>Keeper-reviewed</span><span>&middot;</span><span>5 min read</span></div>
-        </div>
-      </a>
-      </div>
-    </div>
+    <p class="crumb"><a href="index.html">Home</a> &rsaquo; Gear</p>
+    <h1 class="display d-lg">Gear we'd buy,<br>and gear we wouldn't.</h1>
+    <p class="lede">Most pet gear round-ups rank whatever pays best. Ours name the husbandry number the product has to hit, then say which ones hit it &mdash; and which to skip.</p>
   </div>
 </section>
 
@@ -214,6 +125,28 @@
     </div>
   </div>
 </section>
+
+<section class="ask">
+  <div class="shell ask-grid">
+    <div>
+      <span class="label">How we test</span>
+      <h2 class="display d-lg" style="margin-top:12px">The method,<br>in three steps.</h2>
+      <p class="lede">No product enters a list because a brand asked. Every pick starts from the husbandry requirement, not the catalogue.</p>
+    </div>
+    <div class="creds">
+      <div class="cred"><span class="cred-num">01</span><div>
+        <h4>Start from the number</h4>
+        <p>Before looking at products we write down what the animal needs &mdash; the UVI, the RH range, the gallons, the wattage.</p></div></div>
+      <div class="cred"><span class="cred-num">02</span><div>
+        <h4>Test against it</h4>
+        <p>Gear is measured against that figure with independent instruments, in a real enclosure, over weeks rather than an afternoon.</p></div></div>
+      <div class="cred"><span class="cred-num">03</span><div>
+        <h4>Publish the failures</h4>
+        <p>Every list names at least one popular product we think you should avoid, and says exactly why.</p></div></div>
+    </div>
+  </div>
+</section>
+
 <section class="ask" id="subscribe">
   <div class="shell ask-grid">
     <div>

@@ -1,0 +1,878 @@
+<!--
+  Dog Food Serving Calculator — page body for Pet-GoToPro admin.
+
+  Changed from the previous version:
+    - The local brown palette is gone. Only --paper, --ink-mute and
+      --shadow-strong are declared now; every other token (--ink, --cream,
+      --amber, --forest, --line ...) is inherited from the site theme, so
+      this calculator follows the site palette automatically from here on.
+    - Scoped .hero, .calc, .opts and .results under #foodcalc. Bare class
+      names could otherwise style the layout's own elements.
+    - .prose renamed to .calc-prose so it does not collide with the layout's
+      own .prose wrapper, which already wraps this content.
+    - Retuned the remaining hard-coded browns and the amber focus rings.
+    - Byline links to the cat calculator, which now exists.
+    - Removed the hard-coded dark background on the Amazon CTA so it picks up
+      the site's button styling, and dropped the unused CUPG variable.
+-->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Dog Food Serving Calculator",
+  "url": "https://pet-gotopro.com/food-calculations",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Any",
+  "description": "Calculates a dog's daily energy requirement using the veterinary RER/MER formula and converts it into a serving weight for any food type.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "Pet-GoToPro", "logo": { "@type": "ImageObject", "url": "https://pet-gotopro.com/pet-gotopro-logo.png" } }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How many calories does my dog need per day?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Start with resting energy: RER = 70 x (ideal body weight in kg to the power of 0.75). Then multiply by a life-stage and activity factor, typically 1.2 for a quiet neutered adult, 1.6 for a moderately active adult, 2.0 for a working dog and up to 3.0 for a young puppy. The result is the daily energy requirement in kilocalories." } },
+    { "@type": "Question", "name": "Should I measure dog food in cups or grams?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Grams. Scoop-to-scoop variation with a measuring cup runs 20 to 30 percent because kibble density and how firmly it is packed both change the weight. A five dollar kitchen scale removes that error entirely, which matters most for small dogs where a single extra scoop can be a fifth of the day's calories." } },
+    { "@type": "Question", "name": "Do I use my dog's current weight or ideal weight?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ideal weight. Feeding an overweight dog for the weight it currently carries simply maintains the excess. This calculator estimates ideal weight from the body condition you select, then runs the formula on that number." } },
+    { "@type": "Question", "name": "How much of my dog's food can be treats?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No more than ten percent of daily calories. Above that, the complete-and-balanced portion of the diet gets diluted enough to skew the vitamin and mineral balance. Treats are the most common reason a correctly measured meal still leads to weight gain." } },
+    { "@type": "Question", "name": "How do I compare the cost of two dog foods fairly?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Not by price per pound, because moisture content makes that comparison meaningless across formats. Divide the bag price by the days it lasts at your dog's portion for cost per day, or by the bag's total calories for cost per 1,000 kcal. Energy-dense premium foods mean smaller daily portions, so the real price gap is often much smaller than the shelf price suggests." } },
+    { "@type": "Question", "name": "Why does the bag's feeding guide say something different?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Bag charts are built for an average intact, moderately active dog at that weight, with no adjustment for neutering, age, body condition or your dog's actual activity. They also usually quote current weight rather than ideal weight. For most neutered pet dogs the bag over-feeds." } }
+  ]
+}
+</script>
+<style>
+/* Only the three variables the site theme does not define. Everything else
+   is inherited, so this calculator follows the site palette automatically. */
+#foodcalc{max-width:860px;margin:0 auto;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink);line-height:1.65;
+  --paper:#ffffff;
+  --ink-mute:#6E6480;
+  --shadow-strong:0 20px 50px rgba(21,17,28,.15);
+}
+#foodcalc, #foodcalc *{box-sizing:border-box;margin:0;padding:0}
+#foodcalc .hero{padding:44px 0 8px;text-align:center}
+#foodcalc .eyebrow{display:inline-block;background:var(--forest);color:#fff;font-size:11px;font-weight:800;
+  letter-spacing:1.4px;text-transform:uppercase;padding:5px 13px;border-radius:3px}
+#foodcalc h1{font-size:clamp(28px,5.4vw,42px);line-height:1.14;letter-spacing:-.9px;margin:16px 0 12px;font-weight:800}
+#foodcalc .sub{font-size:17px;color:var(--ink-soft);max-width:610px;margin:0 auto}
+#foodcalc .byline{margin-top:16px;font-size:13px;color:var(--ink-mute)}
+#foodcalc .paw-divider{text-align:center;color:var(--amber);letter-spacing:8px;margin:26px 0;font-size:14px}
+#foodcalc .calc{background:var(--paper);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow-med);overflow:hidden;margin:8px 0 34px}
+#foodcalc .calc-head{background:linear-gradient(135deg,#2A2140,#15111C);color:#fff;padding:20px 24px}
+#foodcalc .calc-head h2{font-size:19px;font-weight:800;letter-spacing:-.3px;margin:0}
+#foodcalc .calc-head p{font-size:13.5px;color:#B0A6C0;margin-top:4px}
+#foodcalc .calc-body{padding:24px}
+#foodcalc .step{border-top:1px solid var(--line-soft);padding-top:22px;margin-top:22px}
+#foodcalc .step:first-child{border-top:0;padding-top:0;margin-top:0}
+#foodcalc .step-label{display:flex;align-items:baseline;gap:9px;margin-bottom:14px}
+#foodcalc .step-num{font-size:11px;font-weight:800;color:var(--amber-deep);letter-spacing:1.2px}
+#foodcalc .step-title{font-size:16px;font-weight:800;letter-spacing:-.2px}
+#foodcalc .field{margin-bottom:16px}
+#foodcalc .field > label,
+#foodcalc .flabel{display:block;font-size:13px;font-weight:700;margin-bottom:7px;color:var(--ink-soft)}
+#foodcalc .hint{font-size:12.5px;color:var(--ink-mute);font-weight:400;margin-top:5px;line-height:1.5}
+#foodcalc input[type=number],
+#foodcalc input[type=text],
+#foodcalc select{
+  width:100%;padding:11px 13px;font-size:15.5px;font-family:inherit;color:var(--ink);
+  border:1px solid var(--line);border-radius:8px;background:var(--cream);appearance:none}
+#foodcalc input[type=number]:focus,
+#foodcalc select:focus{outline:3px solid rgba(255,61,150,.35);outline-offset:1px;border-color:var(--amber)}
+#foodcalc .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+#foodcalc .opts{display:flex;flex-wrap:wrap;gap:8px}
+#foodcalc .opt{flex:1 1 auto;min-width:112px;border:1px solid var(--line);background:var(--cream);
+  border-radius:9px;padding:10px 12px;cursor:pointer;text-align:left;font-family:inherit;
+  transition:border-color .15s,background .15s,box-shadow .15s}
+#foodcalc .opt:hover{border-color:var(--amber)}
+#foodcalc .opt:focus-visible{outline:3px solid rgba(255,61,150,.45);outline-offset:2px}
+#foodcalc .opt strong{display:block;font-size:13.5px;font-weight:800;color:var(--ink)}
+#foodcalc .opt span{display:block;font-size:11.5px;color:var(--ink-mute);line-height:1.4;margin-top:2px}
+#foodcalc .opt[aria-pressed=true]{background:#fff;border-color:var(--forest);box-shadow:inset 0 0 0 1px var(--forest)}
+#foodcalc .opt[aria-pressed=true] strong{color:var(--forest)}
+#foodcalc .toggle-line{display:flex;gap:8px;margin-bottom:14px}
+#foodcalc .toggle-line .opt{min-width:0}
+#foodcalc .calc-btn{width:100%;background:var(--forest);color:#fff;border:0;border-radius:10px;
+  padding:15px;font-size:16px;font-weight:800;font-family:inherit;cursor:pointer;
+  letter-spacing:.2px;margin-top:8px;transition:background .15s}
+#foodcalc .calc-btn:hover{background:#23624A}
+#foodcalc .calc-btn:focus-visible{outline:3px solid rgba(44,122,87,.4);outline-offset:3px}
+#foodcalc .results{display:none;border-top:1px solid var(--line);background:var(--cream-deep)}
+#foodcalc .results.on{display:block}
+#foodcalc .res-pad{padding:26px 24px}
+#foodcalc .res-hero{background:var(--paper);border:1px solid var(--line);border-radius:12px;
+  padding:22px;text-align:center;box-shadow:var(--shadow-soft)}
+#foodcalc .res-kicker{font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-mute)}
+#foodcalc .res-big{font-size:clamp(38px,9vw,58px);font-weight:800;letter-spacing:-2px;line-height:1.05;color:var(--forest);margin:6px 0 2px}
+#foodcalc .res-big small{font-size:22px;font-weight:700;letter-spacing:-.5px}
+#foodcalc .res-alt{font-size:14.5px;color:var(--ink-soft)}
+#foodcalc .meals{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px;
+  padding-top:16px;border-top:1px dashed var(--line)}
+#foodcalc .meal{background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:9px 15px;min-width:96px}
+#foodcalc .meal b{display:block;font-size:17px;font-weight:800;color:var(--ink)}
+#foodcalc .meal span{font-size:11px;color:var(--ink-mute);letter-spacing:.6px;text-transform:uppercase;font-weight:700}
+#foodcalc .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:16px}
+#foodcalc .stat{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px}
+#foodcalc .stat .k{font-size:11px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--ink-mute)}
+#foodcalc .stat .v{font-size:20px;font-weight:800;letter-spacing:-.5px;margin-top:3px}
+#foodcalc .stat .n{font-size:12px;color:var(--ink-mute);line-height:1.45;margin-top:3px}
+#foodcalc .res-block{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-top:16px}
+#foodcalc .res-block h3{font-size:14px;font-weight:800;letter-spacing:-.1px;margin-bottom:9px}
+#foodcalc .res-block ul{margin:0;padding-left:19px}
+#foodcalc .res-block li{font-size:14px;margin-bottom:6px;color:var(--ink-soft)}
+#foodcalc .res-block li:last-child{margin-bottom:0}
+#foodcalc .flag{border-left:4px solid;border-radius:0 9px 9px 0;padding:13px 16px;margin-top:12px;font-size:14px;line-height:1.55}
+#foodcalc .flag b{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+#foodcalc .flag-warn{background:#FDEEF0;border-color:var(--clay);color:#6B2233}
+#foodcalc .flag-warn b{color:var(--clay)}
+#foodcalc .flag-tip{background:#E9F5EE;border-color:var(--moss);color:#20402F}
+#foodcalc .flag-tip b{color:var(--forest)}
+#foodcalc .cost-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:12px}
+#foodcalc .cost-cell{background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:11px 8px;text-align:center}
+#foodcalc .cost-cell b{display:block;font-size:19px;font-weight:800;letter-spacing:-.5px;color:var(--amber-deep)}
+#foodcalc .cost-cell span{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--ink-mute)}
+#foodcalc .cost-block ul{margin-top:4px}
+#foodcalc .math{margin-top:16px}
+#foodcalc .math summary{cursor:pointer;font-size:13.5px;font-weight:700;color:var(--amber-deep);
+  padding:11px 14px;background:var(--paper);border:1px solid var(--line);border-radius:9px;list-style:none}
+#foodcalc .math summary::-webkit-details-marker{display:none}
+#foodcalc .math summary::before{content:"▸ ";display:inline-block;transition:transform .15s}
+#foodcalc .math[open] summary::before{content:"▾ "}
+#foodcalc .math .mbody{background:var(--paper);border:1px solid var(--line);border-top:0;
+  border-radius:0 0 9px 9px;padding:14px 16px;font-size:13.5px;color:var(--ink-soft)}
+#foodcalc .math code{background:var(--cream-deep);padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+#foodcalc .math .mline{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px dotted var(--line)}
+#foodcalc .math .mline:last-child{border-bottom:0}
+#foodcalc .calc-prose{margin:6px 0 40px}
+#foodcalc .calc-prose h2{font-size:25px;font-weight:800;letter-spacing:-.6px;margin:34px 0 12px}
+#foodcalc .calc-prose h3{font-size:18px;font-weight:800;letter-spacing:-.2px;margin:24px 0 8px}
+#foodcalc .calc-prose p{margin-bottom:14px;font-size:16.5px;color:var(--ink-soft)}
+#foodcalc .calc-prose ul,
+#foodcalc .calc-prose ol{margin:0 0 16px 22px}
+#foodcalc .calc-prose li{margin-bottom:7px;font-size:16.5px;color:var(--ink-soft)}
+#foodcalc .calc-prose strong{color:var(--ink)}
+#foodcalc .table-wrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+#foodcalc table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:460px}
+#foodcalc th{background:var(--cream-deep);text-align:left;padding:11px 14px;font-weight:800;font-size:12.5px;
+  letter-spacing:.5px;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--line)}
+#foodcalc td{padding:11px 14px;border-bottom:1px solid var(--line-soft);color:var(--ink-soft)}
+#foodcalc tr:last-child td{border-bottom:0}
+#foodcalc .faq-item{background:var(--paper);border:1px solid var(--line);border-radius:10px;
+  padding:16px 18px;margin-bottom:10px}
+#foodcalc .faq-item h3{font-size:16px;font-weight:800;margin:0 0 6px}
+#foodcalc .faq-item p{font-size:15px;margin:0;color:var(--ink-soft)}
+#foodcalc .vet-tip{background:#E9F5EE;border-left:4px solid var(--moss);border-radius:0 10px 10px 0;
+  padding:16px 18px;margin:18px 0}
+#foodcalc .vet-tip b{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--forest);margin-bottom:5px}
+#foodcalc .vet-tip p{margin:0;font-size:15.5px;color:#20402F}
+#foodcalc .vet-warning{background:#FDEEF0;border-left:4px solid var(--clay);border-radius:0 10px 10px 0;
+  padding:16px 18px;margin:18px 0}
+#foodcalc .vet-warning b{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--clay);margin-bottom:5px}
+#foodcalc .vet-warning p{margin:0;font-size:15.5px;color:#6B2233}
+#foodcalc .disclaimer{font-size:12.5px;color:var(--ink-mute);font-style:italic;margin-top:8px}
+@media(max-width:560px){
+#foodcalc .row{grid-template-columns:1fr}
+#foodcalc .calc-body,
+#foodcalc .res-pad{padding:18px}
+#foodcalc .opt{min-width:calc(50% - 4px)}
+}
+@media(prefers-reduced-motion:reduce){
+#foodcalc, #foodcalc *{transition:none!important;animation:none!important}
+}
+</style>
+
+<div id="foodcalc">
+
+<div class="hero" style="padding-top:8px">
+  <span class="eyebrow">Free Tool</span>
+  <p class="sub" style="margin-top:14px">The feeding guide on the bag is written for an average dog. Yours isn't average. This tool runs the same two-step formula veterinary nutritionists use, then converts the answer into grams you can actually put in a bowl.</p>
+  <p class="byline">By The Pet-GoToPro Team · <a href="/cat-food-calculations" style="color:var(--amber-deep)">Cat calculator here</a></p>
+</div>
+<div class="paw-divider">🐾 🐾 🐾</div>
+<!-- ================= CALCULATOR ================= -->
+  <section class="calc" id="calc">
+    <div class="calc-head">
+      <h2>Work out your dog's portion</h2>
+      <p>Five quick questions about your dog, then the food you're feeding.</p>
+    </div>
+
+    <div class="calc-body">
+
+      <!-- STEP 1 -->
+      <div class="step">
+        <div class="step-label"><span class="step-num">STEP 1</span><span class="step-title">Your dog</span></div>
+
+        <div class="field">
+          <label for="wt">Current weight (lbs)</label>
+          <input type="number" id="wt" min="0.5" max="300" step="0.1" placeholder="e.g. 45" inputmode="decimal">
+          <p class="hint">Weigh your dog rather than estimating. Owners under-estimate by a wide margin, and every number below is built on this one.</p>
+        </div>
+
+        <div class="field">
+          <span class="flabel">Body condition — what does your dog look like right now?</span>
+          <div class="opts" id="bcs">
+            <button type="button" class="opt" data-v="under" aria-pressed="false"><strong>Underweight</strong><span>Ribs and hips clearly visible, no fat cover</span></button>
+            <button type="button" class="opt" aria-pressed="true" data-v="ideal"><strong>Ideal weight</strong><span>Ribs easy to feel, waist visible from above</span></button>
+            <button type="button" class="opt" data-v="over" aria-pressed="false"><strong>Overweight</strong><span>Ribs need pressure to find, waist fading</span></button>
+            <button type="button" class="opt" data-v="obese" aria-pressed="false"><strong>Obese</strong><span>Ribs hard to find, no waist, fat over the back</span></button>
+          </div>
+          <p class="hint">This is the input that changes the answer most. The formula is run on your dog's <strong>ideal</strong> weight, not the weight they're carrying today.</p>
+        </div>
+
+        <div class="field">
+          <span class="flabel">Life stage</span>
+          <div class="opts" id="stage">
+            <button type="button" class="opt" data-v="pup_young" aria-pressed="false"><strong>Puppy, under 4 mo</strong><span>Fastest growth phase</span></button>
+            <button type="button" class="opt" data-v="pup" aria-pressed="false"><strong>Puppy, 4 mo – adult</strong><span>Growth slowing</span></button>
+            <button type="button" class="opt" aria-pressed="true" data-v="adult"><strong>Adult</strong><span>Fully grown, under 7</span></button>
+            <button type="button" class="opt" data-v="senior" aria-pressed="false"><strong>Senior</strong><span>7+, or 5+ for giant breeds</span></button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="flabel">Activity level</span>
+          <div class="opts" id="act">
+            <button type="button" class="opt" data-v="low" aria-pressed="false"><strong>Low</strong><span>Under 30 min walking, mostly indoors</span></button>
+            <button type="button" class="opt" aria-pressed="true" data-v="mod"><strong>Moderate</strong><span>Around an hour of real activity daily</span></button>
+            <button type="button" class="opt" data-v="high" aria-pressed="false"><strong>High</strong><span>2+ hrs, sport, herding or working dog</span></button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <span class="flabel">Breed size</span>
+            <select id="size">
+              <option value="toy">Toy / small — under 22 lb</option>
+              <option value="med" selected="">Medium — 22 to 55 lb</option>
+              <option value="lg">Large — 55 to 90 lb</option>
+              <option value="giant">Giant — over 90 lb</option>
+            </select>
+          </div>
+          <div class="field">
+            <span class="flabel">Neutered or spayed?</span>
+            <select id="neuter">
+              <option value="yes" selected="">Yes</option>
+              <option value="no">No, intact</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step">
+        <div class="step-label"><span class="step-num">STEP 2</span><span class="step-title">The food</span></div>
+
+        <div class="field">
+          <span class="flabel">Food format</span>
+          <select id="ftype">
+            <option value="dry" selected="">Dry kibble</option>
+            <option value="wet">Wet / canned</option>
+            <option value="fd">Freeze-dried raw</option>
+            <option value="ad">Air-dried</option>
+            <option value="frozen">Frozen raw</option>
+            <option value="semi">Semi-moist / fresh-cooked</option>
+          </select>
+          <p class="hint">Format sets the default moisture and ash values used if you estimate calories from the label.</p>
+        </div>
+
+        <div class="field">
+          <span class="flabel">How do you want to give us the calories?</span>
+          <div class="toggle-line" id="emode">
+            <button type="button" class="opt" aria-pressed="true" data-v="known"><strong>I have the kcal number</strong><span>Most accurate</span></button>
+            <button type="button" class="opt" data-v="est" aria-pressed="false"><strong>Estimate from the label</strong><span>Uses protein, fat and moisture</span></button>
+          </div>
+        </div>
+
+        <!-- known kcal -->
+        <div id="pane-known">
+          <div class="row">
+            <div class="field">
+              <label for="kcal100">Calories per 100 g <span style="font-weight:400;color:var(--ink-mute)">(or kcal/kg ÷ 10)</span></label>
+              <input type="number" id="kcal100" min="10" max="900" step="1" placeholder="e.g. 380" inputmode="decimal">
+            </div>
+            <div class="field">
+              <label for="kcalcup">Calories per cup <span style="font-weight:400;color:var(--ink-mute)">(fine on its own)</span></label>
+              <input type="number" id="kcalcup" min="10" max="900" step="1" placeholder="e.g. 410" inputmode="decimal">
+            </div>
+          </div>
+          <p class="hint">Fill in <strong>either</strong> field — whichever the bag gives you. Look for <strong>“Calorie Content (calculated) ME”</strong> near the ingredient panel or on the brand's website. If it's quoted as kcal/kg, divide by 10 for kcal per 100 g. US bags often only state kcal per cup — that alone works fine.</p>
+        </div>
+
+        <!-- estimate -->
+        <div id="pane-est" style="display:none">
+          <div class="row">
+            <div class="field">
+              <label for="gaP">Crude protein %</label>
+              <input type="number" id="gaP" min="1" max="99" step="0.1" placeholder="e.g. 26" inputmode="decimal">
+            </div>
+            <div class="field">
+              <label for="gaF">Crude fat %</label>
+              <input type="number" id="gaF" min="1" max="99" step="0.1" placeholder="e.g. 16" inputmode="decimal">
+            </div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="gaFib">Crude fiber %</label>
+              <input type="number" id="gaFib" min="0" max="40" step="0.1" placeholder="e.g. 4" inputmode="decimal">
+            </div>
+            <div class="field">
+              <label for="gaM">Moisture % <span style="font-weight:400;color:var(--ink-mute)">(optional)</span></label>
+              <input type="number" id="gaM" min="0" max="95" step="0.1" placeholder="auto by format" inputmode="decimal">
+            </div>
+          </div>
+          <p class="hint">These four numbers are the guaranteed analysis panel, printed on every bag and can. We fill in ash and carbohydrate for you and apply the modified Atwater factors. Expect this estimate to land within roughly 10% of the real figure — good enough to start, worth replacing with the real kcal number when you find it.</p>
+        </div>
+
+        <div class="field">
+          <span class="flabel">Treats and chews</span>
+          <select id="treats">
+            <option value="0.10" selected="">Normal — reserve 10% of calories for treats</option>
+            <option value="0.05">Light — reserve 5%</option>
+            <option value="0">None — 100% of calories from meals</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <span class="flabel">Bag or pack details <span style="font-weight:400;color:var(--ink-mute)">(optional — unlocks cost per day)</span></span>
+          <div class="row">
+            <div class="field" style="margin-bottom:0">
+              <label for="bagLb">Bag size (lbs)</label>
+              <input type="number" id="bagLb" min="0.1" max="120" step="0.1" placeholder="e.g. 24" inputmode="decimal">
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <label for="bagPrice">What you pay for it ($)</label>
+              <input type="number" id="bagPrice" min="0.5" max="1000" step="0.01" placeholder="e.g. 54.99" inputmode="decimal">
+            </div>
+          </div>
+          <p class="hint">For wet or frozen food, enter the total weight and total price of however many cans or packs you buy at once — e.g. a 12-pack of 12.5 oz cans is 9.4 lbs.</p>
+        </div>
+      </div>
+
+        <button class="calc-btn" id="go">Calculate my dog's portion</button>
+      <p class="disclaimer">This is a starting point, not a prescription. Pregnant, nursing, growing giant-breed and medically managed dogs need a plan from your own veterinarian.</p>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results" id="out">
+      <div class="res-pad">
+        <div class="res-hero">
+          <div class="res-kicker">Feed per day</div>
+          <div class="res-big" id="rGrams">—</div>
+          <div class="res-alt" id="rAlt"></div>
+          <div class="meals" id="rMeals"></div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat"><div class="k">Daily calories</div><div class="v" id="rDer">—</div><div class="n" id="rDerNote"></div></div>
+          <div class="stat"><div class="k">Ideal weight</div><div class="v" id="rIdeal">—</div><div class="n" id="rIdealNote"></div></div>
+          <div class="stat"><div class="k">Treat budget</div><div class="v" id="rTreat">—</div><div class="n">Everything outside the bowl, including chews and training rewards.</div></div>
+          <div class="stat"><div class="k">Food energy</div><div class="v" id="rDens">—</div><div class="n" id="rDensNote"></div></div>
+        </div>
+
+        <div id="rFlags"></div>
+
+        <div class="res-block cost-block" id="rCostBlock" style="display:none">
+          <h3>💰 What this food really costs you</h3>
+          <div class="cost-grid">
+            <div class="cost-cell"><b id="cDay">—</b><span>per day</span></div>
+            <div class="cost-cell"><b id="cMonth">—</b><span>per month</span></div>
+            <div class="cost-cell"><b id="cYear">—</b><span>per year</span></div>
+            <div class="cost-cell"><b id="cBag">—</b><span id="cBagLabel">days per bag</span></div>
+          </div>
+          <ul id="rCost"></ul>
+        </div>
+
+        <div class="res-block" id="rDmBlock" style="display:none">
+          <h3>Dry-matter analysis</h3>
+          <ul id="rDm"></ul>
+        </div>
+
+        <div class="res-block">
+          <h3>What to do next</h3>
+          <ul id="rNext"></ul>
+        </div>
+
+        <details class="math">
+          <summary>Show the math</summary>
+          <div class="mbody" id="rMath"></div>
+        </details>
+      </div>
+    </div>
+  </section>
+<!-- ================= ARTICLE ================= -->
+  <article class="calc-prose">
+
+    <h2>Why the number on the bag is usually wrong</h2>
+    <p>Feeding charts on pet food packaging are built for one hypothetical dog: intact, moderately active, at the weight printed in the left-hand column. Neutering alone drops a dog's energy requirement by roughly 20 to 30 percent, and most pet dogs in the United States are neutered. Add a dog who gets one walk instead of three, and the gap between the chart and reality becomes a few hundred calories a day — which is how a Labrador quietly gains fifteen pounds over two years while their owner follows the instructions exactly.</p>
+    <p>The veterinary approach is different. It calculates what the individual dog burns, then works backwards to a portion.</p>
+
+    <h2>The two-step formula this calculator uses</h2>
+    <p><strong>Step one — resting energy.</strong> RER = 70 × (ideal body weight in kg)<sup>0.75</sup>. That exponent is the important part. Energy needs don't scale in a straight line with body size, because a small dog loses heat far faster relative to its mass. A 5 kg dog burns roughly 37 calories per kilogram at rest; a 40 kg dog burns about 22. Double a dog's weight and you don't double its calories, you add about 68 percent.</p>
+    <p><strong>Step two — the multiplier.</strong> RER only covers breathing, circulation and staying warm. Multiply it by a factor reflecting life stage, activity and neuter status to reach the daily energy requirement.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Life stage</th><th>Low activity</th><th>Moderate (~1 hr)</th><th>High / working</th></tr></thead>
+        <tbody>
+          <tr><td>Puppy, under 4 months</td><td>2.8 × RER</td><td>3.0 × RER</td><td>3.0 × RER</td></tr>
+          <tr><td>Puppy, 4 months to adult</td><td>1.8 × RER</td><td>2.0 × RER</td><td>2.2 × RER</td></tr>
+          <tr><td>Adult</td><td>1.4 × RER</td><td>1.6 × RER</td><td>2.0 × RER</td></tr>
+          <tr><td>Senior</td><td>1.2 × RER</td><td>1.4 × RER</td><td>1.6 × RER</td></tr>
+          <tr><td>Weight loss (adult)</td><td colspan="3">1.0 – 1.2 × RER, calculated on <em>ideal</em> weight</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Intact adults add roughly 0.2 to their factor. Giant breeds run slightly below the formula's prediction and toy breeds slightly above, so the calculator applies a small breed-size correction on top.</p>
+
+    <div class="vet-tip">
+      <b>Vet tip</b>
+      <p>Feed the dog you want, not the dog you have. If your dog is overweight, the calculation must run on their target weight — otherwise you are precisely maintaining the excess. This is the single most common mistake in home feeding, and it's why the body condition question sits above everything else in the tool.</p>
+    </div>
+
+    <h2>Where protein, fat and carbohydrate actually come in</h2>
+    <p>Macronutrient percentages don't set the portion size — calories do. But they matter in two ways the portion alone can't tell you.</p>
+    <p><strong>They let you estimate calories when the bag doesn't say.</strong> Using the modified Atwater factors — 3.5 kcal per gram of protein, 8.5 for fat, 3.5 for carbohydrate — you can reconstruct metabolizable energy from the guaranteed analysis. Carbohydrate isn't printed, so it's derived: 100 minus protein, fat, moisture, ash and fiber. That's exactly what the estimate mode above does.</p>
+    <p><strong>They tell you whether the food suits the dog.</strong> Percentages printed on a can and on a bag aren't comparable until you strip the water out, because a canned food at 78 percent moisture has almost four times as much dry food behind every printed percentage point. Convert both to a dry-matter basis and the comparison becomes honest:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>AAFCO minimum, dry-matter basis</th><th>Protein</th><th>Fat</th></tr></thead>
+        <tbody>
+          <tr><td>Adult maintenance</td><td>18%</td><td>5.5%</td></tr>
+          <tr><td>Growth and reproduction</td><td>22.5%</td><td>8.5%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>The calculator runs this conversion automatically whenever you use estimate mode, and flags anything that falls short for your dog's life stage.</p>
+
+    <h2>Format changes the portion, not the calories</h2>
+    <p>A dog's calorie requirement doesn't care what the food looks like. What changes dramatically is how many grams deliver those calories.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Format</th><th>Typical moisture</th><th>Typical energy</th><th>What that means in the bowl</th></tr></thead>
+        <tbody>
+          <tr><td>Dry kibble</td><td>~10%</td><td>330–450 kcal/100 g</td><td>The reference point most people picture</td></tr>
+          <tr><td>Wet / canned</td><td>~78%</td><td>80–130 kcal/100 g</td><td>Roughly 3–4× the weight for the same calories</td></tr>
+          <tr><td>Freeze-dried raw</td><td>~5%</td><td>450–550 kcal/100 g</td><td>Very dense — small portions, easy to over-serve</td></tr>
+          <tr><td>Air-dried</td><td>~12%</td><td>380–480 kcal/100 g</td><td>Similar to kibble, slightly richer</td></tr>
+          <tr><td>Frozen raw</td><td>~68%</td><td>130–200 kcal/100 g</td><td>Closer to wet food than to kibble</td></tr>
+          <tr><td>Semi-moist / fresh</td><td>~28%</td><td>150–280 kcal/100 g</td><td>Sits between the two extremes</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>This is why switching a dog from kibble to canned food using the same-sized scoop is one of the fastest ways to cause unintended weight loss — and why going the other way causes rapid gain.</p>
+
+    <div class="vet-tip">
+      <b>Why we push hydration</b>
+      <p>Wet formats aren't just lower in calories per gram — they carry water into a dog who may not drink enough on their own. Combining a portion of wet or rehydrated food with a filtered water source is one of the cheapest ways to support kidney and urinary health across a lifetime, particularly in dogs who ignore a still bowl but will drink from a moving one.</p>
+    </div>
+
+    <h2>The bag price is not the food price</h2>
+    <p>Two bags on the same shelf, one at $45 and one at $65. Most shoppers see a $20 difference. What they can't see is that the $65 bag is more energy-dense — a smaller daily portion — and lasts eleven days longer, making it the <em>cheaper</em> food per day. Sticker price tells you almost nothing until you divide it by how long the bag actually lasts your particular dog.</p>
+    <p>That's why the calculator asks for bag size and price. It converts the sticker into three numbers that are actually comparable:</p>
+    <ul>
+      <li><strong>Cost per day</strong> — the price divided by how many days the bag lasts at <em>your dog's</em> portion, not an average dog's.</li>
+      <li><strong>Cost per 1,000 kcal</strong> — the only fair way to compare across formats. A can that is 78 percent water can be cheaper per pound than kibble and still cost three times more per calorie.</li>
+      <li><strong>Days per bag</strong> — so you can reorder before it runs out instead of switching foods overnight and dealing with the stomach upset that follows.</li>
+    </ul>
+    <p>Run the tool once with your current food and once with the food you're considering. The comparison that matters takes about a minute.</p>
+    <p><strong>Ready to switch to a new food?</strong></p>
+    <p><a href="https://amzn.to/4xfHJCm" class="cta-btn" style="font-weight:800;font-size:19px" target="_blank" rel="noopener">Shop food transitioning supplements</a></p>
+
+    <h2>Weigh it, don't scoop it</h2>
+    <p>Measuring cups are the weakest link in the whole chain. The same cup of the same kibble varies by 20 to 30 percent depending on kibble shape, density and how firmly it settles. For a 60 lb dog that's a rounding error you might get away with. For a 10 lb dog it can be a fifth of the day's calories, every single day.</p>
+    <p>A digital kitchen scale removes the problem entirely and takes about four seconds a meal. It is the highest-return purchase in dog nutrition, and it costs less than one bag of treats.</p>
+
+    <div class="vet-warning">
+      <b>Large and giant-breed puppies</b>
+      <p>Growing large-breed puppies must not be fed to appetite. Rapid growth and excess calcium are established risk factors for hip dysplasia and other developmental orthopaedic disease, and the damage is permanent. Feed a food formulated for large-breed growth, keep the puppy lean enough that you can feel ribs easily, and treat any calculator — including this one — as a ceiling rather than a target. Discuss the growth curve with your veterinarian.</p>
+    </div>
+
+    <h2>Adjust, then adjust again</h2>
+    <p>No formula predicts an individual dog's metabolism perfectly; published equations carry an error range of roughly 20 percent in both directions. The calculation is the starting point. The dog is the data.</p>
+    <ul>
+      <li>Weigh your dog every two weeks, at the same time of day.</li>
+      <li>Score body condition by hand at the same time — ribs should feel like the back of your knuckles, not like the back of your hand.</li>
+      <li>If the trend is going the wrong way, change the portion by 10 percent and hold it for another two weeks.</li>
+      <li>Cap deliberate weight loss at 1 to 2 percent of body weight per week. Faster than that costs muscle, not fat.</li>
+      <li>Recalculate after neutering, after any change in exercise routine, and when your dog crosses into their senior years.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+
+    <div class="faq-item">
+      <h3>How many calories does my dog need per day?</h3>
+      <p>Start with 70 × (ideal weight in kg)<sup>0.75</sup> to get resting energy, then multiply by a life-stage and activity factor between 1.2 and 3.0. A moderately active, neutered 45 lb adult lands near 1,000 kcal a day. The calculator above does the arithmetic and applies the breed-size and body-condition corrections.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Should I measure in cups or grams?</h3>
+      <p>Grams, every time. Cup measurements vary by 20 to 30 percent depending on kibble density and packing. The tool gives cups as a secondary figure only when you supply a kcal-per-cup value, because that is the only situation where the number is trustworthy.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Do I use current weight or ideal weight?</h3>
+      <p>Ideal. Feeding an overweight dog for the weight they carry today maintains that weight indefinitely. The calculator estimates ideal weight from the body condition you select, using the standard rule that each point above ideal on the nine-point scale represents about ten percent of excess body weight.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How much of the diet can be treats?</h3>
+      <p>Ten percent of daily calories at most. Beyond that, the complete-and-balanced portion of the diet is diluted enough to distort the vitamin and mineral profile. Treats are the most common reason a carefully measured meal still produces weight gain — dental chews in particular are far more calorific than most owners assume.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How many meals a day?</h3>
+      <p>Puppies under four months do best on four small meals, dropping to three until they finish growing. Most adults do well on two. Single large meals are associated with a higher risk of gastric dilatation-volvulus in deep-chested breeds, so if you have a Great Dane, Standard Poodle, Weimaraner or similar, split the ration and avoid vigorous exercise around mealtimes.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How do I compare the cost of two dog foods fairly?</h3>
+      <p>Never by price per pound — moisture makes that meaningless across formats. Compare cost per day (bag price ÷ days the bag lasts at your dog's portion) or cost per 1,000 kcal (bag price ÷ total calories in the bag). Premium foods are often denser, so the daily portion shrinks and the real gap is far smaller than the shelf price suggests — sometimes it reverses entirely.</p>
+    </div>
+    <div class="faq-item">
+      <h3>When should I skip the calculator and call my vet?</h3>
+      <p>Pregnancy and nursing, any prescription or therapeutic diet, kidney or liver disease, diabetes, pancreatitis, and unexplained weight change all require an individualised plan. Sudden weight loss in a dog eating normally is a medical sign, not a feeding problem.</p>
+    </div>
+
+    <p class="disclaimer">Pet-GoToPro publishes vet-informed general education. It does not replace individual veterinary advice, diagnosis or treatment. Energy equations are population estimates and carry roughly ±20% individual variation.</p>
+  </article>
+<p class="disclaimer" style="text-align:center;margin-top:26px">As an Amazon Associate I earn from qualifying purchases.</p>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- segmented button groups ---------- */
+  var picks = { bcs:"ideal", stage:"adult", act:"mod", emode:"known" };
+  function wireGroup(id){
+    var g = document.getElementById(id);
+    if(!g) return;
+    g.addEventListener("click", function(e){
+      var b = e.target.closest(".opt");
+      if(!b || !g.contains(b)) return;
+      g.querySelectorAll(".opt").forEach(function(o){ o.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed","true");
+      picks[id] = b.dataset.v;
+      if(id === "emode"){
+        document.getElementById("pane-known").style.display = (picks.emode === "known") ? "" : "none";
+        document.getElementById("pane-est").style.display   = (picks.emode === "est")   ? "" : "none";
+      }
+    });
+    g.querySelectorAll(".opt").forEach(function(o){
+      if(!o.hasAttribute("aria-pressed")) o.setAttribute("aria-pressed","false");
+    });
+  }
+  ["bcs","stage","act","emode"].forEach(wireGroup);
+
+  /* ---------- reference data ---------- */
+  var LB_KG = 2.2046226;
+
+  // ideal-weight divisor by body condition
+  var BCS_DIV = { under:0.85, ideal:1.00, over:1.15, obese:1.30 };
+
+  // life stage x activity multiplier
+  var FACTOR = {
+    pup_young:{ low:2.8, mod:3.0, high:3.0 },
+    pup:      { low:1.8, mod:2.0, high:2.2 },
+    adult:    { low:1.4, mod:1.6, high:2.0 },
+    senior:   { low:1.2, mod:1.4, high:1.6 }
+  };
+
+  var SIZE_ADJ = { toy:1.05, med:1.00, lg:0.97, giant:0.93 };
+
+  // default moisture / ash by format (as-fed %)
+  var FMT = {
+    dry:    { m:10, ash:8.0,  label:"dry kibble" },
+    wet:    { m:78, ash:2.5,  label:"wet food" },
+    fd:     { m:5,  ash:8.0,  label:"freeze-dried raw" },
+    ad:     { m:12, ash:7.5,  label:"air-dried food" },
+    frozen: { m:68, ash:3.5,  label:"frozen raw" },
+    semi:   { m:28, ash:5.0,  label:"semi-moist food" }
+  };
+
+  var MEALS = { pup_young:4, pup:3, adult:2, senior:2 };
+
+  // typical grams per standard 8-oz measuring cup, by format (used only when kcal/cup is all we have)
+  var CUP_G = { dry:105, wet:245, fd:42, ad:95, frozen:245, semi:160 };
+
+  var STAGE_NAME = { pup_young:"Puppy (under 4 months)", pup:"Puppy (4 months to adult)", adult:"Adult", senior:"Senior" };
+  var ACT_NAME   = { low:"low activity", mod:"moderate activity", high:"high activity" };
+
+  /* ---------- helpers ---------- */
+  function num(id){ var v = parseFloat(document.getElementById(id).value); return isFinite(v) ? v : NaN; }
+  function r(n, step){ step = step || 1; return Math.round(n/step)*step; }
+  function esc(s){ return String(s).replace(/[&<>]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c]; }); }
+
+  function flag(kind, title, body){
+    return '<div class="flag flag-'+kind+'"><b>'+esc(title)+'</b>'+body+'</div>';
+  }
+
+  /* ---------- main ---------- */
+  document.getElementById("go").addEventListener("click", function(){
+    var out = document.getElementById("out");
+
+    var lbs = num("wt");
+    if(!isFinite(lbs) || lbs <= 0){
+      alert("Enter your dog's current weight in pounds to continue.");
+      document.getElementById("wt").focus();
+      return;
+    }
+    if(lbs > 300){ alert("That weight looks out of range. Enter the weight in pounds."); return; }
+
+    var ftype = document.getElementById("ftype").value;
+    var fmt   = FMT[ftype];
+    var size  = document.getElementById("size").value;
+    var neut  = document.getElementById("neuter").value;
+    var stage = picks.stage, act = picks.act, bcs = picks.bcs;
+    var treatPct = parseFloat(document.getElementById("treats").value);
+
+    /* --- energy density of the food --- */
+    var kcal100 = NaN, kcalCup = NaN, densSource = "", dmP = null, dmF = null, cupOnly = false;
+
+    if(picks.emode === "known"){
+      kcal100 = num("kcal100");
+      kcalCup = num("kcalcup");
+      if(!isFinite(kcal100) && isFinite(kcalCup)){
+        // cup-only mode: estimate density from a typical cup weight for this format
+        cupOnly = true;
+        kcal100 = kcalCup / CUP_G[ftype] * 100;
+        densSource = "estimated from kcal per cup using a typical " + CUP_G[ftype] + " g cup of " + fmt.label;
+      } else if(!isFinite(kcal100)){
+        alert("Enter the food's calories per 100 g or per cup — either one works. Tip: if the label shows kcal/kg, divide by 10.");
+        document.getElementById("kcal100").focus();
+        return;
+      } else {
+        densSource = "from the label's stated calorie content";
+      }
+    } else {
+      var P = num("gaP"), F = num("gaF"), FIB = num("gaFib"), M = num("gaM");
+      if(!isFinite(P) || !isFinite(F)){
+        alert("Enter at least crude protein % and crude fat % from the guaranteed analysis.");
+        document.getElementById("gaP").focus();
+        return;
+      }
+      if(!isFinite(FIB)) FIB = (ftype === "dry" ? 4 : 2);
+      if(!isFinite(M))   M   = fmt.m;
+      var ash = fmt.ash;
+      var nfe = 100 - P - F - M - ash - FIB;
+      if(nfe < 0) nfe = 0;
+      kcal100 = (3.5*P) + (8.5*F) + (3.5*nfe);
+      densSource = "estimated from the guaranteed analysis";
+      var dmBase = 100 - M;
+      if(dmBase > 0){ dmP = P/dmBase*100; dmF = F/dmBase*100; }
+    }
+    if(!(kcal100 > 0)){ alert("Those label numbers don't produce a usable calorie figure. Check the values and try again."); return; }
+
+    /* --- weights --- */
+    var curKg   = lbs / LB_KG;
+    var idealKg = curKg / BCS_DIV[bcs];
+    var idealLb = idealKg * LB_KG;
+
+    /* --- RER on ideal weight --- */
+    var rer = 70 * Math.pow(idealKg, 0.75);
+
+    /* --- factor --- */
+    var factor = FACTOR[stage][act];
+    var isPup = (stage === "pup_young" || stage === "pup");
+
+    if(!isPup && neut === "no"){ factor += 0.2; }
+
+    var derNote = "";
+    var lossMode = false, gainMode = false;
+
+    if(!isPup && (bcs === "over" || bcs === "obese")){
+      factor = (bcs === "obese") ? 1.0 : 1.2;
+      lossMode = true;
+      derNote = "Weight-loss target, set at " + factor.toFixed(1) + " × RER of ideal weight.";
+    } else if(!isPup && bcs === "under"){
+      factor = factor * 1.10;
+      gainMode = true;
+      derNote = "Includes a 10% uplift for controlled weight gain.";
+    } else if(isPup && (bcs === "over" || bcs === "obese")){
+      derNote = "Growth is never restricted — the lean end of the growth range is used instead.";
+    } else {
+      derNote = STAGE_NAME[stage] + ", " + ACT_NAME[act] + ".";
+    }
+
+    var sizeAdj = SIZE_ADJ[size];
+    var der = rer * factor * sizeAdj;
+
+    /* --- portion --- */
+    var mainKcal = der * (1 - treatPct);
+    var treatKcal = der * treatPct;
+    var grams = mainKcal / kcal100 * 100;
+    var oz = grams / 28.3495;
+    var cups = (isFinite(kcalCup) && kcalCup > 0) ? (mainKcal / kcalCup) : null;
+
+    var meals = MEALS[stage];
+
+    /* --- render hero --- */
+    if(cupOnly){
+      var cupsQ = Math.round((mainKcal/kcalCup)*4)/4;
+      document.getElementById("rGrams").innerHTML = cupsQ.toFixed(2).replace(/\.00$/,"").replace(/0$/,"") + '<small> cups</small>';
+      document.getElementById("rAlt").textContent = "≈ " + r(grams,5) + " g (" + r(oz,0.1).toFixed(1) + " oz) of " + fmt.label + " — gram figure assumes a typical " + CUP_G[ftype] + " g cup";
+    } else {
+      document.getElementById("rGrams").innerHTML = r(grams,5) + '<small> g</small>';
+      var alt = r(oz,0.1).toFixed(1) + " oz of " + fmt.label;
+      if(cups) alt += " · about " + (Math.round(cups*4)/4).toFixed(2).replace(/\.00$/,"") + " cups";
+      document.getElementById("rAlt").textContent = alt;
+    }
+
+    var mealHtml = "";
+    function fmtCups(c){ var s = c.toFixed(3).replace(/0+$/,"").replace(/\.$/,""); return s + (c === 1 ? " cup" : " cups"); }
+    if(cupOnly){
+      var mealC = Math.round((mainKcal/kcalCup/meals)*8)/8;
+      for(var i=1;i<=meals;i++){
+        mealHtml += '<div class="meal"><b>'+ fmtCups(mealC) +'</b><span>Meal '+i+'</span></div>';
+      }
+    } else {
+      var mealGeach = grams / meals;
+      for(var j=1;j<=meals;j++){
+        mealHtml += '<div class="meal"><b>'+ r(mealGeach,5) +' g</b><span>Meal '+j+'</span></div>';
+      }
+    }
+    document.getElementById("rMeals").innerHTML = mealHtml;
+
+    /* --- stats --- */
+    document.getElementById("rDer").textContent = r(der,5) + " kcal";
+    document.getElementById("rDerNote").textContent = derNote;
+    document.getElementById("rIdeal").textContent = r(idealLb,0.5).toFixed(1) + " lb";
+    document.getElementById("rIdealNote").textContent =
+      (bcs === "ideal") ? "Same as current weight — all math runs on this figure."
+                        : "Estimated from body condition. Current weight is " + lbs.toFixed(1) + " lb.";
+    document.getElementById("rTreat").textContent = treatPct ? (r(treatKcal,5) + " kcal") : "None";
+    document.getElementById("rDens").textContent = r(kcal100,1) + " kcal/100g";
+    document.getElementById("rDensNote").textContent = "This food is " + densSource + ".";
+
+    /* --- flags --- */
+    var f = "";
+
+    if(lossMode){
+      var excessKg = curKg - idealKg;
+      var weeklyKg = curKg * 0.015;
+      var weeks = Math.ceil(excessKg / weeklyKg);
+      f += flag("warn","Weight-loss plan",
+        "<p>Your dog is carrying roughly <strong>"+ (excessKg*LB_KG).toFixed(1) +" lb</strong> of excess weight. At a safe rate of 1–2% of body weight per week, reaching "+ r(idealLb,0.5).toFixed(1) +" lb should take around <strong>"+ weeks +" weeks</strong>. Weigh every two weeks. If nothing has moved after a month, reduce by a further 10% — and have your vet rule out hypothyroidism before pushing lower.</p>");
+    }
+    if(gainMode){
+      f += flag("tip","Weight-gain plan",
+        "<p>Aim for slow, steady gain rather than a rapid rebound. Split the daily amount across an extra meal if your dog struggles to finish it. A dog who is underweight despite eating well needs a veterinary work-up — parasites, dental pain, malabsorption and thyroid disease all present this way.</p>");
+    }
+    if(isPup && (size === "lg" || size === "giant")){
+      f += flag("warn","Large-breed puppy — read this first",
+        "<p>Treat this number as a ceiling, not a target. Fast growth and excess calcium are established risk factors for hip dysplasia and developmental orthopaedic disease in large and giant breeds, and the damage doesn't reverse. Use a food formulated for large-breed growth, keep your puppy lean enough to feel ribs easily, and set the growth curve with your veterinarian.</p>");
+    }
+    if(isPup){
+      f += flag("tip","Recalculate often",
+        "<p>Puppies outgrow their portion fast. Re-run this every two weeks while your puppy is growing, and step the multiplier down as the growth rate slows.</p>");
+    }
+    if(size === "giant" || size === "lg"){
+      f += flag("tip","Deep-chested breeds",
+        "<p>Split the daily ration across at least two meals and avoid vigorous exercise for an hour either side of eating. Single large meals are associated with higher risk of gastric dilatation-volvulus (bloat), which is a surgical emergency.</p>");
+    }
+    if(ftype === "dry"){
+      f += flag("tip","Hydration",
+        "<p>Dry food carries almost no water, so nearly all of your dog's intake has to come from the bowl. Filtered water changed daily, or a fountain for dogs who ignore still water, meaningfully supports kidney and urinary health over a lifetime. Adding a portion of wet food is the other easy win.</p>");
+    }
+    if(grams < 30 && ftype === "dry"){
+      f += flag("warn","Small portion — precision matters",
+        "<p>At this portion size, a single extra teaspoon is a meaningful share of the day's calories. A digital kitchen scale isn't optional here.</p>");
+    }
+    document.getElementById("rFlags").innerHTML = f;
+
+    /* --- cost of feeding --- */
+    var bagLb = num("bagLb"), price = num("bagPrice");
+    var costBlock = document.getElementById("rCostBlock");
+    if(isFinite(bagLb) && bagLb > 0 && isFinite(price) && price > 0){
+      var bagG = bagLb * 453.592;
+      var daysPerBag = bagG / grams;                 // main-food grams per day
+      var costDay = price / daysPerBag;
+      var bagKcal = bagG * kcal100 / 100;
+      var costPer1000 = price / (bagKcal / 1000);
+
+      document.getElementById("cDay").textContent   = "$" + costDay.toFixed(2);
+      document.getElementById("cMonth").textContent = "$" + (costDay * 30.44).toFixed(0);
+      document.getElementById("cYear").textContent  = "$" + (costDay * 365).toFixed(0);
+      var wholeDays = Math.floor(daysPerBag);
+      document.getElementById("cBag").textContent   = wholeDays;
+      document.getElementById("cBagLabel").textContent = (daysPerBag >= 13.5 ? "days per bag (~" + (daysPerBag/7).toFixed(1) + " wks)" : "days per bag");
+
+      var cl = "";
+      if(cupOnly){
+        cl += "<li><em>Cost figures are approximate</em> — they rest on the typical "+ CUP_G[ftype] +" g cup weight. Weigh one cup of your food to tighten them up.</li>";
+      }
+      cl += "<li>A "+ bagLb +" lb bag at $"+ price.toFixed(2) +" holds about <strong>"+ Math.round(bagKcal).toLocaleString() +" kcal</strong> — that's <strong>$"+ costPer1000.toFixed(2) +" per 1,000 kcal</strong>, the honest number for comparing foods.</li>";
+      cl += "<li>Price per pound is misleading across formats: a can that's 78% water can cost less per pound than kibble and still cost 3× more per calorie. Cost per 1,000 kcal compares any bag, can or pack fairly — re-run this tool with a different food's numbers to see it side by side.</li>";
+      cl += "<li>At <strong>"+ r(grams,5) +" g a day</strong>, buy your next bag when this one is about "+ (wholeDays > 7 ? "a week" : "a couple of days") +" from empty — switching foods abruptly because the bag ran out is the most common cause of avoidable stomach upset.</li>";
+      if(lossMode) cl += "<li>Good news hiding in the weight-loss plan: the smaller portion means this bag lasts longer than it used to. Weight loss usually <em>saves</em> money.</li>";
+      document.getElementById("rCost").innerHTML = cl;
+      costBlock.style.display = "";
+    } else {
+      costBlock.style.display = "none";
+    }
+
+    /* --- dry matter block --- */
+    var dmBlock = document.getElementById("rDmBlock");
+    if(dmP !== null){
+      var needP = isPup ? 22.5 : 18, needF = isPup ? 8.5 : 5.5;
+      var li = "";
+      li += "<li><strong>Protein, dry-matter basis: "+ dmP.toFixed(1) +"%</strong> — AAFCO minimum for "+ (isPup?"growth":"adult maintenance") +" is "+ needP +"%. "+ (dmP < needP ? "⚠️ This food falls below that minimum." : "Comfortably above the minimum.") +"</li>";
+      li += "<li><strong>Fat, dry-matter basis: "+ dmF.toFixed(1) +"%</strong> — AAFCO minimum is "+ needF +"%. "+ (dmF < needF ? "⚠️ Below the minimum." : "Above the minimum.") +"</li>";
+      li += "<li>Dry-matter conversion strips the water out, which is the only way to compare a can against a bag honestly.</li>";
+      if(lossMode && dmF > 18) li += "<li>For a weight-loss dog, a dry-matter fat level this high makes the portion small and the dog hungry. A lower-fat, higher-fiber formula usually works better.</li>";
+      document.getElementById("rDm").innerHTML = li;
+      dmBlock.style.display = "";
+    } else {
+      dmBlock.style.display = "none";
+    }
+
+    /* --- next steps --- */
+    var mealG = grams / meals;
+    var nx = "";
+    if(cupOnly){
+      nx += "<li><strong>Calibrate once:</strong> weigh one level cup of your food on a kitchen scale, then re-run this with the kcal-per-100g figure (kcal per cup ÷ cup weight in g × 100). The numbers above assume a typical "+ CUP_G[ftype] +" g cup — real kibble varies by ±20%.</li>";
+      nx += "<li>Use the same cup every time, levelled off, not heaped. A heaped cup adds 15–25% more food.</li>";
+    } else {
+      nx += "<li>Weigh the portion on a kitchen scale rather than scooping. Cups vary by 20–30%.</li>";
+    }
+    nx += "<li>Split it into <strong>"+ meals +" meals</strong>" + (cupOnly ? "." : " of about "+ r(mealG,5) +" g each.") + "</li>";
+    if(treatPct) nx += "<li>Keep everything outside the bowl under <strong>"+ r(treatKcal,5) +" kcal</strong> a day — chews and dental sticks count.</li>";
+    nx += "<li>Re-weigh your dog in two weeks. Adjust the portion by 10% if the trend is going the wrong way, then hold for another two weeks before changing again.</li>";
+    nx += "<li>Recalculate after neutering, after any change in exercise, and when your dog reaches their senior years.</li>";
+    nx += "<li>Transition between foods over 7 days, moving roughly 25% of the ration each time.</li>";
+    document.getElementById("rNext").innerHTML = nx;
+
+    /* --- math --- */
+    var m = "";
+    m += '<div class="mline"><span>Current weight</span><span>'+ lbs.toFixed(1) +' lb ('+ curKg.toFixed(2) +' kg)</span></div>';
+    m += '<div class="mline"><span>Ideal weight used</span><span>'+ idealKg.toFixed(2) +' kg</span></div>';
+    m += '<div class="mline"><span>RER = 70 × '+ idealKg.toFixed(2) +'<sup>0.75</sup></span><span>'+ r(rer,1) +' kcal</span></div>';
+    m += '<div class="mline"><span>Life-stage / activity factor</span><span>× '+ factor.toFixed(2) +'</span></div>';
+    m += '<div class="mline"><span>Breed-size correction</span><span>× '+ sizeAdj.toFixed(2) +'</span></div>';
+    m += '<div class="mline"><span><strong>Daily energy requirement</strong></span><span><strong>'+ r(der,5) +' kcal</strong></span></div>';
+    m += '<div class="mline"><span>Calories from meals ('+ Math.round((1-treatPct)*100) +'%)</span><span>'+ r(mainKcal,5) +' kcal</span></div>';
+    m += '<div class="mline"><span>Food energy density</span><span>'+ r(kcal100,1) +' kcal / 100 g</span></div>';
+    m += '<div class="mline"><span><strong>Portion</strong> = '+ r(mainKcal,5) +' ÷ '+ r(kcal100,1) +' × 100</span><span><strong>'+ r(grams,5) +' g</strong></span></div>';
+    if(isFinite(bagLb) && bagLb > 0 && isFinite(price) && price > 0){
+      m += '<div class="mline"><span>Bag = '+ bagLb +' lb × 453.6</span><span>'+ Math.round(bagLb*453.592).toLocaleString() +' g</span></div>';
+      m += '<div class="mline"><span>Days per bag = bag grams ÷ daily grams</span><span>'+ ((bagLb*453.592)/grams).toFixed(1) +' days</span></div>';
+      m += '<div class="mline"><span><strong>Cost per day</strong> = $'+ price.toFixed(2) +' ÷ days per bag</span><span><strong>$'+ (price/((bagLb*453.592)/grams)).toFixed(2) +'</strong></span></div>';
+    }
+    if(picks.emode === "est"){
+      m += '<p style="margin-top:10px">Energy was estimated with the modified Atwater factors: <code>3.5 × protein + 8.5 × fat + 3.5 × NFE</code>, where NFE (carbohydrate) is <code>100 − protein − fat − moisture − ash − fiber</code>. Ash was assumed at '+ fmt.ash +'% for '+ fmt.label +'.</p>';
+    }
+    m += '<p style="margin-top:10px">Published energy equations carry roughly ±20% individual variation. Use this as a starting point and let the scale settle the argument.</p>';
+    document.getElementById("rMath").innerHTML = m;
+
+    out.classList.add("on");
+    var reduce = (typeof window.matchMedia === "function") && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(out.scrollIntoView) out.scrollIntoView({ behavior: (reduce ? "auto" : "smooth"), block: "start" });
+  });
+})();
+</script>
