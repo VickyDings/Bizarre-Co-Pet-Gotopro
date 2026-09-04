@@ -53,6 +53,9 @@ table.list tr:last-child td{border-bottom:none}
 .toolbar{display:flex;gap:4px;flex-wrap:wrap;background:var(--cream-deep);border:1px solid var(--line);border-bottom:none;border-radius:8px 8px 0 0;padding:8px}
 .toolbar button{background:#fff;border:1px solid var(--line);border-radius:6px;padding:6px 10px;font-size:13px;cursor:pointer;font-family:inherit;min-width:34px}
 .toolbar button:hover{border-color:var(--amber);color:var(--amber-deep)}
+.toolbar button:disabled{opacity:.38;cursor:default;border-color:var(--line);color:var(--ink-soft)}
+.toolbar button:disabled:hover{border-color:var(--line);color:var(--ink-soft)}
+.toolbar .tb-sep{width:1px;background:var(--line);margin:2px 4px;align-self:stretch}
 #editor{min-height:420px;background:#fff;border:1px solid var(--line);border-radius:0 0 8px 8px;padding:20px 24px;font-family:Georgia,serif;font-size:16px;line-height:1.7;overflow-y:auto}
 #editor:focus{outline:2px solid var(--amber)}
 #editor h2{font-size:24px;margin:22px 0 10px}
@@ -187,6 +190,101 @@ table.list tr:last-child td{border-bottom:none}
 #secbar button.sb-danger:hover{background:var(--clay);border-color:var(--clay)}
 #secbar .sb-sep{width:1px;height:22px;background:#52443a;margin:0 3px}
 @media(max-width:840px){.shell{flex-direction:column}.side{width:100%;flex-direction:row;flex-wrap:wrap;align-items:center;padding:8px}.side .logo{border:none;padding:6px 12px;margin:0}.side a.nav{padding:8px 10px}.side .spacer{display:none}.main{padding:18px}.grid2,.grid3{grid-template-columns:1fr}}
+`;
+
+// ——— Undo / redo for the editor ———
+// The browser's own undo only tracks execCommand and typing. Every section
+// operation — insert, delete, add a box, change the background — works on the
+// DOM directly, so Ctrl+Z could not reach it. This keeps its own snapshot
+// history so one Undo covers both kinds of change.
+const UNDO_JS = `
+var UNDO_MAX = 60;
+var undoStack = [], redoStack = [], undoTimer = null, undoBusy = false;
+// Snapshots must never carry the editing-only outline classes, or undoing
+// would paint a selection back onto something that is no longer selected.
+function undoHtml() {
+  return editor.innerHTML
+    .replace(/ ?pgp-selected/g, '')
+    .replace(/ ?pgp-sec-active/g, '')
+    .replace(/ ?pgp-cell-active/g, '');
+}
+var lastCommitted = undoHtml();
+
+function refreshUndo() {
+  var u = document.getElementById('undoBtn'), r = document.getElementById('redoBtn');
+  if (u) { u.disabled = !undoStack.length; u.title = undoStack.length ? 'Undo (' + undoStack.length + ' step' + (undoStack.length === 1 ? '' : 's') + ') — Ctrl+Z' : 'Nothing to undo yet'; }
+  if (r) { r.disabled = !redoStack.length; r.title = redoStack.length ? 'Redo (' + redoStack.length + ') — Ctrl+Y' : 'Nothing to redo'; }
+}
+function pushState(html) {
+  if (undoStack.length && undoStack[undoStack.length - 1] === html) return;
+  undoStack.push(html);
+  if (undoStack.length > UNDO_MAX) undoStack.shift();
+  redoStack.length = 0;
+  refreshUndo();
+}
+// Typing is grouped into bursts: one Undo takes back a phrase, not a letter.
+function commitTyping() {
+  if (undoBusy) return;
+  var cur = undoHtml();
+  if (cur === lastCommitted) return;
+  pushState(lastCommitted);
+  lastCommitted = cur;
+}
+// Call this immediately BEFORE any change made straight to the DOM.
+function pushUndo() {
+  if (undoBusy) return;
+  clearTimeout(undoTimer); undoTimer = null;
+  commitTyping();
+  var cur = undoHtml();
+  pushState(cur);
+  lastCommitted = cur;
+}
+function restoreState(html) {
+  undoBusy = true;
+  if (typeof deselectSection === 'function') deselectSection();
+  if (typeof deselect === 'function') deselect();
+  editor.innerHTML = html;
+  lastCommitted = html;
+  undoBusy = false;
+  editor.focus();
+  // put the caret at the end so typing carries on somewhere sensible
+  try {
+    var r = document.createRange(); r.selectNodeContents(editor); r.collapse(false);
+    var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+  } catch (e) {}
+  if (typeof countWords === 'function') countWords();
+  refreshUndo();
+}
+function doUndo() {
+  clearTimeout(undoTimer); undoTimer = null;
+  commitTyping();
+  if (!undoStack.length) return;
+  redoStack.push(undoHtml());
+  restoreState(undoStack.pop());
+}
+function doRedo() {
+  if (!redoStack.length) return;
+  undoStack.push(undoHtml());
+  restoreState(redoStack.pop());
+}
+editor.addEventListener('input', function () {
+  if (undoBusy) return;
+  clearTimeout(undoTimer);
+  undoTimer = setTimeout(function () { undoTimer = null; commitTyping(); }, 700);
+});
+var undoBtnEl = document.getElementById('undoBtn');
+var redoBtnEl = document.getElementById('redoBtn');
+if (undoBtnEl) undoBtnEl.addEventListener('click', doUndo);
+if (redoBtnEl) redoBtnEl.addEventListener('click', doRedo);
+document.addEventListener('keydown', function (e) {
+  if (!(e.ctrlKey || e.metaKey)) return;
+  var inEditor = document.activeElement === editor || editor.contains(document.activeElement);
+  if (!inEditor) return;
+  var k = (e.key || '').toLowerCase();
+  if (k === 'z' && !e.shiftKey) { e.preventDefault(); doUndo(); }
+  else if (k === 'y' || (k === 'z' && e.shiftKey)) { e.preventDefault(); doRedo(); }
+});
+refreshUndo();
 `;
 
 // ——— "Add section" dialog + floating box toolbar (post editor and page editor) ———
@@ -355,6 +453,7 @@ secModal.addEventListener('click', function(e){ if (e.target === secModal) secMo
 document.getElementById('smInsert').addEventListener('click', function(){
   var heading = document.getElementById('smTitle').value.trim();
   var html = buildSection(secLayout, secFill, secBg, heading);
+  pushUndo();
   secModal.classList.remove('show');
   editor.focus();
   if (secSavedRange) {
@@ -436,6 +535,7 @@ function targetBox() {
 function addToBox(html, replacePlaceholder) {
   var box = targetBox();
   if (!box) { alert('Click inside a box first.'); return; }
+  pushUndo();
   if (replacePlaceholder) {
     var ph = box.querySelector('.pgp-cell-ph');
     if (ph) { ph.outerHTML = html; if (typeof countWords === 'function') countWords(); return; }
@@ -463,6 +563,7 @@ document.getElementById('sbCell').addEventListener('click', function(){
   if (!activeSection) return;
   var grid = activeSection.querySelector('.pgp-grid');
   if (!grid) return;
+  pushUndo();
   var n = grid.querySelectorAll(':scope > .pgp-cell').length + 1;
   grid.insertAdjacentHTML('beforeend', '<div class="pgp-cell">' + cellText(n) + '</div>');
   placeSecbar();
@@ -470,6 +571,7 @@ document.getElementById('sbCell').addEventListener('click', function(){
 });
 document.getElementById('sbBg').addEventListener('click', function(){
   if (!activeSection) return;
+  pushUndo();
   var cur = '';
   SEC_BGS.forEach(function(b){ if (b && activeSection.classList.contains(b)) cur = b; });
   var next = SEC_BGS[(SEC_BGS.indexOf(cur) + 1) % SEC_BGS.length];
@@ -481,6 +583,7 @@ document.getElementById('sbBg').addEventListener('click', function(){
    these two put an ordinary empty line where you need it. */
 function addLine(where) {
   if (!activeSection) return;
+  pushUndo();
   activeSection.insertAdjacentHTML(where, '<p><br></p>');
   var p = (where === 'beforebegin') ? activeSection.previousElementSibling : activeSection.nextElementSibling;
   if (p) {
@@ -498,6 +601,7 @@ document.getElementById('sbDone').addEventListener('click', deselectSection);
 document.getElementById('sbDel').addEventListener('click', function(){
   if (!activeSection) return;
   if (!confirm('Delete this whole section and everything in it?')) return;
+  pushUndo();
   activeSection.remove();
   deselectSection();
   if (typeof countWords === 'function') countWords();
@@ -993,6 +1097,9 @@ ${!post.id ? `
   <div class="card">
     <label style="margin-top:0">Article content</label>
     <div class="toolbar">
+      <button type="button" id="undoBtn" title="Undo — Ctrl+Z">↶ Undo</button>
+      <button type="button" id="redoBtn" title="Redo — Ctrl+Y">↷ Redo</button>
+      <span class="tb-sep"></span>
       <button type="button" data-cmd="bold" title="Bold"><b>B</b></button>
       <button type="button" data-cmd="italic" title="Italic"><i>I</i></button>
       <button type="button" data-cmd="underline" title="Underline"><u>U</u></button>
@@ -1215,6 +1322,7 @@ window.addEventListener('resize', function(){ if (selectedImg) positionBar(selec
 imgbar.querySelectorAll('[data-size]').forEach(function(b){
   b.addEventListener('click', function(){
     if (!selectedImg) return;
+    pushUndo();
     var t = targetOf(selectedImg);
     SIZES.forEach(function(s){ t.classList.remove(s); });
     t.classList.add(b.dataset.size);
@@ -1224,6 +1332,7 @@ imgbar.querySelectorAll('[data-size]').forEach(function(b){
 imgbar.querySelectorAll('[data-align]').forEach(function(b){
   b.addEventListener('click', function(){
     if (!selectedImg) return;
+    pushUndo();
     var t = targetOf(selectedImg);
     ALIGNS.forEach(function(a){ t.classList.remove(a); });
     t.classList.add(b.dataset.align);
@@ -1237,6 +1346,7 @@ imgbar.querySelectorAll('[data-align]').forEach(function(b){
 imgbar.querySelectorAll('[data-frame]').forEach(function(b){
   b.addEventListener('click', function(){
     if (!selectedImg) return;
+    pushUndo();
     FRAMES.forEach(function(f){ selectedImg.classList.remove(f); });
     if (b.dataset.frame) selectedImg.classList.add(b.dataset.frame);
     syncBar();
@@ -1250,6 +1360,7 @@ document.getElementById('ibCaption').addEventListener('click', function(){
   var existing = fig ? (fig.querySelector('figcaption') || {}).textContent || '' : '';
   var text = prompt('Caption for this image (leave blank to remove):', existing);
   if (text === null) return;
+  pushUndo();
   if (!fig) {
     if (!text.trim()) return;
     fig = document.createElement('figure');
@@ -1278,7 +1389,7 @@ document.getElementById('ibCaption').addEventListener('click', function(){
 document.getElementById('ibAlt').addEventListener('click', function(){
   if (!selectedImg) return;
   var t = prompt('Describe this image for screen readers and Google (alt text):', selectedImg.alt || '');
-  if (t !== null) selectedImg.alt = t;
+  if (t !== null) { pushUndo(); selectedImg.alt = t; }
 });
 
 document.getElementById('ibReplace').addEventListener('click', function(){
@@ -1286,7 +1397,7 @@ document.getElementById('ibReplace').addEventListener('click', function(){
   var inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'image/*';
   inp.onchange = async function(){
     var url = await uploadImage(inp.files[0]);
-    if (url) { selectedImg.src = url; positionBar(selectedImg); }
+    if (url) { pushUndo(); selectedImg.src = url; positionBar(selectedImg); }
   };
   inp.click();
 });
@@ -1294,6 +1405,7 @@ document.getElementById('ibReplace').addEventListener('click', function(){
 document.getElementById('ibDelete').addEventListener('click', function(){
   if (!selectedImg) return;
   if (!confirm('Remove this image from the article?')) return;
+  pushUndo();
   var fig = selectedImg.closest('figure.pgp-figure');
   (fig || selectedImg).remove();
   deselect(); countWords();
@@ -1307,7 +1419,7 @@ document.getElementById('htmlBtn').addEventListener('click', () => {
   htmlMode = !htmlMode;
   if (typeof deselectSection === 'function') deselectSection();
   if (htmlMode) { htmlview.value = editor.innerHTML; editor.style.display = 'none'; htmlview.style.display = 'block'; }
-  else { editor.innerHTML = htmlview.value; htmlview.style.display = 'none'; editor.style.display = 'block'; }
+  else { pushUndo(); editor.innerHTML = htmlview.value; htmlview.style.display = 'none'; editor.style.display = 'block'; }
 });
 
 // Slug auto-fill
@@ -1370,6 +1482,7 @@ if (drop) {
   });
 }
 ${LINK_DIALOG_JS}
+${UNDO_JS}
 ${SECTION_JS}
 </script>`;
   return c.html(adminLayout({ title: post.id ? 'Edit post' : 'New post', active: 'posts', body, flash: msg }));
@@ -1529,6 +1642,9 @@ async function pageEditor(c, page, msg) {
   <div class="card">
     <label style="margin-top:0">Page content</label>
     <div class="toolbar">
+      <button type="button" id="undoBtn" title="Undo — Ctrl+Z">↶ Undo</button>
+      <button type="button" id="redoBtn" title="Redo — Ctrl+Y">↷ Redo</button>
+      <span class="tb-sep"></span>
       <button type="button" data-cmd="bold"><b>B</b></button>
       <button type="button" data-cmd="italic"><i>I</i></button>
       <button type="button" data-block="h2">H2</button>
@@ -1559,7 +1675,7 @@ document.getElementById('htmlBtn').addEventListener('click', () => {
   htmlMode = !htmlMode;
   if (typeof deselectSection === 'function') deselectSection();
   if (htmlMode) { htmlview.value = editor.innerHTML; editor.style.display='none'; htmlview.style.display='block'; }
-  else { editor.innerHTML = htmlview.value; htmlview.style.display='none'; editor.style.display='block'; }
+  else { pushUndo(); editor.innerHTML = htmlview.value; htmlview.style.display='none'; editor.style.display='block'; }
 });
 const slugify = s => s.toLowerCase().trim().replace(/['’]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,80);
 let slugTouched = ${page.slug ? 'true' : 'false'};
@@ -1594,6 +1710,7 @@ async function uploadImage(file) {
   return d.url;
 }
 ${LINK_DIALOG_JS}
+${UNDO_JS}
 ${SECTION_JS}
 </script>`;
   return c.html(adminLayout({ title: page.id ? 'Edit page' : 'New page', active: 'pages', body, flash: msg }));
