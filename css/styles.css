@@ -83,6 +83,9 @@ html {
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* The off-canvas mobile menu sits at right:-100%; without this the whole
+       document stays horizontally scrollable on phones. */
+    overflow-x: hidden;
 }
 
 body {

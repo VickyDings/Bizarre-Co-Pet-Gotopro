@@ -1,0 +1,22 @@
+PHOTO SHOT LIST — bearded-dragon-care-guide
+============================================================
+17 images, listed in the order they appear in the post.
+Upload each in Admin -> Media, then replace the Nth /media/00 with its number.
+
+ 1. bearded dragon basking under a lamp on a raised platform, showing correct posture
+ 2. full enclosure shot showing the hot end with basking lamp and UVB tube, and the cool end with a hide
+ 3. bearded dragon on slate tile substrate, showing the surface texture
+ 4. a bearded dragon salad bowl with chopped collard greens, bell pepper and squash
+ 5. healthy adult bearded dragon, alert with straight limbs and a full tail base
+ 6. Linear T5 HO UVB fixture with reflector
+ 7. Halogen basking bulb and ceramic dome lamp
+ 8. Dimming thermostat with temperature probe
+ 9. Infrared temperature gun pointed at a basking rock
+10. Digital reptile thermometer and hygrometer with probe
+11. Tub of live dubia roaches
+12. Tub of black soldier fly larvae, calciworms
+13. Tub of phosphorus-free calcium powder without D3
+14. Calcium with D3 and reptile multivitamin tubs
+15. Oxbow Critical Care Carnivore recovery formula
+16. Feeding syringe set with measuring cup
+17. bearded dragon sleeping in a cool-end hide

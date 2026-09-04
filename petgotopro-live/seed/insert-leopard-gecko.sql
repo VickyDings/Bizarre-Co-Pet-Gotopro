@@ -1,0 +1,351 @@
+INSERT INTO posts (slug, title, description, keywords, category, hero_image, body_html, status, created_at, updated_at) VALUES ('leopard-gecko-complete-care-guide','Leopard Gecko Care Guide 2026: Setup, Food, Health + Shopping List','Everything you need for a leopard gecko: habitat setup, 20-year lifespan, feeding, supplements, health warning signs, fun facts and a complete shopping list with costs.','leopard gecko care, leopard gecko setup, leopard gecko shopping list, leopard gecko food, leopard gecko supplements, leopard gecko lifespan, leopard gecko habitat, leopard gecko tank setup, beginner reptile pet, leopard gecko health','Reptiles', '','<p>Imagine a pet that greets you with a genuine smile, blinks at you with actual eyelids, licks its own eyeballs clean, stores emergency fat in its tail, and might still be living with you in twenty years'' time. That''s a leopard gecko — and it''s why this palm-sized desert lizard has become the most popular pet reptile on the planet.</p>
+<p>Here''s the honest pitch: leopard geckos are genuinely one of the easiest reptiles to keep <em>well</em>. They don''t need misting systems, they don''t climb the walls, they tolerate handling better than almost any other lizard, and they''ll happily eat bugs out of your fingers. But "easy" isn''t the same as "no effort" — the majority of sick leopard geckos we see at the vet are suffering from three entirely preventable problems: a missing humid hide, an unregulated heat mat, and skipped calcium.</p>
+<p>This guide covers everything: what they actually are, what daily life with one really looks like, how to build the habitat properly, what to feed them, the supplement schedule that prevents the most common killer, the health problems to watch for — and a complete shopping list at the end so you can walk into this fully prepared. Plus a generous helping of fun facts, because these little lizards are genuinely bizarre in the best possible way.</p>
+
+<div class="quick-facts">
+  <h3>🦎 Leopard Gecko at a Glance</h3>
+  <div class="qf-grid">
+    <div class="qf-item"><span class="qf-label">Scientific name</span><span class="qf-value"><em>Eublepharis macularius</em></span></div>
+    <div class="qf-item"><span class="qf-label">Adult size</span><span class="qf-value">8–11 inches, nose to tail</span></div>
+    <div class="qf-item"><span class="qf-label">Lifespan</span><span class="qf-value">15–20 years (some reach 25+)</span></div>
+    <div class="qf-item"><span class="qf-label">Native to</span><span class="qf-value">Arid regions of central Asia &amp; northern India</span></div>
+    <div class="qf-item"><span class="qf-label">Active hours</span><span class="qf-value">Dawn and dusk (crepuscular)</span></div>
+    <div class="qf-item"><span class="qf-label">Diet</span><span class="qf-value">Live insects only — no plants, ever</span></div>
+    <div class="qf-item"><span class="qf-label">Minimum tank</span><span class="qf-value">20 gallons (40 is much better)</span></div>
+    <div class="qf-item"><span class="qf-label">Difficulty</span><span class="qf-value">Beginner-friendly</span></div>
+    <div class="qf-item"><span class="qf-label">Setup cost</span><span class="qf-value">$200–$400 including the gecko</span></div>
+    <div class="qf-item"><span class="qf-label">Running cost</span><span class="qf-value">Roughly $15–$30 a month</span></div>
+  </div>
+</div>
+
+<h2>What Exactly Is a Leopard Gecko?</h2>
+<p>Leopard geckos come from the rocky, arid scrublands of Afghanistan, Pakistan, northern India and Iran — a landscape of baking days, cool nights, and very few places to hide. Everything odd about them makes sense once you know that. They''re crepuscular, meaning they''re most active at dawn and dusk when the desert is survivable, and they spend the blazing middle of the day tucked into a crevice, which is precisely why hides aren''t optional decoration in captivity.</p>
+<p>They''re also one of the few geckos that break the gecko rules. Most geckos have sticky toe pads and permanently open eyes covered by a clear scale. Leopard geckos have neither: they''ve got proper little claws instead of sticky pads (which is why they don''t scale glass and can''t escape a tank the way a crested gecko can), and they have genuine, functioning eyelids they blink with.</p>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #1</span>
+  <p>Their scientific name <strong><em>Eublepharis</em></strong> literally translates as <strong>"true eyelid."</strong> They''re part of a small gecko family named entirely for the fact that they can blink — and because they have eyelids rather than a protective eye scale, they''ll periodically <strong>lick their own eyeballs</strong> to clean off dust. It looks exactly as ridiculous as it sounds.</p>
+</div>
+
+<p>The "leopard" name comes from their adult pattern. Hatchlings emerge boldly <em>banded</em> in yellow and dark brown stripes, then break up into the spotted leopard pattern as they mature — so a banded baby and a spotted adult of the same gecko look like two different animals. Selective breeding since the 1970s has since produced well over 100 colour and pattern morphs: blizzards (pure white, no pattern), tangerines (deep orange), snows, lavenders, sunglows, and so on.</p>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #2</span>
+  <p>Leopard geckos were among the <strong>first lizard species ever properly domesticated</strong>, kept and bred in captivity since the 1970s. That means the gecko you buy today is many generations removed from the wild — one of the reasons they''re so calm with people compared to wild-caught reptiles.</p>
+</div>
+
+<h2>What to Expect: Life With a Leopard Gecko</h2>
+<p>Let''s set realistic expectations, because this is where most disappointment comes from.</p>
+<h3>They are not a cuddly pet — but they are a handleable one</h3>
+<p>Leopard geckos tolerate handling remarkably well once they trust you. Most will happily sit in a cupped palm, walk hand-to-hand, and take a mealworm from your fingers. What they won''t do is seek out affection — they don''t love you, they''ve simply decided you''re not a threat, which for a small desert lizard is high praise. Aim for 10–15 minutes of handling a few times a week, never within 48 hours of a big meal, and always support the whole body.</p>
+<h3>The golden rule: never grab the tail</h3>
+<p>A frightened leopard gecko can voluntarily drop its tail — a defence mechanism called caudal autotomy. The detached tail thrashes around for several minutes to distract a predator while the gecko escapes. It''s not fatal, and it does regrow, but the replacement is always a stubby, smooth, duller-coloured version of the original, and the whole event costs the gecko its entire fat reserve.</p>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #3</span>
+  <p>That chunky tail is a <strong>fat storage organ</strong> — basically a lizard camel hump. A healthy, well-fed leopard gecko has a tail as thick as (or thicker than) its neck, and can survive weeks off those reserves. Tail thickness is the single fastest visual health check you can do: <strong>fat tail = thriving gecko; pencil-thin tail = something is wrong.</strong></p>
+</div>
+
+<h3>They''re quiet, odourless, and low-maintenance — genuinely</h3>
+<p>Daily care is about five minutes: check temperatures, refresh water, spot-clean droppings (they helpfully use one corner as a toilet), and feed on schedule. Weekly you''ll damp down the humid hide and do a proper clean. A leopard gecko doesn''t need walking, doesn''t bark, doesn''t trigger allergies, and won''t smell if you spot-clean. For flats, shift workers and quiet households, that''s a serious advantage.</p>
+<h3>They are nocturnal-ish, so plan around it</h3>
+<p>Don''t expect much activity at 2pm. Your gecko will emerge around dusk, patrol, hunt, and be most engaging in the evening — which happens to suit most people''s schedules rather well.</p>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #4</span>
+  <p>Leopard geckos are <strong>surprisingly chatty</strong>. They chirp, squeak and click — a rapid chirping usually means "back off, I''m not in the mood," while excited squeaks often show up around feeding time. Hatchlings are the loudest of all, producing indignant little screams entirely disproportionate to their size.</p>
+</div>
+
+<h2>Lifespan: This Is a Long-Term Commitment</h2>
+<p>With proper care, expect <strong>15 to 20 years</strong>, and well-kept individuals have reached their mid-to-late twenties. Males tend to outlive females, largely because egg production takes a heavy toll on calcium reserves.</p>
+<p>Take that seriously before buying. A leopard gecko bought for a ten-year-old will very likely still be alive when that child finishes university. It will outlast most family dogs. Plan for who cares for it during holidays, house moves and life changes — and be aware that rescues are overflowing with geckos surrendered by owners who assumed "small pet" meant "short commitment."</p>
+
+<div class="vet-tip">
+  <h4>💚 The Pet-GoToPro view on longevity</h4>
+  <p>Nearly every leopard gecko that dies young dies of something preventable — metabolic bone disease from missed calcium, impaction from loose substrate, or burns from an unregulated heat mat. Get the husbandry right in the first month and you''re overwhelmingly likely to get the full two decades. This is a species where good setup genuinely equals long life.</p>
+</div>
+
+<h2>Habitat: Building the Right Home</h2>
+<h3>The enclosure</h3>
+<p>A single adult needs <strong>20 gallons as an absolute minimum, with 40 gallons strongly preferred</strong> — floor space matters far more than height, since these are ground-dwelling lizards that don''t climb. A front-opening terrarium is kinder than a top-opening tank: approaching from above reads as "predator swooping in" to a small desert animal.</p>
+<p>The lid must be secure and well-ventilated, and it needs to support a light fixture. It also needs to keep the household cat out, which is a genuinely common accident.</p>
+<h3>Heating — the part people get wrong</h3>
+<p>Reptiles are ectotherms: they can''t generate their own body heat, so they move between warm and cool zones to regulate themselves. Your job is to build both.</p>
+<ul>
+  <li><strong>Warm side / basking area: 85–90°F (29–32°C)</strong> — this is where digestion happens. Without it, food ferments in the gut instead of digesting.</li>
+  <li><strong>Cool side: 75–80°F (24–27°C)</strong> — the escape zone that prevents overheating.</li>
+  <li><strong>Night: down to 60°F (16°C) is safe</strong> — no night-time heat source needed in a normal heated home.</li>
+  <li><strong>Lights on 10–12 hours a day, then total darkness.</strong> Darkness at night is essential to their body clock.</li>
+</ul>
+<p>Put a thermometer at <em>each</em> end — a single reading in the middle tells you nothing useful about a gradient.</p>
+
+<div class="vet-warning">
+  <h4>⚠️ Heat mats must be on a thermostat. Always.</h4>
+  <p>An unregulated heat mat can climb past 120°F and cause serious burns. Because a gecko''s belly senses warmth but not pain reliably, they will sit on a surface that''s cooking them. A thermostat is a $30 part that prevents the single most common serious injury in this species — treat it as non-negotiable, not an upgrade.</p>
+  <p><strong>Also avoid "heat rocks" entirely.</strong> They have caused thousands of severe burns and have no place in a modern reptile setup.</p>
+</div>
+
+<h3>UVB lighting</h3>
+<p>Traditionally leopard geckos were kept without UVB because they''re largely nocturnal. Current research has shifted that view: they do benefit from low-level UVB, which supports vitamin D3 synthesis and helps prevent metabolic bone disease — a condition vets still see far too often. A <strong>T5 UVB tube (5–7%) provides a far better gradient than compact fluorescent coils</strong>, and should cover roughly a third to a half of the enclosure so the gecko can choose exposure. Pair it with plenty of shade.</p>
+<h3>Substrate — where beginners get burned</h3>
+<p>Stick to <strong>paper towel, reptile carpet, slate tile, or bare floor</strong>. They''re safe, cheap and trivial to clean.</p>
+<p>Loose substrates — sand, bark, mulch, walnut shell — allow natural digging behaviour, but they also get swallowed alongside prey and can cause impaction: a blocked gut that is painful, expensive and sometimes fatal. Experienced keepers run bioactive setups successfully, but if this is your first gecko, don''t start there. Paper towel first; graduate later if you want to.</p>
+<h3>Hides — three of them, not one</h3>
+<p>Your gecko needs to feel completely hidden, so provide at least three dark hides it can fit its whole body into:</p>
+<ul>
+  <li><strong>A warm hide</strong> on the heated side, for digesting.</li>
+  <li><strong>A cool hide</strong> on the other end, for escaping the heat.</li>
+  <li><strong>A humid hide</strong> in the middle — the most important one of all.</li>
+</ul>
+<h3>The humid hide: the thing that saves toes</h3>
+<p>A humid hide is simply a covered box filled with damp moss or wet paper towel, kept moist at all times. Leopard geckos need that pocket of humidity to shed properly. Without one, shed skin dries and tightens around toes and the tail tip like a tourniquet, cutting off blood supply — and <strong>permanent loss of toes and tail tips is the result</strong>. It''s one of the most common injuries in poorly kept geckos, and one of the easiest to prevent. Re-dampen the moss every few days as it dries out.</p>
+<h3>Water</h3>
+<p>A shallow, stable water dish with fresh water must be available at all times — shallow enough that both babies and adults can climb out easily, and heavy enough not to tip and soak the substrate. Never add vitamin drops to the water.</p>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #5</span>
+  <p>Leopard geckos <strong>eat their own shed skin</strong>. In the wild it''s a two-for-one: recover the nutrients, and erase the evidence that would tell predators exactly where you live. So if you never seem to find shed skin in the tank, nothing has gone missing — it''s been eaten.</p>
+</div>
+
+<h2>Food: What (and How) to Feed</h2>
+<p>Leopard geckos are strict insectivores. They do not eat plants, fruit, vegetables or pellets — <strong>live insects are non-negotiable</strong>. If handling live bugs is a dealbreaker for you, this isn''t the right pet.</p>
+<h3>Staples vs treats</h3>
+<ul>
+  <li><strong>Staples (feed regularly):</strong> crickets and dubia roaches. Both gut-load brilliantly and have good protein-to-fat ratios. Dubia roaches are quieter, don''t smell, and can''t climb glass — many keepers switch and never look back.</li>
+  <li><strong>Treats only (occasional):</strong> mealworms, superworms, and especially waxworms. These are high in fat — waxworms in particular are the lizard equivalent of chocolate, and geckos can become genuinely fussy and refuse healthier food if you overdo them.</li>
+  <li><strong>Never feed:</strong> wild-caught insects (pesticides and parasites), canned or dried insects as a staple, or vertebrate prey like pinkie mice.</li>
+</ul>
+<h3>How much and how often</h3>
+<p>The rule of thumb is <strong>2–3 appropriately sized insects per inch of your gecko''s total length</strong>. A 4-inch juvenile gets roughly 8–12 small crickets per feeding. Insects should be no longer than the width of the gecko''s head.</p>
+<ul>
+  <li><strong>Juveniles (under 12 months):</strong> feed every day.</li>
+  <li><strong>Adults (over 12 months):</strong> feed every other day.</li>
+</ul>
+<p>Remove uneaten crickets after 15–20 minutes. Loose crickets left overnight will nibble a sleeping gecko.</p>
+<h3>Gut-loading: the step most owners skip</h3>
+<p>Gut-loading means feeding your <em>insects</em> a nutritious diet before they become dinner — because an insect fed on nothing is essentially an empty shell. It must be done before <strong>every</strong> feeding, with the insects eating a good diet for at least 4 hours (ideally 6–24 hours) before they''re offered.</p>
+<p><strong>Best gut-load ingredients (highest calcium):</strong> collard greens, turnip greens, mustard greens, dandelion greens, escarole, endive.<br>
+<strong>Good supporting ingredients:</strong> sweet potato, butternut squash, kale, papaya, mango, berries.<br>
+<strong>Quality commercial gut-loads:</strong> Repashy Superload, Cricket Crack, Super Chow.</p>
+<p><strong>Avoid:</strong> iceberg lettuce, spinach, broccoli, cabbage, tomatoes, potato, corn, grains, beans, bread, cereal, meat, eggs, and dog/cat/fish food. These are variously low in calcium, high in phosphorus, or full of oxalates and goitrogens that block mineral absorption. Wash all produce and peel fruit and veg to remove waxes and pesticide residue.</p>
+
+<div class="vet-tip">
+  <h4>💚 Filtered hydration matters here too</h4>
+  <p>It''s easy to assume a desert animal barely drinks — but leopard geckos absolutely do, and clean water is central to kidney health across a 20-year life. Use filtered or dechlorinated water rather than straight tap where you can, change it daily, and scrub the dish weekly: a shallow dish in a warm tank grows biofilm fast.</p>
+</div>
+
+<h2>Supplements: The Non-Negotiable Bit</h2>
+<p>This is the section to read twice, because getting it wrong causes metabolic bone disease (MBD) — a painful, deforming and potentially fatal condition that remains one of the most common reasons leopard geckos are brought to the vet. Insects are naturally poor in calcium and high in phosphorus, so <strong>supplementation isn''t optional and gut-loading alone is not sufficient.</strong></p>
+<h3>The schedule</h3>
+<ul>
+  <li><strong>Under 2 years old:</strong> lightly dust insects with a powdered calcium supplement <strong>3–4 times per week</strong>.</li>
+  <li><strong>Over 2 years old:</strong> dust <strong>1–2 times per week</strong>.</li>
+  <li><strong>Breeding females:</strong> need more — egg production drains calcium dramatically. Speak to your exotics vet.</li>
+</ul>
+<h3>Which supplement</h3>
+<p>Use a calcium powder <strong>without phosphorus</strong>. An all-in-one product such as <strong>Repashy Calcium Plus</strong> is a straightforward, well-balanced choice that covers calcium, D3 and multivitamins in a single powder, which removes the guesswork of juggling separate pots. To dust, drop the insects into a bag or tub with a small pinch of powder and shake gently — you want a light coating, not a snowball.</p>
+<p>Some keepers also leave a small dish of plain calcium in the enclosure for self-regulation. That''s fine as a backup, but it doesn''t replace scheduled dusting.</p>
+
+<div class="vet-warning">
+  <h4>⚠️ Don''t double up on D3</h4>
+  <p>Vitamin D3 is fat-soluble, meaning excess is stored rather than excreted — so it''s genuinely possible to overdose. If you''re using an all-in-one supplement that already contains D3, don''t also dust with a separate D3 product at every feeding. One system, followed consistently, beats a pile of overlapping pots.</p>
+</div>
+
+<h2>Health: What a Healthy Gecko Looks Like — and What Doesn''t</h2>
+<h3>Signs of a healthy leopard gecko</h3>
+<ul>
+  <li>A <strong>plump tail</strong>, as wide as or wider than the neck</li>
+  <li>Clear, bright, fully open eyes</li>
+  <li>Alert and responsive when awake; a strong feeding response</li>
+  <li>Clean vent with no swelling or stuck matter</li>
+  <li>Complete sheds — all toes present, no white tips on the tail</li>
+  <li>Well-formed droppings with a white urate portion</li>
+  <li>Walking with the body lifted off the ground, not dragging</li>
+</ul>
+<h3>The five most common problems</h3>
+<p><strong>1. Metabolic bone disease (MBD).</strong> Caused by insufficient calcium or D3. Look for tremors, a rubbery or bowed jaw, bent limbs, difficulty lifting the body, and lethargy. Early cases can be turned around with corrected supplementation and veterinary treatment; advanced cases cause permanent deformity. Prevention is the whole game.</p>
+<p><strong>2. Impaction.</strong> A blocked digestive tract, usually from swallowed loose substrate but also from prey that was too large. Signs: no droppings for days, a swollen or firm belly, refusing food, straining, lethargy. This needs veterinary attention — do not try to treat it at home.</p>
+<p><strong>3. Stuck shed (dysecdysis).</strong> Almost always caused by a missing or dried-out humid hide. Watch the toes and tail tip especially — retained shed rings act like tourniquets. If you spot stuck shed, a shallow lukewarm soak for 15 minutes and re-damping the humid hide usually resolves it. Never pull shed off by force.</p>
+<p><strong>4. Tail loss.</strong> From rough handling, tank-mate aggression, or fright. Keep the enclosure spotless while it heals, skip handling, and watch for infection at the site.</p>
+<p><strong>5. Parasites and respiratory infection.</strong> Crypto and other parasites cause dramatic weight loss ("stick tail") and runny droppings; respiratory infections show as wheezing, bubbling at the nostrils, or open-mouth breathing. Both need an exotics vet — neither resolves on its own.</p>
+
+<div class="vet-warning">
+  <h4>⚠️ See an exotics vet promptly if you notice</h4>
+  <p>A rapidly thinning tail · refusing food for more than 1–2 weeks in an adult · tremors or jelly-like jaw · straining with no droppings · open-mouth or bubbling breathing · prolapse from the vent · any wound or burn.</p>
+  <p><strong>Find your nearest reptile-experienced vet <em>before</em> you need one.</strong> Not all small-animal practices see reptiles, and hunting for one during an emergency wastes time your gecko may not have.</p>
+</div>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #6</span>
+  <p>In leopard geckos, <strong>incubation temperature determines sex</strong> — a phenomenon called temperature-dependent sex determination. Eggs incubated around 80°F produce mostly females, around 90°F mostly males, and the middle range gives a mix. There are no sex chromosomes doing the deciding: it''s the thermostat.</p>
+</div>
+
+<h2>🛒 The Complete Leopard Gecko Shopping List</h2>
+<p>Here''s everything you need, split into what you must have on day one and what can wait. Buy and set up the entire habitat <strong>at least a week before</strong> the gecko arrives, so you can run it, check the temperature gradient, and fix problems with no animal in residence.</p>
+
+<div class="kit-section">
+  <h3>🔴 The Essentials — buy before your gecko comes home</h3>
+  <p class="kit-note">Nothing on this list is optional. Budget roughly $180–$320 in total.</p>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">1. Enclosure — 20 gallon minimum, 40 gallon preferred</span>
+    <span class="kit-why">Front-opening terrariums (Exo Terra, REPTI ZOO, Zen Habitats) are less stressful than reaching in from above. Floor space beats height — these geckos don''t climb.</span><br>
+    <span class="kit-price">$80–$250</span><a class="kit-link" href="https://www.amazon.com/s?k=leopard+gecko+terrarium+40+gallon+front+opening&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop enclosures on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">2. Under-tank heat mat (or overhead heat source)</span>
+    <span class="kit-why">Should cover roughly one third of the floor to create the warm zone at 85–90°F. Never covers the whole tank — the gradient is the point.</span><br>
+    <span class="kit-price">$15–$30</span><a class="kit-link" href="https://www.amazon.com/s?k=reptile+under+tank+heat+mat+heater&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop heat mats on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">3. Thermostat — the most important $30 you''ll spend</span>
+    <span class="kit-why">Regulates the heat source so it can''t cook your gecko. The Inkbird ITC-308 is the popular reliable choice. Never run a heat mat without one.</span><br>
+    <span class="kit-price">$25–$40</span><a class="kit-link" href="https://www.amazon.com/s?k=reptile+thermostat+Inkbird+ITC-308&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop thermostats on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">4. Two digital thermometers (+ hygrometer)</span>
+    <span class="kit-why">One at each end of the tank. Stick-on dial gauges are notoriously inaccurate — use digital probes or a Bluetooth pair like the Govee sensors.</span><br>
+    <span class="kit-price">$15–$30</span><a class="kit-link" href="https://www.amazon.com/s?k=digital+reptile+thermometer+hygrometer+probe&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop thermometers on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">5. Low-level T5 UVB light (5–7%) + fixture</span>
+    <span class="kit-why">Helps prevent metabolic bone disease. The Arcadia ShadeDweller ProT5 is purpose-built for crepuscular species. Replace the bulb every 12 months even if it still lights up.</span><br>
+    <span class="kit-price">$35–$60</span><a class="kit-link" href="https://www.amazon.com/s?k=Arcadia+ShadeDweller+T5+UVB+kit+reptile&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop UVB lighting on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">6. Three hides — warm, cool and humid</span>
+    <span class="kit-why">The humid hide is the one that prevents lost toes. Fill it with damp sphagnum moss or wet paper towel and re-dampen every few days.</span><br>
+    <span class="kit-price">$20–$45</span><a class="kit-link" href="https://www.amazon.com/s?k=leopard+gecko+hide+humid+cave+set&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop hides on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">7. Sphagnum moss for the humid hide</span>
+    <span class="kit-why">Holds moisture far better than paper towel and lasts months. One bag will see you through a long time.</span><br>
+    <span class="kit-price">$8–$15</span><a class="kit-link" href="https://www.amazon.com/s?k=sphagnum+moss+reptile+humid+hide&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop moss on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">8. Safe substrate — reptile carpet, slate tile or paper towel</span>
+    <span class="kit-why">Skip sand, bark and walnut shell as a beginner: impaction risk isn''t worth it. Slate tile also conducts belly heat beautifully and looks smart.</span><br>
+    <span class="kit-price">$10–$25</span><a class="kit-link" href="https://www.amazon.com/s?k=reptile+carpet+leopard+gecko+substrate&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop substrate on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">9. Shallow water dish + food dish</span>
+    <span class="kit-why">Shallow and stable so it can''t tip or trap a hatchling. A steep-sided food dish stops mealworms escaping into the substrate.</span><br>
+    <span class="kit-price">$10–$20</span><a class="kit-link" href="https://www.amazon.com/s?k=reptile+water+dish+shallow+ramp+bowl&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop dishes on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">10. Calcium + D3 + multivitamin supplement</span>
+    <span class="kit-why">Repashy Calcium Plus covers all three in one pot — simple and hard to get wrong. This is what stands between your gecko and metabolic bone disease.</span><br>
+    <span class="kit-price">$12–$20</span><a class="kit-link" href="https://www.amazon.com/s?k=Repashy+Calcium+Plus+reptile+supplement&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop supplements on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">11. Commercial gut-load for your insects</span>
+    <span class="kit-why">Repashy Superload or Cricket Crack, plus fresh greens from the staple list. Remember: gut-load before every single feeding.</span><br>
+    <span class="kit-price">$10–$18</span><a class="kit-link" href="https://www.amazon.com/s?k=Repashy+Superload+cricket+gut+load&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop gut-load on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">12. Live insects — crickets or dubia roaches</span>
+    <span class="kit-why">Your staple food. Dubia roaches are quieter, cleaner and longer-lived than crickets, and can''t climb smooth sides. You''ll want a ventilated tub to keep them in.</span><br>
+    <span class="kit-price">$15–$30 per order</span><a class="kit-link" href="https://www.amazon.com/s?k=live+dubia+roaches+crickets+reptile+feeder&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop live feeders on Amazon →</a>
+  </div></div>
+</div>
+
+<div class="kit-section">
+  <h3>🟢 Very Nice to Have — makes life easier</h3>
+  <p class="kit-note">Not required on day one, but most keepers end up buying all of these anyway.</p>
+
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">13. Feeding tongs</span>
+    <span class="kit-why">Keeps fingers out of range during enthusiastic feeding, and lets you offer treats without opening the whole cricket tub. Silicone-tipped versions are safest.</span><br>
+    <span class="kit-price">$8–$14</span><a class="kit-link" href="https://www.amazon.com/s?k=reptile+feeding+tongs+silicone+tip&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop tongs on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">14. Infrared temperature gun</span>
+    <span class="kit-why">Checks actual surface temperature where your gecko sits, which is what matters. Instant, accurate, and useful for spotting hot spots.</span><br>
+    <span class="kit-price">$15–$25</span><a class="kit-link" href="https://www.amazon.com/s?k=infrared+temperature+gun+reptile+thermometer&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop temp guns on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">15. Reptile-safe cleaner &amp; spare tub</span>
+    <span class="kit-why">F10 or a dedicated reptile disinfectant for weekly cleaning — household cleaners leave residues that are dangerous in a sealed tank. A spare tub holds the gecko safely during deep cleans.</span><br>
+    <span class="kit-price">$12–$25</span><a class="kit-link" href="https://www.amazon.com/s?k=reptile+safe+terrarium+cleaner+disinfectant&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop cleaners on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">16. Decor — rocks, cork bark, artificial plants</span>
+    <span class="kit-why">Enrichment matters: clutter gives a shy desert lizard confidence to explore. Make sure everything is stable and can''t topple onto your gecko.</span><br>
+    <span class="kit-price">$15–$40</span><a class="kit-link" href="https://www.amazon.com/s?k=reptile+terrarium+decor+cork+bark+rocks&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop decor on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">17. Digital kitchen scale (0.1g)</span>
+    <span class="kit-why">Monthly weigh-ins catch weight loss weeks before it''s visible. The single best early-warning tool in reptile keeping, and it costs less than a takeaway.</span><br>
+    <span class="kit-price">$10–$18</span><a class="kit-link" href="https://www.amazon.com/s?k=digital+kitchen+scale+0.1g+gram&tag=petgo2pro-20" target="_blank" rel="nofollow noopener sponsored">Shop scales on Amazon →</a>
+  </div></div>
+</div>
+
+<h3>What it all costs</h3>
+<div class="table-wrap">
+  <table class="compare">
+    <thead><tr><th>Category</th><th>Budget setup</th><th>Recommended setup</th></tr></thead>
+    <tbody>
+      <tr><td><b>Enclosure &amp; lid</b></td><td>$80</td><td>$180</td></tr>
+      <tr><td><b>Heating + thermostat</b></td><td>$45</td><td>$70</td></tr>
+      <tr><td><b>UVB lighting</b></td><td>$35</td><td>$60</td></tr>
+      <tr><td><b>Hides, substrate, dishes</b></td><td>$45</td><td>$90</td></tr>
+      <tr><td><b>Supplements &amp; gut-load</b></td><td>$25</td><td>$38</td></tr>
+      <tr><td><b>Thermometers &amp; extras</b></td><td>$20</td><td>$60</td></tr>
+      <tr><td><b>The gecko itself</b></td><td>$40 (standard morph)</td><td>$80–$150 (designer morph)</td></tr>
+      <tr><td><b>Total to get started</b></td><td><b>~$290</b></td><td><b>~$550</b></td></tr>
+      <tr><td><b>Ongoing monthly</b></td><td colspan="2"><b>$15–$30</b> — insects, gut-load, supplements, occasional bulb replacement</td></tr>
+    </tbody>
+  </table>
+</div>
+<p style="font-size:12px;font-style:italic">*Prices are indicative and subject to change. Always verify current pricing on Amazon.</p>
+
+<h2>More Fun Facts to Impress People With</h2>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #7</span>
+  <p>Leopard geckos have <strong>no sticky toe pads</strong> — unlike most geckos, they can''t walk up glass or across ceilings. Evolution gave them claws instead, for gripping rocky desert ground. Practically speaking, that''s excellent news: a leopard gecko can''t scale the walls of its tank.</p>
+</div>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #8</span>
+  <p>They will often use <strong>one corner of the tank as a toilet</strong>, consistently, for their entire lives. It''s a wild instinct — keeping waste away from where you sleep reduces the scent trail predators follow — and it makes spot-cleaning almost absurdly easy.</p>
+</div>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #9</span>
+  <p>Baby leopard geckos are <strong>striped, not spotted</strong>. Hatchlings emerge with bold bands and gradually break up into the leopard-spotted adult pattern over their first year. If your "new spotted gecko" arrives looking like a tiny tiger, nothing is wrong.</p>
+</div>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #10</span>
+  <p>That permanent "smile" is pure coincidence of anatomy — the shape of a leopard gecko''s jawline just happens to curve upwards. They''re not expressing happiness, but the effect on humans is so powerful that it''s arguably the single biggest reason the species became a pet-trade superstar.</p>
+</div>
+
+<h2>Frequently Asked Questions</h2>
+<details class="faq-item"><summary>Are leopard geckos good pets for beginners or children?</summary><p>They''re one of the best beginner reptiles — docile, hardy, non-climbing and tolerant of handling. For children, they suit ages roughly 8 and up <em>with adult supervision</em>, since the tail can be dropped through rough handling and the husbandry (thermostat checks, supplement schedule) really needs an adult in charge. And remember: this pet may still be here in 20 years.</p></details>
+<details class="faq-item"><summary>Can I keep two leopard geckos together?</summary><p>Best practice is to house them alone. Two males will fight, sometimes fatally. Females can occasionally cohabit in a large enclosure, but bullying over food and basking spots is common and often invisible until one gecko is thin and stressed. A male and female together means constant breeding, which is hard on the female''s calcium reserves. One gecko, one tank is the safe answer — and they don''t get lonely.</p></details>
+<details class="faq-item"><summary>My gecko won''t eat. Should I panic?</summary><p>Not immediately. Brief appetite loss is normal during shedding, after a move, in cooler months, or in breeding-age males. Check your temperatures first — a cold gecko can''t digest and will stop eating. Do worry if it lasts more than 1–2 weeks in an adult, if the tail is visibly thinning, or if there''s lethargy or weight loss: that''s a vet visit.</p></details>
+<details class="faq-item"><summary>Do leopard geckos actually need UVB?</summary><p>They can survive without it if D3 supplementation is perfect — which is how they were traditionally kept. Current thinking favours providing low-level UVB anyway, since it supports natural D3 synthesis and reduces reliance on getting powder dosing exactly right. Given how common metabolic bone disease still is, it''s cheap insurance. Use a low-output T5 (5–7%) and always provide shade.</p></details>
+<details class="faq-item"><summary>How do I tell if my gecko is male or female?</summary><p>Reliably only once mature. Look at the underside just past the vent: males have two distinct bulges side by side (the hemipenes) and a pronounced V-shaped row of pre-anal pores, often with a waxy secretion. Females lack the bulges and have much smaller pores. Juveniles are genuinely difficult to sex, so treat any seller''s guess on a hatchling with caution.</p></details>
+<details class="faq-item"><summary>Will my gecko''s tail grow back if it drops?</summary><p>Yes, over several weeks to a few months — but the regrown tail is always shorter, smoother, bulbous and duller in colour. It''s cosmetic rather than harmful, though it costs the gecko its entire fat store, so feed well during recovery, keep the enclosure scrupulously clean, and avoid handling until the wound has fully healed.</p></details>
+<details class="faq-item"><summary>How often do they shed?</summary><p>Hatchlings and juveniles shed roughly every 1–2 weeks; adults every 4–8 weeks. You''ll know it''s coming when the gecko turns dull, then chalky white. Don''t handle during this phase, make sure the humid hide is damp, and check the toes and tail tip afterwards for retained rings of skin.</p></details>
+
+<h2>The Bottom Line</h2>
+<p>Leopard geckos earn their popularity honestly. They''re calm, quiet, odourless, genuinely handleable, and they''ll spend twenty years pulling that accidental smile at you from behind a rock. For a first reptile — or a first pet in a flat where a dog isn''t realistic — they''re close to ideal.</p>
+<p>Just don''t mistake "beginner-friendly" for "forgiving." Almost every serious leopard gecko health problem traces back to four things: <strong>a thermostat on the heat source, a genuinely damp humid hide, safe substrate, and calcium on schedule.</strong> Get those four right and the rest is refreshingly simple — a few minutes a day, a tub of bugs in the cupboard, and two decades of one of the most quietly charming animals you can share a home with.</p>
+','draft','2026-08-13T11:00:00.000Z','2026-08-13T11:00:00.000Z');
