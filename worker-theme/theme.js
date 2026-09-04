@@ -464,8 +464,12 @@ body{background:var(--page);color:var(--on-dark)}
 .brand-name,.foot-name{font-family:'Quicksand','Trebuchet MS',sans-serif;font-weight:700;letter-spacing:-.01em}
 .brand-tag,.foot-tag{font-style:normal;letter-spacing:.02em;color:var(--on-dark-dim)}
 
-/* Chrome */
-.brand-bar{background:transparent;border-bottom:1px solid var(--hair)}
+/* Chrome — the header paints its own ground rather than inheriting the body's.
+   Page content is author-editable and can carry its own <style>, so relying on
+   the body background here would let a pasted stylesheet turn the nav invisible. */
+.brand-bar{background:var(--page);border-bottom:1px solid var(--hair)}
+.brand-bar .brand-name,.brand-bar .site-nav a{color:var(--on-dark)}
+.brand-bar .brand-tag{color:var(--on-dark-dim)}
 .home-hero{background:linear-gradient(150deg,#2A2140 0%,var(--page) 70%);
   border-bottom:1px solid var(--hair);padding-bottom:72px}
 .home-hero .hero-cta{color:#2A0A18;border-radius:999px;padding:14px 32px}
