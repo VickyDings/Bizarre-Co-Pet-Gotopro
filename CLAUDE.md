@@ -3,10 +3,51 @@
 **Read `docs/reference/post-template.html` before writing a post.** It carries the
 real markup, copied from the live guinea pig nutrition guide.
 
-## Where posts actually go
+## The real site: `VickyDings/Pet-GotoPro`
 
-`pet-gotopro.com` runs a **custom CMS** — not WordPress (`/wp-admin` 404s). A post
-is hand-written HTML pasted into the editor:
+**pet-gotopro.com is a separate repo from this one.** Clone it read-only with
+`git clone https://github.com/VickyDings/pet-gotopro`, or attach it with
+`add_repo(access:"push")` to make changes.
+
+- **Astro 5**, static, deployed on **Netlify**
+- **Decap CMS** at `/admin`, git-gateway backend on branch `main`
+- **The only stylesheet is `src/styles/global.css`** — theme CSS goes there
+- Decap media uploads land in `public/uploads/`, referenced as `/uploads/...`
+
+There are **two ways a guide gets published**, and they behave very differently:
+
+1. **Decap collection** — Markdown + YAML frontmatter in
+   `src/content/guides/<pet>/<slug>.md`. Products and FAQs are *structured
+   frontmatter fields* (title, badge, image, description, affiliateUrl or asin,
+   priceNote), rendered by the Astro layout. The body field is prose markdown
+   only — the config explicitly says don't repeat products or FAQs in it.
+2. **Standalone HTML** — a hand-built page at
+   `public/guides/<pet>/<slug>/index.html`, registered in
+   `src/data/standaloneArticles.js` so the hub and category pages can list it.
+   This bypasses Decap entirely, which is how full design control is possible.
+
+**The guinea pig nutrition guide is route 2.** That is why it is raw HTML with
+its own `<style>` block and `/media/NN` images rather than frontmatter fields.
+Route 2 is the format to deliver in for design-heavy guides.
+
+Note the local clone is a May 2026 snapshot and the live site has moved on — the
+`quick-facts` / `vet-tip` / `pgp-img` classes and the `/media/NN` convention are
+newer than anything in it. Re-clone before relying on file contents.
+
+## Known issues in the Pet-GotoPro repo (as of the May 2026 snapshot)
+
+- **`netfily.toml` is misspelled** — Netlify only reads `netlify.toml`, so the
+  whole file is ignored: the `/admin` redirect, the config.yml content-type
+  header, the functions directory and the admin no-cache headers are all
+  inactive. Renaming the file is a one-line fix.
+- **`src/content/guides/cats` is a 1-byte file where a directory should be**, so
+  cat guides cannot be created in the Decap collection.
+- **Affiliate tag mismatch** — `public/admin/config.yml` auto-builds ASIN links
+  with `bizco057-20`, but the store ID in use is `petgo2pro-20`.
+
+## How posts were being written before this was known
+
+A post is hand-written HTML pasted into the editor:
 
 1. Upload photos in **Admin → Media**. Each one shows a number.
 2. Open the post → click the **`</>` HTML button**.
