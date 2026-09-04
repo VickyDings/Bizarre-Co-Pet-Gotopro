@@ -455,13 +455,23 @@ body{background:var(--page);color:var(--on-dark)}
 .quick-facts h3,.kit-section h3,.fish-card h3,.filter-panel-title,
 .download-card h3,.pgp-section .pgp-sec-title,.pgp-section .pgp-cell h3,
 .pgp-grid .pgp-cell h3,details.faq-item summary,.product-price .dollar,
-.review-card .rc-score .n{font-weight:400}
+.review-card .rc-score .n,
+/* Added after an audit of every Instrument Serif rule: these three were still
+   rendering at 700, i.e. synthesised bold, which is what this list exists to
+   prevent. The numbered step marker is small and reversed out of magenta,
+   where a smeared faux-bold hurts legibility most. */
+.pgp-prod .pgp-prod-name,.method-list li::before{font-weight:400}
 /* Small uppercase labels read better in the sans than a display serif */
 .pros-cons h4,.vet-warning h4,.vet-tip h4,.pgp-section .pgp-cell h4,
 .pgp-grid .pgp-cell h4{font-family:'Manrope',ui-sans-serif,system-ui,sans-serif;font-weight:700}
 
-/* Wordmark matches the logo's rounded geometric lettering */
-.brand-name,.foot-name{font-family:'Quicksand','Trebuchet MS',sans-serif;font-weight:700;letter-spacing:-.01em}
+/* Wordmark matches the logo's rounded geometric lettering.
+   The footer selector is repeated here on purpose: the footer rule above sets
+   the serif at one-class-plus-an-element, which outranks a bare .foot-name and
+   was leaving the footer wordmark in Instrument Serif while the header used
+   Quicksand. Quicksand has a real 700, so this weight is not synthesised.
+   NOTE: no backticks anywhere in here — this string is a template literal. */
+.brand-name,.foot-name,footer .foot-name{font-family:'Quicksand','Trebuchet MS',sans-serif;font-weight:700;letter-spacing:-.01em}
 .brand-tag,.foot-tag{font-style:normal;letter-spacing:.02em;color:var(--on-dark-dim)}
 
 /* Chrome */
