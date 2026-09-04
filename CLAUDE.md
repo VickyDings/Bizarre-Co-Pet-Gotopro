@@ -3,9 +3,37 @@
 **Read `docs/reference/post-template.html` before writing a post.** It carries the
 real markup, copied from the live guinea pig nutrition guide.
 
-## The real site: `VickyDings/Pet-GotoPro`
+## ⚠️ THE LIVE SITE IS A CLOUDFLARE WORKERS APP — NOT IN ANY GITHUB REPO
 
-**pet-gotopro.com is a separate repo from this one.** Clone it read-only with
+Confirmed from the owner's guide (Sept 2026). pet-gotopro.com runs a
+**self-hosted publishing platform on Cloudflare**:
+
+- **Cloudflare Workers** — deployed with `npx wrangler deploy`, configured by
+  `wrangler.jsonc`
+- **Cloudflare D1** database (`schema.sql`) — **posts live in the database, not
+  in files.** This is why no guide exists in any repo.
+- **Custom admin at `/admin`**, password-protected, with a visual editor plus an
+  HTML view, media library (`/media/NN`), Word `.docx` import, page and menu
+  editing, and logo/tagline/Amazon-tag settings
+- **Cloudflare Workers AI** for the SEO assistant and blog-idea suggestions
+- Project layout: `src/` (public site, admin, AI tools), `assets/`, `seed/`,
+  `wrangler.jsonc`, `schema.sql`
+- Free tier: 100k visits/day, 5 GB database, ~100–200 AI calls/day
+
+**To change anything about the site itself** — theme CSS, page layouts, the admin
+editor toolbar — you need that project. The owner's guide says: upload the zip or
+point Claude at the project, then redeploy with `npx wrangler deploy`.
+
+**Posts are added through the admin**, by pasting HTML into the `</>` view. That
+is why the paste-ready fragment format is the right deliverable for content.
+
+## Dead end: `VickyDings/Pet-GotoPro` (Astro + Decap, NOT live)
+
+**This repo does NOT serve pet-gotopro.com.** It is an older Astro + Decap +
+Netlify build, last pushed May 2026, with different URLs (`/guides/{pet}/{slug}`
+vs the live `/blog/{slug}`) and none of the live theme's classes. Verified: a
+guide merged to its `main` produced a 404 on the live domain. Do not use it as a
+reference for the live site. Clone read-only with
 `git clone https://github.com/VickyDings/pet-gotopro`, or attach it with
 `add_repo(access:"push")` to make changes.
 
