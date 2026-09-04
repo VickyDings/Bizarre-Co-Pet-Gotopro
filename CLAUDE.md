@@ -146,9 +146,23 @@ opens a picker: shape (1/2/3/4 columns, wide-left, wide-right, 1-col-2-rows,
 
 Click inside a section afterwards and a floating **“This box”** toolbar appears:
 add a heading, text, an image (uploads straight into that box) or a product card;
-add another box; cycle the background; insert a plain line above or below the
-section; delete the section. Sections never nest — inserting while the caret is
-inside one places the new section after it.
+add another box; even the widths; cycle the background; insert a plain line above
+or below; move the whole section up or down; delete it. Sections never nest —
+inserting while the caret is inside one places the new section after it.
+
+**Boxes drag and resize.** Each box shows a `⠿` grip at its top-left: drag it to
+reorder boxes, including into a different section. Drag a box's right edge to
+change the column split. Widths are written to a **`--pgp-cols` custom property**
+on the grid, never to an inline `grid-template-columns` — an inline value would
+outrank the phone media queries and stop the columns collapsing. Moving a box
+between grids clears both grids' widths, since the track count no longer matches.
+
+**Undo/Redo** (`↶ ↷`, Ctrl+Z / Ctrl+Y, 60 steps) covers all of it. Every direct
+DOM edit calls `pushUndo()` first; typing is grouped into 700ms bursts.
+`sanitizeHtml()` is the single place that strips the editing-only classes
+(`pgp-selected`, `pgp-sec-active`, `pgp-cell-active`, `pgp-dragging`,
+`pgp-drop-before/after`, `pgp-resizing`) — used by both the undo history and the
+save handlers, so none of them can reach the database.
 
 `.pgp-cell-ph` is the image placeholder. It is `display:none` on the public site,
 and the caption and product photo well collapse with it, so a box you forget to

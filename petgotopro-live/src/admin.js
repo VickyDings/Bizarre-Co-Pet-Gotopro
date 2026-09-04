@@ -161,6 +161,25 @@ table.list tr:last-child td{border-bottom:none}
 #editor .pgp-cell-ph{display:flex;align-items:center;justify-content:center;text-align:center;min-height:96px;padding:14px;border:2px dashed var(--line);border-radius:8px;background:var(--cream);color:#b3a795;font-size:12.5px;font-style:italic;font-family:-apple-system,'Segoe UI',sans-serif;line-height:1.4}
 #editor .pgp-prod-img .pgp-cell-ph{min-height:0;height:100%;width:100%;border:none;border-radius:0}
 #editor .pgp-section>.pgp-sec-tag{position:absolute;top:-9px;left:10px;background:var(--amber);color:#fff;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:20px;font-family:-apple-system,'Segoe UI',sans-serif;pointer-events:none;user-select:none}
+/* ————— Drag to move, drag to resize ————— */
+/* Both handles are drawn with pseudo-elements, so no extra nodes are ever
+   inserted into the article and nothing can leak into the saved HTML. */
+#editor .pgp-cell{position:relative}
+#editor .pgp-cell::before{content:'⠿';position:absolute;top:-2px;left:-2px;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;background:var(--amber);border-radius:5px;cursor:grab;opacity:0;transition:opacity .12s;z-index:5;font-family:-apple-system,'Segoe UI',sans-serif;line-height:1}
+#editor .pgp-cell:hover::before,#editor .pgp-cell.pgp-cell-active::before{opacity:.85}
+#editor .pgp-cell::before:hover{opacity:1}
+/* Right-edge grip: drags this column's width against its neighbour */
+#editor .pgp-grid:not(.pgp-grid--rows)>.pgp-cell:not(:last-child)::after{content:'';position:absolute;top:0;bottom:0;right:-9px;width:18px;cursor:col-resize;border-radius:3px;background:transparent;transition:background .12s;z-index:4}
+#editor .pgp-grid:not(.pgp-grid--rows)>.pgp-cell:not(:last-child):hover::after{background:rgba(200,130,43,.28)}
+#editor .pgp-cell.pgp-resizing::after{background:var(--amber)!important}
+/* While a box is being dragged */
+#editor .pgp-cell.pgp-dragging{opacity:.4}
+#editor .pgp-cell.pgp-drop-before{box-shadow:-4px 0 0 var(--forest)}
+#editor .pgp-cell.pgp-drop-after{box-shadow:4px 0 0 var(--forest)}
+#editor .pgp-grid--rows>.pgp-cell.pgp-drop-before{box-shadow:0 -4px 0 var(--forest)}
+#editor .pgp-grid--rows>.pgp-cell.pgp-drop-after{box-shadow:0 4px 0 var(--forest)}
+body.pgp-dragging-now{cursor:grabbing!important;user-select:none}
+body.pgp-resizing-now{cursor:col-resize!important;user-select:none}
 /* Section picker dialog */
 #secModal{position:fixed;inset:0;background:rgba(26,20,16,.55);z-index:1000;display:none;align-items:center;justify-content:center;padding:20px}
 #secModal.show{display:flex}
@@ -202,12 +221,20 @@ var UNDO_MAX = 60;
 var undoStack = [], redoStack = [], undoTimer = null, undoBusy = false;
 // Snapshots must never carry the editing-only outline classes, or undoing
 // would paint a selection back onto something that is no longer selected.
-function undoHtml() {
-  return editor.innerHTML
+// One place that strips every editing-only class, used by the undo history
+// and by the save handlers, so a transient outline or drag marker can never
+// be written to the database.
+function sanitizeHtml(h) {
+  return h
     .replace(/ ?pgp-selected/g, '')
     .replace(/ ?pgp-sec-active/g, '')
-    .replace(/ ?pgp-cell-active/g, '');
+    .replace(/ ?pgp-cell-active/g, '')
+    .replace(/ ?pgp-dragging/g, '')
+    .replace(/ ?pgp-drop-before/g, '')
+    .replace(/ ?pgp-drop-after/g, '')
+    .replace(/ ?pgp-resizing/g, '');
 }
+function undoHtml() { return sanitizeHtml(editor.innerHTML); }
 var lastCommitted = undoHtml();
 
 function refreshUndo() {
@@ -334,7 +361,11 @@ const SECTION_DIALOG_HTML = `
   <button type="button" id="sbProd">🛒 Product</button>
   <span class="sb-sep"></span>
   <button type="button" id="sbCell">➕ Add box</button>
+  <button type="button" id="sbEven">⇹ Even widths</button>
   <button type="button" id="sbBg">🎨 Background</button>
+  <span class="sb-sep"></span>
+  <button type="button" id="sbSecUp">⬆ Move section up</button>
+  <button type="button" id="sbSecDown">⬇ Move section down</button>
   <span class="sb-sep"></span>
   <button type="button" id="sbUp">⬆ Line above</button>
   <button type="button" id="sbDown">⬇ Line below</button>
@@ -605,6 +636,163 @@ document.getElementById('sbDel').addEventListener('click', function(){
   activeSection.remove();
   deselectSection();
   if (typeof countWords === 'function') countWords();
+});
+`;
+
+// ——— Drag a box to move it, drag its edge to resize it ———
+// Pointer events rather than HTML5 drag-and-drop: native DnD inside a
+// contenteditable lets the browser move nodes itself, which fights with the
+// grid. Handles are hit-tested by geometry against the CSS pseudo-elements.
+const MOVE_JS = `
+var GRIP = 22;      // top-left square that starts a move
+var EDGE = 13;      // right-edge strip that starts a resize
+var dragCell = null, dropCell = null, dropAfter = false, didDrag = false;
+var rzGrid = null, rzIndex = null, rzStartX = 0, rzWidths = null;
+
+function cellsOf(grid) { return Array.prototype.slice.call(grid.children).filter(function (c) { return c.classList.contains('pgp-cell'); }); }
+function onGrip(cell, e) { var r = cell.getBoundingClientRect(); return (e.clientX - r.left) <= GRIP && (e.clientY - r.top) <= GRIP; }
+function onEdge(cell, e) {
+  var grid = cell.parentElement;
+  if (!grid || !grid.classList.contains('pgp-grid') || grid.classList.contains('pgp-grid--rows')) return false;
+  if (cell === cellsOf(grid)[cellsOf(grid).length - 1]) return false;
+  var r = cell.getBoundingClientRect();
+  return Math.abs(e.clientX - r.right) <= EDGE;
+}
+function clearDropMarks() {
+  editor.querySelectorAll('.pgp-drop-before,.pgp-drop-after').forEach(function (c) { c.classList.remove('pgp-drop-before', 'pgp-drop-after'); });
+}
+// A grid whose column count changed can't keep hand-set widths, or the tracks
+// stop lining up with the boxes. Fall back to even columns.
+function resetCols(grid) { if (grid) grid.style.removeProperty('--pgp-cols'); }
+
+/* ————— Move ————— */
+function startDrag(cell, e) {
+  dragCell = cell; didDrag = false;
+  document.body.classList.add('pgp-dragging-now');
+  editor.setAttribute('contenteditable', 'false');   // stop text selection fighting the drag
+  cell.classList.add('pgp-dragging');
+  document.addEventListener('mousemove', onDragMove);
+  document.addEventListener('mouseup', endDrag);
+  e.preventDefault();
+}
+function onDragMove(e) {
+  didDrag = true;
+  clearDropMarks();
+  dropCell = null;
+  var el = document.elementFromPoint(e.clientX, e.clientY);
+  var target = el && el.closest ? el.closest('.pgp-cell') : null;
+  if (!target || target === dragCell || !editor.contains(target)) return;
+  var r = target.getBoundingClientRect();
+  var vertical = target.parentElement.classList.contains('pgp-grid--rows');
+  dropAfter = vertical ? (e.clientY > r.top + r.height / 2) : (e.clientX > r.left + r.width / 2);
+  dropCell = target;
+  target.classList.add(dropAfter ? 'pgp-drop-after' : 'pgp-drop-before');
+}
+function endDrag() {
+  document.removeEventListener('mousemove', onDragMove);
+  document.removeEventListener('mouseup', endDrag);
+  document.body.classList.remove('pgp-dragging-now');
+  editor.setAttribute('contenteditable', 'true');
+  if (dragCell) dragCell.classList.remove('pgp-dragging');
+  clearDropMarks();
+  if (dragCell && dropCell && dropCell !== dragCell) {
+    pushUndo();
+    var from = dragCell.parentElement, to = dropCell.parentElement;
+    if (dropAfter) dropCell.after(dragCell); else dropCell.before(dragCell);
+    if (from !== to) { resetCols(from); resetCols(to); }
+    if (typeof countWords === 'function') countWords();
+  }
+  dragCell = null; dropCell = null;
+  setTimeout(function () { didDrag = false; }, 0);
+}
+
+/* ————— Resize ————— */
+function startResize(cell, e) {
+  var grid = cell.parentElement, cells = cellsOf(grid);
+  rzGrid = grid;
+  rzIndex = cells.indexOf(cell);
+  rzStartX = e.clientX;
+  rzWidths = cells.map(function (c) { return c.getBoundingClientRect().width; });
+  pushUndo();
+  cell.classList.add('pgp-resizing');
+  document.body.classList.add('pgp-resizing-now');
+  editor.setAttribute('contenteditable', 'false');
+  document.addEventListener('mousemove', onResizeMove);
+  document.addEventListener('mouseup', endResize);
+  e.preventDefault();
+}
+function onResizeMove(e) {
+  if (!rzGrid) return;
+  var MIN = 60;
+  var d = e.clientX - rzStartX;
+  var a = rzWidths[rzIndex] + d, b = rzWidths[rzIndex + 1] - d;
+  if (a < MIN) { d += (MIN - a); a = MIN; b = rzWidths[rzIndex + 1] - d; }
+  if (b < MIN) { d -= (MIN - b); b = MIN; a = rzWidths[rzIndex] + d; }
+  var w = rzWidths.slice();
+  w[rzIndex] = a; w[rzIndex + 1] = b;
+  var total = w.reduce(function (x, y) { return x + y; }, 0) || 1;
+  // Store as fractions of the row, so the layout stays fluid at any screen size
+  rzGrid.style.setProperty('--pgp-cols', w.map(function (px) {
+    return 'minmax(0,' + (px / total * w.length).toFixed(3) + 'fr)';
+  }).join(' '));
+}
+function endResize() {
+  document.removeEventListener('mousemove', onResizeMove);
+  document.removeEventListener('mouseup', endResize);
+  document.body.classList.remove('pgp-resizing-now');
+  editor.setAttribute('contenteditable', 'true');
+  editor.querySelectorAll('.pgp-resizing').forEach(function (c) { c.classList.remove('pgp-resizing'); });
+  rzGrid = null; rzWidths = null;
+}
+
+// The gap between two columns belongs to the grid, not to either cell, so a
+// press landing there has no .pgp-cell to close over. Look for the nearest
+// resizable edge in the grid before giving up.
+function edgeCellAt(e) {
+  var el = e.target.closest ? e.target.closest('.pgp-grid') : null;
+  if (!el || el.classList.contains('pgp-grid--rows') || !editor.contains(el)) return null;
+  var cells = cellsOf(el);
+  for (var i = 0; i < cells.length - 1; i++) {
+    var r = cells[i].getBoundingClientRect();
+    if (Math.abs(e.clientX - r.right) <= EDGE && e.clientY >= r.top && e.clientY <= r.bottom) return cells[i];
+  }
+  return null;
+}
+editor.addEventListener('mousedown', function (e) {
+  if (e.button !== 0) return;
+  var cell = e.target.closest ? e.target.closest('.pgp-cell') : null;
+  if (cell && editor.contains(cell)) {
+    if (onEdge(cell, e)) { startResize(cell, e); return; }
+    if (onGrip(cell, e)) { startDrag(cell, e); return; }
+    return;
+  }
+  var edge = edgeCellAt(e);
+  if (edge) startResize(edge, e);
+});
+// a finished drag must not also register as a click on the box
+editor.addEventListener('click', function (e) { if (didDrag) { e.stopPropagation(); e.preventDefault(); } }, true);
+
+/* ————— Move a whole section up or down ————— */
+function moveSection(dir) {
+  if (!activeSection) return;
+  var top = activeSection;
+  while (top.parentElement && top.parentElement !== editor) top = top.parentElement;
+  var sib = dir < 0 ? top.previousElementSibling : top.nextElementSibling;
+  if (!sib) return;
+  pushUndo();
+  if (dir < 0) sib.before(top); else sib.after(top);
+  placeSecbar();
+}
+var sbUpSec = document.getElementById('sbSecUp'), sbDownSec = document.getElementById('sbSecDown');
+if (sbUpSec) sbUpSec.addEventListener('click', function () { moveSection(-1); });
+if (sbDownSec) sbDownSec.addEventListener('click', function () { moveSection(1); });
+
+/* Even out the columns again */
+var sbEven = document.getElementById('sbEven');
+if (sbEven) sbEven.addEventListener('click', function () {
+  if (!activeSection) return;
+  pushUndo();
+  activeSection.querySelectorAll('.pgp-grid').forEach(resetCols);
 });
 `;
 
@@ -1441,8 +1629,7 @@ document.getElementById('postForm').addEventListener('submit', () => {
   if (typeof deselectSection === 'function') deselectSection();
   if (htmlMode) editor.innerHTML = htmlview.value;
   // never save the editing-only selection outlines
-  document.getElementById('body_html').value =
-    editor.innerHTML.replace(/ ?pgp-selected/g, '').replace(/ ?pgp-sec-active/g, '').replace(/ ?pgp-cell-active/g, '');
+  document.getElementById('body_html').value = sanitizeHtml(editor.innerHTML);
 });
 
 // AI SEO
@@ -1484,6 +1671,7 @@ if (drop) {
 ${LINK_DIALOG_JS}
 ${UNDO_JS}
 ${SECTION_JS}
+${MOVE_JS}
 </script>`;
   return c.html(adminLayout({ title: post.id ? 'Edit post' : 'New post', active: 'posts', body, flash: msg }));
 }
@@ -1684,8 +1872,7 @@ document.getElementById('f_title').addEventListener('input', (e) => { if (!slugT
 document.getElementById('pageForm').addEventListener('submit', () => {
   if (typeof deselectSection === 'function') deselectSection();
   if (htmlMode) editor.innerHTML = htmlview.value;
-  document.getElementById('body_html').value =
-    editor.innerHTML.replace(/ ?pgp-sec-active/g, '').replace(/ ?pgp-cell-active/g, '');
+  document.getElementById('body_html').value = sanitizeHtml(editor.innerHTML);
 });
 // Shrink large photos in the browser before upload (max 1600px, JPEG)
 async function compressImage(file) {
@@ -1712,6 +1899,7 @@ async function uploadImage(file) {
 ${LINK_DIALOG_JS}
 ${UNDO_JS}
 ${SECTION_JS}
+${MOVE_JS}
 </script>`;
   return c.html(adminLayout({ title: page.id ? 'Edit page' : 'New page', active: 'pages', body, flash: msg }));
 }

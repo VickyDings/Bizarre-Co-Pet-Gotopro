@@ -56,11 +56,15 @@ export const SECTION_CSS = `
    viewport on phones. */
 .pgp-grid{display:grid;gap:24px;align-items:start}
 .pgp-grid>*{min-width:0}
-.pgp-grid--2{grid-template-columns:repeat(2,minmax(0,1fr))}
-.pgp-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
-.pgp-grid--4{grid-template-columns:repeat(4,minmax(0,1fr))}
-.pgp-grid--wide-left{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
-.pgp-grid--wide-right{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}
+/* Column widths are read from --pgp-cols so a dragged-to-size layout can be
+   stored as a custom property rather than an inline grid-template-columns.
+   An inline style would outrank the phone media queries below and stop the
+   columns collapsing; a custom property leaves those rules in charge. */
+.pgp-grid--2{grid-template-columns:var(--pgp-cols,repeat(2,minmax(0,1fr)))}
+.pgp-grid--3{grid-template-columns:var(--pgp-cols,repeat(3,minmax(0,1fr)))}
+.pgp-grid--4{grid-template-columns:var(--pgp-cols,repeat(4,minmax(0,1fr)))}
+.pgp-grid--wide-left{grid-template-columns:var(--pgp-cols,minmax(0,2fr) minmax(0,1fr))}
+.pgp-grid--wide-right{grid-template-columns:var(--pgp-cols,minmax(0,1fr) minmax(0,2fr))}
 .pgp-grid--rows{grid-template-columns:minmax(0,1fr);gap:18px}
 .pgp-grid--even{align-items:stretch}
 /* Product cards should always end level, whether or not --even was asked for */
