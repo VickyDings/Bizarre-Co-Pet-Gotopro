@@ -10,7 +10,26 @@ then fill the fields below.
 | **Category** | Birds |
 | **Description** | Vet-informed parakeet care: correct cage size and bar spacing, why an all-seed diet kills budgies early, the household fumes that are fatal within minutes, and a two-week taming plan. |
 | **Keywords** | parakeet care guide, budgie care, parakeet cage setup, parakeet cage size, budgie bar spacing, what to feed a parakeet, how long do parakeets live, taming a budgie |
+| **Fun facts** | 8, numbered, in the house style |
+| **Care sheet** | `parakeet-quick-care-sheet.png` — upload and swap the media id |
 | **Hero image** | `https://images.unsplash.com/photo-1470662061953-318cd8c6c152?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=1600&h=900` |
+
+## The downloadable care sheet
+
+`parakeet-quick-care-sheet.png` (2000 × 2836) is ready to upload.
+
+1. **Admin → Media → Upload** the PNG, and note the media id it returns.
+2. In the post body, replace all **three** occurrences of
+   `PARAKEET_SHEET_MEDIA_ID` with that number. They are the inline figure,
+   the download-card thumbnail, and the download button.
+3. Optionally add it to **Free Guides** as well — the `guides` table takes a
+   `media_id`, so it will appear on that page alongside the gecko and cat
+   sheets.
+
+`care-sheet-template.html` is the source. Re-render it in a browser to get
+the sheet in the real brand fonts (this PNG fell back to system fonts because
+Google Fonts is unreachable from the build container), and reuse it as the
+template for every future species — swap the header text and the six cards.
 
 ## Notes
 
