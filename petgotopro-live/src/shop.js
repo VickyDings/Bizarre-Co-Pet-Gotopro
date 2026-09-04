@@ -326,40 +326,40 @@ export async function getShopUrls(db) {
 }
 
 const SHOP_CSS = `
-.shop-hero{background:linear-gradient(160deg,#1a1410,#3d322a);color:#faf6ef;padding:56px 20px 48px;text-align:center}
-.shop-hero h1{font-family:'Playfair Display',Georgia,serif;font-size:clamp(28px,5vw,42px);margin-bottom:10px}
-.shop-hero p{max-width:60ch;margin:0 auto;color:#e3d7c2;font-size:17px}
-.shop-note{background:#f3ead9;border:1px solid #e8dcc4;border-radius:10px;padding:14px 18px;margin:26px 0;color:#3d322a;font-size:15px}
+.shop-hero{background:linear-gradient(160deg,#15111C,#514860);color:#FBFAFD;padding:56px 20px 48px;text-align:center}
+.shop-hero h1{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(28px,5vw,42px);margin-bottom:10px}
+.shop-hero p{max-width:60ch;margin:0 auto;color:#E5E0EE;font-size:17px}
+.shop-note{background:#F1EDF7;border:1px solid #E5E0EE;border-radius:10px;padding:14px 18px;margin:26px 0;color:#514860;font-size:15px}
 .shop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:22px;margin:26px 0 50px}
-.shop-card{background:#fff;border:1px solid #e8dcc4;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(26,20,16,.05)}
-.shop-card .pic{aspect-ratio:1;background:#f3ead9;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.shop-card{background:#fff;border:1px solid #E5E0EE;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 2px 10px rgba(21,17,28,.05)}
+.shop-card .pic{aspect-ratio:1;background:#F1EDF7;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .shop-card .pic img{width:100%;height:100%;object-fit:cover}
 .shop-card .body{padding:14px 16px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
 .shop-card h3{font-size:16px;line-height:1.35;margin:0}
-.shop-card h3 a{color:#1a1410;text-decoration:none}
-.shop-card h3 a:hover{color:#a86618}
-.shop-card .price{font-weight:700;color:#a86618;font-size:17px;margin-top:auto}
-.shop-card .vcount{font-size:12px;color:#6b5c4e}
+.shop-card h3 a{color:#15111C;text-decoration:none}
+.shop-card h3 a:hover{color:#C42A6E}
+.shop-card .price{font-weight:700;color:#C42A6E;font-size:17px;margin-top:auto}
+.shop-card .vcount{font-size:12px;color:#6E6480}
 .pdp{display:grid;grid-template-columns:1fr;gap:34px;margin:34px 0 56px}
 @media(min-width:820px){.pdp{grid-template-columns:1.05fr 1fr}}
-.pdp-gallery .main{aspect-ratio:1;background:#f3ead9;border:1px solid #e8dcc4;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.pdp-gallery .main{aspect-ratio:1;background:#F1EDF7;border:1px solid #E5E0EE;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .pdp-gallery .main img{width:100%;height:100%;object-fit:cover}
 .pdp-thumbs{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
-.pdp-thumbs button{width:62px;height:62px;border:2px solid #e8dcc4;border-radius:8px;overflow:hidden;background:none;padding:0;cursor:pointer}
-.pdp-thumbs button.on{border-color:#c8822b}
+.pdp-thumbs button{width:62px;height:62px;border:2px solid #E5E0EE;border-radius:8px;overflow:hidden;background:none;padding:0;cursor:pointer}
+.pdp-thumbs button.on{border-color:#FF3D96}
 .pdp-thumbs img{width:100%;height:100%;object-fit:cover;display:block}
-.pdp h1{font-family:'Playfair Display',Georgia,serif;font-size:clamp(24px,4vw,34px);margin-bottom:8px}
-.pdp .pdp-price{font-size:26px;font-weight:700;color:#a86618;margin-bottom:16px}
+.pdp h1{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(24px,4vw,34px);margin-bottom:8px}
+.pdp .pdp-price{font-size:26px;font-weight:700;color:#C42A6E;margin-bottom:16px}
 .opt-group{margin-bottom:16px}
-.opt-group .lab{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#6b5c4e;margin-bottom:7px}
+.opt-group .lab{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#6E6480;margin-bottom:7px}
 .opt-row{display:flex;gap:8px;flex-wrap:wrap}
-.opt{border:1.5px solid #e8dcc4;background:#fff;border-radius:8px;padding:8px 14px;font-size:14px;cursor:pointer;font-family:inherit}
-.opt.on{border-color:#c8822b;background:#f9f0e0;font-weight:700}
+.opt{border:1.5px solid #E5E0EE;background:#fff;border-radius:8px;padding:8px 14px;font-size:14px;cursor:pointer;font-family:inherit}
+.opt.on{border-color:#FF3D96;background:#F5EFFA;font-weight:700}
 .opt.swatch{width:34px;height:34px;padding:0;border-radius:50%}
-.buy{display:block;width:100%;text-align:center;background:#c8822b;color:#fff;border:none;border-radius:10px;padding:15px;font-size:16px;font-weight:700;font-family:inherit;text-decoration:none;cursor:pointer}
-.buy:hover{background:#a86618}
-.buy.soon{background:#3d5c3a}
-.pdp-meta{margin-top:18px;font-size:14px;color:#3d322a;line-height:1.7}
+.buy{display:block;width:100%;text-align:center;background:#FF3D96;color:#fff;border:none;border-radius:10px;padding:15px;font-size:16px;font-weight:700;font-family:inherit;text-decoration:none;cursor:pointer}
+.buy:hover{background:#C42A6E}
+.buy.soon{background:#2C7A57}
+.pdp-meta{margin-top:18px;font-size:14px;color:#514860;line-height:1.7}
 .pdp-meta ul{margin:8px 0 0 18px}
 `;
 
@@ -437,7 +437,7 @@ shopRoutes.get('/shop/:slug', async (c) => {
 
   const sizes = [...new Set(variants.map(v => v.size).filter(Boolean))];
   const colors = [...new Set(variants.map(v => v.color).filter(Boolean))];
-  const colorCode = new Map(variants.filter(v => v.color).map(v => [v.color, v.color_code || '#ccc']));
+  const colorCode = new Map(variants.filter(v => v.color).map(v => [v.color, v.color_code || '#D8D2E2']));
 
   const price = displayPrice(p);
   const preview = (settings.shop_mode || 'preview') !== 'live';
@@ -447,14 +447,14 @@ shopRoutes.get('/shop/:slug', async (c) => {
       <div class="lab">${label}</div>
       <div class="opt-row">
         ${values.map((v, i) => kind === 'color'
-          ? `<button class="opt swatch${i === 0 ? ' on' : ''}" data-val="${esc(v)}" title="${esc(v)}" aria-label="${esc(v)}" style="background:${esc(colorCode.get(v) || '#ccc')}"></button>`
+          ? `<button class="opt swatch${i === 0 ? ' on' : ''}" data-val="${esc(v)}" title="${esc(v)}" aria-label="${esc(v)}" style="background:${esc(colorCode.get(v) || '#D8D2E2')}"></button>`
           : `<button class="opt${i === 0 ? ' on' : ''}" data-val="${esc(v)}">${esc(v)}</button>`).join('')}
       </div>
     </div>` : '';
 
   const body = `
 <div class="container">
-  <p style="margin:26px 0 0;font-size:14px"><a href="/shop" style="color:#a86618;text-decoration:none">← Back to shop</a></p>
+  <p style="margin:26px 0 0;font-size:14px"><a href="/shop" style="color:#C42A6E;text-decoration:none">← Back to shop</a></p>
   <div class="pdp">
     <div class="pdp-gallery">
       <div class="main"><img id="pdp-main" src="${esc(gallery[0])}" alt="${esc(p.name)}"></div>
@@ -469,7 +469,7 @@ shopRoutes.get('/shop/:slug', async (c) => {
       ${optionBlock('Size', sizes, 'size')}
       ${preview
         ? `<a class="buy soon" href="/contact">Tell me when this is available</a>
-           <p style="font-size:13px;color:#6b5c4e;margin-top:10px;text-align:center">Checkout opens shortly — this page is live so you can see the range.</p>`
+           <p style="font-size:13px;color:#6E6480;margin-top:10px;text-align:center">Checkout opens shortly — this page is live so you can see the range.</p>`
         : `<button class="buy" id="pdp-buy" data-slug="${esc(p.slug)}">Add to basket</button>`}
       <div class="pdp-meta">
         <strong>Printed on demand</strong>
@@ -558,10 +558,10 @@ shopAdminRoutes.get('/shop', async (c) => {
 
   const rows = products.map(p => `
     <tr>
-      <td style="width:56px"><img src="${esc(productImg(p))}" alt="" style="width:44px;height:44px;object-fit:cover;border-radius:6px;background:#f3ead9"></td>
-      <td><a href="/admin/shop/${p.id}"><strong>${esc(p.name)}</strong></a><br><span style="font-size:12px;color:#6b5c4e">/shop/${esc(p.slug)}</span></td>
+      <td style="width:56px"><img src="${esc(productImg(p))}" alt="" style="width:44px;height:44px;object-fit:cover;border-radius:6px;background:#F1EDF7"></td>
+      <td><a href="/admin/shop/${p.id}"><strong>${esc(p.name)}</strong></a><br><span style="font-size:12px;color:#6E6480">/shop/${esc(p.slug)}</span></td>
       <td style="font-size:13px">${money(p.base_cost, p.currency)}</td>
-      <td style="font-size:13px"><strong>${money(displayPrice(p), p.currency)}</strong>${p.price_override ? ' <span style="font-size:11px;color:#a86618">override</span>' : ''}</td>
+      <td style="font-size:13px"><strong>${money(displayPrice(p), p.currency)}</strong>${p.price_override ? ' <span style="font-size:11px;color:#C42A6E">override</span>' : ''}</td>
       <td><span class="badge ${p.status === 'published' ? 'published' : 'draft'}">${esc(p.status)}</span></td>
       <td style="text-align:right"><a class="btn small ghost" href="/admin/shop/${p.id}">Edit</a></td>
     </tr>`).join('');
@@ -574,7 +574,7 @@ shopAdminRoutes.get('/shop', async (c) => {
   <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
     <div>
       <strong>Sync from Printful</strong>
-      <div style="font-size:13px;color:#6b5c4e;margin-top:4px">
+      <div style="font-size:13px;color:#6E6480;margin-top:4px">
         ${last ? `Last run ${esc(last.ran_at.slice(0, 16).replace('T', ' '))} — ${last.products} product${last.products === 1 ? '' : 's'}, ${last.variants} variant${last.variants === 1 ? '' : 's'}, ${last.images} image${last.images === 1 ? '' : 's'} cached.` : 'Never run yet.'}
       </div>
     </div>
@@ -597,7 +597,7 @@ shopAdminRoutes.get('/shop', async (c) => {
 
 <table class="list">
   <tr><th></th><th>Product</th><th>Base cost</th><th>Your price</th><th>Status</th><th></th></tr>
-  ${rows || '<tr><td colspan="6" style="padding:22px;text-align:center;color:#6b5c4e">No products yet. Build them in the Printful dashboard, then hit <strong>Sync now</strong>.</td></tr>'}
+  ${rows || '<tr><td colspan="6" style="padding:22px;text-align:center;color:#6E6480">No products yet. Build them in the Printful dashboard, then hit <strong>Sync now</strong>.</td></tr>'}
 </table>`;
 
   return c.html(adminLayout({ title: 'Shop', active: 'shop', body, flash, flashErr }));
@@ -634,7 +634,7 @@ shopAdminRoutes.get('/shop/:id', async (c) => {
       <td>${esc(v.size || '—')}</td>
       <td>${money(v.base_cost, p.currency)}</td>
       <td>${money(v.retail_price, p.currency)}</td>
-      <td style="font-size:12px;color:#6b5c4e">${esc(v.availability || '')}</td>
+      <td style="font-size:12px;color:#6E6480">${esc(v.availability || '')}</td>
     </tr>`).join('');
 
   const body = `
@@ -646,7 +646,7 @@ shopAdminRoutes.get('/shop/:id', async (c) => {
   <div class="card">
     <label for="slug">Page address</label>
     <input type="text" name="slug" id="slug" value="${esc(p.slug)}">
-    <p style="font-size:12px;color:#6b5c4e;margin-top:5px">Lives at /shop/${esc(p.slug)} — changing this breaks any existing links to the product.</p>
+    <p style="font-size:12px;color:#6E6480;margin-top:5px">Lives at /shop/${esc(p.slug)} — changing this breaks any existing links to the product.</p>
 
     <label for="description">Description</label>
     <textarea name="description" id="description" rows="7" placeholder="Why someone wants this. HTML is allowed.">${esc(p.description)}</textarea>
@@ -655,7 +655,7 @@ shopAdminRoutes.get('/shop/:id', async (c) => {
       <div>
         <label for="price_override">Your price (overrides Printful)</label>
         <input type="text" name="price_override" id="price_override" value="${p.price_override ?? ''}" placeholder="${displayPrice(p).toFixed(2)}">
-        <p style="font-size:12px;color:#6b5c4e;margin-top:5px">Base cost ${money(p.base_cost, p.currency)} · Printful retail ${money(p.retail_price, p.currency)} · aim for roughly 2× base.</p>
+        <p style="font-size:12px;color:#6E6480;margin-top:5px">Base cost ${money(p.base_cost, p.currency)} · Printful retail ${money(p.retail_price, p.currency)} · aim for roughly 2× base.</p>
       </div>
       <div>
         <label for="status">Status</label>
@@ -678,10 +678,10 @@ shopAdminRoutes.get('/shop/:id', async (c) => {
 
 <div class="card">
   <strong>Variants</strong>
-  <p style="font-size:13px;color:#6b5c4e;margin:4px 0 12px">Managed in Printful — sync to update them here.</p>
+  <p style="font-size:13px;color:#6E6480;margin:4px 0 12px">Managed in Printful — sync to update them here.</p>
   <table class="list">
     <tr><th>Name</th><th>Colour</th><th>Size</th><th>Base</th><th>Printful retail</th><th>Availability</th></tr>
-    ${vrows || '<tr><td colspan="6" style="padding:16px;color:#6b5c4e">No variants synced.</td></tr>'}
+    ${vrows || '<tr><td colspan="6" style="padding:16px;color:#6E6480">No variants synced.</td></tr>'}
   </table>
 </div>`;
 

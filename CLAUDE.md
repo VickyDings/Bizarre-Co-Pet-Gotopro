@@ -38,6 +38,15 @@ in that folder reaches visitors until someone runs that command.
 `ADMIN_CSS`, so the editor renders those components exactly as visitors see them.
 Put anything that must look identical in both places in one of those two.
 
+**Never write a backtick inside these template literals** — not even in a CSS
+comment. It closes the string early and silently truncates the stylesheet; the
+symptom is media queries going missing so columns stop collapsing on phones.
+`node check-templates.mjs` catches it.
+
+When adding an editor-only rule, **match the public sheet's specificity**. An
+`#editor a.cta-btn` rule outranks the theme's own `.pgp-prod .cta-btn`, so the
+editor silently stops being a true preview.
+
 Note: `schema.sql` is a **stale copy** — it is missing `slug_history` and
 `guides`, both of which `src/index.js` creates. Trust `index.js`.
 
@@ -116,22 +125,31 @@ rewrite it.
 
 ## Colour theme — keep this identical across the whole site
 
-Warm, natural, earthy. **Not** the purple/gold of the Bizarre Co static repo.
-Declared in every post's shop block; reuse these exact values anywhere you write
-inline CSS.
+**Rebranded Sept 2026: warm brown/amber → dark plum + magenta.** The site now
+sits on a dark plum ground with long-form articles on a light "paper" sheet.
+Token *roles* were kept, so `--ink` is still the dark value and `--cream` still
+the light one — only the hues moved. `ADMIN_CSS` in `admin.js` mirrors this
+`:root` so the dashboard and editor match.
 
 | Token | Hex | Use |
 |---|---|---|
-| `--ink` | `#1a1410` | headings, near-black brown |
-| `--ink-soft` | `#3d322a` | body copy |
-| `--ink-mute` | `#6f6055` | captions, sub-labels, disclaimers |
-| `--cream` | `#faf6ef` | page/section background |
-| `--cream-deep` | `#f3ead9` | alternate background |
-| `--paper` | `#ffffff` | cards |
-| `--amber` | `#c8822b` | badges, accents |
-| `--amber-deep` | `#a86618` | buttons |
-| `--forest` | `#3d5c3a` | prices, the "our pick" badge, positive signals |
-| `--line` | `#e8dcc4` | warm borders and rules |
+| `--ink` | `#15111C` | headings, near-black plum |
+| `--ink-soft` | `#514860` | body copy |
+| `--cream` | `#FBFAFD` | page/article sheet background |
+| `--cream-deep` | `#F1EDF7` | alternate background |
+| `--amber` | `#FF3D96` | accents and buttons (magenta, despite the name) |
+| `--amber-deep` | `#C42A6E` | links, hover, eyebrows |
+| `--clay` | `#C63B52` | warnings |
+| `--forest` | `#2C7A57` | prices, the "our pick" badge, positive signals |
+| `--line` | `#E5E0EE` | borders and rules |
+| `--page` / `--page-2` / `--page-3` | `#15111C` `#1E1927` `#292234` | the dark shell behind the paper |
+| `--on-dark` / `--on-dark-dim` | `#F4F0F7` `#B5ABC0` | text on the dark ground |
+
+Buttons are pills (`border-radius:999px`) with `#2A0A18` text on magenta.
+
+**Fonts:** `Instrument Serif` for headings, `Manrope` for body and UI,
+`Quicksand` for the wordmark. Instrument Serif ships **one weight** — the theme
+pins serif headings to `font-weight:400` because synthesised bold goes muddy.
 
 ## Sections and column layouts — now a button in the editor
 
