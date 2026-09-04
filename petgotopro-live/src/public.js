@@ -2,6 +2,7 @@
 import { Hono } from 'hono';
 import { esc, fmtDate, readingTime, excerpt, getSettings, stripHtml, applyAmazonTag } from './util.js';
 import { layout, pawDivider, logoUrl } from './theme.js';
+import { getShopUrls } from './shop.js';
 
 export const CATEGORIES = [
   { key: 'Dogs', emoji: '🐕' },
@@ -276,13 +277,16 @@ publicRoutes.get('/sitemap.xml', async (c) => {
   const base = siteUrl(c, settings);
   const posts = (await db.prepare("SELECT slug, updated_at FROM posts WHERE status='published'").all()).results || [];
   const pages = (await db.prepare("SELECT slug, updated_at FROM pages WHERE status='published'").all()).results || [];
+  const shop = await getShopUrls(db);
   const urls = [
     `<url><loc>${base}/</loc></url>`,
     `<url><loc>${base}/blog</loc></url>`,
     `<url><loc>${base}/free-guides</loc></url>`,
+    ...(shop.length ? [`<url><loc>${base}/shop</loc></url>`] : []),
     ...CATEGORIES.map(x => `<url><loc>${base}/category/${encodeURIComponent(x.key)}</loc></url>`),
     ...posts.map(p => `<url><loc>${base}/blog/${esc(p.slug)}</loc><lastmod>${(p.updated_at || '').slice(0, 10)}</lastmod></url>`),
     ...pages.map(p => `<url><loc>${base}/${esc(p.slug)}</loc><lastmod>${(p.updated_at || '').slice(0, 10)}</lastmod></url>`),
+    ...shop.map(s => `<url><loc>${base}/shop/${esc(s.slug)}</loc><lastmod>${(s.updated_at || '').slice(0, 10)}</lastmod></url>`),
   ].join('\n');
   return c.body(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`, 200, { 'Content-Type': 'application/xml' });
 });

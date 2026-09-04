@@ -2,6 +2,7 @@
 import { Hono } from 'hono';
 import { publicRoutes, notFound } from './public.js';
 import { adminRoutes } from './admin.js';
+import { shopRoutes, shopAdminRoutes } from './shop.js';
 
 const SCHEMA = [
   `CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT)`,
@@ -32,7 +33,11 @@ app.use('*', async (c, next) => {
   await next();
 });
 
+// Shop routes mount first: publicRoutes ends with a catch-all '/:slug' that
+// would otherwise swallow /shop, and adminRoutes has its own '*' auth gate.
+app.route('/admin', shopAdminRoutes);
 app.route('/admin', adminRoutes);
+app.route('/', shopRoutes);
 app.route('/', publicRoutes);
 app.notFound((c) => notFound(c));
 

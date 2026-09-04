@@ -731,11 +731,12 @@ const LINK_DIALOG_JS = `
 })();
 `;
 
-function adminLayout({ title, active, body, flash, flashErr }) {
+export function adminLayout({ title, active, body, flash, flashErr }) {
   const nav = [
     ['dashboard', '/admin', '📊 Dashboard'],
     ['posts', '/admin/posts', '📝 Blog Posts'],
     ['pages', '/admin/pages', '📄 Pages'],
+    ['shop', '/admin/shop', '🛍️ Shop'],
     ['menu', '/admin/menu', '🧭 Menu'],
     ['settings', '/admin/settings', '⚙️ Settings'],
   ].map(([k, href, label]) => `<a class="nav${active === k ? ' active' : ''}" href="${href}">${label}</a>`).join('');
