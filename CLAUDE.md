@@ -3,10 +3,14 @@
 **Read `docs/reference/post-template.html` before writing a post.** It carries the
 real markup, copied from the live guinea pig nutrition guide.
 
-## ⚠️ THE LIVE SITE IS A CLOUDFLARE WORKERS APP — NOT IN ANY GITHUB REPO
+## The live site now lives in this repo, under `petgotopro-live/`
 
-Confirmed from the owner's guide (Sept 2026). pet-gotopro.com runs a
-**self-hosted publishing platform on Cloudflare**:
+pet-gotopro.com runs a **self-hosted publishing platform on Cloudflare**. The
+owner uploaded the project in Sept 2026 and it is now committed here — it is not
+on GitHub anywhere else, so this is the only copy under version control.
+
+**Deploy from `petgotopro-live/` with `npx wrangler deploy`.** Nothing you change
+in that folder reaches visitors until someone runs that command.
 
 - **Cloudflare Workers** — deployed with `npx wrangler deploy`, configured by
   `wrangler.jsonc`
@@ -16,13 +20,26 @@ Confirmed from the owner's guide (Sept 2026). pet-gotopro.com runs a
   HTML view, media library (`/media/NN`), Word `.docx` import, page and menu
   editing, and logo/tagline/Amazon-tag settings
 - **Cloudflare Workers AI** for the SEO assistant and blog-idea suggestions
-- Project layout: `src/` (public site, admin, AI tools), `assets/`, `seed/`,
-  `wrangler.jsonc`, `schema.sql`
 - Free tier: 100k visits/day, 5 GB database, ~100–200 AI calls/day
 
-**To change anything about the site itself** — theme CSS, page layouts, the admin
-editor toolbar — you need that project. The owner's guide says: upload the zip or
-point Claude at the project, then redeploy with `npx wrangler deploy`.
+### Where things are in `petgotopro-live/`
+
+| File | What it holds |
+|---|---|
+| `src/index.js` | Worker entry, route mounting, **and the real schema** — `SCHEMA[]` runs on every request, so it is authoritative, not `schema.sql` |
+| `src/theme.js` | `IMAGE_CSS`, `SECTION_CSS`, `PUBLIC_CSS`, and `layout()` — all public styling |
+| `src/admin.js` | The whole `/admin` app: auth, post editor, page editor, media, menus, settings |
+| `src/public.js` | Public routes, `CATEGORIES`, guides, 404 |
+| `src/ai.js` | Workers AI — SEO suggestions and topic ideas |
+| `src/util.js` | esc/slugify/auth/sessions/`applyAmazonTag` |
+| `seed/` | One-off SQL and HTML used to load existing posts |
+
+`IMAGE_CSS` and `SECTION_CSS` are imported by **both** `PUBLIC_CSS` and
+`ADMIN_CSS`, so the editor renders those components exactly as visitors see them.
+Put anything that must look identical in both places in one of those two.
+
+Note: `schema.sql` is a **stale copy** — it is missing `slug_history` and
+`guides`, both of which `src/index.js` creates. Trust `index.js`.
 
 **Posts are added through the admin**, by pasting HTML into the `</>` view. That
 is why the paste-ready fragment format is the right deliverable for content.
@@ -116,18 +133,35 @@ inline CSS.
 | `--forest` | `#3d5c3a` | prices, the "our pick" badge, positive signals |
 | `--line` | `#e8dcc4` | warm borders and rules |
 
-## Sections and column layouts
+## Sections and column layouts — now a button in the editor
 
-`docs/reference/section-layouts.css` goes in the theme once; then any post can use
-these. `.pgp-section` uses `display:flow-root`, which is what stops an image
-dropped between two sections being absorbed into the previous one.
+`SECTION_CSS` in `petgotopro-live/src/theme.js` ships these to the live site and
+the admin editor. `.pgp-section` uses `display:flow-root`, which is what stops an
+image dropped between two sections being absorbed into the previous one.
+
+**The editor has a `▦ Section` toolbar button** (post editor and page editor). It
+opens a picker: shape (1/2/3/4 columns, wide-left, wide-right, 1-col-2-rows,
+1-col-3-rows) × contents (text, photos, photo+text, product cards) × background
+(none, cream, warm, white card, top rule, dark) + an optional heading.
+
+Click inside a section afterwards and a floating **“This box”** toolbar appears:
+add a heading, text, an image (uploads straight into that box) or a product card;
+add another box; cycle the background; insert a plain line above or below the
+section; delete the section. Sections never nest — inserting while the caret is
+inside one places the new section after it.
+
+`.pgp-cell-ph` is the image placeholder. It is `display:none` on the public site,
+and the caption and product photo well collapse with it, so a box you forget to
+fill leaves nothing behind for visitors.
 
 - `.pgp-section` (+ `--cream` `--tint` `--paper` `--rule`) — an independent band
 - `.pgp-grid` + `--2` `--3` `--4` `--wide-left` `--wide-right` `--rows`, plus
   `--even` to make cards end level. All collapse to one column below 760px.
 - `.pgp-cell` — holds an image, text, or a product card
 - `.pgp-prod` — compact product card that works inside a column
+  (`.pgp-prod-badge` / `-img` / `-body` / `-name` / `-price` / `-disc` / `-why` / `-note`)
 - `.pgp-cap` — caption under a cell image
+- `.pgp-sec-title` / `.pgp-sec-sub` — section heading and standfirst
 
 Grid tracks are `minmax(0, 1fr)`, never plain `1fr` — plain `1fr` lets a wide
 table push the column past the viewport on phones.
