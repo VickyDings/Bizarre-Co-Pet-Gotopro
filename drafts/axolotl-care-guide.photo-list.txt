@@ -22,3 +22,14 @@ Upload each in Admin -> Media, then replace the Nth /media/00 with its number.
 17. Gravel vacuum siphon with hose and bucket
 18. Tub of non-iodised aquarium salt
 19. Food-safe plastic storage bin with lid used as a hospital tub
+
+Images 1-7 are your own axolotl/tank photos.
+Images 8-19 are product packshots, in shop order:
+  water care (3) -> cooling (2) -> food (2) -> tank & equipment (3) -> emergency (2)
+
+REPLACE EVERY /media/00 BEFORE YOU PUBLISH. These are real <img> tags, so an
+unreplaced one renders as a broken-image icon to visitors — it does not hide
+itself. (The empty boxes the Section button inserts do collapse; these don't.)
+
+If you don't have a photo for one of them yet, delete that whole <img> line
+rather than publishing it broken.

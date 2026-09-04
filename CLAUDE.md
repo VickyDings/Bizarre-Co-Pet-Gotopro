@@ -220,6 +220,12 @@ Every product card carries, in order: badge → image → name → price range �
 `*Price starts from and is subject to change` → reasoning → `cta-btn` →
 the OneLink availability note.
 
+Two card shapes exist. The full-width `.product` card (or the `#xxshop` scoped
+`.gp-card`) is right for a one-per-row shop. **In a column layout use `.pgp-prod`**,
+which is themed, needs no scoped `<style>`, and ends level with its neighbours.
+Its OneLink note is short — put the full country list once in the shop intro
+instead of repeating it in every narrow column.
+
 Brand strategy: pick one trusted brand per species where possible (Oxbow for
 small animals) and say plainly why.
 
