@@ -1,0 +1,872 @@
+<!--
+  Cat Food Serving Calculator — page body for Pet-GoToPro admin.
+
+  Paste this as the page CONTENT. It is a fragment, not a document:
+  the site layout already supplies <html>, <head>, the title, the meta
+  description, the canonical link, the header and the footer.
+
+  Changed from the previous version:
+    - Removed <title>, <meta> and <link rel=canonical> (the layout emits them).
+    - Removed the :root block. It redefined every design token and the body
+      background for the whole page, which is what turned the site cream and
+      made the header's nav invisible. Page-only variables now sit on .wrap.
+    - Removed the body{} rule and narrowed the global * reset to .wrap.
+    - Removed the duplicate <header> and <footer> and their CSS. The footer
+      also used .site-footer, which was restyling the real site footer.
+    - Retuned the remaining hard-coded browns to the plum palette.
+    - Renamed the article's .prose to .calc-prose so it does not nest inside
+      the layout's own .prose wrapper.
+    - Dropped the bare table/th/td rules so tables inherit the site style.
+  JSON-LD is kept: schema in the body is valid and worth keeping.
+-->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Cat Food Serving Calculator",
+  "url": "https://pet-gotopro.com/cat-food-calculations",
+  "applicationCategory": "HealthApplication",
+  "operatingSystem": "Any",
+  "description": "Calculates a cat's daily energy requirement using the veterinary RER/MER formula and converts it into a serving weight or can count for any food type.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "Pet-GoToPro", "logo": { "@type": "ImageObject", "url": "https://pet-gotopro.com/pet-gotopro-logo.png" } }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How many calories does my cat need per day?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Start with resting energy: RER = 70 x (ideal body weight in kg to the power of 0.75). Then multiply by a factor of roughly 1.0 to 1.2 for a neutered indoor adult, 1.4 for an intact or very active cat, and 2.0 to 2.5 for kittens. A typical 10 lb neutered indoor cat lands around 200 to 250 kcal a day — far less than most owners expect." } },
+    { "@type": "Question", "name": "How many cans of wet food should I feed my cat?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Divide the cat's daily calorie budget by the calories per can printed on the label. A 10 lb indoor cat needing about 220 kcal a day eats roughly two and a half 3-oz cans of a typical pate, or one 5.5-oz can plus a small topper. Can calories vary widely by recipe, so always use the number on your specific can." } },
+    { "@type": "Question", "name": "Is it safe to put my cat on a diet?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, but slowly — no more than about one percent of body weight per week. Cats that lose weight too fast, or stop eating for more than a day or two, can develop hepatic lipidosis, a life-threatening liver condition. A dieting cat must keep eating every day. If your cat refuses food for more than 24 to 48 hours, call your veterinarian." } },
+    { "@type": "Question", "name": "Should cats eat wet or dry food?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Cats descend from desert hunters with a naturally low thirst drive, so many chronically under-drink on an all-dry diet. Wet food carries water into the cat with every meal and supports kidney and urinary health over a lifetime. Many cats do well on a mix: measured dry food plus at least one wet meal a day, with fresh filtered water always available." } },
+    { "@type": "Question", "name": "Why is my indoor cat gaining weight on the recommended amount?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Feeding guides on the bag assume an active, often intact cat. A neutered indoor cat can need 30 to 40 percent less than the chart suggests, and free-feeding kibble makes the gap worse because most cats will graze past their requirement. Measured meals, calculated on ideal weight, are the fix." } },
+    { "@type": "Question", "name": "How do I compare the cost of two cat foods fairly?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Not by price per pound or per can — moisture content makes those comparisons meaningless. Divide the price by the days it lasts at your cat's portion for cost per day, or by the total calories in the bag or case for cost per 1,000 kcal. Wet food nearly always costs more per calorie; many owners split the difference with a wet-plus-measured-dry routine." } }
+  ]
+}
+</script>
+
+<style>
+
+/* Page-only variables. These sit on .wrap, never on :root — putting them on
+   :root would override the site's design tokens for the whole document. */
+.wrap{
+  --paper:#ffffff;
+  --ink-mute:#6E6480;
+  --shadow-strong:0 20px 50px rgba(21,17,28,.15);
+}
+.wrap *{box-sizing:border-box}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+
+/* ---------- hero ---------- */
+.wrap .hero{padding:44px 0 8px;text-align:center}
+.wrap .eyebrow{display:inline-block;background:var(--forest);color:#fff;font-size:11px;font-weight:800;
+  letter-spacing:1.4px;text-transform:uppercase;padding:5px 13px;border-radius:3px}
+.wrap h1{font-size:clamp(28px,5.4vw,42px);line-height:1.14;letter-spacing:-.9px;margin:16px 0 12px;font-weight:800}
+.wrap .sub{font-size:17px;color:var(--ink-soft);max-width:610px;margin:0 auto}
+.wrap .byline{margin-top:16px;font-size:13px;color:var(--ink-mute)}
+.wrap .paw-divider{text-align:center;color:var(--amber);letter-spacing:8px;margin:26px 0;font-size:14px}
+
+/* ---------- calculator shell ---------- */
+.calc{background:var(--paper);border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--shadow-med);overflow:hidden;margin:8px 0 34px}
+.calc-head{background:linear-gradient(135deg,#2A2140,#15111C);color:#fff;padding:20px 24px}
+.calc-head h2{font-size:19px;font-weight:800;letter-spacing:-.3px;margin:0}
+.calc-head p{font-size:13.5px;color:#B0A6C0;margin-top:4px}
+.calc-body{padding:24px}
+
+.step{border-top:1px solid var(--line-soft);padding-top:22px;margin-top:22px}
+.step:first-child{border-top:0;padding-top:0;margin-top:0}
+.step-label{display:flex;align-items:baseline;gap:9px;margin-bottom:14px}
+.step-num{font-size:11px;font-weight:800;color:var(--amber-deep);letter-spacing:1.2px}
+.step-title{font-size:16px;font-weight:800;letter-spacing:-.2px}
+
+.calc .field{margin-bottom:16px}
+.calc .field > label,.calc .flabel{display:block;font-size:13px;font-weight:700;margin-bottom:7px;color:var(--ink-soft)}
+.calc .hint{font-size:12.5px;color:var(--ink-mute);font-weight:400;margin-top:5px;line-height:1.5}
+.calc input[type=number],.calc input[type=text],.calc select{
+  width:100%;padding:11px 13px;font-size:15.5px;font-family:inherit;color:var(--ink);
+  border:1px solid var(--line);border-radius:8px;background:var(--cream);appearance:none}
+.calc input[type=number]:focus,.calc select:focus{outline:3px solid rgba(255,61,150,.35);outline-offset:1px;border-color:var(--amber)}
+.calc .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* segmented option buttons */
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{flex:1 1 auto;min-width:112px;border:1px solid var(--line);background:var(--cream);
+  border-radius:9px;padding:10px 12px;cursor:pointer;text-align:left;font-family:inherit;
+  transition:border-color .15s,background .15s,box-shadow .15s}
+.opt:hover{border-color:var(--amber)}
+.opt:focus-visible{outline:3px solid rgba(255,61,150,.45);outline-offset:2px}
+.opt strong{display:block;font-size:13.5px;font-weight:800;color:var(--ink)}
+.opt span{display:block;font-size:11.5px;color:var(--ink-mute);line-height:1.4;margin-top:2px}
+.opt[aria-pressed=true]{background:#fff;border-color:var(--forest);box-shadow:inset 0 0 0 1px var(--forest)}
+.opt[aria-pressed=true] strong{color:var(--forest)}
+
+.toggle-line{display:flex;gap:8px;margin-bottom:14px}
+.toggle-line .opt{min-width:0}
+
+.calc-btn{width:100%;background:var(--forest);color:#fff;border:0;border-radius:10px;
+  padding:15px;font-size:16px;font-weight:800;font-family:inherit;cursor:pointer;
+  letter-spacing:.2px;margin-top:8px;transition:background .15s}
+.calc-btn:hover{background:#23624A}
+.calc-btn:focus-visible{outline:3px solid rgba(44,122,87,.4);outline-offset:3px}
+
+/* ---------- results ---------- */
+.results{display:none;border-top:1px solid var(--line);background:var(--cream-deep)}
+.results.on{display:block}
+.res-pad{padding:26px 24px}
+.res-hero{background:var(--paper);border:1px solid var(--line);border-radius:12px;
+  padding:22px;text-align:center;box-shadow:var(--shadow-soft)}
+.res-kicker{font-size:11px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:var(--ink-mute)}
+.res-big{font-size:clamp(38px,9vw,58px);font-weight:800;letter-spacing:-2px;line-height:1.05;color:var(--forest);margin:6px 0 2px}
+.res-big small{font-size:22px;font-weight:700;letter-spacing:-.5px}
+.res-alt{font-size:14.5px;color:var(--ink-soft)}
+.meals{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px;
+  padding-top:16px;border-top:1px dashed var(--line)}
+.meal{background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:9px 15px;min-width:96px}
+.meal b{display:block;font-size:17px;font-weight:800;color:var(--ink)}
+.meal span{font-size:11px;color:var(--ink-mute);letter-spacing:.6px;text-transform:uppercase;font-weight:700}
+
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:16px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:14px}
+.stat .k{font-size:11px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--ink-mute)}
+.stat .v{font-size:20px;font-weight:800;letter-spacing:-.5px;margin-top:3px}
+.stat .n{font-size:12px;color:var(--ink-mute);line-height:1.45;margin-top:3px}
+
+.res-block{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-top:16px}
+.res-block h3{font-size:14px;font-weight:800;letter-spacing:-.1px;margin-bottom:9px}
+.res-block ul{margin:0;padding-left:19px}
+.res-block li{font-size:14px;margin-bottom:6px;color:var(--ink-soft)}
+.res-block li:last-child{margin-bottom:0}
+
+.flag{border-left:4px solid;border-radius:0 9px 9px 0;padding:13px 16px;margin-top:12px;font-size:14px;line-height:1.55}
+.flag b{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.flag-warn{background:#FDEEF0;border-color:var(--clay);color:#6B2233}
+.flag-warn b{color:var(--clay)}
+.flag-tip{background:#E9F5EE;border-color:var(--moss);color:#20402F}
+.flag-tip b{color:var(--forest)}
+
+.cost-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:12px}
+.cost-cell{background:var(--cream);border:1px solid var(--line);border-radius:9px;padding:11px 8px;text-align:center}
+.cost-cell b{display:block;font-size:19px;font-weight:800;letter-spacing:-.5px;color:var(--amber-deep)}
+.cost-cell span{font-size:11px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--ink-mute)}
+.cost-block ul{margin-top:4px}
+
+.math{margin-top:16px}
+.math summary{cursor:pointer;font-size:13.5px;font-weight:700;color:var(--amber-deep);
+  padding:11px 14px;background:var(--paper);border:1px solid var(--line);border-radius:9px;list-style:none}
+.math summary::-webkit-details-marker{display:none}
+.math summary::before{content:"▸ ";display:inline-block;transition:transform .15s}
+.math[open] summary::before{content:"▾ "}
+.math .mbody{background:var(--paper);border:1px solid var(--line);border-top:0;
+  border-radius:0 0 9px 9px;padding:14px 16px;font-size:13.5px;color:var(--ink-soft)}
+.math code{background:var(--cream-deep);padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.math .mline{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px dotted var(--line)}
+.math .mline:last-child{border-bottom:0}
+
+/* ---------- article ---------- */
+.calc-prose{margin:6px 0 40px}
+.calc-prose h2{font-size:25px;font-weight:800;letter-spacing:-.6px;margin:34px 0 12px}
+.calc-prose h3{font-size:18px;font-weight:800;letter-spacing:-.2px;margin:24px 0 8px}
+.calc-prose p{margin-bottom:14px;font-size:16.5px;color:var(--ink-soft)}
+.calc-prose ul,.calc-prose ol{margin:0 0 16px 22px}
+.calc-prose li{margin-bottom:7px;font-size:16.5px;color:var(--ink-soft)}
+.calc-prose strong{color:var(--ink)}
+
+.faq-item{background:var(--paper);border:1px solid var(--line);border-radius:10px;
+  padding:16px 18px;margin-bottom:10px}
+.faq-item h3{font-size:16px;font-weight:800;margin:0 0 6px}
+.faq-item p{font-size:15px;margin:0;color:var(--ink-soft)}
+
+.calc-prose .vet-tip{background:#E9F5EE;border-left:4px solid var(--moss);border-radius:0 10px 10px 0;
+  padding:16px 18px;margin:18px 0}
+.calc-prose .vet-tip b{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--forest);margin-bottom:5px}
+.calc-prose .vet-tip p{margin:0;font-size:15.5px;color:#20402F}
+.calc-prose .vet-warning{background:#FDEEF0;border-left:4px solid var(--clay);border-radius:0 10px 10px 0;
+  padding:16px 18px;margin:18px 0}
+.calc-prose .vet-warning b{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--clay);margin-bottom:5px}
+.calc-prose .vet-warning p{margin:0;font-size:15.5px;color:#6B2233}
+
+.disclaimer{font-size:12.5px;color:var(--ink-mute);font-style:italic;margin-top:8px}
+
+@media(max-width:560px){
+  .calc .row{grid-template-columns:1fr}
+  .calc-body,.res-pad{padding:18px}
+  .opt{min-width:calc(50% - 4px)}
+}
+@media(prefers-reduced-motion:reduce){.wrap *{transition:none!important;animation:none!important}}
+
+</style>
+
+
+<main class="wrap">
+
+  <section class="hero">
+    <span class="eyebrow">Free Tool</span>
+    <h1>Cat Food Serving Calculator</h1>
+    <p class="sub">Cats are not small dogs — a neutered indoor cat needs far fewer calories than the bag suggests, and getting it wrong is why over half of US cats are overweight. This tool runs the veterinary formula with cat-specific factors, then converts the answer into grams or cans.</p>
+    <p class="byline">By The Pet-GoToPro Team · <a href="/food-calculations" style="color:var(--amber-deep)">Dog calculator here</a></p>
+  </section>
+
+  <div class="paw-divider">🐾 🐾 🐾</div>
+
+  <!-- ================= CALCULATOR ================= -->
+  <section class="calc" id="calc">
+    <div class="calc-head">
+      <h2>Work out your cat's portion</h2>
+      <p>Five quick questions about your cat, then the food you're feeding.</p>
+    </div>
+
+    <div class="calc-body">
+
+      <!-- STEP 1 -->
+      <div class="step">
+        <div class="step-label"><span class="step-num">STEP 1</span><span class="step-title">Your cat</span></div>
+
+        <div class="field">
+          <label for="wt">Current weight (lbs)</label>
+          <input type="number" id="wt" min="0.5" max="40" step="0.1" placeholder="e.g. 11" inputmode="decimal">
+          <p class="hint">Weigh your cat — a bathroom scale works: weigh yourself holding the cat, then without, and subtract. Every number below is built on this one.</p>
+        </div>
+
+        <div class="field">
+          <span class="flabel">Body condition — what does your cat look like right now?</span>
+          <div class="opts" id="bcs">
+            <button type="button" class="opt" data-v="under" aria-pressed="false"><strong>Underweight</strong><span>Ribs and spine easily seen, tucked belly</span></button>
+            <button type="button" class="opt" aria-pressed="true" data-v="ideal"><strong>Ideal weight</strong><span>Ribs easy to feel, visible waist behind ribs</span></button>
+            <button type="button" class="opt" data-v="over" aria-pressed="false"><strong>Overweight</strong><span>Ribs need pressure to find, belly rounding</span></button>
+            <button type="button" class="opt" data-v="obese" aria-pressed="false"><strong>Obese</strong><span>Ribs hard to find, swinging belly pouch, no waist</span></button>
+          </div>
+          <p class="hint">This changes the answer more than anything else. The formula runs on your cat's <strong>ideal</strong> weight, not today's weight. (A soft primordial pouch alone doesn't mean obese — go by the ribs.)</p>
+        </div>
+
+        <div class="field">
+          <span class="flabel">Life stage</span>
+          <div class="opts" id="stage">
+            <button type="button" class="opt" data-v="kit_young" aria-pressed="false"><strong>Kitten, under 4 mo</strong><span>Fastest growth phase</span></button>
+            <button type="button" class="opt" data-v="kit" aria-pressed="false"><strong>Kitten, 4–12 mo</strong><span>Growth slowing</span></button>
+            <button type="button" class="opt" aria-pressed="true" data-v="adult"><strong>Adult</strong><span>1 to 7 years</span></button>
+            <button type="button" class="opt" data-v="senior" aria-pressed="false"><strong>Senior</strong><span>7 years and up</span></button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="flabel">Activity level</span>
+          <div class="opts" id="act">
+            <button type="button" class="opt" data-v="low" aria-pressed="false"><strong>Low</strong><span>Mostly naps, little play</span></button>
+            <button type="button" class="opt" aria-pressed="true" data-v="mod"><strong>Moderate</strong><span>Daily play sessions, patrols the house</span></button>
+            <button type="button" class="opt" data-v="high" aria-pressed="false"><strong>High</strong><span>Constant motion, hunts, young and athletic</span></button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="field">
+            <span class="flabel">Lifestyle</span>
+            <select id="life">
+              <option value="in" selected="">Indoor only</option>
+              <option value="mix">Indoor–outdoor</option>
+              <option value="out">Mostly outdoor</option>
+            </select>
+          </div>
+          <div class="field">
+            <span class="flabel">Neutered or spayed?</span>
+            <select id="neuter">
+              <option value="yes" selected="">Yes</option>
+              <option value="no">No, intact</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step">
+        <div class="step-label"><span class="step-num">STEP 2</span><span class="step-title">The food</span></div>
+
+        <div class="field">
+          <span class="flabel">Food format</span>
+          <select id="ftype">
+            <option value="dry" selected="">Dry kibble</option>
+            <option value="wet">Wet / canned</option>
+            <option value="fd">Freeze-dried raw</option>
+            <option value="ad">Air-dried</option>
+            <option value="frozen">Frozen raw</option>
+            <option value="semi">Semi-moist / fresh-cooked</option>
+          </select>
+          <p class="hint">Format sets the default moisture and ash values used if you estimate calories from the label.</p>
+        </div>
+
+        <div class="field">
+          <span class="flabel">How do you want to give us the calories?</span>
+          <div class="toggle-line" id="emode">
+            <button type="button" class="opt" aria-pressed="true" data-v="known"><strong>I have the kcal number</strong><span>Most accurate</span></button>
+            <button type="button" class="opt" data-v="est" aria-pressed="false"><strong>Estimate from the label</strong><span>Uses protein, fat and moisture</span></button>
+          </div>
+        </div>
+
+        <!-- known kcal -->
+        <div id="pane-known">
+          <div class="row">
+            <div class="field">
+              <label for="kcal100">Calories per 100 g <span style="font-weight:400;color:var(--ink-mute)">(or kcal/kg ÷ 10)</span></label>
+              <input type="number" id="kcal100" min="10" max="900" step="1" placeholder="e.g. 400" inputmode="decimal">
+            </div>
+            <div class="field">
+              <label for="kcalcup">Calories per cup <span style="font-weight:400;color:var(--ink-mute)">(fine on its own)</span></label>
+              <input type="number" id="kcalcup" min="10" max="900" step="1" placeholder="e.g. 430" inputmode="decimal">
+            </div>
+          </div>
+          <div class="row" id="canRow" style="display:none">
+            <div class="field">
+              <label for="kcalcan">Calories per can <span style="font-weight:400;color:var(--ink-mute)">(fine on its own)</span></label>
+              <input type="number" id="kcalcan" min="10" max="600" step="1" placeholder="e.g. 95" inputmode="decimal">
+            </div>
+            <div class="field">
+              <label for="canoz">Can size (oz)</label>
+              <select id="canoz">
+                <option value="3" selected="">3 oz</option>
+                <option value="5.5">5.5 oz</option>
+                <option value="12.5">12.5 oz</option>
+              </select>
+            </div>
+          </div>
+          <p class="hint">Fill in <strong>whichever</strong> the label gives you. Look for <strong>“Calorie Content (calculated) ME”</strong> near the ingredient panel or on the brand's website. If it's quoted as kcal/kg, divide by 10 for kcal per 100 g. Wet food usually states kcal per can — that alone works.</p>
+        </div>
+
+        <!-- estimate -->
+        <div id="pane-est" style="display:none">
+          <div class="row">
+            <div class="field">
+              <label for="gaP">Crude protein %</label>
+              <input type="number" id="gaP" min="1" max="99" step="0.1" placeholder="e.g. 34" inputmode="decimal">
+            </div>
+            <div class="field">
+              <label for="gaF">Crude fat %</label>
+              <input type="number" id="gaF" min="1" max="99" step="0.1" placeholder="e.g. 15" inputmode="decimal">
+            </div>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="gaFib">Crude fiber %</label>
+              <input type="number" id="gaFib" min="0" max="40" step="0.1" placeholder="e.g. 3" inputmode="decimal">
+            </div>
+            <div class="field">
+              <label for="gaM">Moisture % <span style="font-weight:400;color:var(--ink-mute)">(optional)</span></label>
+              <input type="number" id="gaM" min="0" max="95" step="0.1" placeholder="auto by format" inputmode="decimal">
+            </div>
+          </div>
+          <p class="hint">These are the guaranteed analysis panel, printed on every bag and can. We fill in ash and carbohydrate for you and apply the modified Atwater factors — expect the estimate to land within roughly 10% of the real figure.</p>
+        </div>
+
+        <div class="field">
+          <span class="flabel">Treats and toppers</span>
+          <select id="treats">
+            <option value="0.10" selected="">Normal — reserve 10% of calories for treats</option>
+            <option value="0.05">Light — reserve 5%</option>
+            <option value="0">None — 100% of calories from meals</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <span class="flabel">Bag or case details <span style="font-weight:400;color:var(--ink-mute)">(optional — unlocks cost per day)</span></span>
+          <div class="row">
+            <div class="field" style="margin-bottom:0">
+              <label for="bagLb">Bag / case weight (lbs)</label>
+              <input type="number" id="bagLb" min="0.1" max="60" step="0.1" placeholder="e.g. 12" inputmode="decimal">
+            </div>
+            <div class="field" style="margin-bottom:0">
+              <label for="bagPrice">What you pay for it ($)</label>
+              <input type="number" id="bagPrice" min="0.5" max="500" step="0.01" placeholder="e.g. 38.99" inputmode="decimal">
+            </div>
+          </div>
+          <p class="hint">For wet food, enter the total weight and total price of the case — a 24-pack of 3 oz cans is 4.5 lbs; a 24-pack of 5.5 oz cans is 8.25 lbs.</p>
+        </div>
+      </div>
+
+      <button class="calc-btn" id="go">Calculate my cat's portion</button>
+      <p class="disclaimer">This is a starting point, not a prescription. Pregnant, nursing and medically managed cats — including kidney, thyroid, urinary and diabetic cats — need a plan from your own veterinarian.</p>
+    </div>
+
+    <!-- RESULTS -->
+    <div class="results" id="out">
+      <div class="res-pad">
+        <div class="res-hero">
+          <div class="res-kicker">Feed per day</div>
+          <div class="res-big" id="rGrams">—</div>
+          <div class="res-alt" id="rAlt"></div>
+          <div class="meals" id="rMeals"></div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat"><div class="k">Daily calories</div><div class="v" id="rDer">—</div><div class="n" id="rDerNote"></div></div>
+          <div class="stat"><div class="k">Ideal weight</div><div class="v" id="rIdeal">—</div><div class="n" id="rIdealNote"></div></div>
+          <div class="stat"><div class="k">Treat budget</div><div class="v" id="rTreat">—</div><div class="n">Everything outside the bowl — lickable treats and dental treats count.</div></div>
+          <div class="stat"><div class="k">Food energy</div><div class="v" id="rDens">—</div><div class="n" id="rDensNote"></div></div>
+        </div>
+
+        <div id="rFlags"></div>
+
+        <div class="res-block cost-block" id="rCostBlock" style="display:none">
+          <h3>💰 What this food really costs you</h3>
+          <div class="cost-grid">
+            <div class="cost-cell"><b id="cDay">—</b><span>per day</span></div>
+            <div class="cost-cell"><b id="cMonth">—</b><span>per month</span></div>
+            <div class="cost-cell"><b id="cYear">—</b><span>per year</span></div>
+            <div class="cost-cell"><b id="cBag">—</b><span id="cBagLabel">days per bag</span></div>
+          </div>
+          <ul id="rCost"></ul>
+        </div>
+
+        <div class="res-block" id="rDmBlock" style="display:none">
+          <h3>Dry-matter analysis</h3>
+          <ul id="rDm"></ul>
+        </div>
+
+        <div class="res-block">
+          <h3>What to do next</h3>
+          <ul id="rNext"></ul>
+        </div>
+
+        <details class="math">
+          <summary>Show the math</summary>
+          <div class="mbody" id="rMath"></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ARTICLE ================= -->
+  <article class="calc-prose">
+
+    <h2>Why indoor cats gain weight on the “recommended” amount</h2>
+    <p>Feeding charts on cat food packaging assume an active, often intact cat. The cat actually eating the food is usually neutered, indoor, and spends eighteen hours a day asleep — a combination that cuts energy needs by 30 to 40 percent compared with the chart. Add free-fed kibble, which most cats will graze past their requirement, and you have the reason more than half of American cats are overweight.</p>
+    <p>The fix isn't a special diet. It's calculating what your individual cat burns, and measuring meals against that number.</p>
+
+    <h2>The two-step formula this calculator uses</h2>
+    <p><strong>Step one — resting energy.</strong> RER = 70 × (ideal body weight in kg)<sup>0.75</sup>. Same equation as dogs, and the exponent matters just as much: a 5 lb kitten burns far more per pound than a 15 lb Maine Coon.</p>
+    <p><strong>Step two — the multiplier.</strong> This is where cats part company with dogs. Cat factors are lower and the range is narrower:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Life stage</th><th>Low activity</th><th>Moderate</th><th>High</th></tr></thead>
+        <tbody>
+          <tr><td>Kitten, under 4 months</td><td>2.5 × RER</td><td>2.5 × RER</td><td>2.5 × RER</td></tr>
+          <tr><td>Kitten, 4–12 months</td><td>1.8 × RER</td><td>2.0 × RER</td><td>2.2 × RER</td></tr>
+          <tr><td>Adult, neutered</td><td>1.0 × RER</td><td>1.2 × RER</td><td>1.4 × RER</td></tr>
+          <tr><td>Senior (7+)</td><td>1.0 × RER</td><td>1.1 × RER</td><td>1.3 × RER</td></tr>
+          <tr><td>Weight loss (adult)</td><td colspan="3">0.8 – 1.0 × RER, calculated on <em>ideal</em> weight — never faster</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Intact adults add roughly 0.2. Indoor-only cats run slightly below the table and outdoor cats slightly above, so the calculator applies a small lifestyle correction. The practical upshot: a typical 10 lb neutered indoor cat needs only <strong>200–250 kcal a day</strong> — about what's in two-thirds of a cup of many kibbles. Most owners are genuinely surprised by how small that is.</p>
+
+    <div class="vet-tip">
+      <b>Vet tip</b>
+      <p>Feed the cat you want, not the cat you have. An overweight cat fed for its current weight stays overweight forever — the math has to run on target weight. But unlike dogs, cats must never be crash-dieted: slow is not just kinder, it's a safety requirement.</p>
+    </div>
+
+    <div class="vet-warning">
+      <b>Hepatic lipidosis — the cat-specific danger</b>
+      <p>A cat that loses weight too fast, or stops eating for more than a day or two, can develop hepatic lipidosis (fatty liver) — a life-threatening emergency unique to cats. Cap weight loss at about 1% of body weight per week, make any food change gradually over 7–10 days, and treat a cat refusing food for 24–48 hours as a veterinary problem, not a standoff to win. A dieting cat must keep eating every single day.</p>
+    </div>
+
+    <h2>Wet, dry, or both — the hydration question</h2>
+    <p>Cats descend from desert hunters that got most of their water from prey, and the low thirst drive came along for the ride. Many cats on an all-dry diet simply never drink enough, and chronic mild dehydration is one of the quiet contributors to the kidney and urinary problems that dominate feline medicine in later life.</p>
+    <p>Wet food fixes this mechanically: at roughly 78 percent moisture, every meal carries water into the cat whether it feels thirsty or not. A practical routine many households land on — and the one we recommend — is at least one wet meal a day plus measured dry food, with fresh filtered water always available. Cats that ignore a still bowl will often drink happily from a fountain; moving water reads as safe to a cat's instincts.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Format</th><th>Typical moisture</th><th>Typical energy</th><th>What that means in the bowl</th></tr></thead>
+        <tbody>
+          <tr><td>Dry kibble</td><td>~10%</td><td>330–450 kcal/100 g</td><td>Dense — a full day can fit in ⅔ cup</td></tr>
+          <tr><td>Wet / canned</td><td>~78%</td><td>70–120 kcal/100 g</td><td>A 3 oz can is often only 70–100 kcal</td></tr>
+          <tr><td>Freeze-dried raw</td><td>~5%</td><td>450–560 kcal/100 g</td><td>Extremely dense — easy to over-serve</td></tr>
+          <tr><td>Air-dried</td><td>~12%</td><td>380–480 kcal/100 g</td><td>Similar to kibble, slightly richer</td></tr>
+          <tr><td>Frozen raw</td><td>~68%</td><td>120–190 kcal/100 g</td><td>Closer to canned than to kibble</td></tr>
+          <tr><td>Semi-moist / fresh</td><td>~28%</td><td>140–260 kcal/100 g</td><td>Sits between the two extremes</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>Protein matters more for cats</h2>
+    <p>Cats are obligate carnivores. Their minimums are meaningfully higher than a dog's: AAFCO requires at least <strong>26% protein</strong> on a dry-matter basis for adult maintenance and <strong>30% for growth</strong>, versus 18% and 22.5% for dogs — plus taurine, an amino acid cats cannot make themselves, which every complete cat food must supply and dog food does not. This is also why cats can't live on dog food.</p>
+    <p>When you use the calculator's estimate mode, it converts the label to a dry-matter basis — the only way to compare a can against a bag honestly — and flags anything below the cat minimums for your cat's life stage.</p>
+
+    <h2>The can price is not the food price</h2>
+    <p>Wet food looks expensive per can and cheap decisions get made on that impression. The honest comparison is <strong>cost per 1,000 kcal</strong>: divide what you pay by the calories in the bag or case. Wet food nearly always does cost more per calorie — but the gap is usually smaller than the shelf suggests, and a mixed routine (one wet meal, measured dry for the rest) buys the hydration benefit at a fraction of the all-wet price. The calculator's cost panel does this arithmetic for you; run it once for each food you're weighing up.</p>
+
+    <h2>Free-feeding: the habit to break</h2>
+    <p>Leaving the bowl topped up all day works for a minority of naturally lean cats and quietly overfeeds everyone else. Measured meals — two at minimum, three or more small ones ideally, since cats are natural grazers of many small prey — put you back in control of the number that matters. Puzzle feeders and lick mats slow a fast eater, add activity to an indoor cat's day, and make a modest portion feel like more work and therefore more food.</p>
+
+    <h2>Adjust, then adjust again</h2>
+    <ul>
+      <li>Weigh your cat every two weeks — same scale, same time of day.</li>
+      <li>Check body condition by hand: ribs should feel like the back of your knuckles under a thin glove.</li>
+      <li>If the trend is wrong, change the portion by 10% and hold for two more weeks.</li>
+      <li>Cap deliberate weight loss at ~1% of body weight per week — for a 14 lb cat that's about 1 oz a week. Slower is fine; faster is dangerous.</li>
+      <li>Recalculate after neutering, after any lifestyle change, and at each senior check-up.</li>
+      <li><strong>Unexplained weight loss in a cat eating normally is a medical sign</strong> — hyperthyroidism, kidney disease and diabetes all present exactly this way, especially past age 10. That's a vet visit, not a bigger portion.</li>
+    </ul>
+
+    <h2>Frequently asked questions</h2>
+
+    <div class="faq-item">
+      <h3>How many calories does my cat need per day?</h3>
+      <p>70 × (ideal weight in kg)<sup>0.75</sup>, multiplied by 1.0–1.2 for a neutered indoor adult, up to 1.4 for intact or very active cats, and 2.0–2.5 for kittens. A 10 lb neutered indoor cat lands around 200–250 kcal — far less than most people expect, and the reason the calculator above exists.</p>
+    </div>
+    <div class="faq-item">
+      <h3>How many cans of wet food should I feed?</h3>
+      <p>Daily calorie budget ÷ calories per can. A 10 lb indoor cat needing ~220 kcal eats roughly two and a half 3-oz cans of a typical pâté, or one 5.5-oz can plus a topper. Can calories vary hugely by recipe — a gravy-style 3 oz can might be 60 kcal while a rich pâté is 110 — so use the number printed on your can, which is exactly what the can fields above are for.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Is it safe to put my cat on a diet?</h3>
+      <p>Yes — slowly. No more than about 1% of body weight per week, and the cat must keep eating every day. Rapid loss or food refusal beyond 24–48 hours risks hepatic lipidosis, a life-threatening liver condition specific to cats. For an obese cat, do the plan with your vet from the start.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Wet or dry food?</h3>
+      <p>Both have a job. Dry is dense, convenient and cheaper per calorie; wet carries water into a species that chronically under-drinks. Our standing recommendation: at least one wet meal a day, measured dry for the rest, filtered fresh water always down — and a fountain if your cat ignores a still bowl.</p>
+    </div>
+    <div class="faq-item">
+      <h3>Can I free-feed my cat?</h3>
+      <p>A minority of naturally lean cats self-regulate; most don't, and with over half of US cats overweight the odds aren't in your favour. Measured meals two to four times a day give you control of the calories, and puzzle feeders restore the "work for food" pattern indoor cats are missing.</p>
+    </div>
+    <div class="faq-item">
+      <h3>When should I skip the calculator and call my vet?</h3>
+      <p>Pregnancy and nursing, any prescription diet, kidney or urinary disease, diabetes, hyperthyroidism, an obese cat starting weight loss, and any cat losing weight while eating normally. Cats hide illness well — weight change is often the first visible sign.</p>
+    </div>
+
+    <p class="disclaimer">Pet-GoToPro publishes vet-informed general education. It does not replace individual veterinary advice, diagnosis or treatment. Energy equations are population estimates and carry roughly ±20% individual variation.</p>
+  </article>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  var picks = { bcs:"ideal", stage:"adult", act:"mod", emode:"known" };
+  function wireGroup(id){
+    var g = document.getElementById(id);
+    if(!g) return;
+    g.addEventListener("click", function(e){
+      var b = e.target.closest(".opt");
+      if(!b || !g.contains(b)) return;
+      g.querySelectorAll(".opt").forEach(function(o){ o.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed","true");
+      picks[id] = b.dataset.v;
+      if(id === "emode"){
+        document.getElementById("pane-known").style.display = (picks.emode === "known") ? "" : "none";
+        document.getElementById("pane-est").style.display   = (picks.emode === "est")   ? "" : "none";
+      }
+    });
+    g.querySelectorAll(".opt").forEach(function(o){
+      if(!o.hasAttribute("aria-pressed")) o.setAttribute("aria-pressed","false");
+    });
+  }
+  ["bcs","stage","act","emode"].forEach(wireGroup);
+
+  /* show can fields only for wet food */
+  document.getElementById("ftype").addEventListener("change", function(){
+    document.getElementById("canRow").style.display = (this.value === "wet") ? "" : "none";
+  });
+
+  /* ---------- reference data (feline) ---------- */
+  var LB_KG = 2.2046226;
+  var BCS_DIV = { under:0.85, ideal:1.00, over:1.15, obese:1.30 };
+
+  var FACTOR = {
+    kit_young:{ low:2.5, mod:2.5, high:2.5 },
+    kit:      { low:1.8, mod:2.0, high:2.2 },
+    adult:    { low:1.0, mod:1.2, high:1.4 },
+    senior:   { low:1.0, mod:1.1, high:1.3 }
+  };
+
+  var LIFE_ADJ = { "in":0.97, mix:1.00, out:1.05 };
+
+  var FMT = {
+    dry:    { m:10, ash:7.0, label:"dry kibble" },
+    wet:    { m:78, ash:2.5, label:"wet food" },
+    fd:     { m:5,  ash:8.0, label:"freeze-dried raw" },
+    ad:     { m:12, ash:7.5, label:"air-dried food" },
+    frozen: { m:68, ash:3.5, label:"frozen raw" },
+    semi:   { m:28, ash:5.0, label:"semi-moist food" }
+  };
+
+  var CUP_G = { dry:110, wet:245, fd:40, ad:95, frozen:245, semi:160 };
+  var MEALS = { kit_young:4, kit:3, adult:3, senior:3 };
+  var STAGE_NAME = { kit_young:"Kitten (under 4 months)", kit:"Kitten (4–12 months)", adult:"Adult", senior:"Senior" };
+  var ACT_NAME = { low:"low activity", mod:"moderate activity", high:"high activity" };
+
+  function num(id){ var v = parseFloat(document.getElementById(id).value); return isFinite(v) ? v : NaN; }
+  function r(n, step){ step = step || 1; return Math.round(n/step)*step; }
+  function esc(s){ return String(s).replace(/[&<>]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;"}[c]; }); }
+  function flag(kind, title, body){ return '<div class="flag flag-'+kind+'"><b>'+esc(title)+'</b>'+body+'</div>'; }
+  function trimNum(n,dp){ return n.toFixed(dp).replace(/0+$/,"").replace(/\.$/,""); }
+
+  document.getElementById("go").addEventListener("click", function(){
+    var out = document.getElementById("out");
+
+    var lbs = num("wt");
+    if(!isFinite(lbs) || lbs <= 0){
+      alert("Enter your cat's current weight in pounds to continue.");
+      document.getElementById("wt").focus(); return;
+    }
+    if(lbs > 40){ alert("That weight looks out of range for a cat. Enter the weight in pounds."); return; }
+
+    var ftype = document.getElementById("ftype").value;
+    var fmt = FMT[ftype];
+    var life = document.getElementById("life").value;
+    var neut = document.getElementById("neuter").value;
+    var stage = picks.stage, act = picks.act, bcs = picks.bcs;
+    var treatPct = parseFloat(document.getElementById("treats").value);
+
+    /* --- energy density --- */
+    var kcal100 = NaN, kcalCup = NaN, kcalCan = NaN, canOz = NaN;
+    var densSource = "", dmP = null, dmF = null, cupOnly = false, canMode = false;
+
+    if(picks.emode === "known"){
+      kcal100 = num("kcal100");
+      kcalCup = num("kcalcup");
+      kcalCan = num("kcalcan");
+      canOz = parseFloat(document.getElementById("canoz").value);
+
+      if(!isFinite(kcal100) && ftype === "wet" && isFinite(kcalCan)){
+        canMode = true;
+        kcal100 = kcalCan / (canOz * 28.3495) * 100;
+        densSource = "from " + kcalCan + " kcal per " + canOz + " oz can";
+      } else if(!isFinite(kcal100) && isFinite(kcalCup)){
+        cupOnly = true;
+        kcal100 = kcalCup / CUP_G[ftype] * 100;
+        densSource = "estimated from kcal per cup using a typical " + CUP_G[ftype] + " g cup of " + fmt.label;
+      } else if(!isFinite(kcal100)){
+        alert("Enter the food's calories per 100 g, per cup, or per can — any one works. Tip: if the label shows kcal/kg, divide by 10.");
+        document.getElementById("kcal100").focus(); return;
+      } else {
+        densSource = "from the label's stated calorie content";
+        if(ftype === "wet" && isFinite(kcalCan)) canMode = true;
+      }
+    } else {
+      var P = num("gaP"), F = num("gaF"), FIB = num("gaFib"), M = num("gaM");
+      if(!isFinite(P) || !isFinite(F)){
+        alert("Enter at least crude protein % and crude fat % from the guaranteed analysis.");
+        document.getElementById("gaP").focus(); return;
+      }
+      if(!isFinite(FIB)) FIB = (ftype === "dry" ? 3 : 1.5);
+      if(!isFinite(M)) M = fmt.m;
+      var ash = fmt.ash;
+      var nfe = 100 - P - F - M - ash - FIB;
+      if(nfe < 0) nfe = 0;
+      kcal100 = (3.5*P) + (8.5*F) + (3.5*nfe);
+      densSource = "estimated from the guaranteed analysis";
+      var dmBase = 100 - M;
+      if(dmBase > 0){ dmP = P/dmBase*100; dmF = F/dmBase*100; }
+    }
+    if(!(kcal100 > 0)){ alert("Those label numbers don't produce a usable calorie figure. Check the values and try again."); return; }
+
+    /* --- weights --- */
+    var curKg = lbs / LB_KG;
+    var idealKg = curKg / BCS_DIV[bcs];
+    var idealLb = idealKg * LB_KG;
+
+    var rer = 70 * Math.pow(idealKg, 0.75);
+
+    var factor = FACTOR[stage][act];
+    var isKit = (stage === "kit_young" || stage === "kit");
+    var derNote = "", lossMode = false, gainMode = false;
+
+    if(!isKit && neut === "no"){ factor += 0.2; }
+
+    if(!isKit && (bcs === "over" || bcs === "obese")){
+      factor = (bcs === "obese") ? 0.8 : 1.0;
+      lossMode = true;
+      derNote = "Weight-loss target, set at " + factor.toFixed(1) + " × RER of ideal weight — cats must lose slowly.";
+    } else if(!isKit && bcs === "under"){
+      factor = factor * 1.10;
+      gainMode = true;
+      derNote = "Includes a 10% uplift for controlled weight gain.";
+    } else if(isKit && (bcs === "over" || bcs === "obese")){
+      derNote = "Growth is never restricted — the lean end of the growth range is used instead.";
+    } else {
+      derNote = STAGE_NAME[stage] + ", " + ACT_NAME[act] + ".";
+    }
+
+    var lifeAdj = LIFE_ADJ[life];
+    var der = rer * factor * lifeAdj;
+
+    var mainKcal = der * (1 - treatPct);
+    var treatKcal = der * treatPct;
+    var grams = mainKcal / kcal100 * 100;
+    var oz = grams / 28.3495;
+    var cups = (isFinite(kcalCup) && kcalCup > 0) ? (mainKcal / kcalCup) : null;
+    var cans = (canMode && isFinite(kcalCan) && kcalCan > 0) ? (mainKcal / kcalCan) : null;
+
+    var meals = MEALS[stage];
+
+    /* --- render hero --- */
+    if(cans){
+      var cansQ = Math.round(cans*4)/4;
+      document.getElementById("rGrams").innerHTML = trimNum(cansQ,2) + '<small> cans</small>';
+      document.getElementById("rAlt").textContent = "of the " + canOz + " oz cans · ≈ " + r(grams,5) + " g (" + r(oz,0.1).toFixed(1) + " oz) of " + fmt.label;
+    } else if(cupOnly){
+      var cupsQ = Math.round((mainKcal/kcalCup)*4)/4;
+      document.getElementById("rGrams").innerHTML = trimNum(cupsQ,2) + '<small> cups</small>';
+      document.getElementById("rAlt").textContent = "≈ " + r(grams,5) + " g (" + r(oz,0.1).toFixed(1) + " oz) of " + fmt.label + " — gram figure assumes a typical " + CUP_G[ftype] + " g cup";
+    } else {
+      document.getElementById("rGrams").innerHTML = r(grams,5) + '<small> g</small>';
+      var alt = r(oz,0.1).toFixed(1) + " oz of " + fmt.label;
+      if(cups) alt += " · about " + trimNum(Math.round(cups*4)/4,2) + " cups";
+      document.getElementById("rAlt").textContent = alt;
+    }
+
+    var mealHtml = "";
+    if(cans){
+      var mealCan = Math.round((cans/meals)*4)/4;
+      for(var i=1;i<=meals;i++) mealHtml += '<div class="meal"><b>'+ trimNum(mealCan,2) + (mealCan===1?' can':' cans') +'</b><span>Meal '+i+'</span></div>';
+    } else if(cupOnly){
+      var mealC = Math.round((mainKcal/kcalCup/meals)*8)/8;
+      for(var j=1;j<=meals;j++) mealHtml += '<div class="meal"><b>'+ trimNum(mealC,3) + (mealC===1?' cup':' cups') +'</b><span>Meal '+j+'</span></div>';
+    } else {
+      var mealG = grams / meals;
+      for(var k=1;k<=meals;k++) mealHtml += '<div class="meal"><b>'+ r(mealG,5) +' g</b><span>Meal '+k+'</span></div>';
+    }
+    document.getElementById("rMeals").innerHTML = mealHtml;
+
+    /* --- stats --- */
+    document.getElementById("rDer").textContent = r(der,5) + " kcal";
+    document.getElementById("rDerNote").textContent = derNote;
+    document.getElementById("rIdeal").textContent = r(idealLb,0.5).toFixed(1) + " lb";
+    document.getElementById("rIdealNote").textContent =
+      (bcs === "ideal") ? "Same as current weight — all math runs on this figure."
+                        : "Estimated from body condition. Current weight is " + lbs.toFixed(1) + " lb.";
+    document.getElementById("rTreat").textContent = treatPct ? (r(treatKcal,5) + " kcal") : "None";
+    document.getElementById("rDens").textContent = r(kcal100,1) + " kcal/100g";
+    document.getElementById("rDensNote").textContent = "This food is " + densSource + ".";
+
+    /* --- flags --- */
+    var f = "";
+    if(lossMode){
+      var excessKg = curKg - idealKg;
+      var weeklyKg = curKg * 0.0075;   /* ~0.75%/week midpoint of the safe 0.5–1% range */
+      var weeks = Math.ceil(excessKg / weeklyKg);
+      f += flag("warn","Weight-loss plan — go slowly, this is a safety rule",
+        "<p>Your cat is carrying roughly <strong>"+ (excessKg*LB_KG).toFixed(1) +" lb</strong> of excess weight. At the safe feline rate of 0.5–1% of body weight per week, reaching "+ r(idealLb,0.5).toFixed(1) +" lb will take around <strong>"+ weeks +" weeks</strong> — months, not weeks, and that's correct. Faster loss risks hepatic lipidosis, a life-threatening liver condition. Your cat must eat every day: if they refuse the new portion or new food for 24–48 hours, call your vet rather than waiting them out. For an obese cat, run the whole plan with your vet.</p>");
+    }
+    if(gainMode){
+      f += flag("warn","Underweight cat — rule out illness first",
+        "<p>A cat losing weight while eating normally is a medical sign, not a portion problem — hyperthyroidism, kidney disease and diabetes all present this way, especially past age 10. Book a vet check before assuming the food is the issue, then use this plan for slow, steady gain.</p>");
+    }
+    if(isKit){
+      f += flag("tip","Recalculate often",
+        "<p>Kittens outgrow their portion fast. Re-run this every two weeks, feed a food labelled for growth (30% protein dry-matter minimum), and step down the multiplier as growth slows toward the first birthday.</p>");
+    }
+    if(ftype === "dry"){
+      f += flag("tip","The hydration gap",
+        "<p>Cats have a low thirst drive and many chronically under-drink on all-dry diets — a quiet contributor to kidney and urinary disease later in life. Add at least one wet meal a day if you can, keep fresh filtered water down, and consider a fountain: moving water gets ignored far less than a still bowl.</p>");
+    }
+    if(!isKit && !lossMode){
+      f += flag("tip","Skip the all-day buffet",
+        "<p>Free-fed kibble quietly overfeeds most cats. Split the amount above into "+ meals +" measured meals — cats are natural grazers of many small prey, so several small meals suit them better than one or two big ones. A puzzle feeder slows fast eaters and gives an indoor cat some of the hunt back.</p>");
+    }
+    if(stage === "senior"){
+      f += flag("tip","Senior cats can flip the script",
+        "<p>Past about 11, many cats digest less efficiently and start needing <em>more</em> food to hold weight, not less. If your senior is thinning despite a good appetite, that's a vet visit first (thyroid, kidneys), then a richer, highly digestible diet.</p>");
+    }
+    if(grams < 30 && (ftype === "dry" || ftype === "fd")){
+      f += flag("warn","Small portion — precision matters",
+        "<p>At this portion size a single extra tablespoon is a meaningful share of the day. Weigh on a digital kitchen scale — with cats there is no margin for scooping by eye.</p>");
+    }
+    document.getElementById("rFlags").innerHTML = f;
+
+    /* --- cost --- */
+    var bagLb = num("bagLb"), price = num("bagPrice");
+    var costBlock = document.getElementById("rCostBlock");
+    if(isFinite(bagLb) && bagLb > 0 && isFinite(price) && price > 0){
+      var bagG = bagLb * 453.592;
+      var daysPerBag = bagG / grams;
+      var costDay = price / daysPerBag;
+      var bagKcal = bagG * kcal100 / 100;
+      var costPer1000 = price / (bagKcal / 1000);
+
+      document.getElementById("cDay").textContent = "$" + costDay.toFixed(2);
+      document.getElementById("cMonth").textContent = "$" + (costDay * 30.44).toFixed(0);
+      document.getElementById("cYear").textContent = "$" + (costDay * 365).toFixed(0);
+      document.getElementById("cBag").textContent = Math.floor(daysPerBag);
+      document.getElementById("cBagLabel").textContent = (daysPerBag >= 13.5 ? "days per " + (ftype==="wet"?"case":"bag") + " (~" + (daysPerBag/7).toFixed(1) + " wks)" : "days per " + (ftype==="wet"?"case":"bag"));
+
+      var cl = "";
+      if(cupOnly) cl += "<li><em>Cost figures are approximate</em> — they rest on the typical "+ CUP_G[ftype] +" g cup weight. Weigh one cup of your food to tighten them up.</li>";
+      cl += "<li>A "+ bagLb +" lb "+ (ftype==="wet"?"case":"bag") +" at $"+ price.toFixed(2) +" holds about <strong>"+ Math.round(bagKcal).toLocaleString() +" kcal</strong> — that's <strong>$"+ costPer1000.toFixed(2) +" per 1,000 kcal</strong>, the honest number for comparing foods.</li>";
+      cl += "<li>Price per pound or per can is misleading across formats: wet food is mostly water, so it always looks cheap per pound and expensive per can. Cost per 1,000 kcal compares any bag, can or pouch fairly — many households land on one wet meal a day plus measured dry as the best value for the hydration benefit.</li>";
+      cl += "<li>At <strong>"+ r(grams,5) +" g a day</strong>, restock about a week before you run out — abrupt food switches upset feline stomachs, and a cat refusing an overnight change is a genuine health risk, not fussiness.</li>";
+      if(lossMode) cl += "<li>The smaller portion means this "+ (ftype==="wet"?"case":"bag") +" lasts longer than it used to. Feline weight loss usually <em>saves</em> money.</li>";
+      document.getElementById("rCost").innerHTML = cl;
+      costBlock.style.display = "";
+    } else {
+      costBlock.style.display = "none";
+    }
+
+    /* --- dry matter --- */
+    var dmBlock = document.getElementById("rDmBlock");
+    if(dmP !== null){
+      var needP = isKit ? 30 : 26, needF = 9;
+      var li = "";
+      li += "<li><strong>Protein, dry-matter basis: "+ dmP.toFixed(1) +"%</strong> — the AAFCO cat minimum for "+ (isKit?"growth":"adult maintenance") +" is "+ needP +"%. "+ (dmP < needP ? "⚠️ This food falls below the feline minimum." : "Above the minimum — as an obligate carnivore, your cat needs every point of it.") +"</li>";
+      li += "<li><strong>Fat, dry-matter basis: "+ dmF.toFixed(1) +"%</strong> — AAFCO minimum is "+ needF +"%. "+ (dmF < needF ? "⚠️ Below the minimum." : "Above the minimum.") +"</li>";
+      li += "<li>Dry-matter conversion strips the water out — the only honest way to compare a can against a bag. A can showing 10% protein at 78% moisture is actually ~45% protein dry-matter.</li>";
+      li += "<li>Make sure the label says the food is complete and balanced for cats (taurine included) — cat minimums are much higher than dog food provides.</li>";
+      document.getElementById("rDm").innerHTML = li;
+      dmBlock.style.display = "";
+    } else {
+      dmBlock.style.display = "none";
+    }
+
+    /* --- next steps --- */
+    var mealG2 = grams / meals;
+    var nx = "";
+    if(cupOnly){
+      nx += "<li><strong>Calibrate once:</strong> weigh one level cup of your food, then re-run this with kcal per 100 g (kcal per cup ÷ cup weight in g × 100). The numbers above assume a typical "+ CUP_G[ftype] +" g cup.</li>";
+    } else if(!cans){
+      nx += "<li>Weigh the portion on a kitchen scale rather than scooping — with portions this small, cups are hopeless.</li>";
+    }
+    nx += "<li>Split it into <strong>"+ meals +" small meals</strong>" + (cans||cupOnly ? "." : " of about "+ r(mealG2,5) +" g each.") + " More, smaller meals suit cats.</li>";
+    if(treatPct) nx += "<li>Keep everything outside the bowl under <strong>"+ r(treatKcal,5) +" kcal</strong> a day — lickable treats run 15–25 kcal a tube and add up fast.</li>";
+    nx += "<li>Re-weigh your cat in two weeks. Adjust by 10% if the trend is wrong, then hold two more weeks.</li>";
+    nx += "<li>Transition any food change over 7–10 days — and never let a cat simply go hungry rather than switch. If they refuse food 24–48 hours, call your vet.</li>";
+    nx += "<li>Fresh filtered water always available; a fountain if the bowl gets ignored.</li>";
+    document.getElementById("rNext").innerHTML = nx;
+
+    /* --- math --- */
+    var m = "";
+    m += '<div class="mline"><span>Current weight</span><span>'+ lbs.toFixed(1) +' lb ('+ curKg.toFixed(2) +' kg)</span></div>';
+    m += '<div class="mline"><span>Ideal weight used</span><span>'+ idealKg.toFixed(2) +' kg</span></div>';
+    m += '<div class="mline"><span>RER = 70 × '+ idealKg.toFixed(2) +'<sup>0.75</sup></span><span>'+ r(rer,1) +' kcal</span></div>';
+    m += '<div class="mline"><span>Life-stage / activity factor</span><span>× '+ factor.toFixed(2) +'</span></div>';
+    m += '<div class="mline"><span>Lifestyle correction ('+ (life==="in"?"indoor":life==="mix"?"indoor–outdoor":"outdoor") +')</span><span>× '+ lifeAdj.toFixed(2) +'</span></div>';
+    m += '<div class="mline"><span><strong>Daily energy requirement</strong></span><span><strong>'+ r(der,5) +' kcal</strong></span></div>';
+    m += '<div class="mline"><span>Calories from meals ('+ Math.round((1-treatPct)*100) +'%)</span><span>'+ r(mainKcal,5) +' kcal</span></div>';
+    m += '<div class="mline"><span>Food energy density</span><span>'+ r(kcal100,1) +' kcal / 100 g</span></div>';
+    m += '<div class="mline"><span><strong>Portion</strong> = '+ r(mainKcal,5) +' ÷ '+ r(kcal100,1) +' × 100</span><span><strong>'+ r(grams,5) +' g</strong></span></div>';
+    if(cans) m += '<div class="mline"><span>Cans = '+ r(mainKcal,5) +' ÷ '+ kcalCan +' kcal per can</span><span>'+ trimNum(Math.round(cans*4)/4,2) +' cans</span></div>';
+    if(isFinite(bagLb) && bagLb > 0 && isFinite(price) && price > 0){
+      m += '<div class="mline"><span>Days per '+ (ftype==="wet"?"case":"bag") +' = '+ Math.round(bagLb*453.592).toLocaleString() +' g ÷ daily grams</span><span>'+ ((bagLb*453.592)/grams).toFixed(1) +' days</span></div>';
+      m += '<div class="mline"><span><strong>Cost per day</strong></span><span><strong>$'+ (price/((bagLb*453.592)/grams)).toFixed(2) +'</strong></span></div>';
+    }
+    if(picks.emode === "est"){
+      m += '<p style="margin-top:10px">Energy was estimated with the modified Atwater factors: <code>3.5 × protein + 8.5 × fat + 3.5 × NFE</code>, where NFE (carbohydrate) is <code>100 − protein − fat − moisture − ash − fiber</code>. Ash was assumed at '+ fmt.ash +'% for '+ fmt.label +'.</p>';
+    }
+    m += '<p style="margin-top:10px">Published feline energy equations carry roughly ±20% individual variation. Use this as a starting point and let the fortnightly weigh-in settle the argument.</p>';
+    document.getElementById("rMath").innerHTML = m;
+
+    out.classList.add("on");
+    var reduce = (typeof window.matchMedia === "function") && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(out.scrollIntoView) out.scrollIntoView({ behavior: (reduce ? "auto" : "smooth"), block: "start" });
+  });
+})();
+</script>
