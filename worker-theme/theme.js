@@ -92,7 +92,9 @@ export const SECTION_CSS = `
 .pgp-section .pgp-cap,.pgp-grid .pgp-cap{display:block;font-size:13px;color:#6E6480;font-style:italic;text-align:center;margin-top:9px;line-height:1.5}
 
 /* Compact product card — the full .product card is too wide for a column */
-.pgp-prod{background:#fff;border:1px solid #E5E0EE;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(21,17,28,.06);display:flex;flex-direction:column;height:100%}
+.pgp-cell:has(>.pgp-prod){display:flex;flex-direction:column}
+.pgp-cell>.pgp-prod{flex:1 1 auto;min-height:0}
+.pgp-prod{background:#fff;border:1px solid #E5E0EE;border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(21,17,28,.06);display:flex;flex-direction:column;height:auto}
 .pgp-prod .pgp-prod-badge{background:#15111C;color:#FBFAFD;font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;text-align:center}
 .pgp-prod .pgp-prod-badge.pick{background:#2C7A57}
 /* Retail packshots are boxes and bottles photographed on white. object-fit
