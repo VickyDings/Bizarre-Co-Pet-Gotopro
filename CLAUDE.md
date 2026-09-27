@@ -96,3 +96,22 @@ there just leaves a gap — put the photo beside running prose instead.
 Render it against the real `theme.js` in headless Chromium and check, at 900px and at
 390px: no horizontal scroll, nothing overflowing the column, no full-width block
 overlapping a floated photo, and every image resolving.
+
+## Gotcha: two route groups share the /admin prefix
+
+`index.js` mounts `shopAdminRoutes` and then `adminRoutes`, both at `/admin`. Hono
+runs the first group's `use('*')` middleware on **every** `/admin/*` request, so an
+auth gate there also guards `/admin/login` — and redirecting the login page to
+itself is an infinite loop the browser reports as `ERR_TOO_MANY_REDIRECTS`.
+
+Both gates must exempt the open paths:
+
+```js
+const path = new URL(c.req.url).pathname;
+if (path === '/admin/login' || path === '/admin/setup') return next();
+```
+
+`adminRoutes` always had it; `shopAdminRoutes` did not, which locked the owner out
+of their own admin the first time a session expired. Anything else mounted at
+`/admin` later needs the same exemption. Test it logged **out** — with a valid
+session cookie the gate passes and the bug stays invisible.
