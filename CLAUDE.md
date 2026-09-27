@@ -18,10 +18,17 @@ what broke the cat calculator page: a page-level `:root` override killed the hea
    clumped at the end. Each one must teach something genuinely surprising.
 2. **A downloadable quick care sheet** covering **habitat, necessities and diet**,
    linked from a `.download-card`. Built from `worker-theme/care-sheet-template.html`,
-   rendered at 1000px wide × deviceScaleFactor 2, then auto-trimmed. Upload the PNG
-   through the admin media library and replace the `MEDIA_ID` placeholder in the post.
-   A second sheet is worth it when a guide has a big standalone topic (breeding, for
-   instance).
+   rendered at 1000px wide × deviceScaleFactor 2, then auto-trimmed. A second sheet is
+   worth it when a guide has a big standalone topic (breeding, for instance).
+
+   Write both the thumbnail `src` and the button `href` as `/media/SOMETHING_MEDIA_ID`.
+   `wireDownloadCards()` in `util.js` runs on every public post render and copies the
+   thumbnail's src onto the button whenever the button still holds a `MEDIA_ID`
+   placeholder — so the owner uploads the picture into the card with the editor's
+   🖼️ Image button and the download link wires itself. It never overwrites an href
+   that points somewhere real, and it pairs the nth button with the nth card, so two
+   sheets in one post stay straight. The admin editor does not run this transform, so
+   in the editor the button still shows the placeholder — check the live page.
 
 ### The section order that works
 
