@@ -1,0 +1,1 @@
+export class Hono{use(){}get(){}post(){}route(){}}

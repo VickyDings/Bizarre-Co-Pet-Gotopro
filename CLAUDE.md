@@ -266,6 +266,64 @@ link gets ignored — it is worth more than the buttons.
 Facebook caches what it first scrapes. After changing a title or image, re-scrape at
 `developers.facebook.com/tools/debug/`, or the old card persists for weeks.
 
+## The shop runs on Printify
+
+`shop.js` syncs the catalog from **Printify**, not Printful. It moved in
+September 2026. The differences that actually bite:
+
+| | Printful | Printify |
+|---|---|---|
+| ids | integers | **strings** |
+| money | decimal strings | **integer cents** |
+| list call | products only | products **with** variants, options and images |
+| base cost | separate catalog call | `variant.cost`, inline |
+| size / colour | on the catalog variant | **option value ids**, resolved against `product.options[].values[]` |
+| scope | one store per token | every call needs a **shop id** |
+| headers | Authorization | Authorization **and a User-Agent**, which Workers do not send by default |
+
+Secrets: `PRINTIFY_TOKEN` is required. `PRINTIFY_SHOP_ID` is optional and pins
+which shop to sync — without it the first shop from `/v1/shops.json` is used,
+which is right for a one-shop account and wrong for anybody else.
+
+**`cents()` exists for a reason.** Printify money is integer cents everywhere.
+2900 landing in a dollars column is a $2,900 t-shirt, so nothing raw goes near
+a price field.
+
+**A sync retires what it did not see.** Any published product whose `remote_id`
+is missing from the response drops back to draft — that is what stopped the old
+Printful catalog sitting on the live shop after the switch. It is skipped
+entirely when the response is empty, because an empty list is far more likely to
+be a wrong shop id than a genuinely empty store, and unpublishing everything
+over a typo would be a bad afternoon.
+
+**The column rename is a migration, not a schema change.** `CREATE TABLE IF NOT
+EXISTS` will not touch a table that already exists, so `printful_id` becomes
+`remote_id` through `ALTER TABLE ... RENAME COLUMN`, guarded on the column being
+present. It is safe to re-run, and the owner's price overrides and published
+flags survive it.
+
+### When a sync returns nothing
+
+Open **`/admin/shop/probe`** first. It shows whether the token works, which
+shops the token can see, the first product exactly as Printify sent it, and what
+the sync would have pulled out of it. A field Printify has renamed shows up
+there as an empty column instead of as a silent empty catalog.
+
+### Testing it without the API
+
+`worker-theme/shop-sync-test.mjs` runs the sync against a mock Printify response
+with a fake D1 that records every statement — it checks the cents conversion,
+option resolution, per-variant image matching, disabled variants, the retire
+step and the empty-response guard. Run it from `worker-theme/` after any change
+to the sync:
+
+```
+node shop-sync-test.mjs
+```
+
+It needs no token and makes no network calls. Thirteen assertions; all should
+say PASS.
+
 ## Gotcha: a backtick in theme.js breaks the whole worker
 
 `PUBLIC_CSS`, `SECTION_CSS` and `IMAGE_CSS` are template literals, so a single
