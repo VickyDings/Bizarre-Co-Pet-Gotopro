@@ -222,6 +222,60 @@ a{color:var(--amber-deep)}
    Do not add a width rule for it here. It only needs to clear floats. */
 .pgp-ig{clear:both}
 
+/* ——— Sharing ———————————————————————————————————————————————
+   Plain links, no third-party widgets. Network buttons load no script,
+   set no cookie and cannot track a reader, so they cost nothing in speed
+   and raise no consent question. Copy-link and the native sheet are the
+   only ones that need JS, and both degrade to nothing if it fails. */
+.share-bar{clear:both;margin:34px 0;padding:20px 22px;background:var(--cream-deep);
+  border:1px solid var(--line);border-radius:14px}
+.share-bar--compact{margin:18px 0 26px;padding:12px 14px;background:transparent;border:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:0}
+.share-label{display:block;font-family:'Quicksand',sans-serif;font-weight:700;font-size:12.5px;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--plum);margin:0 0 12px}
+.share-bar--compact .share-label{display:inline-block;margin:0 12px 0 0;vertical-align:middle;font-size:11.5px}
+.share-btns{display:flex;flex-wrap:wrap;gap:7px}
+.share-bar--compact .share-btns{display:inline-flex;vertical-align:middle}
+.sh{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;
+  border:1px solid var(--line);background:#fff;color:var(--ink-soft);cursor:pointer;
+  font-family:'Manrope',system-ui,sans-serif;font-size:13.5px;font-weight:600;line-height:1;
+  text-decoration:none;transition:transform .12s ease,box-shadow .12s ease,color .12s ease,border-color .12s ease}
+.sh svg{width:15px;height:15px;fill:currentColor;flex:none}
+.sh:hover{transform:translateY(-1px);box-shadow:var(--shadow-soft);text-decoration:none}
+.sh-pin:hover{color:#BD081C;border-color:#BD081C}
+.sh-fb:hover{color:#1877F2;border-color:#1877F2}
+.sh-x:hover{color:#000;border-color:#000}
+.sh-wa:hover{color:#25D366;border-color:#1EA952}
+.sh-rd:hover{color:#FF4500;border-color:#FF4500}
+.sh-em:hover,.sh-copy:hover,.sh-native:hover{color:var(--plum);border-color:var(--plum)}
+.sh-copy.done{color:var(--sage-deep);border-color:var(--sage-deep)}
+.sh[hidden]{display:none}
+/* A phone with its own share sheet does not need five network pills: the sheet
+   offers every app the reader actually has, including ones not listed here.
+   Pinterest stays because the sheet cannot hand it the image to pin. The class
+   is added by script, so with JS off every button remains. */
+.share-bar--native .sh-fb,.share-bar--native .sh-x,.share-bar--native .sh-wa,
+.share-bar--native .sh-rd,.share-bar--native .sh-em{display:none}
+.share-bar--native .sh-native .sh-t,.share-bar--native .sh-copy .sh-t{display:inline}
+/* the label collapses on a narrow screen so the row stays one line of icons */
+@media (max-width:520px){
+  .sh{padding:9px 10px}
+  .sh .sh-t{display:none}
+  .share-bar--compact .share-label{display:block;margin:0 0 9px}
+}
+/* Save-to-Pinterest on article images. Pet content lives on Pinterest, and a
+   reader already looking at the photo is the one most likely to pin it.
+   It is ONE position:fixed button that follows the hovered image, rather than
+   a wrapper around each one — wrapping would put a floated .img-left inside an
+   inline-block and the float would stop working. Touch devices never see it. */
+.pin-save{position:fixed;z-index:60;display:none;align-items:center;gap:6px;
+  padding:7px 12px;border:0;border-radius:999px;background:#BD081C;color:#fff;cursor:pointer;
+  font-family:'Manrope',system-ui,sans-serif;font-size:12.5px;font-weight:700;line-height:1;
+  box-shadow:0 2px 10px rgba(0,0,0,.28)}
+.pin-save svg{width:13px;height:13px;fill:#fff}
+.pin-save.on{display:inline-flex}
+.pin-save:hover{background:#8C0615}
+@media (hover:none){.pin-save{display:none!important}}
+
 /* Product cards (for review posts) */
 .product{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:28px 0;clear:both;box-shadow:var(--shadow-soft)}
 .product:hover{box-shadow:var(--shadow-med)}
@@ -558,8 +612,55 @@ export function logoUrl(settings) {
   return settings.logo_media_id ? `/media/${settings.logo_media_id}` : '/logo.png';
 }
 
+// ——— Sharing ————————————————————————————————————————————————
+// Builds the row of share buttons. Everything is a plain link built here on
+// the server, so it works with JS switched off and loads nothing from a
+// third party — no widget script, no cookie, no tracking pixel.
+//
+//   url          absolute, and it must be absolute: every network fetches it
+//   title        what gets quoted in the post
+//   description  used by Pinterest and email, which allow longer text
+//   image        absolute URL of the image Pinterest should pin
+//   compact      a slim inline row, for under a byline
+//   label        overrides the heading
+const SHARE_ICONS = {
+  pin: '<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12c0 5.1 3.2 9.4 7.6 11.2-.1-.9-.2-2.4 0-3.4.2-.9 1.4-6 1.4-6s-.4-.7-.4-1.8c0-1.7 1-3 2.2-3 1 0 1.5.8 1.5 1.7 0 1-.7 2.6-1 4.1-.3 1.2.6 2.2 1.8 2.2 2.2 0 3.8-2.3 3.8-5.6 0-2.9-2.1-5-5.1-5-3.5 0-5.5 2.6-5.5 5.3 0 1 .4 2.2.9 2.8.1.1.1.2.1.3l-.3 1.3c0 .2-.2.3-.4.2-1.5-.7-2.4-2.9-2.4-4.7 0-3.8 2.8-7.3 8-7.3 4.2 0 7.4 3 7.4 7 0 4.2-2.6 7.5-6.3 7.5-1.2 0-2.4-.6-2.8-1.4l-.8 2.9c-.3 1.1-1 2.5-1.5 3.4 1.1.3 2.3.5 3.5.5 6.6 0 12-5.4 12-12S18.6 0 12 0z"/></svg>',
+  fb:  '<svg viewBox="0 0 24 24"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.96h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>',
+  x:   '<svg viewBox="0 0 24 24"><path d="M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.59l5.24 6.93 6.07-6.93zm-1.29 19.5h2.04L6.49 3.24H4.3l13.31 17.41z"/></svg>',
+  wa:  '<svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.05-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.22 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35zM12.04 21.8h-.01a9.8 9.8 0 01-4.99-1.37l-.36-.21-3.71.97.99-3.62-.23-.37a9.78 9.78 0 01-1.5-5.22c0-5.4 4.4-9.8 9.82-9.8 2.62 0 5.08 1.03 6.93 2.88a9.74 9.74 0 012.87 6.93c0 5.4-4.4 9.81-9.81 9.81zM20.5 3.49A11.76 11.76 0 0012.04 0C5.56 0 .29 5.27.28 11.75c0 2.07.54 4.09 1.57 5.87L.18 24l6.53-1.71a11.73 11.73 0 005.32 1.35h.01c6.48 0 11.75-5.27 11.76-11.75a11.68 11.68 0 00-3.3-8.4z"/></svg>',
+  rd:  '<svg viewBox="0 0 24 24"><path d="M24 11.78a2.6 2.6 0 00-4.4-1.86 12.8 12.8 0 00-6.96-2.22l1.18-5.56 3.87.82a1.86 1.86 0 103.7-.3 1.86 1.86 0 00-3.53-.55l-4.32-.92a.45.45 0 00-.53.35l-1.32 6.2a12.8 12.8 0 00-7.05 2.2 2.6 2.6 0 10-2.87 4.26 5.1 5.1 0 00-.06.8c0 4.07 4.74 7.37 10.6 7.37 5.85 0 10.6-3.3 10.6-7.37 0-.27-.02-.53-.06-.79A2.6 2.6 0 0024 11.78zM6.28 13.64a1.86 1.86 0 113.72 0 1.86 1.86 0 01-3.72 0zm10.4 4.93a6.9 6.9 0 01-4.67 1.45h-.02a6.9 6.9 0 01-4.67-1.45.46.46 0 01.65-.65 6.03 6.03 0 004.02 1.18h.02a6.03 6.03 0 004.02-1.18.46.46 0 11.65.65zm-.35-3.07a1.86 1.86 0 110-3.72 1.86 1.86 0 010 3.72z"/></svg>',
+  em:  '<svg viewBox="0 0 24 24"><path d="M1.5 4.5h21a1.5 1.5 0 011.5 1.5v12a1.5 1.5 0 01-1.5 1.5h-21A1.5 1.5 0 010 18V6a1.5 1.5 0 011.5-1.5zm10.5 8.1L2.4 6.75h19.2L12 12.6zM2.25 8.63V17.1h19.5V8.63l-9.3 5.67a.9.9 0 01-.9 0z"/></svg>',
+  link:'<svg viewBox="0 0 24 24"><path d="M10.6 13.4a1 1 0 001.4 0l4.9-4.9a2.5 2.5 0 00-3.5-3.5l-2 2a1 1 0 001.4 1.4l2-2a.5.5 0 01.7.7l-4.9 4.9a1 1 0 000 1.4zm2.8-2.8a1 1 0 00-1.4 0l-4.9 4.9a2.5 2.5 0 003.5 3.5l2-2a1 1 0 10-1.4-1.4l-2 2a.5.5 0 01-.7-.7l4.9-4.9a1 1 0 000-1.4z"/><path d="M6.5 21a4.5 4.5 0 01-3.2-7.7l2.6-2.6a1 1 0 011.4 1.4l-2.6 2.6A2.5 2.5 0 008.3 18.2l2.6-2.6a1 1 0 011.4 1.4l-2.6 2.6A4.47 4.47 0 016.5 21zM14.9 12.6a1 1 0 01-.7-1.7l2.6-2.6a2.5 2.5 0 00-3.6-3.5l-2.6 2.6a1 1 0 01-1.4-1.4l2.6-2.6a4.5 4.5 0 116.4 6.3l-2.6 2.6a1 1 0 01-.7.3z"/></svg>',
+  share:'<svg viewBox="0 0 24 24"><path d="M18 16.08a2.9 2.9 0 00-1.96.77L8.9 12.7a3.3 3.3 0 000-1.4l7.05-4.11A2.99 2.99 0 1015 5c0 .24.04.47.09.7L8.04 9.81a3 3 0 100 4.38l7.12 4.16c-.05.21-.08.43-.08.65a2.92 2.92 0 105.92 0 2.92 2.92 0 00-3-2.92z"/></svg>',
+};
+
+export function shareBar({ url, title, description, image, compact, label } = {}) {
+  const u = encodeURIComponent(url || '');
+  const t = encodeURIComponent(title || '');
+  const d = encodeURIComponent((description || title || '').slice(0, 480));
+  const m = encodeURIComponent(image || '');
+  const btn = (cls, href, name, icon) =>
+    `<a class="sh sh-${cls}" href="${href}" target="_blank" rel="noopener noreferrer" ` +
+    `aria-label="Share on ${name}" title="Share on ${name}">${icon}<span class="sh-t">${name}</span></a>`;
+  return `
+<div class="share-bar${compact ? ' share-bar--compact' : ''}" data-share-url="${esc(url || '')}" data-share-title="${esc(title || '')}" data-share-text="${esc(description || '')}">
+  <span class="share-label">${esc(label || 'Share this')}</span>
+  <div class="share-btns">
+    ${image ? btn('pin', `https://pinterest.com/pin/create/button/?url=${u}&media=${m}&description=${d}`, 'Pinterest', SHARE_ICONS.pin) : ''}
+    ${btn('fb', `https://www.facebook.com/sharer/sharer.php?u=${u}`, 'Facebook', SHARE_ICONS.fb)}
+    ${btn('x', `https://twitter.com/intent/tweet?url=${u}&text=${t}`, 'X', SHARE_ICONS.x)}
+    ${btn('wa', `https://api.whatsapp.com/send?text=${t}%20${u}`, 'WhatsApp', SHARE_ICONS.wa)}
+    ${btn('rd', `https://www.reddit.com/submit?url=${u}&title=${t}`, 'Reddit', SHARE_ICONS.rd)}
+    ${btn('em', `mailto:?subject=${t}&body=${d}%0A%0A${u}`, 'Email', SHARE_ICONS.em)}
+    <button class="sh sh-copy" type="button" aria-label="Copy link to this page">${SHARE_ICONS.link}<span class="sh-t">Copy</span></button>
+    <button class="sh sh-native" type="button" aria-label="Open your device share menu" hidden>${SHARE_ICONS.share}<span class="sh-t">Share…</span></button>
+  </div>
+</div>`;
+}
+
 // Full page layout for the public site
-export function layout({ settings, menu, title, description, canonical, body, ogImage, jsonLd, ogType }) {
+export function layout({ settings, menu, title, description, canonical, body,
+                         ogImage, ogImageAlt, jsonLd, ogType, article }) {
   const nav = (menu || []).map(m => `<a href="${esc(m.url)}">${esc(m.label)}</a>`).join('');
   const logo = logoUrl(settings);
   return `<!DOCTYPE html>
@@ -576,10 +677,19 @@ ${canonical ? `<link rel="canonical" href="${esc(canonical)}">` : ''}
 <meta property="og:title" content="${esc(title)}">
 <meta property="og:description" content="${esc(description || '')}">
 <meta property="og:site_name" content="${esc(settings.site_name)}">
-${ogImage ? `<meta property="og:image" content="${esc(ogImage)}">` : ''}
+<meta property="og:locale" content="en_US">
+${canonical ? `<meta property="og:url" content="${esc(canonical)}">` : ''}
+${ogImage ? `<meta property="og:image" content="${esc(ogImage)}">
+<meta property="og:image:alt" content="${esc(ogImageAlt || title)}">` : ''}
+${article && article.published ? `<meta property="article:published_time" content="${esc(article.published)}">` : ''}
+${article && article.modified ? `<meta property="article:modified_time" content="${esc(article.modified)}">` : ''}
+${article && article.section ? `<meta property="article:section" content="${esc(article.section)}">` : ''}
+${article && article.tags ? article.tags.slice(0, 6).map(t => `<meta property="article:tag" content="${esc(t)}">`).join('\n') : ''}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description || '')}">
+${ogImage ? `<meta name="twitter:image" content="${esc(ogImage)}">
+<meta name="twitter:image:alt" content="${esc(ogImageAlt || title)}">` : ''}
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>` : ''}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -649,6 +759,113 @@ ${body}
     zb.textContent = im.classList.contains('zoomed') ? '🔍 Fit to screen' : '🔍 Zoom in';
   });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape' && lb.classList.contains('open')) close(); });
+})();
+</script>
+<script>
+/* Sharing helpers. Everything here is an enhancement: the network links are
+   plain anchors rendered on the server, so with JS off they still work and
+   these two extra buttons simply never appear. */
+(function(){
+  // ——— Copy link ———
+  document.addEventListener('click', function(e){
+    var b = e.target.closest && e.target.closest('.sh-copy');
+    if(!b) return;
+    var bar = b.closest('.share-bar');
+    var url = (bar && bar.getAttribute('data-share-url')) || location.href;
+    var t = b.querySelector('.sh-t'), old = t ? t.textContent : '';
+    function done(){
+      b.classList.add('done');
+      if(t) t.textContent = 'Copied!';
+      setTimeout(function(){ b.classList.remove('done'); if(t) t.textContent = old; }, 2000);
+    }
+    function fallback(){
+      var ta = document.createElement('textarea');
+      ta.value = url; ta.setAttribute('readonly','');
+      ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); done(); }
+      catch(_) { window.prompt('Copy this link:', url); }
+      document.body.removeChild(ta);
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(done, fallback);
+    } else fallback();
+  });
+
+  // ——— The device's own share sheet, where there is one ———
+  var coarse = window.matchMedia && matchMedia('(pointer:coarse)').matches;
+  if(navigator.share){
+    Array.prototype.forEach.call(document.querySelectorAll('.sh-native'), function(b){
+      b.hidden = false;
+      if(coarse){ var bar0 = b.closest('.share-bar'); if(bar0) bar0.classList.add('share-bar--native'); }
+      b.addEventListener('click', function(){
+        var bar = b.closest('.share-bar');
+        navigator.share({
+          title: (bar && bar.getAttribute('data-share-title')) || document.title,
+          text:  (bar && bar.getAttribute('data-share-text')) || '',
+          url:   (bar && bar.getAttribute('data-share-url')) || location.href
+        }).catch(function(){});
+      });
+    });
+  }
+
+  // ——— Save an article image to Pinterest ———
+  if(!window.matchMedia || !matchMedia('(hover:hover)').matches) return;
+  var PIN = '<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12c0 5.1 3.2 9.4 7.6 11.2-.1-.9-.2-2.4 0-3.4.2-.9 1.4-6 1.4-6s-.4-.7-.4-1.8c0-1.7 1-3 2.2-3 1 0 1.5.8 1.5 1.7 0 1-.7 2.6-1 4.1-.3 1.2.6 2.2 1.8 2.2 2.2 0 3.8-2.3 3.8-5.6 0-2.9-2.1-5-5.1-5-3.5 0-5.5 2.6-5.5 5.3 0 1 .4 2.2.9 2.8.1.1.1.2.1.3l-.3 1.3c0 .2-.2.3-.4.2-1.5-.7-2.4-2.9-2.4-4.7 0-3.8 2.8-7.3 8-7.3 4.2 0 7.4 3 7.4 7 0 4.2-2.6 7.5-6.3 7.5-1.2 0-2.4-.6-2.8-1.4l-.8 2.9c-.3 1.1-1 2.5-1.5 3.4 1.1.3 2.3.5 3.5.5 6.6 0 12-5.4 12-12S18.6 0 12 0z"/></svg>';
+  var btn = document.createElement('button');
+  btn.type = 'button'; btn.className = 'pin-save';
+  btn.innerHTML = PIN + 'Save';
+  btn.setAttribute('aria-label', 'Save this image to Pinterest');
+  document.body.appendChild(btn);
+  var target = null, hideT = null;
+
+  function place(){
+    if(!target) return;
+    var r = target.getBoundingClientRect();
+    // gone off screen, or scrolled away under the sticky header
+    if(r.bottom < 40 || r.top > innerHeight - 10){ hide(true); return; }
+    btn.style.top  = Math.max(46, r.top + 10) + 'px';
+    btn.style.left = (r.left + 10) + 'px';
+  }
+  function show(im){
+    target = im; place(); btn.classList.add('on');
+  }
+  function hide(now){
+    clearTimeout(hideT);
+    if(now){ btn.classList.remove('on'); target = null; return; }
+    hideT = setTimeout(function(){ btn.classList.remove('on'); target = null; }, 220);
+  }
+  function pinnable(im){
+    if(!im.closest('.prose')) return false;
+    // inside a link the click belongs to the link; product wells and care-sheet
+    // thumbnails are the owner's own art and are handled by the page's own bar
+    if(im.closest('a, .pgp-prod, .product, .dl-thumb, .brand-logo')) return false;
+    // Measure what is on screen, not the intrinsic size. naturalWidth reads 0
+    // until the file has loaded, so sizing off it loses the button on any image
+    // the reader reaches before it finishes downloading.
+    var r = im.getBoundingClientRect();
+    var w = r.width || im.naturalWidth, h = r.height || im.naturalHeight;
+    return w >= 300 && h >= 200;
+  }
+  document.addEventListener('mouseover', function(e){
+    var im = e.target;
+    if(im.tagName === 'IMG' && pinnable(im)){ clearTimeout(hideT); show(im); }
+    else if(!e.target.closest || !e.target.closest('.pin-save')) hide();
+  });
+  btn.addEventListener('mouseenter', function(){ clearTimeout(hideT); });
+  btn.addEventListener('mouseleave', function(){ hide(); });
+  addEventListener('scroll', place, { passive: true });
+  addEventListener('resize', place);
+  btn.addEventListener('click', function(e){
+    e.preventDefault(); e.stopPropagation();   // must not open the lightbox
+    if(!target) return;
+    var src = target.currentSrc || target.src;
+    if(src.charAt(0) === '/') src = location.origin + src;
+    window.open('https://pinterest.com/pin/create/button/?url=' + encodeURIComponent(location.href) +
+      '&media=' + encodeURIComponent(src) +
+      '&description=' + encodeURIComponent(target.alt || document.title),
+      '_blank', 'noopener,noreferrer,width=760,height=620');
+  });
 })();
 </script>
 </body>

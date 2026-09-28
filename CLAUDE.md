@@ -194,6 +194,52 @@ Paste the article only — everything inside `<div class="prose">`, not the file
 wraps it. `layout-check.mjs` does not catch this; grep a draft for `PREVIEW`,
 `pv-wrap`, `fonts.googleapis` and a `body{` / `:root{` selector before it goes in.
 
+## Sharing
+
+`shareBar()` in `theme.js` renders the row of share buttons. Everything is a plain
+anchor built on the server, so it works with JavaScript off and loads **nothing from
+a third party** — no widget script, no cookie, no tracking pixel, and so nothing to
+disclose in a consent banner. Only Copy link and the native sheet need JS, and both
+degrade to nothing.
+
+```js
+shareBar({ url, title, description, image, compact, label })
+```
+
+`url` and `image` **must be absolute**. Every network fetches them from its own
+servers, so a `/media/12` path resolves against facebook.com and 404s. Build them
+from `siteUrl(c, settings)`.
+
+Where they are: two on a blog post (compact under the byline, full after the
+article), one at the foot of a custom page, one per card plus one for the page on
+`/free-guides`, and a compact one on a shop product.
+
+**Pinterest matters more than the rest for this site** — pet content is what
+Pinterest is for. It is the only button given the image, and article photos get a
+hover "Save" button as well. That button is **one `position:fixed` element that
+follows the hovered image**, not a wrapper around each one: wrapping would put a
+floated `.img-left` inside an inline-block and the float would stop working. It
+stops the click reaching the lightbox with `stopPropagation()`, and it never appears
+on a touch device.
+
+It sizes images off `getBoundingClientRect()`, not `naturalWidth` — `naturalWidth`
+reads 0 until the file has downloaded, so sizing off it loses the button on any
+image the reader reaches first.
+
+On a phone with its own share sheet (`navigator.share` and `pointer:coarse`), the
+five network pills are hidden and the OS sheet replaces them — it offers every app
+the reader actually has. Pinterest stays, because the sheet cannot hand it an image.
+
+### The share preview card
+
+`layout()` emits `og:*`, `twitter:*` and `article:*`. Pass `ogImage` (absolute),
+`ogImageAlt`, and for a post an `article: { published, modified, section, tags }`.
+Without `og:image` a shared link is a bare blue rectangle, which is most of why a
+link gets ignored — it is worth more than the buttons.
+
+Facebook caches what it first scrapes. After changing a title or image, re-scrape at
+`developers.facebook.com/tools/debug/`, or the old card persists for weeks.
+
 ## Gotcha: wrangler on Windows
 
 `--file` cannot reach D1 on an OAuth login — the import endpoint answers
