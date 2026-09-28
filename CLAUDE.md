@@ -22,9 +22,34 @@ jumper, labeled not labelled, recognize/realize/analyze with a z. "Bathe" is the
 verb, "a bath" the noun. Keep **greyhound comb** as-is: it is the tool's trade name
 and a breed, not a color.
 
-`scan-uk.py` in the scratchpad greps a draft for the whole list — run it before
-handing anything over. This applies to the care-sheet HTML too, since that text ends
-up baked into a PNG where it cannot be corrected later without a re-render.
+It is not only spelling. **Different words count too**: cotton swab not cotton bud,
+two weeks not fortnight, period not full stop, cilantro not coriander, zucchini not
+courgette, rolled oats not porridge oats, pulse not blitz, right away not straight
+away, stopped eating not gone off their food, vacuuming not hoovering, centerpiece
+not centrepiece, molding not moulding. These pass a spellcheck and still read as
+British.
+
+`scan-uk.py` in `worker-theme/` checks a draft for all of it — run it before handing
+anything over. It now covers three families rather than a hand-written word list:
+
+- the `-ise / -isation / -yse` shape as a **rule**, with an exception list for the
+  words that genuinely keep `-ise` in US English (advertise, surprise, compromise,
+  franchise, exercise...). Hand-listing these is what let `fertiliser` ship twice —
+  it was simply never named. `analysis`, `realistic`, `paralysis` and `specialist`
+  are correct US English and are not flagged.
+- the lexical list above.
+- **mid-word capitals**, which catch a case-preserving replacement that went wrong.
+  `fertiliser` once became `fertiliZer` that way and went live.
+
+Two false positives worth knowing: **HOB** is a hang-on-back filter, not a stovetop,
+and **pavement** is correct US English for a paved surface. Keep **greyhound comb**
+and **Jumper** (the jumping spider) as they are.
+
+This applies to the care-sheet HTML too, since that text ends up baked into a PNG
+where it cannot be corrected later without a re-render — the dog grooming sheet had
+to be re-rendered for exactly this: it read "Bath a dog you have not brushed out"
+and "Push a cotton bud into the ear canal". Sheet sources live beside the template
+(`grooming-sheet-source.html`); scan the source, not just the post.
 
 ### Required in every guide
 
