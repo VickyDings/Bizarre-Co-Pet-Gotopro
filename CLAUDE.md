@@ -12,6 +12,20 @@ already defined in `theme.js` (`PUBLIC_CSS` + `IMAGE_CSS` + `SECTION_CSS`) — n
 invent new CSS in a post, and never put a `<style>` block in post body HTML (that is
 what broke the cat calculator page: a page-level `:root` override killed the header).
 
+### Language
+
+**US English, always, in every word a visitor can read** — posts, care sheets, page
+copy, alt text, captions. color not colour, gray not grey, center not centre, molt
+not moult, mold not mould, feces not faeces, drafts not draughts, fall not autumn,
+toss not bin, cabinet not cupboard, baseboards not skirting boards, sweater not
+jumper, labeled not labelled, recognize/realize/analyze with a z. "Bathe" is the
+verb, "a bath" the noun. Keep **greyhound comb** as-is: it is the tool's trade name
+and a breed, not a color.
+
+`scan-uk.py` in the scratchpad greps a draft for the whole list — run it before
+handing anything over. This applies to the care-sheet HTML too, since that text ends
+up baked into a PNG where it cannot be corrected later without a re-render.
+
 ### Required in every guide
 
 1. **Fun facts** — at least four `.funfact` boxes spread through the article, not
@@ -72,6 +86,15 @@ https://www.amazon.com/s?k=SEARCH+TERMS&tag=petgo2pro-20
 `applyAmazonTag()` in the worker appends the tag anyway, and `public.js` auto-inserts
 the affiliate disclosure on any page matching `/amazon\./i`. Always give a price
 *range* plus the `*Price starts from and is subject to change` line — never a fixed price.
+
+**Never put an editorial photo inside a product card.** The `.pgp-prod-img` well is
+where the owner's real product shot goes, so a nice stock photo parked there is
+guaranteed to be overwritten and lost. Leave the well holding the standard
+`.pgp-cell-ph` placeholder — the public CSS hides an empty well, and the editor shows
+it as an obvious drop target. Good photos belong in the article body, where they
+stay. Aim for **ten or more** through a guide: an `.img-full .img-frame` with an
+italic caption between blocks always fits, and `.img-md .img-left/right` works beside
+two or more paragraphs of running prose.
 
 ### Images
 
