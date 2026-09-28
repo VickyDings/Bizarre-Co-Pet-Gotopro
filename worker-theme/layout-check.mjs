@@ -6,11 +6,13 @@ import path from 'path';
 const { chromium } = pw;
 const T = await import('./pgp_assets/src/theme.js');
 const DIR = '/home/user/Bizarre-Co-Pet-Gotopro/worker-theme';
+// Everything in updated/, plus every post-*.html beside it. Globbed rather
+// than listed, so a new post is checked without anyone remembering to add it.
 const files = [
   ...fs.readdirSync(path.join(DIR, 'updated')).filter(f => f.endsWith('.html'))
        .map(f => path.join(DIR, 'updated', f)),
-  path.join(DIR, 'post-budgie-setup-guide.html'),
-  path.join(DIR, 'post-dog-grooming-at-home.html'),
+  ...fs.readdirSync(DIR).filter(f => /^post-.*\.html$/.test(f))
+       .map(f => path.join(DIR, f)),
 ];
 const widths = [900, 390];
 const b = await chromium.launch();
