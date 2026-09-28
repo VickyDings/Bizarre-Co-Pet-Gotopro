@@ -262,6 +262,11 @@ a{color:var(--amber-deep)}
 .share-bar--native .sh-fb,.share-bar--native .sh-x,.share-bar--native .sh-wa,
 .share-bar--native .sh-rd,.share-bar--native .sh-em{display:none}
 .share-bar--native .sh-native .sh-t,.share-bar--native .sh-copy .sh-t{display:inline}
+/* ...unless the bar was explicitly asked for icons. A bare link or share
+   glyph is vaguer than a Pinterest logo, so in native mode those two get
+   their words back - but icons:true is the author saying there is no room,
+   and an explicit option should not be quietly overridden. */
+.share-bar--icons.share-bar--native .sh .sh-t{display:none}
 /* the label collapses on a narrow screen so the row stays one line of icons */
 @media (max-width:520px){
   .sh{padding:9px 10px}

@@ -238,6 +238,15 @@ image the reader reaches first.
 On a phone with its own share sheet (`navigator.share` and `pointer:coarse`), the
 five network pills are hidden and the OS sheet replaces them — it offers every app
 the reader actually has. Pinterest stays, because the sheet cannot hand it an image.
+With only three buttons left there is room for words, so Copy and Share get their
+labels back — a bare link or share glyph is vaguer than a Pinterest logo. A bar that
+asked for `icons` keeps its icons even then: an explicit option should not be
+quietly overridden.
+
+**Test the phone case through `layout()`, not a hand-built page.** The share script
+lives in `layout()`, so a test page assembled from `PUBLIC_CSS` and `shareBar()`
+alone has no JavaScript at all — it can check CSS and nothing else, and it will
+happily report that the native-sheet behavior "works" when it never ran.
 
 ### The share preview card
 
@@ -248,6 +257,22 @@ link gets ignored — it is worth more than the buttons.
 
 Facebook caches what it first scrapes. After changing a title or image, re-scrape at
 `developers.facebook.com/tools/debug/`, or the old card persists for weeks.
+
+## Gotcha: a backtick in theme.js breaks the whole worker
+
+`PUBLIC_CSS`, `SECTION_CSS` and `IMAGE_CSS` are template literals, so a single
+backtick anywhere inside them — including inside a `/* CSS comment */` — closes the
+string early and the file stops parsing. Writing ``icons:true`` in a comment took
+the entire site down until `node --check` caught it.
+
+Comments in there use plain quotes and no backticks. After any edit to theme.js:
+
+```
+node --check theme.js     # rename to .mjs first, or copy it
+```
+
+A quick structural check too — the PUBLIC_CSS block should contain exactly two
+unescaped backticks, its own open and close.
 
 ## Gotcha: wrangler on Windows
 
