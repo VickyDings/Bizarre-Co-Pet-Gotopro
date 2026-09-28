@@ -249,6 +249,12 @@ a{color:var(--amber-deep)}
 .sh-em:hover,.sh-copy:hover,.sh-native:hover{color:var(--plum);border-color:var(--plum)}
 .sh-copy.done{color:var(--sage-deep);border-color:var(--sage-deep)}
 .sh[hidden]{display:none}
+/* Icons-only, for a narrow column. The @media rule below keys off the
+   VIEWPORT, which is no help inside a 280px grid card on a wide screen —
+   the card is narrow while the window is not. This is set per bar instead. */
+.share-bar--icons .sh{padding:8px 9px;gap:0}
+.share-bar--icons .sh .sh-t{display:none}
+.share-bar--icons .share-btns{gap:6px}
 /* A phone with its own share sheet does not need five network pills: the sheet
    offers every app the reader actually has, including ones not listed here.
    Pinterest stays because the sheet cannot hand it the image to pin. The class
@@ -634,26 +640,31 @@ const SHARE_ICONS = {
   share:'<svg viewBox="0 0 24 24"><path d="M18 16.08a2.9 2.9 0 00-1.96.77L8.9 12.7a3.3 3.3 0 000-1.4l7.05-4.11A2.99 2.99 0 1015 5c0 .24.04.47.09.7L8.04 9.81a3 3 0 100 4.38l7.12 4.16c-.05.21-.08.43-.08.65a2.92 2.92 0 105.92 0 2.92 2.92 0 00-3-2.92z"/></svg>',
 };
 
-export function shareBar({ url, title, description, image, compact, label } = {}) {
+export function shareBar({ url, title, description, image, compact, label,
+                           only, icons } = {}) {
   const u = encodeURIComponent(url || '');
   const t = encodeURIComponent(title || '');
   const d = encodeURIComponent((description || title || '').slice(0, 480));
   const m = encodeURIComponent(image || '');
-  const btn = (cls, href, name, icon) =>
-    `<a class="sh sh-${cls}" href="${href}" target="_blank" rel="noopener noreferrer" ` +
-    `aria-label="Share on ${name}" title="Share on ${name}">${icon}<span class="sh-t">${name}</span></a>`;
+  // `only` picks a subset, for somewhere too narrow to carry the full row —
+  // a guide card is 280px wide however big the window is.
+  const want = n => !only || only.indexOf(n) !== -1;
+  const btn = (cls, href, name, icon) => want(cls)
+    ? `<a class="sh sh-${cls}" href="${href}" target="_blank" rel="noopener noreferrer" ` +
+      `aria-label="Share on ${name}" title="Share on ${name}">${icon}<span class="sh-t">${name}</span></a>`
+    : '';
   return `
-<div class="share-bar${compact ? ' share-bar--compact' : ''}" data-share-url="${esc(url || '')}" data-share-title="${esc(title || '')}" data-share-text="${esc(description || '')}">
+<div class="share-bar${compact ? ' share-bar--compact' : ''}${icons ? ' share-bar--icons' : ''}" data-share-url="${esc(url || '')}" data-share-title="${esc(title || '')}" data-share-text="${esc(description || '')}">
   <span class="share-label">${esc(label || 'Share this')}</span>
   <div class="share-btns">
-    ${image ? btn('pin', `https://pinterest.com/pin/create/button/?url=${u}&media=${m}&description=${d}`, 'Pinterest', SHARE_ICONS.pin) : ''}
+    ${image && want('pin') ? btn('pin', `https://pinterest.com/pin/create/button/?url=${u}&media=${m}&description=${d}`, 'Pinterest', SHARE_ICONS.pin) : ''}
     ${btn('fb', `https://www.facebook.com/sharer/sharer.php?u=${u}`, 'Facebook', SHARE_ICONS.fb)}
     ${btn('x', `https://twitter.com/intent/tweet?url=${u}&text=${t}`, 'X', SHARE_ICONS.x)}
     ${btn('wa', `https://api.whatsapp.com/send?text=${t}%20${u}`, 'WhatsApp', SHARE_ICONS.wa)}
     ${btn('rd', `https://www.reddit.com/submit?url=${u}&title=${t}`, 'Reddit', SHARE_ICONS.rd)}
     ${btn('em', `mailto:?subject=${t}&body=${d}%0A%0A${u}`, 'Email', SHARE_ICONS.em)}
-    <button class="sh sh-copy" type="button" aria-label="Copy link to this page">${SHARE_ICONS.link}<span class="sh-t">Copy</span></button>
-    <button class="sh sh-native" type="button" aria-label="Open your device share menu" hidden>${SHARE_ICONS.share}<span class="sh-t">Share…</span></button>
+    ${want('copy') ? `<button class="sh sh-copy" type="button" aria-label="Copy link to this page" title="Copy link">${SHARE_ICONS.link}<span class="sh-t">Copy</span></button>` : ''}
+    ${want('native') ? `<button class="sh sh-native" type="button" aria-label="Open your device share menu" title="Share" hidden>${SHARE_ICONS.share}<span class="sh-t">Share…</span></button>` : ''}
   </div>
 </div>`;
 }

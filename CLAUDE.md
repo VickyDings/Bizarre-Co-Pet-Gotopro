@@ -212,7 +212,16 @@ from `siteUrl(c, settings)`.
 
 Where they are: two on a blog post (compact under the byline, full after the
 article), one at the foot of a custom page, one per card plus one for the page on
-`/free-guides`, and a compact one on a shop product.
+`/free-guides`, and one on a shop product.
+
+**`icons` and `only` exist because a narrow column is not a narrow window.** The
+`@media (max-width:520px)` rule that drops the text labels keys off the viewport,
+which is no help inside a 280px grid card on a 1200px screen. Unchecked, the full
+row stacked **four deep and 208px tall** inside a guide card — taller than the
+Download button the card exists for. So a guide card asks for
+`only: ['pin','fb','copy'], icons: true` and a shop product for `icons: true`, and
+both come out one row and 59px. Measure any new placement in a real render; the
+numbers are not obvious from the markup.
 
 **Pinterest matters more than the rest for this site** — pet content is what
 Pinterest is for. It is the only button given the image, and article photos get a
