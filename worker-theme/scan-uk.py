@@ -84,6 +84,21 @@ SPELLING = [
     r'\bcaesarean\b', r'\banaesthe\w*', r'\bfaec\w*', r'\bmoult\w*',
     r'\bcosy\b', r'\bpyjama\w*', r'\bpostcode\b', r'\bcheque\b',
 ]
+# British doubles a final L before a suffix when the last syllable is
+# unstressed - travelling, signalling, cruellest.  US English does not.
+# Listing the stems is safer than a shape rule, because plenty of words
+# legitimately carry LL in both (calling, selling, controlling, fulfilling).
+DOUBLE_L_STEMS = """
+travel cancel label model signal total marvel quarrel tunnel counsel level
+fuel duel revel jewel cruel initial pencil unravel channel funnel panel
+parcel rival shovel snivel spiral stencil swivel trowel gruel libel medal
+pedal pummel refuel remodel shrivel squirrel tassel towel trammel weasel
+dial dishevel enamel equal grovel kennel nickel bevel chisel cudgel marshal
+ravel tinsel victual
+""".split()
+SPELLING.append(r'\b(?:' + '|'.join(DOUBLE_L_STEMS) +
+                r')l(?:ed|ing|er|ers|est|ery|or|ors)\b')
+
 SPELLING_PAT = re.compile('|'.join(SPELLING), re.I)
 
 # --- exceptions ------------------------------------------------------------
