@@ -35,7 +35,27 @@ up baked into a PNG where it cannot be corrected later without a re-render.
    rendered at 1000px wide × deviceScaleFactor 2, then auto-trimmed. A second sheet is
    worth it when a guide has a big standalone topic (breeding, for instance).
 
-   Write both the thumbnail `src` and the button `href` as `/media/SOMETHING_MEDIA_ID`.
+   **Link the sheet through the guides table, not a media id.** Register it once
+   (see `worker-theme/register-guides.bat`) and the card points at permanent names:
+
+   ```html
+   <div class="dl-thumb"><img src="/img/budgie-care-sheet.png" ...></div>
+   <a class="dl-btn" href="/download/budgie-care-sheet.png">
+   ```
+
+   A `/media/<id>` link is wiped every time a revised post body is pasted over the
+   old one, which cost the owner their uploads twice. A name survives that. It also
+   puts the sheet on `/free-guides`, which is where the QR code printed on every
+   sheet points, and `/download/` sends a real `Content-Disposition: attachment` so
+   no `download` attribute is needed on the anchor. **Keep the `.png` on the guide
+   key** — the saved filename is built from it, and without an extension the file
+   will not open on double-click.
+
+   Existing keys: `budgie-care-sheet.png`, `budgie-breeding-sheet.png`,
+   `dog-grooming-sheet.png`, plus nine older `.jpg` guides.
+
+   For a sheet not yet registered, write the thumbnail `src` and button `href` as
+   `/media/SOMETHING_MEDIA_ID`.
    `wireDownloadCards()` in `util.js` runs on every public post render and copies the
    thumbnail's src onto the button whenever the button still holds a `MEDIA_ID`
    placeholder — so the owner uploads the picture into the card with the editor's
@@ -119,6 +139,21 @@ there just leaves a gap — put the photo beside running prose instead.
 Render it against the real `theme.js` in headless Chromium and check, at 900px and at
 390px: no horizontal scroll, nothing overflowing the column, no full-width block
 overlapping a floated photo, and every image resolving.
+
+## Gotcha: wrangler on Windows
+
+`--file` cannot reach D1 on an OAuth login — the import endpoint answers
+`Authentication error [code: 10000]` however broad the token. Send statements with
+`--command` instead; that is the query endpoint deploys already use.
+
+Statements typed at a `cmd.exe` prompt must avoid `%` entirely (cmd pairs `%...%`
+up and eats what lies between, so `LIKE 'budgie%'` silently mangles) and `&`. Use
+`instr(lower(x),'y')` rather than `LIKE`, and `instr()` alone as a truth test so no
+`>` is needed either.
+
+In a `.bat`, every `npx` line needs `call` in front. `npx` is itself a batch file,
+and cmd hands control to a called batch file without returning — without `call` the
+script dies silently after the first command.
 
 ## Gotcha: two route groups share the /admin prefix
 
