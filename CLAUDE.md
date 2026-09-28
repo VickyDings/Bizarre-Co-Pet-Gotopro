@@ -132,6 +132,14 @@ https://www.amazon.com/s?k=SEARCH+TERMS&tag=petgo2pro-20
 the affiliate disclosure on any page matching `/amazon\./i`. Always give a price
 *range* plus the `*Price starts from and is subject to change` line — never a fixed price.
 
+**An unfilled well must collapse, not print its own instructions.** The Tiki
+review shipped ten wells reading *"Drop your product photo here"* with nothing
+hiding them — that text would have gone out to every visitor. `.pgp-prod-img`
+already had `:not(:has(img)){display:none}`; `.product-image-wrap` now does too,
+and the rule sits in the **public-only** part of `PUBLIC_CSS` so the editor still
+shows the well as a drop target. Any new card component needs the same pair:
+a visible target in the editor, nothing at all on the page.
+
 **Never put an editorial photo inside a product card.** The `.pgp-prod-img` well is
 where the owner's real product shot goes, so a nice stock photo parked there is
 guaranteed to be overwritten and lost. Leave the well holding the standard

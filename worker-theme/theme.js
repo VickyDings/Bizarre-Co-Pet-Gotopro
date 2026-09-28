@@ -293,6 +293,12 @@ a{color:var(--amber-deep)}
 .product-ribbon{display:flex;align-items:center;justify-content:space-between;padding:12px 22px;background:var(--ink);color:var(--cream);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
 .product-ribbon .star{color:var(--amber)}
 .product-body{display:grid;grid-template-columns:240px 1fr;gap:24px;padding:26px}
+/* An unfilled well collapses on the public site, the same way .pgp-prod-img
+   does. The placeholder inside it is an instruction to whoever is editing -
+   drop your product photo here - and a visitor must never read that. This
+   rule sits in the public-only block, so the editor still shows the well as
+   a drop target while a reader never sees an empty square or the text. */
+.product-image-wrap:not(:has(img)){display:none}
 .product-image-wrap{aspect-ratio:1;background:var(--cream-deep);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .product-image-wrap img{width:100%;height:100%;object-fit:cover}
 .product-image-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:13px;text-align:center;padding:16px;font-style:italic}
