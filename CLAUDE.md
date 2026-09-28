@@ -171,9 +171,28 @@ is nested inside a flex container.
 
 ### Before handing a guide over
 
-Render it against the real `theme.js` in headless Chromium and check, at 900px and at
-390px: no horizontal scroll, nothing overflowing the column, no full-width block
-overlapping a floated photo, and every image resolving.
+`worker-theme/layout-check.mjs` renders every post against the real `theme.js` in
+headless Chromium at 900px and 390px and reports float collisions, content escaping
+the column and horizontal page scroll. Run it after any edit to a post or to the
+theme; it reads the working files, so it does not need a database export.
+
+One thing it deliberately does not flag: `.pgp-ig-frame` and `.table-wrap` are
+**meant** to scroll sideways on a phone. A detailed cross-section diagram squeezed
+to 350px is unreadable, so the infographic holds its SVG at `min-width` and shows a
+swipe hint instead. Do not "fix" that with a `width:100%` rule.
+
+### Never paste a preview file into the editor
+
+Posts 10 and 11 each had an entire preview document sitting in the post body:
+`<meta charset>`, a `<title>… — PREVIEW</title>`, a Google Fonts `<link>`, a
+`.pv-*` stylesheet ending in `body{background:#FBFAFD}`, and then a **second `<h1>`**
+and category line that the theme already renders above the post. Two H1s on a page
+is an SEO fault, and a `body{}` rule inside a post body is the same bug that broke
+the cat calculator.
+
+Paste the article only — everything inside `<div class="prose">`, not the file that
+wraps it. `layout-check.mjs` does not catch this; grep a draft for `PREVIEW`,
+`pv-wrap`, `fonts.googleapis` and a `body{` / `:root{` selector before it goes in.
 
 ## Gotcha: wrangler on Windows
 

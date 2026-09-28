@@ -216,6 +216,11 @@ a{color:var(--amber-deep)}
 /* Paw divider */
 .paw-divider{display:flex;justify-content:center;align-items:center;gap:18px;margin:50px 0;opacity:.5}
 .paw-divider svg{width:22px;height:22px;fill:var(--amber)}
+/* The infographic block. Its own diagram sizing is deliberate — on a phone
+   the SVG is held at min-width and the frame scrolls sideways, the same
+   bargain .table-wrap makes, because a squeezed cross-section is unreadable.
+   Do not add a width rule for it here. It only needs to clear floats. */
+.pgp-ig{clear:both}
 
 /* Product cards (for review posts) */
 .product{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:28px 0;clear:both;box-shadow:var(--shadow-soft)}
