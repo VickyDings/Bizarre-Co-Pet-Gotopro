@@ -1,0 +1,399 @@
+<!-- ============================================================
+  NEW KITTEN / NEW CAT COMPLETE GUIDE — Pet-GoToPro post body
+  Paste into admin → Posts → raw HTML view.
+  Suggested slug: new-kitten-checklist-first-year-guide
+  Category: Cats · Type: Care guide
+  IMAGE placeholders: dashed boxes below — replace each with an
+  image from your media picker.
+  AMAZON buttons: currently Amazon SEARCH links — open each,
+  create your SiteStripe amzn.to link, send them back to me and
+  I'll swap them in.
+============================================================ -->
+
+<style>
+#kittenguide{
+  max-width:860px;margin:0 auto;color:var(--ink);line-height:1.65;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+#kittenguide *{box-sizing:border-box}
+#kittenguide h2{font-size:26px;font-weight:800;letter-spacing:-.6px;margin:38px 0 12px}
+#kittenguide h3{font-size:18px;font-weight:800;letter-spacing:-.2px;margin:24px 0 8px}
+#kittenguide p{margin:0 0 14px;font-size:16.5px;color:var(--ink-soft)}
+#kittenguide ul,#kittenguide ol{margin:0 0 16px 22px;padding:0}
+#kittenguide li{margin-bottom:7px;font-size:16.5px;color:var(--ink-soft)}
+#kittenguide strong{color:var(--ink)}
+#kittenguide .lede{font-size:19px;color:var(--ink-soft)}
+#kittenguide .img-slot{border:2px dashed var(--line);border-radius:12px;background:var(--cream-deep);padding:34px 18px;text-align:center;color:var(--ink-mute);font-size:14px;margin:18px 0}
+#kittenguide .vet-tip{background:#f1f5ef;border-left:4px solid var(--moss);border-radius:0 10px 10px 0;padding:16px 18px;margin:18px 0}
+#kittenguide .vet-tip b{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--forest);margin-bottom:5px}
+#kittenguide .vet-tip p{margin:0;font-size:15.5px;color:#2f3f2c}
+#kittenguide .vet-warning{background:#fdf3ee;border-left:4px solid var(--clay);border-radius:0 10px 10px 0;padding:16px 18px;margin:18px 0}
+#kittenguide .vet-warning b{display:block;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--clay);margin-bottom:5px}
+#kittenguide .vet-warning p{margin:0;font-size:15.5px;color:#5c2a1c}
+#kittenguide .pullquote{background:var(--cream-deep);border-radius:12px;padding:22px 26px;margin:26px 0;font-size:17.5px;font-style:italic;color:var(--ink-soft)}
+#kittenguide .pullquote span{display:block;font-style:normal;font-size:13px;color:var(--ink-mute);margin-top:8px}
+/* filter panel */
+#kittenguide .filterbar{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;margin:20px 0}
+#kittenguide .filterbar h4{margin:0 0 4px;font-size:16px;font-weight:800}
+#kittenguide .filterbar .fb-sub{font-size:13.5px;color:var(--ink-mute);margin-bottom:12px}
+#kittenguide .fgroup{margin-bottom:10px}
+#kittenguide .fgroup .flab{font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--ink-mute);margin-bottom:6px}
+#kittenguide .fbtns{display:flex;flex-wrap:wrap;gap:7px}
+#kittenguide .fbtn{border:1px solid var(--line);background:var(--cream);border-radius:99px;padding:6px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--ink-soft)}
+#kittenguide .fbtn[aria-pressed=true]{background:var(--forest);border-color:var(--forest);color:#fff}
+#kittenguide .fcount{font-size:13px;color:var(--ink-mute);margin-top:4px}
+/* product cards */
+#kittenguide .pcard{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:22px;margin:22px 0;box-shadow:0 2px 10px #15111C}
+#kittenguide .pbadge{display:inline-block;background:var(--amber);color:#fff;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-bottom:10px}
+#kittenguide .pname{font-size:20px;font-weight:800;letter-spacing:-.3px;margin:8px 0 4px}
+#kittenguide .pprice{font-size:17px;font-weight:800;color:var(--forest)}
+#kittenguide .pdisc{font-size:12px;color:var(--ink-mute);font-style:italic}
+#kittenguide .pbest{font-size:13.5px;color:var(--ink-soft);margin:8px 0 12px}
+#kittenguide .pbest b{color:var(--amber-deep)}
+#kittenguide .procon{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+#kittenguide .procon h5{margin:0 0 6px;font-size:13px;font-weight:800;letter-spacing:.5px;text-transform:uppercase}
+#kittenguide .procon .pros h5{color:var(--forest)}
+#kittenguide .procon .cons h5{color:var(--clay)}
+#kittenguide .procon ul{margin:0 0 0 18px}
+#kittenguide .procon li{font-size:14px;margin-bottom:4px}
+#kittenguide .pbtn{display:inline-block;background:var(--amber-deep);color:#fff;font-weight:800;font-size:15px;text-decoration:none;padding:12px 26px;border-radius:9px;margin-top:6px}
+#kittenguide .ponelink{font-size:12.5px;color:var(--ink-mute);margin-top:10px}
+@media(max-width:560px){#kittenguide .procon{grid-template-columns:1fr}}
+/* tables */
+#kittenguide .table-wrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+#kittenguide table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:520px}
+#kittenguide th{background:var(--cream-deep);text-align:left;padding:11px 14px;font-weight:800;font-size:12.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--line)}
+#kittenguide td{padding:11px 14px;border-bottom:1px solid var(--line-soft);color:var(--ink-soft);vertical-align:top}
+#kittenguide tr:last-child td{border-bottom:0}
+/* timeline */
+#kittenguide .tl{border-left:3px solid var(--amber);margin:18px 0 18px 8px;padding-left:22px}
+#kittenguide .tl-item{margin-bottom:18px;position:relative}
+#kittenguide .tl-item:before{content:"";position:absolute;left:-29px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--amber);border:2px solid var(--cream)}
+#kittenguide .tl-item b{display:block;font-size:14px;font-weight:800;color:var(--amber-deep);letter-spacing:.3px}
+#kittenguide .tl-item p{margin:4px 0 0;font-size:15px}
+/* faq */
+#kittenguide .faq-item{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:10px}
+#kittenguide .faq-item h3{font-size:16px;margin:0 0 6px}
+#kittenguide .faq-item p{font-size:15px;margin:0}
+#kittenguide .toolbox{background:linear-gradient(135deg,#2c2620,#15111C);border-radius:12px;padding:20px 24px;margin:22px 0;color:#fff}
+#kittenguide .toolbox b{color:#e8b96a}
+#kittenguide .toolbox p{color:#c9bfb2;margin:6px 0 10px;font-size:15px}
+#kittenguide .toolbox a{display:inline-block;background:var(--amber);color:#fff;font-weight:800;font-size:14px;text-decoration:none;padding:10px 20px;border-radius:8px;margin-right:8px;margin-bottom:6px}
+</style>
+
+<div id="kittenguide">
+
+<h2>Bringing home a kitten — or welcoming an adult rescue — is one of the best days you'll have all year.</h2><h3>It's also the day most new cat owners discover they bought the wrong litter box, skipped the one product that makes introductions work, and have no idea when the vaccines are due. This guide fixes all three: the shopping list that matters, how to introduce your new cat to resident cats, dogs and small pets without drama, what the first three months actually look like, the health timeline for year one, and how to feed a growing cat properly.</h3>
+
+<div class="img-slot"><img class="pgp-img img-full img-center" src="/media/201" alt=""><p></p></div>
+
+<h2 id="shopping-list">The Shopping List: 8 Essentials Before the Cat Comes Home</h2>
+<p>You don't need half of what the pet store aisle suggests. You do need these eight, ready and in place <em>before</em> arrival day — a new cat should walk into a finished home, not a work in progress. Filter by what you're setting up for:</p>
+
+<div class="filterbar">
+  <h4>Narrow your list</h4>
+  <div class="fb-sub">Filter the 8 essentials below by budget or purpose.</div>
+  <div class="fgroup">
+    <div class="flab">Price</div>
+    <div class="fbtns" data-fg="price">
+      <button class="fbtn" aria-pressed="true" data-f="all">All prices</button>
+      <button class="fbtn" data-f="under25">Under $25</button>
+      <button class="fbtn" data-f="25to50">$25–$50</button>
+      <button class="fbtn" data-f="over50">Over $50</button>
+    </div>
+  </div>
+  <div class="fgroup">
+    <div class="flab">Purpose</div>
+    <div class="fbtns" data-fg="cat">
+      <button class="fbtn" aria-pressed="true" data-f="all">Everything</button>
+      <button class="fbtn" data-f="litter">Litter &amp; hygiene</button>
+      <button class="fbtn" data-f="comfort">Comfort &amp; safety</button>
+      <button class="fbtn" data-f="play">Play &amp; scratching</button>
+      <button class="fbtn" data-f="intro">Introductions</button>
+    </div>
+  </div>
+  <div class="fcount" id="fcount">Showing 8 of 8 essentials</div>
+</div>
+
+<!-- ============ PRODUCT CARDS ============ -->
+
+<div class="pcard" data-price="25to50" data-cat="litter">
+  <span class="pbadge">★ #1 · The Litter Setup</span>
+  <div class="img-slot"><img class="pgp-img img-center img-md" src="/media/202" alt=""><p></p></div>
+  <div class="pname"><span style="letter-spacing: -0.3px;">Large High-Sided Open Litter Box (low entry for kittens)</span></div>
+  <div class="pprice">~$25–$40 <span class="pdisc">*Price starts from and is subject to change</span></div>
+  <p class="pbest"><b>Best for:</b> Every new cat, no exceptions · Kittens need a low entry point</p>
+  <p>The single most common reason a new cat has accidents is the box, not the cat. Get one <strong>at least 1.5× the length of your cat</strong>, open-topped (hooded boxes trap odor at cat height and many cats hate them), with high sides for enthusiastic diggers but a lowered entry a kitten can step over. Skip self-cleaning robots for now — many cats fear them, and you need to see what's in the box during the first weeks, because litter box contents are your best early health signal. House rule: <strong>one box per cat, plus one spare</strong>, in quiet spots away from food.</p>
+  <div class="procon">
+    <div class="pros"><h5>Pros</h5><ul><li>Open design cats actually use</li><li>High sides contain litter scatter</li><li>Easy to monitor health</li></ul></div>
+    <div class="cons"><h5>Cons</h5><ul><li>Less "hidden" than hooded styles</li><li>Needs daily scooping (all boxes do)</li></ul></div>
+  </div>
+  <a href="https://amzn.to/4g9y5uW" target="_blank" rel="noopener" class="cta-btn" style="font-weight: 800;">View on Amazon</a><!-- SWAP: SiteStripe link -->
+  <p class="ponelink">Also available in Canada, France, Germany, Italy, Netherlands, Poland, Spain, Sweden, and the United Kingdom — Amazon OneLink will redirect you automatically.</p>
+</div>
+
+<div class="pcard" data-price="under25" data-cat="litter">
+  <span class="pbadge">★ #2 · The Litter Itself</span>
+  <div class="img-slot"><img class="pgp-img img-center img-md" src="/media/203" alt=""><p></p></div>
+  <div class="pname">Unscented Clumping Clay Litter (Dr. Elsey's Ultra or similar)</div>
+  <div class="pprice">~$20 <span class="pdisc">*Price starts from and is subject to change</span></div>
+  <p class="pbest"><b>Best for:</b> Picky cats · Multi-cat homes · Anyone who values their nose</p>
+  <p>Cats vote with their bladders, and the overwhelming winner across behavior studies is <strong>unscented, fine-grained clumping litter</strong> — perfumed litters are made to please humans and actively repel many cats. Dr. Elsey's Ultra is the long-standing benchmark: hard clumps, low dust, low tracking. If you're adopting, ask what litter the cat used before and start with that, changing over gradually later. One important kitten caveat: for kittens under about 8 weeks, use non-clumping litter — very young kittens taste-test everything, and swallowed clumping litter can cause blockages.</p>
+  <div class="procon">
+    <div class="pros"><h5>Pros</h5><ul><li>The texture and scent profile cats prefer</li><li>Hard clumps make scooping fast</li><li>99% dust-free versions available</li></ul></div>
+    <div class="cons"><h5>Cons</h5><ul><li>Heavy bags</li><li>Clay isn't flushable or compostable</li><li>Not for kittens under ~8 weeks</li></ul></div>
+  </div>
+  <a href="https://amzn.to/4xdFOxY" target="_blank" rel="noopener" class="cta-btn">View on Amazon</a><!-- SWAP: SiteStripe link -->
+  <p class="ponelink">Also available in Canada, France, Germany, Italy, Netherlands, Poland, Spain, Sweden, and the United Kingdom — Amazon OneLink will redirect you automatically.</p>
+</div>
+
+<div class="pcard" data-price="25to50" data-cat="comfort">
+  <span class="pbadge">★ #3 · The Carrier</span>
+  <div class="img-slot"><img class="pgp-img img-center img-md" src="/media/204" alt="Petmate Two Door Plastic Pet Kennel for Small Dogs and Cats, 24in, Blue"><p></p></div>
+  <div class="pname">Hard-Sided Carrier with Top &amp; Front Doors</div>
+  <div class="pprice">~$30–$54&nbsp;<span class="pdisc">*Price starts from and is subject to change</span></div>
+  <p class="pbest"><b>Best for:</b> Day one (you need it to bring the cat home) · Every vet trip after</p>
+  <p>The carrier is the first product your cat ever experiences — buy it before the cat. Hard-sided beats soft for a first cat: it's crash-safer in the car, wipes clean after accidents, and a <strong>top-loading door</strong> means a reluctant cat can be lowered in calmly instead of shoved in face-first. Look for one where the entire top half unclips — vets love these, because a nervous cat can often be examined sitting in the familiar bottom half. Leave it out permanently with a blanket inside so it becomes furniture, not a trap that predicts needles.</p>
+  <div class="procon">
+    <div class="pros"><h5>Pros</h5><ul><li>Top door = calm loading</li><li>Unclipping top half eases vet exams</li><li>Secure and easy to clean</li></ul></div>
+    <div class="cons"><h5>Cons</h5><ul><li>Bulkier to store than soft carriers</li><li>Heavier to carry</li></ul></div>
+  </div>
+  <a class="cta-btn" href="https://amzn.to/4io7aNf" target="_blank" rel="noopener">View on Amazon</a><!-- SWAP: SiteStripe link -->
+  <p class="ponelink">Also available in Canada, France, Germany, Italy, Netherlands, Poland, Spain, Sweden, and the United Kingdom — Amazon OneLink will redirect you automatically.</p>
+</div>
+
+<div class="pcard" data-price="over50" data-cat="play">
+  <span class="pbadge">★ #4 · The Scratching Post</span>
+  <div class="img-slot"><img class="pgp-img img-center img-md" src="/media/205" alt=""><p></p></div>
+  <div class="pname">Tall Sisal Scratching Post (30″+, e.g. SmartCat Ultimate)</div>
+  <div class="pprice">~$50–$70 <span class="pdisc">*Price starts from and is subject to change</span></div>
+  <p class="pbest"><b>Best for:</b> Saving your sofa — seriously, this is sofa insurance</p>
+  <p>Scratching isn't optional behavior you train away; it's how cats maintain claws, stretch their backs and mark territory. Your only choice is <em>where</em>. The post that wins against furniture is <strong>tall enough for a full vertical stretch (30 inches minimum), wrapped in sisal, and heavy enough not to wobble</strong> — a wobbly post gets abandoned for the very stable sofa arm next to it. Place it where the cat already wants to scratch (near sleeping spots and room entrances, not hidden in a spare room). Add a flat cardboard scratcher too; many cats like both angles.</p>
+  <div class="procon">
+    <div class="pros"><h5>Pros</h5><ul><li>Full-stretch height cats actually use</li><li>Sisal is the preferred texture</li><li>Wide, stable base</li></ul></div>
+    <div class="cons"><h5>Cons</h5><ul><li>Takes floor space</li><li>Pricier than short posts (which fail)</li></ul></div>
+  </div>
+  <a class="cta-btn" href="https://amzn.to/4zCkAvA" target="_blank" rel="noopener">View on Amazon</a><!-- SWAP: SiteStripe link -->
+  <p class="ponelink">Also available in Canada, France, Germany, Italy, Netherlands, Poland, Spain, Sweden, and the United Kingdom — Amazon OneLink will redirect you automatically.</p>
+</div>
+
+<div class="pcard" data-price="25to50" data-cat="comfort"><span class="pbadge">★ #5 · Food &amp; Water Stations</span>
+  <div class="img-slot"><img class="pgp-img img-center img-md" src="/media/206" alt=""><p></p></div>
+  <div class="pname">Stainless Steel Bowls + a Water Fountain</div>
+  <div class="pprice">~$15 bowls · $20–$70 fountain <span class="pdisc">*Price starts from and is subject to change</span></div>
+  <p class="pbest"><b>Best for:</b> Every cat · Especially dry-fed cats and future kidney health</p>
+  <p>Skip plastic bowls from day one — scratched plastic harbors bacteria and is the classic trigger for feline chin acne. <strong>Stainless steel or ceramic, washed daily</strong>, shallow enough that whiskers don't brush the sides. Put water well away from food and litter; cats instinctively distrust water near either. And because cats inherited a desert-hunter's weak thirst drive, moving filtered water gets most cats drinking measurably more — which is genuine kidney and urinary prevention. We tested the five best fountains of 2026 in our <a href="/blog/cat-water-fountains-reviewed">cat water fountain guide</a> — the budget Catit Flower is a perfect starter pick.</p>
+  <div class="procon">
+    <div class="pros"><h5>Pros</h5><ul><li>Hygienic, chin-acne-safe materials</li><li>Fountain = more drinking, less kidney risk</li><li>Whisker-friendly shallow shapes</li></ul><div><font color="#514860"><span style="font-size: 14px;"><br></span></font></div><div><br></div></div>
+    <div class="cons"><h5>Cons</h5><ul><li>Fountains need weekly cleaning</li><li>Filter replacements are ongoing</li></ul></div>
+  </div>
+  <a class="cta-btn" href="https://amzn.to/3UMsmTj" target="_blank" rel="noopener">View Water Fountains on Amazon</a><a href="https://amzn.to/3UrYPhF" class="cta-btn" target="_blank" rel="noopener">View Cat Bowls on Amazon</a>&nbsp;<!-- SWAP: SiteStripe link --><p class="ponelink">Also available in Canada, France, Germany, Italy, Netherlands, Poland, Spain, Sweden, and the United Kingdom — Amazon OneLink will redirect you automatically.</p>
+</div>
+
+<div class="pcard" data-price="under25" data-cat="comfort">
+  <span class="pbadge">★ #6 · The Hideaway</span>
+  <div class="img-slot"><img class="pgp-img img-center img-md" src="/media/207" alt=""><p></p></div>
+  <div class="pname">Covered Cat Bed or Cave (plus a cardboard box — genuinely)</div>
+  <div class="pprice">~$20–$35 <span class="pdisc">*Price starts from and is subject to change</span></div>
+  <p class="pbest"><b>Best for:</b> The first two weeks · Shy cats · Every cat's stress management</p>
+  <p>A new cat's first need isn't play — it's a place to hide that nobody reaches into. A covered bed or cave gives them a den where they can watch the new world without being seen, and having one <em>measurably lowers stress</em> in newly homed cats. Put it in the starter room (more on that below), never pull the cat out of it, and let them make the first move. Budget honesty: an upturned cardboard box with a hole cut in it works nearly as well, and most cats will choose the box anyway. Buy the nice bed for you; keep the box for the cat.</p>
+  <div class="procon">
+    <div class="pros"><h5>Pros</h5><ul><li>Fastest way to lower new-home stress</li><li>Doubles as a permanent safe spot</li><li>Machine-washable options</li></ul></div>
+    <div class="cons"><h5>Cons</h5><ul><li>The cat may prefer the box it came in</li></ul></div>
+  </div>
+  <a class="cta-btn" href="https://amzn.to/3SPiPKG" target="_blank" rel="noopener">View on Amazon</a><!-- SWAP: SiteStripe link -->
+  <p class="ponelink">Also available in Canada, France, Germany, Italy, Netherlands, Poland, Spain, Sweden, and the United Kingdom — Amazon OneLink will redirect you automatically.</p>
+</div>
+
+<div class="pcard" data-price="under25" data-cat="play">
+  <span class="pbadge">★ #7 · The Toy Kit</span>
+  <div class="img-slot"><img class="pgp-img img-center img-md" src="/media/208" alt="Wand Teaser + Kicker Toy + Ball Track cat toy set"><p></p></div>
+  <div class="pname">Wand Teaser + Kicker Toy + Ball Track</div>
+  <div class="pprice">~$15–$25 for all three <span class="pdisc">*Price starts from and is subject to change</span></div>
+  <p class="pbest"><b>Best for:</b> Bonding · Burning kitten energy · Teaching "hands are not toys"</p>
+  <p>Three toys cover every play instinct. The <strong>wand teaser</strong> is the important one — it's how you bond with a shy cat from a safe distance, and how you teach a kitten from day one that <em>hands are never prey</em> (the single best bite-prevention investment you'll make). The <strong>kicker toy</strong> absorbs the grab-and-bunny-kick instinct that would otherwise land on your forearm. The <strong>ball track</strong> is solo entertainment for when you're out. Two ten-minute wand sessions a day, ending with a treat "kill," is the routine that produces a calm evening cat.</p>
+  <div class="procon">
+    <div class="pros"><h5>Pros</h5><ul><li>Wand play = bonding without pressure</li><li>Redirects biting away from hands</li><li>Cheap to rotate and refresh</li></ul></div>
+    <div class="cons"><h5>Cons</h5><ul><li>Wand toys must be put away after play (string-swallowing risk)</li></ul></div>
+  </div>
+  <a class="cta-btn" href="https://amzn.to/4xP6g0L" target="_blank" rel="noopener">View on Amazon</a><!-- SWAP: SiteStripe link -->
+  <p class="ponelink">Also available in Canada, France, Germany, Italy, Netherlands, Poland, Spain, Sweden, and the United Kingdom — Amazon OneLink will redirect you automatically.</p>
+</div>
+
+<div class="pcard" data-price="25to50" data-cat="intro">
+  <span class="pbadge">★ #8 · The Introduction Helper</span>
+  <div class="img-slot"><img class="pgp-img img-center img-md" src="/media/209" alt="FELIWAY Optimum Cat Calming Pheromone Diffuser Kit and refill packs"><p></p></div>
+  <div class="pname">Feliway Classic / Optimum Pheromone Diffuser</div>
+  <div class="pprice">~$25–$40 starter kit <span class="pdisc">*Price starts from and is subject to change</span></div>
+  <p class="pbest"><b>Best for:</b> Multi-cat introductions · Anxious rescues · Smoothing the first month</p>
+  <p>This is the product most first-timers skip and most multi-cat households swear by. The diffuser releases a synthetic copy of the facial pheromone cats deposit when they rub their cheeks on things they consider safe — effectively broadcasting "this territory is settled" into the room. It is not magic and won't fix a bad introduction process, but plugged in a week before arrival (one in the new cat's room, one where the resident cat lives), it reliably takes the edge off. Evidence is decent for reducing general anxiety behaviors; think of it as lowering the temperature so the step-by-step introduction below can work.</p>
+  <div class="procon">
+    <div class="pros"><h5>Pros</h5><ul><li>Eases multi-pet introductions</li><li>Helps anxious rescues settle</li><li>Plug-and-forget, 30 days per refill</li></ul></div>
+    <div class="cons"><h5>Cons</h5><ul><li>Refills are an ongoing cost</li><li>Helps, doesn't replace, proper introductions</li></ul></div>
+  </div>
+  <a class="cta-btn" href="https://amzn.to/4wKWHPM" target="_blank" rel="noopener">View on Amazon</a><!-- SWAP: SiteStripe link -->
+  <p class="ponelink">Also available in Canada, France, Germany, Italy, Netherlands, Poland, Spain, Sweden, and the United Kingdom — Amazon OneLink will redirect you automatically.</p>
+</div>
+
+<h2>Quick Comparison Table</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th>Essential</th><th>Price*</th><th>Why it's on the list</th><th>Buy before day one?</th></tr></thead>
+<tbody>
+<tr><td><strong>High-sided open litter box</strong></td><td>$25–$40</td><td>Prevents 90% of accident problems</td><td>Yes — set up first</td></tr>
+<tr><td><strong>Unscented clumping litter</strong></td><td>~$20</td><td>The texture cats actually accept</td><td>Yes</td></tr>
+<tr><td><strong>Hard carrier, two doors</strong></td><td>$30–$54</td><td>You need it to collect the cat</td><td>Yes — first purchase</td></tr>
+<tr><td><strong>Tall sisal scratching post</strong></td><td>$50–$70</td><td>Sofa insurance, full stop</td><td>Yes</td></tr>
+<tr><td><strong>Steel bowls + fountain</strong></td><td>$35–$85</td><td>Chin-acne-safe + hydration = kidney prevention</td><td>Bowls yes, fountain week 2</td></tr>
+<tr><td><strong>Covered bed / cave</strong></td><td>$20–$35</td><td>Lowers new-home stress measurably</td><td>Yes — in the starter room</td></tr>
+<tr><td><strong>Wand + kicker + track</strong></td><td>$15–$25</td><td>Bonding, bite prevention, energy burn</td><td>Yes</td></tr>
+<tr><td><strong>Pheromone diffuser</strong></td><td>$25–$40</td><td>Smooths introductions and settling</td><td>Yes — plug in a week early</td></tr>
+</tbody>
+</table>
+</div>
+<p class="pdisc">*Prices start from and are subject to change. Always verify current pricing on Amazon.</p>
+
+<div class="toolbox">
+  <b>🧮 Free tools for your new arrival</b>
+  <p>Work out exactly how much to feed — in grams or cans — with our vet-formula calculators, including the kitten growth settings used in the nutrition section below.</p>
+  <a href="/cat-food-calculations">Cat Food Calculator</a>&nbsp;<a href="https://pet-gotopro.com/free-guides" class="cta-btn" target="_blank" rel="noopener" style="font-weight: 800; font-size: 14px;">5 Hydration Tips and Guide</a><span style="color: #15111C;">&nbsp;</span></div>
+
+<div class="paw-divider"></div>
+
+<h2 id="introductions">Introducing Your New Cat to Resident Pets</h2>
+<p>This is the part people rush, and rushing is the number one cause of multi-cat households that never quite work. The golden rule for every species pairing below: <strong>the animals set the pace, and going backwards a step is normal, not failure.</strong></p>
+
+<h3><img class="pgp-img img-md img-right" src="/media/210" alt=""><p></p></h3><h3>To a resident cat: the 5-step method</h3>
+<p>Cats are territorial, not naturally social with strangers — a new cat is an invader until proven otherwise. Budget <strong>2–4 weeks minimum</strong>; some pairs need months.</p>
+<ol>
+<li><strong>Separate completely (days 1–7).</strong> The new cat lives in one closed "starter room" with their own litter, food, water and hideaway. The cats hear and smell each other under the door but never meet. Feed both cats near opposite sides of the closed door so the other cat's scent starts predicting good things.</li>
+<li><strong>Swap scents (from day 2–3).</strong> Rub each cat's cheeks with a separate soft cloth and leave it in the other cat's space. Swap bedding. When both cats sniff the other's scent without hissing or flattening, move on.</li>
+<li><strong>Swap spaces (around week 1–2).</strong> Let the new cat explore the house while the resident spends an hour in the starter room. Territory becomes shared information before the cats ever meet.</li>
+<li><strong>Visual contact through a barrier (week 2+).</strong> A baby gate, cracked door, or screen. Short sessions, both cats fed or played with in sight of each other, ended <em>before</em> anyone gets tense. Hissing at first sight is normal; escalating stares and stalking mean go back a step.</li>
+<li><strong>Supervised time together.</strong> Short, positive, ended early. Play with both cats simultaneously (a wand in each hand works). Only when they can eat, play and pass each other calmly do you leave them alone together — and even then, keep separate resources: one litter box per cat plus one, food stations apart, and multiple water points so nobody can guard everything.</li>
+</ol>
+
+<div class="vet-tip"><b>Vet tip</b><p>Watch for the quiet signs, not just the loud ones. Hissing is honest communication and usually fine. The introductions that fail show blocking (one cat guarding hallways or the litter box), long hard stares, and one cat gradually living in one room. If you see those, go back two steps and slow down — and if it's stuck for weeks, ask your vet about a referral to a feline behaviorist before the pattern sets.</p></div>
+
+<h3>To a resident dog</h3><img class="pgp-img img-md img-right" src="/media/211" alt=""><p></p>
+<ol>
+<li>Same starter-room and scent-swap routine first — the cat must have dog-free territory and, forever after, <strong>escape routes and high places</strong> in every shared room (this is where a cat tree earns its space).</li>
+<li>First meetings: <strong>dog on a leash</strong>, lying down or in a calm sit, cat free to approach or leave. Reward the dog lavishly for ignoring the cat. Never hold the cat, and never let the dog approach the cat first.</li>
+<li>The line that matters: <strong>one chase can undo a month of work.</strong> Until the dog reliably ignores a running cat, they are never loose together unsupervised. Baby gates the cat can slip through or jump are your best friends.</li>
+<li>Feed the cat somewhere the dog can't reach — up high — both for peace and because dogs will eat cat food (and cat food is too rich for them, while dog food is deficient for cats).</li>
+</ol>
+
+<h3>To birds, rodents, rabbits, reptiles and fish</h3><img class="pgp-img img-md img-right" src="/media/262" alt=""><p></p>
+<p>Be honest about biology: your cat is a predator, and your parakeet, hamster or betta is prey. "They get along" stories exist, but the safe rule is simpler:</p>
+<ul>
+<li><strong>Never unsupervised access. Ever.</strong> Not even with a "gentle" cat — a cat's stare and presence alone is chronic stress for prey animals, and stress kills small pets.</li>
+<li><strong>Secure the enclosures like a burglar is coming.</strong> Weighted or clipped lids on tanks and terrariums, latched cage doors, cages positioned where a cat can't sit on top or reach through bars. A cat paw through cage bars can be fatal to a bird even without "catching" it — and note that cat saliva is dangerous to birds, so any bird that's been in a cat's mouth needs a vet immediately, even if it looks unharmed.</li></ul><img class="pgp-img img-md img-left" src="/media/213" alt=""><p></p><ul>
+<li><strong>Give prey pets a cat-free room</strong> if at all possible, and give the cat zero rewarding access — the more the cat watches the cage, the stronger the habit becomes. Redirect that hunting energy into wand play instead.</li>
+<li><strong>Rabbits are the partial exception:</strong> a confident house rabbit and a calm cat can genuinely coexist, using the same slow barrier method as cat-to-cat introductions. But a kitten's play-hunting can injure a rabbit and a large rabbit can injure a kitten, so supervise long-term.</li>
+</ul>
+
+<h2 id="what-to-expect"><br></h2><h2 id="what-to-expect"><span style="letter-spacing: -0.6px;">What to Expect: The First Three Months</span></h2>
+<p>Shelters talk about the <strong>3-3-3 rule</strong> — 3 days, 3 weeks, 3 months — and it maps well onto cats:</p>
+<ul>
+<li><strong>First 3 days: hiding is healthy.</strong> A new cat under the bed, barely eating, using the box at 3 a.m. is a normal cat doing normal cat things. Sit in the room reading aloud, offer food and wand play, and let them come to you. Concern threshold: a cat eating <em>nothing at all</em> for more than 24–48 hours needs a vet call — food refusal is genuinely risky in cats.</li>
+<li><strong>First 3 weeks: routines form.</strong> Feeding times, play sessions, your work schedule — cats attach to patterns before they attach to people. Expect testing of boundaries (counters, curtains, 4 a.m. zoomies), and shape behavior by rewarding what you like and making what you don't boring, never by punishing — punishment teaches a cat to fear you, not to stop.</li>
+<li><strong>First 3 months: the real cat appears.</strong> The personality you see at month three — playful, aloof, lap-seeking, chatty — is who you actually adopted. Confidence keeps building for a year.</li>
+</ul>
+<p><img class="pgp-img img-full img-center" src="/media/263" alt=""></p><p></p><p>Normal things that alarm first-timers: night-time zoomies (crepuscular species — dawn and dusk are rush hour), kneading with claws, chattering at birds, eating grass, sleeping 16 hours a day, and the occasional 2 a.m. yowl as they map the house. Things that are <em>not</em> normal and warrant a vet call: not eating (24–48 h), not urinating for a day, straining in the box, repeated vomiting, labored breathing, or hiding <em>plus</em> not eating after the first settling week.</p>
+
+<div class="vet-warning"><b>Kitten-proofing — do this before arrival</b><p>Kittens explore with their mouths at floor level. Secure or remove: dangling cords and hair ties (string swallowing is a surgery-level emergency), open windows and balconies, washer and dryer doors (always check before running), recliner mechanisms, human medications, antifreeze, rodent bait — and houseplants. <strong>Lilies deserve their own sentence: every part of a true lily, even the pollen, can cause fatal kidney failure in cats.</strong> If you have lilies, the safest move is not owning lilies.</p></div>
+
+<h2 id="health-timeline">Health Information &amp; the First-Year Timeline</h2><div><img class="pgp-img img-md img-right" src="/media/264" alt=""><p></p></div>
+<p>Book the first vet visit for <strong>within a week of arrival</strong> — sooner if the cat came from a shelter with a health note, or if you have resident cats (new arrivals should be checked, and ideally FeLV/FIV tested, before the introduction process finishes). Here's the year at a glance for a kitten:</p>
+
+<div class="tl">
+  <div class="tl-item"><b>6–8 weeks</b><p>First FVRCP vaccine (the core combination against feline herpesvirus, calicivirus and panleukopenia). First deworming — kittens are dewormed every 2 weeks until 12 weeks old. Flea prevention starts (use only vet-approved, cat-specific products — dog flea products containing permethrin are lethal to cats).</p></div>
+  <div class="tl-item"><b>10–12 weeks</b><p>Second FVRCP. FeLV vaccine usually starts here after an FeLV/FIV test. Continue deworming schedule.</p></div>
+  <div class="tl-item"><b>14–16 weeks</b><p>Final kitten FVRCP, second FeLV, and the rabies vaccine (timing and legal requirement vary by state — Virginia requires rabies vaccination by 4 months). Monthly deworming from 12 weeks to 6 months.</p></div>
+  <div class="tl-item"><b>~5–6 months</b><p>Spay or neuter. Doing it by 5 months prevents the first heat, eliminates unwanted litters, sharply reduces mammary cancer risk in females and spraying in males. Microchip at the same appointment if not already done — and register it.</p></div>
+  <div class="tl-item"><b>6–12 months</b><p>Transition from kitten food to adult food around 10–12 months (see nutrition below). Settle into monthly or vet-recommended parasite prevention. Start the habits that pay off for 15 years: weekly brushing, monthly weight checks, and touching paws, ears and mouth so future vet care and nail trims aren't a wrestling match.</p></div>
+  <div class="tl-item"><b>12 months</b><p>First annual exam and booster set. From here: yearly check-ups through adulthood, twice-yearly from age 7 or so — cats hide illness brilliantly, and weight change between visits is often the first clue anything is wrong.</p></div>
+</div>
+
+<p><strong>Adopting an adult cat?</strong> The timeline compresses: vet check in week one, vaccine boosters brought up to date, FeLV/FIV test if status is unknown, parasite prevention started, microchip checked and re-registered to you, then annual care. Ask the shelter for records — most cats leave shelters already spayed/neutered and part-vaccinated.</p>
+<p>Two more first-year decisions worth making deliberately: <strong>pet insurance</strong> (cheapest and easiest to get before any conditions exist — even if you skip it, put a monthly amount aside, because the expensive emergencies are urinary blockages and swallowed string, both most common in young cats) and <strong>indoor vs outdoor</strong> (indoor cats live dramatically longer; if you want outdoor time, a catio or harness training gives the enrichment without the traffic, fights and disease exposure).</p>
+
+<div class="paw-divider"></div>
+
+<h2 id="nutrition">Feeding a New Kitten or Cat: The Basics Done Right</h2>
+<p>Cats are <strong>obligate carnivores</strong> — they need meat-based protein, plus taurine, an amino acid they can't make and dog food doesn't contain. That's the lens for every food decision:</p>
+<ul>
+<li><strong>Kittens eat kitten food until about 10–12 months.</strong> Growth food is denser in calories, protein (30% dry-matter minimum vs 26% for adults) and minerals. Look for an AAFCO statement on the label saying the food is complete and balanced <em>for growth</em> or <em>for all life stages</em>.</li>
+<li><strong>Wet + dry mix is our standing recommendation.</strong> At least one wet meal a day carries water into a species that chronically under-drinks (roughly 78% moisture vs 10% in kibble), supporting lifelong kidney and urinary health — pair it with filtered water, ideally moving. Measured dry food covers the rest affordably.</li>
+<li><strong>Meal schedule:</strong> kittens under 4 months eat 4 small meals a day; 4–12 months, 3 meals; adults do best on 2–3 measured meals. Skip free-feeding — it quietly overfeeds most cats, and over half of US cats are already overweight.</li>
+<li><strong>How much?</strong> Don't guess off the bag — run your cat's actual numbers through our <a href="/cat-food-calculations">Cat Food Serving Calculator</a>. It uses the veterinary RER formula with kitten growth settings, converts to grams or cans, and even shows cost per day for the food you're considering.</li>
+<li><strong>Switching foods:</strong> always transition over 7–10 days (25% steps), including the switch from shelter food. A cat that refuses a new food must never be starved into accepting it — cats that stop eating for more than a day or two risk hepatic lipidosis, a life-threatening liver condition. If they refuse, go back to the old food and transition slower.</li>
+<li><strong>What to look for on the label:</strong> a named meat first (chicken, salmon — not "meat derivatives"), an AAFCO adequacy statement, and a stated calorie content. Grain-free is a marketing category, not a health one — grains aren't a common cat allergy, and the money is better spent on higher meat content or wet food.</li>
+<li><strong>Treats:</strong> under 10% of daily calories. Lickable treats run 15–25 kcal a tube and are the stealth calorie bomb of modern cat ownership.</li>
+</ul>
+
+<div class="vet-warning"><b>Never feed</b><p>Onion, garlic, chives and leeks (in any form, including baby food with onion powder), chocolate, caffeine, alcohol, grapes and raisins, raw dough, xylitol, cooked bones, dog food as a diet, and milk — most adult cats are lactose intolerant, whatever the cartoons said. Tuna as an occasional treat is fine; tuna as a diet causes real deficiencies.</p></div>
+
+<h3>Our starter recommendations</h3>
+<p>Brand-agnostic and vet-aligned: pick a kitten food from an established manufacturer that does feeding trials and employs professional nutritionists and veterinarians, one wet and one dry so your kitten learns both textures early — a cat raised on kibble alone often refuses wet food later in life exactly when a medical diet needs it. Ask what the shelter or breeder fed and start there.</p>
+
+<a class="cta-btn" href="https://amzn.to/3S81NY5" target="_blank" rel="noopener">Shop kitten wet food on Amazon</a>&nbsp;-&nbsp;<a href="https://amzn.to/3UM4qzs" class="cta-btn">Shop Kitten Dry Food on Amazon</a>&nbsp;</div><div id="kittenguide"><!-- SWAP: SiteStripe link --><p class="ponelink">Also available in Canada, France, Germany, Italy, Netherlands, Poland, Spain, Sweden, and the United Kingdom — Amazon OneLink will redirect you automatically.</p>
+
+<div class="pullquote">The households that succeed with a new cat all did the same three unglamorous things: they set the room up before the cat arrived, they let the cat hide as long as it wanted, and they went slower on introductions than they thought they needed to. Everything else is shopping.<span>— The Pet-GoToPro Editorial Team</span></div>
+
+<h2>Frequently Asked Questions</h2>
+
+<div class="faq-item"><h3>How long should I keep a new cat in one room?</h3>
+<p>Until the cat tells you they're ready — eating normally, using the box, relaxed body language, and approaching you or the door with curiosity. For a confident cat that's 3–7 days; for a shy rescue, two weeks or more. With resident pets, the starter room stays in use for the full introduction process regardless.</p></div>
+
+<div class="faq-item"><h3>My new kitten cries at night. What do I do?</h3>
+<p>They've just lost their litter — it's grief, not manipulation, and it fades in under a week. A warm covered bed in your bedroom (or a ticking-clock/heartbeat toy in theirs), a big play session before bed, and a small late meal help enormously. Don't reward 3 a.m. crying with food or you'll be running a 3 a.m. diner for a decade.</p></div>
+
+<div class="faq-item"><h3>How do I litter train a kitten?</h3>
+<p>Mostly, you don't — it's instinct. Place the kitten in the box after meals and naps for the first day or two, keep the box easy to reach (one per floor for a tiny kitten), scoop daily, and never punish accidents. A previously reliable cat having accidents is a health or stress signal — think vet first, behavior second, especially for urinating outside the box.</p></div>
+
+<div class="faq-item"><h3>My resident cat is hissing at the new arrival. Have I ruined it?</h3>
+<p>No — hissing is communication, not war. Go back a step in the introduction process (more barrier time, more scent swapping, shorter sessions) and progress when both cats are calm. The pairs that fail are almost always the ones introduced face-to-face on day one. Weeks of patience buys years of peace.</p></div>
+
+<div class="faq-item"><h3>When can my kitten go outside?</h3>
+<p>Not before vaccinations are complete (around 16 weeks, then a week or two for immunity) and ideally after neutering and microchipping — so realistically 5–6 months, starting with supervised garden visits. Our honest recommendation for 2026 remains indoor-first with a catio or harness for outdoor enrichment; the lifespan difference is measured in years.</p></div>
+
+<div class="faq-item"><h3>What's the one thing most new cat owners get wrong?</h3>
+<p>Free-feeding kibble in a plastic bowl next to the water, next to the litter box, and skipping wand play because the cat "has toys." Measured meals, steel bowls, water and litter in separate quiet spots, and ten minutes of interactive play twice a day — that short list prevents most of the behavior and weight problems we write about on this site.</p></div>
+
+<h2><img class="pgp-img img-left img-md" src="/media/265" alt=""><p></p></h2><h2><br></h2><div class="paw-divider"></div>
+
+<h2><br></h2><h2>The Bottom Line</h2>
+<p>Set the room up first, buy the eight essentials (the litter box, the tall scratching post and the carrier are the ones people regret cheaping out on), and let the cat hide until the cat stops hiding. Introduce resident pets over weeks, not days — with a diffuser smoothing the edges and a dog on a leash until proven trustworthy. Get the vet visit booked for week one and the year-one timeline in your calendar. Feed a proper growth food, wet and dry, in measured portions from our <a href="/cat-food-calculations">cat calculator</a> — and keep lilies out of the house forever.</p>
+<p><img class="pgp-img img-md img-right" src="/media/266" alt=""></p><p></p><p>Do those things and month three delivers what you actually signed up for: a confident, healthy cat who owns the place and lets you live there too.</p>
+
+</div>
+
+<script>
+(function(){
+  var wrap = document.getElementById('kittenguide');
+  if(!wrap) return;
+  var state = { price:'all', cat:'all' };
+  var cards = [].slice.call(wrap.querySelectorAll('.pcard'));
+  var count = document.getElementById('fcount');
+  function apply(){
+    var shown = 0;
+    cards.forEach(function(c){
+      var ok = (state.price==='all' || c.dataset.price===state.price) &&
+               (state.cat==='all' || c.dataset.cat===state.cat);
+      c.style.display = ok ? '' : 'none';
+      if(ok) shown++;
+    });
+    if(count) count.textContent = 'Showing ' + shown + ' of ' + cards.length + ' essentials';
+  }
+  [].slice.call(wrap.querySelectorAll('.fbtns')).forEach(function(group){
+    group.addEventListener('click', function(e){
+      var b = e.target.closest('.fbtn');
+      if(!b) return;
+      [].slice.call(group.querySelectorAll('.fbtn')).forEach(function(o){ o.setAttribute('aria-pressed','false'); });
+      b.setAttribute('aria-pressed','true');
+      state[group.dataset.fg === 'price' ? 'price' : 'cat'] = b.dataset.f;
+      apply();
+    });
+  });
+})();
+</script>
