@@ -131,8 +131,18 @@ reachable, or curl them down to local files first. Never ship a photo of the wro
 species because the right one was not available — leave the image out instead.
 
 Floated images (`.img-left` / `.img-right`) must not sit directly above a table or any
-full-width block. The theme now forces those blocks to `clear:both`, so a float placed
-there just leaves a gap — put the photo beside running prose instead.
+full-width block. The theme forces those blocks to `clear:both` — `.table-wrap`,
+`.quick-facts`, `.pros-cons`, `.kit-section`, `.kit-item`, `.method-list`,
+`.download-card`, `.callout`, `.funfact`, `.vet-warning`, `.vet-tip`, `.product`,
+`.pgp-section` — so a float placed there just leaves a gap. Put the photo beside
+running prose instead.
+
+**`clear` does not escape a flex parent.** A `.product` inside a `.kit-item` could not
+clear a float that was a sibling of the `.kit-section`, because `.kit-item` is
+`display:flex` and starts its own formatting context. The clear has to go on the
+outermost element that is a sibling of the float — which is why `.kit-item` carries it
+rather than only the things inside it. Check for this whenever a new full-width block
+is nested inside a flex container.
 
 ### Before handing a guide over
 

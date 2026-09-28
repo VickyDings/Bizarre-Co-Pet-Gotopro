@@ -218,7 +218,7 @@ a{color:var(--amber-deep)}
 .paw-divider svg{width:22px;height:22px;fill:var(--amber)}
 
 /* Product cards (for review posts) */
-.product{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:28px 0;box-shadow:var(--shadow-soft)}
+.product{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:28px 0;clear:both;box-shadow:var(--shadow-soft)}
 .product:hover{box-shadow:var(--shadow-med)}
 .product-ribbon{display:flex;align-items:center;justify-content:space-between;padding:12px 22px;background:var(--ink);color:var(--cream);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
 .product-ribbon .star{color:var(--amber)}
@@ -285,19 +285,19 @@ table.compare tr:nth-child(even){background:var(--cream)}
 .filter-count{font-size:13px;color:var(--ink-soft);padding:10px 16px;background:var(--cream-deep);border-radius:6px;display:inline-block;margin:12px 0 8px}
 
 /* Fun fact box */
-.funfact{background:linear-gradient(135deg,#F7F2FC 0%,var(--cream-deep) 100%);border:1px solid var(--line);border-left:5px solid var(--amber);border-radius:0 12px 12px 0;padding:18px 24px;margin:28px 0;position:relative}
+.funfact{background:linear-gradient(135deg,#F7F2FC 0%,var(--cream-deep) 100%);border:1px solid var(--line);border-left:5px solid var(--amber);border-radius:0 12px 12px 0;padding:18px 24px;margin:28px 0;clear:both;position:relative}
 .funfact .ff-label{display:block;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--amber-deep);margin-bottom:6px}
 .funfact p{margin:0;font-size:16px;color:var(--ink-soft);line-height:1.6}
 .funfact p strong{color:var(--ink)}
 
 /* Vet warning box */
-.vet-warning{background:#FDEEF0;border:1px solid #F4CFD6;border-left:5px solid var(--clay);border-radius:0 12px 12px 0;padding:20px 24px;margin:28px 0}
+.vet-warning{background:#FDEEF0;border:1px solid #F4CFD6;border-left:5px solid var(--clay);border-radius:0 12px 12px 0;padding:20px 24px;margin:28px 0;clear:both}
 .vet-warning h4{font-family:'Instrument Serif',Georgia,serif;font-size:18px;color:var(--clay);margin-bottom:8px}
 .vet-warning p{margin-bottom:8px;font-size:15.5px;color:var(--ink-soft)}
 .vet-warning p:last-child{margin-bottom:0}
 
 /* Vet tip / positive box */
-.vet-tip{background:#E9F5EE;border:1px solid #CFE6D8;border-left:5px solid var(--moss);border-radius:0 12px 12px 0;padding:20px 24px;margin:28px 0}
+.vet-tip{background:#E9F5EE;border:1px solid #CFE6D8;border-left:5px solid var(--moss);border-radius:0 12px 12px 0;padding:20px 24px;margin:28px 0;clear:both}
 .vet-tip h4{font-family:'Instrument Serif',Georgia,serif;font-size:18px;color:var(--forest);margin-bottom:8px}
 .vet-tip p{margin-bottom:8px;font-size:15.5px;color:var(--ink-soft)}
 .vet-tip p:last-child{margin-bottom:0}
@@ -314,7 +314,7 @@ table.compare tr:nth-child(even){background:var(--cream)}
 .kit-section{margin:24px 0;clear:both}
 .kit-section h3{font-family:'Instrument Serif',Georgia,serif;font-size:20px;margin:28px 0 6px}
 .kit-section .kit-note{font-size:14px;color:var(--ink-soft);font-style:italic;margin-bottom:14px}
-.kit-item{display:flex;gap:14px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow-soft)}
+.kit-item{display:flex;gap:14px;align-items:flex-start;clear:both;background:#fff;border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow-soft)}
 .kit-item .kit-check{flex-shrink:0;width:26px;height:26px;border-radius:6px;border:2px solid var(--amber);color:var(--amber);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;margin-top:2px}
 .kit-item .kit-body{flex:1}
 .kit-item .kit-name{font-weight:700;font-size:16px;color:var(--ink);display:block;margin-bottom:3px}
@@ -393,7 +393,7 @@ table.compat tbody tr:hover td.m{filter:brightness(.95)}
 /* Free download card */
 .download-card{display:flex;gap:22px;align-items:center;clear:both;background:linear-gradient(135deg,#2A2140 0%,var(--ink) 100%);color:var(--cream);border-radius:14px;padding:24px 28px;margin:36px 0;box-shadow:var(--shadow-med);flex-wrap:wrap}
 .download-card .dl-thumb{flex-shrink:0;width:92px;border-radius:8px;overflow:hidden;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.3)}
-.download-card .dl-thumb img{width:100%;display:block;margin:0;border-radius:0;box-shadow:none}
+.download-card .dl-thumb img{width:100%;display:block;float:none;margin:0;border-radius:0;box-shadow:none}
 .download-card .dl-body{flex:1;min-width:220px}
 .download-card .dl-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:var(--amber);padding:4px 11px;border-radius:20px;margin-bottom:9px}
 .download-card h3{font-family:'Instrument Serif',Georgia,serif;font-size:22px;color:#fff;margin-bottom:6px;line-height:1.25}
