@@ -22,7 +22,7 @@ product shot survives a future re-paste of the article.
 
 The ten, in order: After Dark Chicken &amp; Duck · Born Carnivore Chicken &amp;
 Egg · Luau Succulent Chicken · Velvet Mousse Variety · Silver Variety · Baby
-Chicken &amp; Egg · Aloha Friends Tuna &amp; Pumpkin · Grill Variety · Luau Lean
+Chicken &amp; Egg · Friends Tuna &amp; Pumpkin Mousse · Grill Variety · Luau Lean
 Gelée · Stix.
 
 **2. The care sheet.** Upload `tiki-cat-line-chooser.png` (2000 × 3216) through
