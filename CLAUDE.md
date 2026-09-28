@@ -173,3 +173,28 @@ if (path === '/admin/login' || path === '/admin/setup') return next();
 of their own admin the first time a session expired. Anything else mounted at
 `/admin` later needs the same exemption. Test it logged **out** — with a valid
 session cookie the gate passes and the bug stays invisible.
+
+## Restyling the older posts
+
+The owner chose a mixed approach for the nine or so posts written before the
+plum retheme:
+
+- **Care guides get the full treatment** — gecko, guinea pig ×2, aquarium
+  nitrogen cycle, fish compatibility. Rewritten to the section order above,
+  6,000–7,500 words, with a printable sheet each.
+- **Reviews and shorter pieces are restructured only** — cat water fountains,
+  Stella and Chewy's. Their existing sentences are kept and reorganised into the
+  house blocks; nothing is padded to hit a word count.
+
+**Every image `src` and link `href` already in a post is carried across exactly
+as it is.** Those point at media the owner uploaded and affiliate links that
+already earn — losing one is worse than an ugly layout.
+
+The theme already colours everything, so a post only looks "old" where it fights
+the theme: inline `style="color:…"` / `background:` attributes, or a `<style>`
+block in the body. `analyze-export.py` flags those per post, along with which
+house blocks each post already has and its word count, so the work can be sized
+before any of it is rewritten.
+
+`export-posts.bat` pulls the bodies out of D1; there is no way to read the live
+database from this environment.
