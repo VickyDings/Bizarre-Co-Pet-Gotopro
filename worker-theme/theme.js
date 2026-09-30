@@ -293,6 +293,10 @@ a{color:var(--amber-deep)}
 .product-ribbon{display:flex;align-items:center;justify-content:space-between;padding:12px 22px;background:var(--ink);color:var(--cream);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
 .product-ribbon .star{color:var(--amber)}
 .product-body{display:grid;grid-template-columns:240px 1fr;gap:24px;padding:26px}
+/* Hiding the empty well takes it out of the grid, but the 240px track stays,
+   so the text landed in the narrow column with 394px of dead space beside it.
+   No photo means one column, full width. */
+.product-body:not(:has(.product-image-wrap img)){grid-template-columns:1fr}
 /* An unfilled well collapses on the public site, the same way .pgp-prod-img
    does. The placeholder inside it is an instruction to whoever is editing -
    drop your product photo here - and a visitor must never read that. This

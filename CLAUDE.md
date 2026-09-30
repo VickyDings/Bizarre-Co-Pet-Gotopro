@@ -132,6 +132,20 @@ https://www.amazon.com/s?k=SEARCH+TERMS&tag=petgo2pro-20
 the affiliate disclosure on any page matching `/amazon\./i`. Always give a price
 *range* plus the `*Price starts from and is subject to change` line — never a fixed price.
 
+**Hiding a grid item does not remove its track.** `.product-body` is a
+`240px 1fr` grid. Taking the empty image well out with `display:none` left the
+240px column behind, so the text rendered in the narrow one with 394px of dead
+space beside it — a card crushed to a third of its width. `.product-body` now
+drops to a single column when there is no `img` in the well. Check what happens
+to the *siblings* whenever something is hidden inside a grid or flex parent;
+hiding it cleanly is only half the test.
+
+**A product card only looks like the Stella & Chewy's one when it has a photo
+in the well.** Same component, same CSS — the two-column layout is the image
+column plus the content column. With no photo it is a clean full-width card,
+which is correct but different. If the owner asks why a new review looks
+unlike an old one, this is almost always why.
+
 **An unfilled well must collapse, not print its own instructions.** The Tiki
 review shipped ten wells reading *"Drop your product photo here"* with nothing
 hiding them — that text would have gone out to every visitor. `.pgp-prod-img`
