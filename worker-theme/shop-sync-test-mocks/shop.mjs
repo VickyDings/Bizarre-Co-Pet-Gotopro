@@ -75,6 +75,10 @@ const SHOP_SCHEMA = [
      alt TEXT DEFAULT '',
      sort INTEGER DEFAULT 0)`,
   `CREATE UNIQUE INDEX IF NOT EXISTS idx_shop_images_url ON shop_images(product_id, url)`,
+  `CREATE TABLE IF NOT EXISTS shop_ignored (
+     remote_id TEXT PRIMARY KEY,
+     name TEXT DEFAULT '',
+     ignored_at TEXT NOT NULL)`,
   `CREATE TABLE IF NOT EXISTS shop_sync_log (
      id INTEGER PRIMARY KEY AUTOINCREMENT,
      ran_at TEXT NOT NULL,
@@ -335,10 +339,18 @@ export async function syncFromPrintify(env, db, { cacheImages = true } = {}) {
     if (!batch.length || page >= lastPage) break;
   }
 
+  // Deleting a product in the admin only removes the local row. The product
+  // is still in Printify, so without this the very next sync would put it
+  // straight back and the duplicate the owner just cleared would reappear.
+  const ignored = new Set(((await db.prepare('SELECT remote_id FROM shop_ignored').all()).results || [])
+    .map(r => String(r.remote_id)));
+  let skippedIgnored = 0;
+
   // 2. Upsert
   for (const p of list) {
     if (!p?.id) continue;
     const remoteId = String(p.id);
+    if (ignored.has(remoteId)) { skippedIgnored++; continue; }
     const title = String(p.title || 'Untitled');
 
     // is_enabled false means the merchant switched that variant off in
@@ -463,11 +475,14 @@ export async function syncFromPrintify(env, db, { cacheImages = true } = {}) {
     retired = r.meta?.changes ?? 0;
   }
 
-  const note = retired ? `OK — ${retired} product(s) no longer at the provider were set back to draft` : 'OK';
+  const note = [
+    retired ? `${retired} product(s) no longer at the provider were set back to draft` : '',
+    skippedIgnored ? `${skippedIgnored} deleted product(s) were skipped` : '',
+  ].filter(Boolean).join('; ') || 'OK';
   await db.prepare('INSERT INTO shop_sync_log (ran_at, ok, products, variants, images, message) VALUES (?, 1, ?, ?, ?, ?)')
     .bind(stamp, productCount, variantCount, imageCount, note).run();
 
-  return { products: productCount, variants: variantCount, images: imageCount, retired };
+  return { products: productCount, variants: variantCount, images: imageCount, retired, skippedIgnored };
 }
 
 // ————————————————————————————————————————————————
@@ -525,6 +540,14 @@ const SHOP_CSS = `
 .shop-card h3 a:hover{color:#C42A6E}
 .shop-card .price{font-weight:700;color:#C42A6E;font-size:17px;margin-top:auto}
 .shop-card .vcount{font-size:12px;color:#6E6480}
+button.hmenu{background:none;border:none;color:inherit;font:inherit;text-transform:inherit;
+  letter-spacing:inherit;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:5px}
+button.hmenu:hover{text-decoration:underline}
+.hmenu-pop{position:fixed;z-index:80;background:#fff;border:1px solid #E5E0EE;border-radius:10px;
+  box-shadow:0 10px 30px rgba(21,17,28,.18);padding:6px;min-width:190px;max-height:60vh;overflow:auto}
+.hmenu-pop button{display:block;width:100%;text-align:left;background:none;border:none;font:inherit;
+  font-size:14px;padding:8px 12px;border-radius:6px;cursor:pointer;color:#15111C}
+.hmenu-pop button:hover{background:#F1EDF7;color:#C42A6E}
 .shop-card .tags{display:flex;flex-wrap:wrap;gap:6px}
 .shop-card .tags a{font-size:11px;letter-spacing:.04em;text-transform:uppercase;font-weight:700;
   color:#6E6480;background:#F1EDF7;border:1px solid #E5E0EE;border-radius:999px;padding:3px 9px;text-decoration:none}
@@ -865,6 +888,14 @@ shopAdminRoutes.get('/shop', async (c) => {
     `SELECT * FROM shop_products ${sql} ORDER BY sort ASC, name ASC`).bind(...args).all()).results || [];
   const total = (await db.prepare('SELECT COUNT(*) n FROM shop_products').first())?.n || 0;
   const last = await db.prepare('SELECT * FROM shop_sync_log ORDER BY id DESC LIMIT 1').first();
+  const hidden = (await db.prepare('SELECT COUNT(*) n FROM shop_ignored').first())?.n || 0;
+  const unclassified = (await db.prepare(
+    "SELECT COUNT(*) n FROM shop_products WHERE COALESCE(animal,'')='' OR COALESCE(item_type,'')=''").first())?.n || 0;
+  // Two products with the same title are almost always the same design
+  // uploaded to Printify twice. Flagging them is the only way to find them
+  // in a list of sixty.
+  const dupeNames = new Set(((await db.prepare(
+    'SELECT name FROM shop_products GROUP BY name HAVING COUNT(*) > 1').all()).results || []).map(r => r.name));
   const flash = c.req.query('ok');
   const flashErr = c.req.query('err');
   const mode = settings.shop_mode || 'preview';
@@ -873,8 +904,10 @@ shopAdminRoutes.get('/shop', async (c) => {
     <tr>
       <td style="width:34px"><input type="checkbox" class="bulk-pick" name="ids" value="${p.id}" aria-label="Select ${esc(p.name)}"></td>
       <td style="width:56px"><img src="${esc(productImg(p))}" alt="" style="width:44px;height:44px;object-fit:cover;border-radius:6px;background:#F1EDF7"></td>
-      <td><a href="/admin/shop/${p.id}"><strong>${esc(p.name)}</strong></a><br><span style="font-size:12px;color:#6E6480">/shop/${esc(p.slug)}</span></td>
-      <td style="font-size:12px;color:#6E6480">${esc(p.animal || '—')}<br>${esc(p.item_type || '—')}</td>
+      <td><a href="/admin/shop/${p.id}"><strong>${esc(p.name)}</strong></a>${dupeNames.has(p.name)
+        ? ' <span style="font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#B3261E;background:#FDEEF0;border:1px solid #F4CFD6;border-radius:999px;padding:2px 7px;white-space:nowrap">duplicate</span>' : ''}<br><span style="font-size:12px;color:#6E6480">/shop/${esc(p.slug)}</span></td>
+      <td style="font-size:13px">${esc(p.animal || '—')}</td>
+      <td style="font-size:13px">${esc(p.item_type || '—')}</td>
       <td style="font-size:13px">${money(p.base_cost, p.currency)}</td>
       <td style="font-size:13px"><strong>${money(displayPrice(p), p.currency)}</strong>${p.price_override ? ' <span style="font-size:11px;color:#C42A6E">override</span>' : ''}</td>
       <td><span class="badge ${p.status === 'published' ? 'published' : 'draft'}">${esc(p.status)}</span></td>
@@ -899,6 +932,38 @@ shopAdminRoutes.get('/shop', async (c) => {
     </div>
   </div>
 </div>
+
+${unclassified ? `<div class="card" style="border-left:4px solid #C9A227">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+    <div>
+      <strong>${unclassified} product${unclassified === 1 ? '' : 's'} have no category yet</strong>
+      <div style="font-size:13px;color:#6E6480;margin-top:4px">Anything synced before categories existed came in blank. This guesses both from the title — it only fills empty fields, so nothing you have set is overwritten.</div>
+    </div>
+    <form method="POST" action="/admin/shop/classify">
+      <button class="btn">Categorize them</button>
+    </form>
+  </div>
+</div>` : ''}
+
+${dupeNames.size ? `<div class="card" style="border-left:4px solid #B3261E">
+  <strong>${dupeNames.size} title${dupeNames.size === 1 ? ' appears' : 's appear'} more than once</strong>
+  <div style="font-size:13px;color:#6E6480;margin-top:4px">
+    Marked <span style="font-size:10.5px;font-weight:700;text-transform:uppercase;color:#B3261E">duplicate</span> in the list below.
+    They are separate products in Printify, so tick the ones you do not want and use <strong>Delete</strong> — that also stops the next sync restoring them.
+  </div>
+</div>` : ''}
+
+${hidden ? `<div class="card" style="border-left:4px solid #B3261E">
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+    <div>
+      <strong>${hidden} deleted product${hidden === 1 ? '' : 's'} hidden from sync</strong>
+      <div style="font-size:13px;color:#6E6480;margin-top:4px">They still exist in Printify. Syncing will not bring them back until you restore them.</div>
+    </div>
+    <form method="POST" action="/admin/shop/restore" onsubmit="return confirm('Stop hiding ${hidden} deleted product(s)? They come back on the next sync.')">
+      <button class="btn ghost">Restore all</button>
+    </form>
+  </div>
+</div>` : ''}
 
 <div class="card">
   <form method="get" action="/admin/shop" style="display:flex;align-items:end;gap:12px;flex-wrap:wrap">
@@ -943,9 +1008,14 @@ shopAdminRoutes.get('/shop', async (c) => {
 <table class="list">
   <tr>
     <th style="width:34px"><input type="checkbox" id="bulk-all" aria-label="Select every product shown"></th>
-    <th></th><th>Product</th><th>Category</th><th>Base cost</th><th>Your price</th><th>Status</th><th></th>
+    <th></th><th>Product</th>
+    <th><button type="button" class="hmenu" data-field="animal">Animal <span aria-hidden="true">&#9662;</span></button></th>
+    <th><button type="button" class="hmenu" data-field="item_type">Item type <span aria-hidden="true">&#9662;</span></button></th>
+    <th>Base cost</th><th>Your price</th>
+    <th><button type="button" class="hmenu" data-field="status">Status <span aria-hidden="true">&#9662;</span></button></th>
+    <th></th>
   </tr>
-  ${rows || `<tr><td colspan="8" style="padding:22px;text-align:center;color:#6E6480">${active
+  ${rows || `<tr><td colspan="9" style="padding:22px;text-align:center;color:#6E6480">${active
     ? 'Nothing matches that filter. <a href="/admin/shop">Clear it</a>.'
     : 'No products yet. Build them in the Printify dashboard, then hit <strong>Sync now</strong>.'}</td></tr>`}
 </table>
@@ -1006,10 +1076,14 @@ ${products.length ? `
       </select>
     </div>
     <button class="btn" id="bulkgo">Apply to selected</button>
+    <button class="btn" id="bulkdel" formaction="/admin/shop/delete"
+      style="background:#B3261E;margin-left:auto">Delete selected</button>
   </div>
   <p style="font-size:12px;color:#6E6480;margin:12px 0 0">
     <strong>Base cost &times; 2.5</strong> on a $9.67 item gives $24.18, or $24.99 rounded to .99.
     Printify's own retail price is used whenever no override is set.
+    <br><strong>Delete</strong> is for duplicates: it removes the product here and stops the next
+    sync putting it back. It does not delete anything in Printify.
   </p>
 </div>` : ''}
 </form>
@@ -1019,17 +1093,18 @@ ${products.length ? `
   var form = document.getElementById('bulkform');
   if (!form) return;
   var all = document.getElementById('bulk-all');
-  var boxes = function(){ return [].slice.call(form.querySelectorAll('.bulk-pick')); };
   var go = document.getElementById('bulkgo');
+  var del = document.getElementById('bulkdel');
   var mode = document.getElementById('b_pmode');
   var val = document.getElementById('b_pval');
+  var boxes = function(){ return [].slice.call(form.querySelectorAll('.bulk-pick')); };
+  var count = function(){ return boxes().filter(function(b){ return b.checked; }).length; };
 
-  function count(){ return boxes().filter(function(b){ return b.checked; }).length; }
   function refresh(){
     var n = count();
     if (go) go.textContent = n ? 'Apply to ' + n + ' selected' : 'Apply to selected';
+    if (del) del.textContent = n ? 'Delete ' + n : 'Delete selected';
     if (all) all.indeterminate = n > 0 && n < boxes().length;
-    // A value is meaningless for "clear", and required for the rest
     if (val && mode) val.disabled = (mode.value === '' || mode.value === 'clear');
   }
   if (all) all.addEventListener('change', function(){
@@ -1038,12 +1113,79 @@ ${products.length ? `
   form.addEventListener('change', refresh);
   refresh();
 
+  // ——— Column header menus ———
+  // The quick edits live on the column they affect: tick some rows, click
+  // "Animal", pick a value. The menu is position:fixed because table.list is
+  // overflow:hidden and would otherwise clip it away to nothing.
+  var pop = document.createElement('div');
+  pop.className = 'hmenu-pop';
+  pop.hidden = true;
+  document.body.appendChild(pop);
+  var openFor = null;
+
+  function closeMenu(){ pop.hidden = true; openFor = null; }
+
+  function openMenu(btn){
+    var field = btn.getAttribute('data-field');
+    var sel = form.querySelector('[name="' + field + '"]');
+    if (!sel) return;
+    pop.innerHTML = '';
+    [].slice.call(sel.options).forEach(function(o){
+      if (!o.value) return;                       // skip "leave alone"
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = o.textContent;
+      b.addEventListener('click', function(){
+        // Set only this field, clear the others, then submit — so clicking
+        // "Cats" cannot also carry a price rule somebody set earlier.
+        ['animal','item_type','status','price_mode'].forEach(function(k){
+          var el = form.querySelector('[name="' + k + '"]');
+          if (el) el.value = (k === field) ? o.value : '';
+        });
+        closeMenu();
+        if (typeof form.requestSubmit === 'function') form.requestSubmit(go); else form.submit();
+      });
+      pop.appendChild(b);
+    });
+    var r = btn.getBoundingClientRect();
+    pop.hidden = false;
+    pop.style.top = (r.bottom + 4) + 'px';
+    pop.style.left = Math.min(r.left, innerWidth - pop.offsetWidth - 12) + 'px';
+    openFor = btn;
+  }
+
+  [].slice.call(document.querySelectorAll('.hmenu')).forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      if (openFor === btn) { closeMenu(); return; }
+      if (!count()) { alert('Tick some products first, then choose a value from the column.'); return; }
+      openMenu(btn);
+    });
+  });
+  document.addEventListener('click', function(e){ if (!pop.contains(e.target)) closeMenu(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeMenu(); });
+  addEventListener('scroll', closeMenu, { passive: true });
+  addEventListener('resize', closeMenu);
+
+  // ——— Confirmations ———
   form.addEventListener('submit', function(e){
     var n = count();
     if (!n) { e.preventDefault(); alert('Tick at least one product first.'); return; }
+
+    var deleting = e.submitter === del;
+    if (deleting) {
+      if (!confirm('Delete ' + n + ' product' + (n === 1 ? '' : 's') + ' from the site?\n\n' +
+                   'They stay in Printify, and the next sync will not bring them back. ' +
+                   'Anything you wrote in the description, and any price override, is lost.')) {
+        e.preventDefault();
+      }
+      return;
+    }
+
     var bits = [];
     ['b_animal','b_type','b_status'].forEach(function(id){
-      var el = document.getElementById(id); if (el && el.value) bits.push(el.options[el.selectedIndex].text);
+      var el = document.getElementById(id);
+      if (el && el.value) bits.push(el.options[el.selectedIndex].text);
     });
     if (mode && mode.value) bits.push('a new price');
     if (!bits.length) { e.preventDefault(); alert('Choose at least one thing to change.'); return; }
@@ -1301,6 +1443,76 @@ shopAdminRoutes.post('/shop/bulk', async (c) => {
   const note = `Updated ${changed} product${changed === 1 ? '' : 's'} (${bits.join(', ')}).` +
     (skipped ? ` ${skipped} skipped — no base cost to calculate from, so they would have come out at $0.00.` : '');
   return c.redirect(`/admin/shop?ok=${encodeURIComponent(note)}`);
+});
+
+// Remove products from the site, and remember not to fetch them again.
+//
+// This is for duplicates. The row, its variants and its gallery rows go; the
+// remote id is recorded so the next sync does not simply restore it. Cached
+// images are left in the media library, because the owner may have used one
+// in a post and a sync has no way of knowing.
+// Run the guesser over products that have no category yet.
+//
+// Anything synced before the classifier existed came in blank, and setting
+// 59 of them by hand is not a reasonable ask. Only empty fields are filled,
+// so a category the owner has already chosen is never overwritten.
+shopAdminRoutes.post('/shop/classify', async (c) => {
+  const db = c.env.DB;
+  const rows = (await db.prepare(
+    `SELECT id, name, animal, item_type FROM shop_products
+      WHERE COALESCE(animal,'') = '' OR COALESCE(item_type,'') = ''`).all()).results || [];
+  if (!rows.length) return c.redirect(`/admin/shop?ok=${encodeURIComponent('Everything already has a category.')}`);
+
+  const stamp = now();
+  const batch = [];
+  let animals = 0, types = 0;
+  for (const r of rows) {
+    const animal = r.animal || guessAnimal(r.name, []);
+    const itemType = r.item_type || guessItemType(r.name, []);
+    if (!r.animal) animals++;
+    if (!r.item_type) types++;
+    batch.push(db.prepare('UPDATE shop_products SET animal=?, item_type=?, updated_at=? WHERE id=?')
+      .bind(animal, itemType, stamp, r.id));
+  }
+  await db.batch(batch);
+  return c.redirect(`/admin/shop?ok=${encodeURIComponent(
+    `Categorized ${rows.length} product${rows.length === 1 ? '' : 's'} — ${animals} animal, ${types} item type. Check them and correct any that look wrong.`)}`);
+});
+
+shopAdminRoutes.post('/shop/delete', async (c) => {
+  const db = c.env.DB;
+  const f = await c.req.parseBody({ all: true });
+  const ids = [].concat(f.ids || []).map(x => parseInt(x, 10))
+    .filter(n => Number.isFinite(n) && n > 0).slice(0, 500);
+  if (!ids.length) return c.redirect(`/admin/shop?err=${encodeURIComponent('Nothing was selected.')}`);
+
+  const marks = ids.map(() => '?').join(',');
+  const rows = (await db.prepare(
+    `SELECT id, remote_id, name FROM shop_products WHERE id IN (${marks})`).bind(...ids).all()).results || [];
+  if (!rows.length) return c.redirect(`/admin/shop?err=${encodeURIComponent('Those products are already gone.')}`);
+
+  const stamp = now();
+  const batch = [];
+  for (const r of rows) {
+    batch.push(db.prepare('INSERT OR REPLACE INTO shop_ignored (remote_id, name, ignored_at) VALUES (?, ?, ?)')
+      .bind(String(r.remote_id), String(r.name || ''), stamp));
+    batch.push(db.prepare('DELETE FROM shop_variants WHERE product_id=?').bind(r.id));
+    batch.push(db.prepare('DELETE FROM shop_images WHERE product_id=?').bind(r.id));
+    batch.push(db.prepare('DELETE FROM shop_products WHERE id=?').bind(r.id));
+  }
+  await db.batch(batch);
+
+  const n = rows.length;
+  return c.redirect(`/admin/shop?ok=${encodeURIComponent(
+    `Deleted ${n} product${n === 1 ? '' : 's'}. They will not come back on the next sync — use Restore below if that was a mistake.`)}`);
+});
+
+// Put them back in the sync's way again. The rows are gone, so the next sync
+// re-creates them from Printify rather than this undoing the delete directly.
+shopAdminRoutes.post('/shop/restore', async (c) => {
+  const db = c.env.DB;
+  await c.env.DB.prepare('DELETE FROM shop_ignored').run();
+  return c.redirect(`/admin/shop?ok=${encodeURIComponent('Deleted products are no longer hidden. Hit Sync now to bring them back.')}`);
 });
 
 shopAdminRoutes.post('/shop/save', async (c) => {

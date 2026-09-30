@@ -364,6 +364,43 @@ bare string, which is what a single ticked box sends.
 Everything posted is checked against `SHOP_ANIMALS` / `SHOP_ITEM_TYPES` and the
 known price modes before it reaches SQL.
 
+### Duplicates, deleting, and the ignore list
+
+Printify happily holds the same design twice, and the shop had sixty products
+in it before anyone noticed. A title that appears more than once is flagged
+**duplicate** in the admin list, with a banner counting them.
+
+**Deleting only removes the local row — the product is still in Printify.**
+Without something else, the very next sync would put it straight back. So a
+delete also writes the `remote_id` into `shop_ignored`, and the sync skips
+anything in that table and reports how many it skipped. *Restore all* empties
+the table; the rows are gone, so they come back on the following sync rather
+than being undeleted.
+
+Cached images are deliberately **not** removed with the product. The owner may
+have used one in a post, and nothing here can tell.
+
+### Column header menus
+
+Tick some rows, then click **Animal**, **Item type** or **Status** in the table
+header and pick a value. Setting one field through a menu clears the others
+first, so clicking "Cats" cannot also carry a price rule somebody set earlier
+in the bulk bar.
+
+The menu is `position:fixed`. `table.list` is `overflow:hidden` for its rounded
+corners, which would clip a menu inside a `th` down to nothing.
+
+The bulk bar below the table stays: it is the no-JavaScript path, and price
+rules are too fiddly for a small menu.
+
+### Categorizing what synced before the classifier
+
+Anything imported before `animal` / `item_type` existed came in blank, which
+was 59 products. The banner offers **Categorize them**, which runs the same
+guesser over rows where either field is empty. It only fills blanks, so a
+category the owner has corrected is never overwritten — and the two fields are
+independent, so a product with the animal set still gets its item type filled.
+
 ### Testing it without the API
 
 Three suites in `worker-theme/`, none of which need a token or touch the
@@ -375,6 +412,7 @@ this repo:
 | `shop-sync-test.mjs` | 15 — cents conversion, option resolution, per-variant images, disabled variants, the retire step, the empty-response guard |
 | `shop-bulk-test.mjs` | 20 — every price rule and rounding mode, the zero-cost skip, the count in the confirmation, validation, and a single checkbox arriving as a string |
 | `shop-classify-test.mjs` | 15 titles through the animal and item-type guesser |
+| `shop-admin-test.mjs` | 11 — delete and its ignore list, restore, and categorizing blanks, using real titles from the live admin |
 
 They rebuild their mock from the live source on every run, so a suite can never
 pass against a stale copy of the file it is meant to be checking. Two of them
