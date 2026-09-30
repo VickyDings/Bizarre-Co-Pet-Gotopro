@@ -309,6 +309,37 @@ shops the token can see, the first product exactly as Printify sent it, and what
 the sync would have pulled out of it. A field Printify has renamed shows up
 there as an empty column instead of as a silent empty catalog.
 
+### Search and filters
+
+Both shop pages filter on the same three things — a text search across name and
+description, an **animal**, and an **item type** — and both go through
+`shopFilterSql()` so "search" cannot come to mean two different things.
+
+It is a plain `GET` form. No JavaScript, so the URLs are shareable and
+`/shop?animal=Reptiles` is a real page, and a filtered view points its canonical
+back at `/shop` rather than competing with it. Only values that appear in
+`SHOP_ANIMALS` / `SHOP_ITEM_TYPES` are accepted, on the way in and on save —
+they end up in a WHERE clause.
+
+The animal list is **the same one the blog uses**, so "Reptiles" means the same
+word on both sides of the site.
+
+**Printify cannot tell you which animal a design is about.** It knows the
+blueprint is a tote bag; the fact that it is a *cat* tote bag exists only in the
+title and tags. So `guessAnimal()` and `guessItemType()` classify on first
+insert, and a later sync never touches them — by then the owner may have
+corrected one in the admin. Rules are longest-phrase-first, so "bearded dragon"
+beats "dragon" and "guinea pig" is never read as a pig.
+
+The public dropdowns only offer values that have published products behind them.
+An empty category in a dropdown is a dead end the visitor has to back out of.
+
+**`flex-grow` grows the wrong way once a row stacks.** The filter bar as a
+column gave the search field `flex:1 1 220px` in a vertical container, which put
+150px of empty white under it and made the bar 469px tall on a phone — over half
+the screen before a single product. On a phone it is a grid instead: search
+spans, the two selects sit side by side, the button spans. 240px.
+
 ### Testing it without the API
 
 `worker-theme/shop-sync-test.mjs` runs the sync against a mock Printify response

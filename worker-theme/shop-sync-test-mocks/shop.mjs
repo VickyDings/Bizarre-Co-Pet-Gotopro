@@ -36,6 +36,8 @@ const SHOP_SCHEMA = [
      name TEXT NOT NULL,
      description TEXT DEFAULT '',
      category TEXT DEFAULT 'Merch',
+     animal TEXT DEFAULT '',
+     item_type TEXT DEFAULT '',
      thumb_media_id INTEGER,
      thumb_url TEXT DEFAULT '',
      base_cost REAL DEFAULT 0,
@@ -106,6 +108,22 @@ async function migrateProviderColumns(db) {
     } catch {
       // Table not created yet, or already migrated. Either is fine.
     }
+  }
+
+  // Filter columns, added later than the rest. Same guard: ADD COLUMN throws
+  // if it is already there, and CREATE TABLE IF NOT EXISTS will not add it to
+  // a table that already exists.
+  for (const [table, col, decl] of [
+    ['shop_products', 'animal', "TEXT DEFAULT ''"],
+    ['shop_products', 'item_type', "TEXT DEFAULT ''"],
+  ]) {
+    try {
+      const info = await db.prepare(`PRAGMA table_info(${table})`).all();
+      const cols = (info.results || []).map(r => r.name);
+      if (!cols.includes(col)) {
+        await db.prepare(`ALTER TABLE ${table} ADD COLUMN ${col} ${decl}`).run();
+      }
+    } catch { /* table not there yet */ }
   }
 }
 
@@ -185,6 +203,80 @@ async function cacheImage(db, url, filenameHint) {
   } catch {
     return null;
   }
+}
+
+// ————————————————————————————————————————————————
+// Classifying a product for the shop filters
+// ————————————————————————————————————————————————
+//
+// Printify knows a product is a tote bag. It does not know it is a CAT tote
+// bag, and nothing in the API says which animal a design is about — that only
+// exists in the title and the tags the designer typed. So both are guessed
+// here on first sync, and both are editable in the admin afterwards. A guess
+// is never allowed to overwrite a choice the owner has made.
+
+// Same list the blog uses, so "Reptiles" means the same word in both places.
+export const SHOP_ANIMALS = ['Dogs', 'Cats', 'Small Pets', 'Birds', 'Reptiles', 'Aquatics', 'Invertebrates', 'General'];
+
+export const SHOP_ITEM_TYPES = ['T-Shirt', 'Hoodie', 'Sweatshirt', 'Tank Top', 'Tote Bag', 'Mug',
+  'Sticker', 'Poster', 'Hat', 'Bandana', 'Blanket', 'Pillow', 'Phone Case', 'Notebook',
+  'Apron', 'Socks', 'Pin', 'Magnet', 'Water Bottle', 'Pet Bowl', 'Pet Bed', 'Other'];
+
+// Longest phrases first, so "bearded dragon" beats "dragon" and "guinea pig"
+// is never read as a pig.
+const ANIMAL_RULES = [
+  ['Small Pets', ['guinea pig', 'chinchilla', 'hedgehog', 'hamster', 'gerbil', 'ferret', 'rabbit', 'bunny', 'degu']],
+  ['Reptiles', ['bearded dragon', 'leopard gecko', 'crested gecko', 'ball python', 'corn snake', 'tortoise',
+                'chameleon', 'reptile', 'gecko', 'lizard', 'snake', 'turtle', 'iguana', 'skink']],
+  ['Invertebrates', ['jumping spider', 'hermit crab', 'praying mantis', 'tarantula', 'isopod', 'scorpion',
+                     'millipede', 'centipede', 'spider', 'mantis', 'snail', 'crab', 'beetle']],
+  ['Aquatics', ['betta fish', 'goldfish', 'axolotl', 'aquarium', 'cichlid', 'guppy', 'betta', 'fishkeep',
+                'shrimp tank', 'nano tank', 'fish']],
+  ['Birds', ['cockatiel', 'parakeet', 'budgie', 'lovebird', 'conure', 'macaw', 'parrot', 'canary',
+             'finch', 'birb', 'bird']],
+  ['Cats', ['black cat', 'kitten', 'kitty', 'feline', 'meow', 'purr', 'tabby', 'cat']],
+  ['Dogs', ['puppy', 'canine', 'doggo', 'woof', 'corgi', 'dachshund', 'retriever', 'terrier', 'dog']],
+];
+
+const ITEM_RULES = [
+  ['Tank Top', ['tank top', 'racerback']],
+  ['Sweatshirt', ['sweatshirt', 'crewneck']],
+  ['Hoodie', ['hoodie', 'hooded', 'pullover']],
+  ['T-Shirt', ['t-shirt', 'tshirt', 'tee shirt', 'unisex tee', ' tee', 'shirt']],
+  ['Tote Bag', ['tote bag', 'canvas tote', 'tote']],
+  ['Water Bottle', ['water bottle', 'tumbler', 'flask']],
+  ['Phone Case', ['phone case', 'iphone case', 'tough case']],
+  ['Pet Bowl', ['pet bowl', 'dog bowl', 'cat bowl', 'food bowl']],
+  ['Pet Bed', ['pet bed', 'dog bed', 'cat bed']],
+  ['Mug', ['coffee mug', 'enamel mug', 'mug']],
+  ['Sticker', ['sticker', 'decal']],
+  ['Poster', ['poster', 'art print', 'canvas print', 'wall art']],
+  ['Bandana', ['bandana', 'neckerchief']],
+  ['Blanket', ['blanket', 'throw']],
+  ['Pillow', ['pillow', 'cushion']],
+  ['Notebook', ['notebook', 'journal', 'spiral']],
+  ['Hat', ['snapback', 'beanie', 'trucker', 'bucket hat', 'baseball cap', ' cap', 'hat']],
+  ['Apron', ['apron']],
+  ['Socks', ['socks', 'sock']],
+  ['Magnet', ['magnet']],
+  ['Pin', ['enamel pin', 'lapel pin']],
+];
+
+function classify(rules, haystack, fallback) {
+  for (const [label, needles] of rules) {
+    for (const n of needles) {
+      if (haystack.includes(n)) return label;
+    }
+  }
+  return fallback;
+}
+
+export function guessAnimal(title, tags) {
+  return classify(ANIMAL_RULES, `${title} ${(tags || []).join(' ')}`.toLowerCase(), 'General');
+}
+
+export function guessItemType(title, tags) {
+  return classify(ITEM_RULES, `${title} ${(tags || []).join(' ')}`.toLowerCase(), 'Other');
 }
 
 // ————————————————————————————————————————————————
@@ -286,10 +378,14 @@ export async function syncFromPrintify(env, db, { cacheImages = true } = {}) {
       // Description is set on first insert only. Printify supplies one and
       // Printful did not, but once the owner has edited it in the admin a
       // later sync must not overwrite their words.
+      // Animal and item type are guessed here and only here. A later sync
+      // leaves them alone, because by then the owner may have corrected them.
       const r = await db.prepare(
-        `INSERT INTO shop_products (remote_id, slug, name, description, thumb_url, base_cost, retail_price, currency, status, sort, synced_at, created_at, updated_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, 'USD', 'draft', 0, ?, ?, ?)`
-      ).bind(remoteId, slug, title, String(p.description || ''), thumbUrl, baseCost, retail, stamp, stamp, stamp).run();
+        `INSERT INTO shop_products (remote_id, slug, name, description, animal, item_type, thumb_url, base_cost, retail_price, currency, status, sort, synced_at, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'USD', 'draft', 0, ?, ?, ?)`
+      ).bind(remoteId, slug, title, String(p.description || ''),
+             guessAnimal(title, p.tags), guessItemType(title, p.tags),
+             thumbUrl, baseCost, retail, stamp, stamp, stamp).run();
       productId = r.meta?.last_row_id;
     }
     productCount++;
@@ -429,6 +525,36 @@ const SHOP_CSS = `
 .shop-card h3 a:hover{color:#C42A6E}
 .shop-card .price{font-weight:700;color:#C42A6E;font-size:17px;margin-top:auto}
 .shop-card .vcount{font-size:12px;color:#6E6480}
+.shop-card .tags{display:flex;flex-wrap:wrap;gap:6px}
+.shop-card .tags a{font-size:11px;letter-spacing:.04em;text-transform:uppercase;font-weight:700;
+  color:#6E6480;background:#F1EDF7;border:1px solid #E5E0EE;border-radius:999px;padding:3px 9px;text-decoration:none}
+.shop-card .tags a:hover{color:#C42A6E;border-color:#C42A6E}
+.shop-filters{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;background:#fff;border:1px solid #E5E0EE;
+  border-radius:12px;padding:16px 18px;margin:26px 0 8px;box-shadow:0 2px 10px rgba(21,17,28,.05)}
+.f-field{display:flex;flex-direction:column;gap:5px;min-width:150px}
+.f-field>span{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#6E6480}
+.f-field input,.f-field select{font:inherit;font-size:15px;padding:9px 11px;border:1px solid #E5E0EE;
+  border-radius:8px;background:#fff;color:#15111C;min-height:42px}
+.f-field input:focus,.f-field select:focus{outline:2px solid #C42A6E;outline-offset:1px;border-color:#C42A6E}
+.f-grow{flex:1 1 220px}
+.f-actions{display:flex;gap:10px;align-items:center}
+.f-actions button{font:inherit;font-weight:700;font-size:15px;padding:10px 20px;border:none;border-radius:8px;
+  background:#C42A6E;color:#fff;cursor:pointer;min-height:42px}
+.f-actions button:hover{background:#A42259}
+.f-clear{font-size:14px;color:#6E6480;text-decoration:underline}
+.f-count{font-size:14px;color:#6E6480;margin:12px 0 0}
+/* On a phone the row becomes a grid, not a column. Stacking it left
+   flex:1 1 220px growing VERTICALLY, which put 150px of empty white
+   under the search box, and four stacked controls ate half the screen
+   before a single product appeared. Search spans, the two selects sit
+   side by side, the button spans. */
+@media(max-width:560px){
+  .shop-filters{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:end}
+  .f-field{min-width:0}
+  .f-grow{grid-column:1/-1;flex:0 0 auto}
+  .f-actions{grid-column:1/-1}
+  .f-actions button{flex:1}
+}
 .pdp{display:grid;grid-template-columns:1fr;gap:34px;margin:34px 0 56px}
 @media(min-width:820px){.pdp{grid-template-columns:1.05fr 1fr}}
 .pdp-gallery .main{aspect-ratio:1;background:#F1EDF7;border:1px solid #E5E0EE;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center}
@@ -462,19 +588,72 @@ shopRoutes.use('*', async (c, next) => {
   return next();
 });
 
+// Shared by the public shop and the admin list. Returns the WHERE fragment
+// and its bindings, so the two never drift apart on what "search" means.
+function shopFilterSql({ q, animal, type }, { publishedOnly }) {
+  const where = [];
+  const args = [];
+  if (publishedOnly) where.push("status='published'");
+  if (q) {
+    // Name and description both, so "tote" finds it whether the word is in
+    // the title or only in the blurb.
+    where.push('(lower(name) LIKE ? OR lower(description) LIKE ?)');
+    const like = `%${q.toLowerCase()}%`;
+    args.push(like, like);
+  }
+  if (animal) { where.push('animal = ?'); args.push(animal); }
+  if (type) { where.push('item_type = ?'); args.push(type); }
+  return { sql: where.length ? `WHERE ${where.join(' AND ')}` : '', args };
+}
+
+function readFilters(c) {
+  const u = new URL(c.req.url);
+  const get = (k) => (u.searchParams.get(k) || '').trim().slice(0, 80);
+  const animal = get('animal');
+  const type = get('type');
+  return {
+    q: get('q'),
+    // Only accept values we actually offer, so a hand-typed query string
+    // cannot put arbitrary text into a bound parameter or the page.
+    animal: SHOP_ANIMALS.includes(animal) ? animal : '',
+    type: SHOP_ITEM_TYPES.includes(type) ? type : '',
+  };
+}
+
+function selectBox(name, label, options, current) {
+  return `<label class="f-field"><span>${label}</span>
+    <select name="${name}">
+      <option value="">All</option>
+      ${options.map(o => `<option value="${esc(o)}"${o === current ? ' selected' : ''}>${esc(o)}</option>`).join('')}
+    </select></label>`;
+}
+
 shopRoutes.get('/shop', async (c) => {
   const db = c.env.DB;
   const settings = await getSettings(db);
   const menu = await getMenu(db);
-  const products = (await db.prepare(
-    "SELECT * FROM shop_products WHERE status='published' ORDER BY sort ASC, name ASC"
-  ).all()).results || [];
+  const f = readFilters(c);
+  const active = !!(f.q || f.animal || f.type);
 
+  const { sql, args } = shopFilterSql(f, { publishedOnly: true });
+  const products = (await db.prepare(
+    `SELECT * FROM shop_products ${sql} ORDER BY sort ASC, name ASC`
+  ).bind(...args).all()).results || [];
+
+  // One grouped query rather than one per product. The old version issued a
+  // COUNT per card, which is fine at ten products and not at two hundred.
   const counts = new Map();
-  for (const p of products) {
-    const r = await db.prepare('SELECT COUNT(*) n FROM shop_variants WHERE product_id=?').bind(p.id).first();
-    counts.set(p.id, r?.n || 0);
+  for (const r of (await db.prepare(
+    'SELECT product_id, COUNT(*) n FROM shop_variants GROUP BY product_id').all()).results || []) {
+    counts.set(r.product_id, r.n);
   }
+
+  // Only offer a filter value that has something behind it — an empty
+  // category in a dropdown is a dead end the visitor has to back out of.
+  const avail = (await db.prepare(
+    "SELECT animal, item_type FROM shop_products WHERE status='published'").all()).results || [];
+  const animalsWith = SHOP_ANIMALS.filter(a => avail.some(r => r.animal === a));
+  const typesWith = SHOP_ITEM_TYPES.filter(t => avail.some(r => r.item_type === t));
 
   const preview = (settings.shop_mode || 'preview') !== 'live';
   const cards = products.map(p => `
@@ -482,7 +661,9 @@ shopRoutes.get('/shop', async (c) => {
       <div class="pic"><a href="/shop/${esc(p.slug)}"><img src="${esc(productImg(p))}" alt="${esc(p.name)}" loading="lazy"></a></div>
       <div class="body">
         <h3><a href="/shop/${esc(p.slug)}">${esc(p.name)}</a></h3>
-        <div class="vcount">${counts.get(p.id)} option${counts.get(p.id) === 1 ? '' : 's'}</div>
+        ${p.animal || p.item_type ? `<div class="tags">${[p.animal, p.item_type].filter(Boolean).map(t =>
+          `<a href="/shop?${p.animal === t ? 'animal' : 'type'}=${encodeURIComponent(t)}">${esc(t)}</a>`).join('')}</div>` : ''}
+        <div class="vcount">${counts.get(p.id) || 0} option${(counts.get(p.id) || 0) === 1 ? '' : 's'}</div>
         <div class="price">${money(displayPrice(p), p.currency)}</div>
       </div>
     </article>`).join('');
@@ -494,15 +675,35 @@ shopRoutes.get('/shop', async (c) => {
 </section>
 <div class="container">
   ${preview ? `<div class="shop-note"><strong>Opening soon.</strong> The range is live to browse while we finish setting up checkout. Spotted something you want? <a href="/contact">Tell us</a> and we'll let you know the moment it's buyable.</div>` : ''}
-  <div class="shop-grid">${cards || '<p style="color:var(--ink-soft)">Products are on their way — check back shortly.</p>'}</div>
+
+  <form class="shop-filters" method="get" action="/shop" role="search">
+    <label class="f-field f-grow"><span>Search</span>
+      <input type="search" name="q" value="${esc(f.q)}" placeholder="tote, gecko, mug…" autocomplete="off">
+    </label>
+    ${animalsWith.length > 1 ? selectBox('animal', 'Animal', animalsWith, f.animal) : ''}
+    ${typesWith.length > 1 ? selectBox('type', 'Item', typesWith, f.type) : ''}
+    <div class="f-actions">
+      <button type="submit">Filter</button>
+      ${active ? `<a class="f-clear" href="/shop">Clear</a>` : ''}
+    </div>
+  </form>
+
+  ${active ? `<p class="f-count">${products.length} item${products.length === 1 ? '' : 's'}${f.q ? ` matching “${esc(f.q)}”` : ''}${f.animal ? ` in ${esc(f.animal)}` : ''}${f.type ? ` · ${esc(f.type)}` : ''}</p>` : ''}
+
+  <div class="shop-grid">${cards || `<p style="color:var(--ink-soft)">${active
+      ? 'Nothing matches that. <a href="/shop">Show everything</a>.'
+      : 'Products are on their way — check back shortly.'}</p>`}</div>
   ${pawDivider()}
 </div>`;
 
   const base = siteUrl(c, settings);
+  const titleBits = [f.animal, f.type].filter(Boolean).join(' ');
   return c.html(layout({
     settings, menu,
-    title: `Shop | ${settings.site_name}`,
+    title: `${titleBits ? `${titleBits} — ` : ''}Shop | ${settings.site_name}`,
     description: `Pet-GoToPro merchandise — bandanas, mugs, totes and tees for pet people, printed on demand.`,
+    // A filtered view is the same catalog in a different order, so it points
+    // its canonical at the plain shop rather than competing with it.
     canonical: `${base}/shop`,
     ogImage: products[0] ? `${base}${productImg(products[0])}` : `${base}${logoUrl(settings)}`,
     body: `<style>${SHOP_CSS}</style>${body}`,
@@ -657,7 +858,12 @@ shopAdminRoutes.use('*', async (c, next) => {
 shopAdminRoutes.get('/shop', async (c) => {
   const db = c.env.DB;
   const settings = await getSettings(db);
-  const products = (await db.prepare('SELECT * FROM shop_products ORDER BY sort ASC, name ASC').all()).results || [];
+  const f = readFilters(c);
+  const active = !!(f.q || f.animal || f.type);
+  const { sql, args } = shopFilterSql(f, { publishedOnly: false });
+  const products = (await db.prepare(
+    `SELECT * FROM shop_products ${sql} ORDER BY sort ASC, name ASC`).bind(...args).all()).results || [];
+  const total = (await db.prepare('SELECT COUNT(*) n FROM shop_products').first())?.n || 0;
   const last = await db.prepare('SELECT * FROM shop_sync_log ORDER BY id DESC LIMIT 1').first();
   const flash = c.req.query('ok');
   const flashErr = c.req.query('err');
@@ -667,6 +873,7 @@ shopAdminRoutes.get('/shop', async (c) => {
     <tr>
       <td style="width:56px"><img src="${esc(productImg(p))}" alt="" style="width:44px;height:44px;object-fit:cover;border-radius:6px;background:#F1EDF7"></td>
       <td><a href="/admin/shop/${p.id}"><strong>${esc(p.name)}</strong></a><br><span style="font-size:12px;color:#6E6480">/shop/${esc(p.slug)}</span></td>
+      <td style="font-size:12px;color:#6E6480">${esc(p.animal || '—')}<br>${esc(p.item_type || '—')}</td>
       <td style="font-size:13px">${money(p.base_cost, p.currency)}</td>
       <td style="font-size:13px"><strong>${money(displayPrice(p), p.currency)}</strong>${p.price_override ? ' <span style="font-size:11px;color:#C42A6E">override</span>' : ''}</td>
       <td><span class="badge ${p.status === 'published' ? 'published' : 'draft'}">${esc(p.status)}</span></td>
@@ -693,6 +900,32 @@ shopAdminRoutes.get('/shop', async (c) => {
 </div>
 
 <div class="card">
+  <form method="get" action="/admin/shop" style="display:flex;align-items:end;gap:12px;flex-wrap:wrap">
+    <div style="flex:1;min-width:200px">
+      <label for="q">Search products</label>
+      <input type="search" name="q" id="q" value="${esc(f.q)}" placeholder="name or description" autocomplete="off">
+    </div>
+    <div style="min-width:150px">
+      <label for="animal">Animal</label>
+      <select name="animal" id="animal">
+        <option value="">All</option>
+        ${SHOP_ANIMALS.map(a => `<option value="${esc(a)}"${a === f.animal ? ' selected' : ''}>${esc(a)}</option>`).join('')}
+      </select>
+    </div>
+    <div style="min-width:150px">
+      <label for="type">Item type</label>
+      <select name="type" id="type">
+        <option value="">All</option>
+        ${SHOP_ITEM_TYPES.map(t => `<option value="${esc(t)}"${t === f.type ? ' selected' : ''}>${esc(t)}</option>`).join('')}
+      </select>
+    </div>
+    <button class="btn ghost">Filter</button>
+    ${active ? '<a class="btn small ghost" href="/admin/shop">Clear</a>' : ''}
+  </form>
+  ${active ? `<p style="font-size:13px;color:#6E6480;margin:12px 0 0">Showing ${products.length} of ${total}.</p>` : ''}
+</div>
+
+<div class="card">
   <form method="POST" action="/admin/shop/mode" style="display:flex;align-items:end;gap:14px;flex-wrap:wrap">
     <div style="flex:1;min-width:220px">
       <label for="mode">Shop mode</label>
@@ -706,8 +939,10 @@ shopAdminRoutes.get('/shop', async (c) => {
 </div>
 
 <table class="list">
-  <tr><th></th><th>Product</th><th>Base cost</th><th>Your price</th><th>Status</th><th></th></tr>
-  ${rows || '<tr><td colspan="6" style="padding:22px;text-align:center;color:#6E6480">No products yet. Build them in the Printful dashboard, then hit <strong>Sync now</strong>.</td></tr>'}
+  <tr><th></th><th>Product</th><th>Category</th><th>Base cost</th><th>Your price</th><th>Status</th><th></th></tr>
+  ${rows || `<tr><td colspan="7" style="padding:22px;text-align:center;color:#6E6480">${active
+    ? 'Nothing matches that filter. <a href="/admin/shop">Clear it</a>.'
+    : 'No products yet. Build them in the Printify dashboard, then hit <strong>Sync now</strong>.'}</td></tr>`}
 </table>`;
 
   return c.html(adminLayout({ title: 'Shop', active: 'shop', body, flash, flashErr }));
@@ -834,6 +1069,19 @@ shopAdminRoutes.get('/shop/:id', async (c) => {
         <p style="font-size:12px;color:#6E6480;margin-top:5px">Base cost ${money(p.base_cost, p.currency)} · Printful retail ${money(p.retail_price, p.currency)} · aim for roughly 2× base.</p>
       </div>
       <div>
+        <label for="animal">Animal</label>
+        <select name="animal" id="animal">
+          ${SHOP_ANIMALS.map(a => `<option value="${esc(a)}"${a === (p.animal || 'General') ? ' selected' : ''}>${esc(a)}</option>`).join('')}
+        </select>
+        <p style="font-size:12px;color:#6E6480;margin-top:5px">Guessed from the title on first sync. Change it here and a later sync will leave it alone.</p>
+      </div>
+      <div>
+        <label for="item_type">Item type</label>
+        <select name="item_type" id="item_type">
+          ${SHOP_ITEM_TYPES.map(t => `<option value="${esc(t)}"${t === (p.item_type || 'Other') ? ' selected' : ''}>${esc(t)}</option>`).join('')}
+        </select>
+      </div>
+      <div>
         <label for="status">Status</label>
         <select name="status" id="status">
           <option value="draft"${p.status === 'draft' ? ' selected' : ''}>Draft — hidden from the site</option>
@@ -885,10 +1133,16 @@ shopAdminRoutes.post('/shop/save', async (c) => {
   const override = String(f.price_override || '').trim();
   const priceOverride = override === '' ? null : (parseFloat(override.replace(/[^0-9.]/g, '')) || null);
 
+  // Only accept a value the dropdown actually offers. A posted form is user
+  // input like any other, and these two go straight into a WHERE clause on
+  // the public shop.
+  const animal = SHOP_ANIMALS.includes(String(f.animal)) ? String(f.animal) : (p.animal || '');
+  const itemType = SHOP_ITEM_TYPES.includes(String(f.item_type)) ? String(f.item_type) : (p.item_type || '');
+
   await db.prepare(
-    `UPDATE shop_products SET slug=?, description=?, price_override=?, status=?, sort=?, updated_at=? WHERE id=?`
+    `UPDATE shop_products SET slug=?, description=?, animal=?, item_type=?, price_override=?, status=?, sort=?, updated_at=? WHERE id=?`
   ).bind(
-    slug, String(f.description || ''), priceOverride,
+    slug, String(f.description || ''), animal, itemType, priceOverride,
     f.status === 'published' ? 'published' : 'draft',
     parseInt(f.sort, 10) || 0, now(), id
   ).run();

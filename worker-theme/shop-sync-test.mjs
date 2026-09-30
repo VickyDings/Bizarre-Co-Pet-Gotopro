@@ -2,24 +2,12 @@
 // fake D1 that records every statement. Proves the parsing — cents, option
 // ids, per-variant images, disabled variants — without the live API.
 import fs from 'fs';
-// shop.js is server-side and is not kept in the public repo, so find it
-// wherever this is being run from: an explicit path wins, then the usual spots.
-const CANDIDATES = [
-  process.argv[2],
-  'shop.js', 'src/shop.js', '../src/shop.js', '../../src/shop.js',
-].filter(Boolean);
-const shopPath = CANDIDATES.find(f => { try { return fs.statSync(f).isFile(); } catch { return false; } });
-if (!shopPath) {
-  console.error('Could not find shop.js. Pass its path:\n  node shop-sync-test.mjs path\\to\\src\\shop.js\n\nTried: ' + CANDIDATES.join(', '));
-  process.exit(1);
-}
-console.log('testing ' + shopPath + '\n');
-const src = fs.readFileSync(shopPath, 'utf8');
+const src = fs.readFileSync('./pgp_assets/src/shop.js', 'utf8');
 
 // Stub the module's imports so it can load standalone
 fs.mkdirSync('mock', { recursive: true });
-fs.writeFileSync('shop-sync-test-mocks/hono.js', 'export class Hono{use(){}get(){}post(){}route(){}}');
-fs.writeFileSync('shop-sync-test-mocks/shop.mjs', src
+fs.writeFileSync('mock/hono.js', 'export class Hono{use(){}get(){}post(){}route(){}}');
+fs.writeFileSync('mock/shop.mjs', src
   .replace("from 'hono'", "from './hono.js'")
   .replace("from './util.js'", "from './util.js'"));
 
@@ -70,38 +58,48 @@ const mkStmt = (sql) => ({
 });
 const db = { prepare: mkStmt, batch: async () => [] };
 
-const mod = await import('./shop-sync-test-mocks/shop.mjs');
+const mod = await import('./mock/shop.mjs');
 const r = await mod.syncFromPrintify({ PRINTIFY_TOKEN: 'x' }, db, { cacheImages: true });
 console.log('sync returned:', JSON.stringify(r));
 
+// Resolve a binding by COLUMN NAME rather than position. Asserting on
+// indices meant that adding a column to the INSERT broke assertions about
+// columns that had not changed, which is noise pretending to be a failure.
+function cols(sql) {
+  const m = sql.match(/INSERT INTO \w+\s*\(([^)]*)\)/i);
+  return m ? m[1].split(',').map(x => x.trim()) : [];
+}
+const val = ([sql, binds], name) => {
+  const i = cols(sql).indexOf(name);
+  if (i < 0) throw new Error(`no column "${name}" in: ${sql.slice(0, 80)}`);
+  return binds[i];
+};
 const find = (re) => writes.filter(([sql]) => re.test(sql));
 const prod = find(/INSERT INTO shop_products/)[0];
 const vars = find(/INSERT INTO shop_variants/);
 console.log('\n--- product row ---');
-console.log('  remote_id   ', prod[1][0]);
-console.log('  slug        ', prod[1][1]);
-console.log('  name        ', prod[1][2]);
-console.log('  description ', JSON.stringify(prod[1][3]).slice(0, 40));
-console.log('  thumb_url   ', prod[1][4], '   <- should be b.png, the is_default one');
-console.log('  base_cost   ', prod[1][5], '  <- cheapest cost in dollars (1109c = 11.09)');
-console.log('  retail      ', prod[1][6], '  <- cheapest price in dollars (2900c = 29)');
+for (const k of ['remote_id','slug','name','animal','item_type','thumb_url','base_cost','retail_price'])
+  console.log(`  ${k.padEnd(14)} ${JSON.stringify(val(prod, k)).slice(0, 60)}`);
 console.log('\n--- variant rows (disabled one must be absent) ---');
-for (const [, b] of vars) {
-  console.log(`  id=${b[1]} name=${String(b[4]).padEnd(18)} size=${String(b[5]).padEnd(3)} color=${String(b[6]).padEnd(14)} hex=${String(b[7]).padEnd(8)} cost=${b[9]} price=${b[10]} avail=${b[12]}`);
-  console.log(`      img=${b[11]}`);
+for (const v of vars) {
+  const g = k => val(v, k);
+  console.log(`  id=${g('remote_variant_id')} name=${String(g('name')).padEnd(18)} size=${String(g('size')).padEnd(3)} color=${String(g('color')).padEnd(14)} cost=${g('base_cost')} price=${g('retail_price')} avail=${g('availability')}`);
+  console.log(`      img=${g('image_url')}`);
 }
 console.log('\n--- assertions ---');
 const ok = (label, cond) => console.log(`  ${cond ? 'PASS' : 'FAIL'}  ${label}`);
 ok('disabled variant excluded', vars.length === 3);
-ok('cents converted to dollars', prod[1][5] === 11.09 && prod[1][6] === 29);
-ok('size resolved from option id', vars.map(v => v[1][5]).join(',') === 'S,M,L');
-ok('color resolved from option id', vars[0][1][6] === 'Black' && vars[2][1][6] === 'Heather Grey');
-ok('color hex carried through', vars[0][1][7] === '#000000');
-ok('default image used as thumbnail', prod[1][4] === 'https://images.printify.com/b.png');
-ok('per-variant image matched by variant_ids', vars[0][1][11] === 'https://images.printify.com/a.png' && vars[2][1][11] === 'https://images.printify.com/b.png');
-ok('out-of-stock flagged', vars[1][1][12] === 'out_of_stock' && vars[0][1][12] === 'in_stock');
-ok('remote ids stored as strings', typeof prod[1][0] === 'string' && typeof vars[0][1][1] === 'string');
-ok('blueprint / provider captured', vars[0][1][2] === 5 && vars[0][1][3] === 29);
+ok('cents converted to dollars', val(prod,'base_cost') === 11.09 && val(prod,'retail_price') === 29);
+ok('size resolved from option id', vars.map(v => val(v,'size')).join(',') === 'S,M,L');
+ok('color resolved from option id', val(vars[0],'color') === 'Black' && val(vars[2],'color') === 'Heather Grey');
+ok('color hex carried through', val(vars[0],'color_code') === '#000000');
+ok('default image used as thumbnail', val(prod,'thumb_url') === 'https://images.printify.com/b.png');
+ok('per-variant image matched by variant_ids', val(vars[0],'image_url') === 'https://images.printify.com/a.png' && val(vars[2],'image_url') === 'https://images.printify.com/b.png');
+ok('out-of-stock flagged', val(vars[1],'availability') === 'out_of_stock' && val(vars[0],'availability') === 'in_stock');
+ok('remote ids stored as strings', typeof val(prod,'remote_id') === 'string' && typeof val(vars[0],'remote_variant_id') === 'string');
+ok('blueprint / provider captured', val(vars[0],'blueprint_id') === 5 && val(vars[0],'print_provider_id') === 29);
+ok('animal guessed from the title', val(prod,'animal') === 'General');
+ok('item type guessed from the title', val(prod,'item_type') === 'T-Shirt');
 
 const retire = find(/UPDATE shop_products SET status='draft'/);
 ok('missing products retired to draft', retire.length === 1);
