@@ -29,6 +29,10 @@ echo === registering the land hermit crab care sheet ===
 call npx wrangler d1 execute petgotopro --remote --command "INSERT OR REPLACE INTO guides (file,title,category,blurb,related,media_id,sort) SELECT 'hermit-crab-care-sheet.png','Land Hermit Crab Quick Care Sheet','Invertebrates','Habitat, equipment and diet on one page, with the humidity and temperature targets, the substrate recipe, both water dishes, and the molting rules that decide whether a crab reaches its third year or its third month.',COALESCE((SELECT '/blog/' || slug FROM posts WHERE instr(lower(title),'hermit') AND status='published' ORDER BY id DESC LIMIT 1),''),id,51 FROM media WHERE instr(lower(filename),'hermit-crab-care-sheet') ORDER BY id DESC LIMIT 1"
 
 echo.
+echo === registering the saltwater setup sheet ===
+call npx wrangler d1 execute petgotopro --remote --command "INSERT OR REPLACE INTO guides (file,title,category,blurb,related,media_id,sort) SELECT 'saltwater-care-sheet.png','Saltwater Setup Quick Sheet','Aquatics','Every parameter with its target and test frequency, the week-by-week setup timeline, the stocking order, the maintenance routine and the four ways a first marine tank usually fails.',COALESCE((SELECT '/blog/' || slug FROM posts WHERE instr(lower(title),'saltwater') AND status='published' ORDER BY id DESC LIMIT 1),''),id,52 FROM media WHERE instr(lower(filename),'saltwater-care-sheet') ORDER BY id DESC LIMIT 1"
+
+echo.
 echo === done ===
 echo If a sheet did not register, upload its PNG in the admin media library first.
 pause

@@ -77,7 +77,21 @@ and "Push a cotton bud into the ear canal". Sheet sources live beside the templa
    will not open on double-click.
 
    Existing keys: `budgie-care-sheet.png`, `budgie-breeding-sheet.png`,
-   `dog-grooming-sheet.png`, plus nine older `.jpg` guides.
+   `dog-grooming-sheet.png`, `shrimp-care-sheet.png`, `hermit-crab-care-sheet.png`,
+   `saltwater-care-sheet.png`, plus nine older `.jpg` guides.
+   `register-new-guides.bat` holds the last three and is safe to re-run — a sheet
+   whose PNG is not uploaded yet matches nothing and skips.
+
+   **Lay the page out at its final height before measuring it.** The renderer
+   used to compute the content box, then resize the viewport, then screenshot
+   with the box it measured first. Resizing reflowed the page, so the clip
+   coordinates were stale and the footer was pulled up into the header. Set the
+   tall viewport, then measure, then clip.
+
+   One false alarm worth knowing: a faint logo and tagline appear over the header
+   when a finished sheet is viewed downscaled. Sampling the pixels at full
+   resolution finds nothing there but the header gradient. It is an artifact of
+   the preview, not of the file — check the pixels before re-rendering.
 
    For a sheet not yet registered, write the thumbnail `src` and button `href` as
    `/media/SOMETHING_MEDIA_ID`.
@@ -165,7 +179,18 @@ two or more paragraphs of running prose.
 
 ### Images
 
-Unsplash, via the MCP connector. In the published post use the plain form:
+Unsplash, via the MCP connector. **Read each result's own description before
+using it** — the search term is not a guarantee, and three guides in a row turned
+up a wrong-species result that a quick glance would have shipped. An aquarium
+search returned an anubias plant; a "cherry shrimp" search returned a Blood Red
+Fire Shrimp, which is marine and no relation to a Neocaridina; two "hermit crab"
+results were marine animals photographed underwater and in a tide pool, not the
+land species the guide was about; and a "clownfish anemone" search returned a hot
+air balloon. The description field usually names the species outright, and the
+`alt` line stored beside each photo id in `PET_CATEGORIES` exists so this can be
+re-checked later without loading anything.
+
+In the published post use the plain form:
 
 ```
 https://images.unsplash.com/photo-XXXXXXXX?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1080
