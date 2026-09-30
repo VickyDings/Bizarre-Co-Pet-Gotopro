@@ -1,0 +1,35 @@
+PHOTO SHOT LIST — axolotl-care-guide
+============================================================
+19 images, listed in the order they appear in the post.
+Upload each in Admin -> Media, then replace the Nth /media/00 with its number.
+
+ 1. leucistic axolotl resting on fine sand in a planted tank, gills visible
+ 2. digital aquarium thermometer reading in the 60s Fahrenheit next to a tank
+ 3. liquid test kit tubes showing ammonia, nitrite and nitrate results lined up
+ 4. axolotl tank showing fine sand substrate, two hides and low-light plants
+ 5. axolotl taking an earthworm from feeding tongs
+ 6. healthy axolotl with full feathery gills held out and a straight tail
+ 7. stressed axolotl with gills curled forward and tail tip curled to one side
+ 8. Seachem Prime water conditioner bottle
+ 9. API Freshwater Master Test Kit box with test tubes
+10. Bottle of live nitrifying bacteria starter
+11. Digital aquarium thermometer with external probe
+12. Aquarium chiller unit with hose connections
+13. Tub of live nightcrawler earthworms in bedding
+14. Pouch of soft sinking axolotl pellets
+15. Sponge filter with air line and air pump
+16. Bag of fine aquarium sand
+17. Gravel vacuum siphon with hose and bucket
+18. Tub of non-iodised aquarium salt
+19. Food-safe plastic storage bin with lid used as a hospital tub
+
+Images 1-7 are your own axolotl/tank photos.
+Images 8-19 are product packshots, in shop order:
+  water care (3) -> cooling (2) -> food (2) -> tank & equipment (3) -> emergency (2)
+
+REPLACE EVERY /media/00 BEFORE YOU PUBLISH. These are real <img> tags, so an
+unreplaced one renders as a broken-image icon to visitors — it does not hide
+itself. (The empty boxes the Section button inserts do collapse; these don't.)
+
+If you don't have a photo for one of them yet, delete that whole <img> line
+rather than publishing it broken.

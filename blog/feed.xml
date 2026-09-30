@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Bizarre Co Pet Care Guides</title>
+    <link>https://pet-gotopro.com/blog</link>
+    <description>Beginner-friendly pet care guides with tested product recommendations.</description>
+    <language>en</language>
+    <atom:link href="https://pet-gotopro.com/blog/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Axolotl Care Guide 2026: Health, Diet, Habitat &amp; Best Products</title>
+      <link>https://pet-gotopro.com/blog/axolotl-care-guide</link>
+      <guid isPermaLink="true">https://pet-gotopro.com/blog/axolotl-care-guide</guid>
+      <description>The complete beginner's axolotl care guide - tank setup, water parameters, feeding, health problems and the exact food, supplements and supplies we recommend for a healthy axolotl.</description>
+      <pubDate>Sat, 23 Aug 2026 09:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Bearded Dragon Care Guide 2026: Setup, UVB, Diet &amp; Best Products</title>
+      <link>https://pet-gotopro.com/blog/bearded-dragon-care-guide</link>
+      <guid isPermaLink="true">https://pet-gotopro.com/blog/bearded-dragon-care-guide</guid>
+      <description>The complete beginner's bearded dragon care guide - enclosure size, basking temperatures, UVB, the diet ratio that changes with age, health problems, and the exact food, supplements and supplies we recommend.</description>
+      <pubDate>Sat, 23 Aug 2026 09:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

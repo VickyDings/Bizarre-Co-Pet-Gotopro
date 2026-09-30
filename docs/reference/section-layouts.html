@@ -1,0 +1,182 @@
+<!-- =============================================================
+  PASTE-READY SECTION BLOCKS
+  Requires section-layouts.css in the site theme (add it once).
+  Every src="/media/00" is a placeholder - swap 00 for the number
+  Admin -> Media shows after upload.
+
+  These are the blocks an "Add section" toolbar button should insert.
+  ============================================================= -->
+
+
+<!-- ========== A. PLAIN SECTION (image gets its own band) ========== -->
+<div class="pgp-section">
+  <h2>🌾 Section heading</h2>
+  <p>Body copy for this section.</p>
+  <img class="pgp-img img-full img-center" src="/media/00" alt="Describe the photo">
+</div>
+
+
+<!-- ========== B. TWO COLUMNS — image + text ========== -->
+<div class="pgp-section">
+  <h2>☀️ Section heading</h2>
+  <div class="pgp-grid pgp-grid--2">
+    <div class="pgp-cell">
+      <img src="/media/00" alt="Describe the photo">
+      <p class="pgp-cap">Optional caption</p>
+    </div>
+    <div class="pgp-cell">
+      <h3>Sub-heading</h3>
+      <p>Text sitting alongside the image. On a phone this drops below it automatically.</p>
+      <ul><li>Point one</li><li>Point two</li></ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- ========== C. TWO COLUMNS — two images ========== -->
+<div class="pgp-section">
+  <div class="pgp-grid pgp-grid--2">
+    <div class="pgp-cell">
+      <img src="/media/00" alt="Left photo">
+      <p class="pgp-cap">✓ Correct setup</p>
+    </div>
+    <div class="pgp-cell">
+      <img src="/media/00" alt="Right photo">
+      <p class="pgp-cap">✕ What to avoid</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ========== D. THREE COLUMNS — text blocks ========== -->
+<div class="pgp-section pgp-section--cream">
+  <h2>⚖️ Section heading</h2>
+  <div class="pgp-grid pgp-grid--3">
+    <div class="pgp-cell"><h4>First</h4><p>Short block of text.</p></div>
+    <div class="pgp-cell"><h4>Second</h4><p>Short block of text.</p></div>
+    <div class="pgp-cell"><h4>Third</h4><p>Short block of text.</p></div>
+  </div>
+</div>
+
+
+<!-- ========== E. THREE COLUMNS — products ========== -->
+<div class="pgp-section">
+  <h2>🌟 Our picks</h2>
+  <p class="pgp-sec-sub">One line on how to choose within this category.</p>
+  <div class="pgp-grid pgp-grid--3 pgp-grid--even">
+
+    <div class="pgp-cell">
+      <div class="pgp-prod">
+        <span class="pgp-prod-badge pick">✓ Our pick</span>
+        <div class="pgp-prod-img"><img src="/media/00" alt="Product name"></div>
+        <h4>Exact Product Name</h4>
+        <div class="pgp-prod-price">$00–$00</div>
+        <div class="pgp-prod-disc">*Price starts from and is subject to change</div>
+        <p>Two sentences of real reasoning, plus one honest caveat.</p>
+        <a class="cta-btn" href="PASTE-AMZN-LINK" target="_blank" rel="nofollow sponsored noopener">Shop on Amazon</a>
+        <p class="pgp-prod-note">Also available in Canada, France, Germany, Italy, Netherlands, Poland, Spain, Sweden, and the United Kingdom — Amazon OneLink will redirect you automatically.</p>
+      </div>
+    </div>
+
+    <div class="pgp-cell">
+      <div class="pgp-prod">
+        <span class="pgp-prod-badge">Budget option</span>
+        <div class="pgp-prod-img"><img src="/media/00" alt="Product name"></div>
+        <h4>Exact Product Name</h4>
+        <div class="pgp-prod-price">$00–$00</div>
+        <div class="pgp-prod-disc">*Price starts from and is subject to change</div>
+        <p>Two sentences of real reasoning, plus one honest caveat.</p>
+        <a class="cta-btn" href="PASTE-AMZN-LINK" target="_blank" rel="nofollow sponsored noopener">Shop on Amazon</a>
+        <p class="pgp-prod-note">Also available in Canada, France, Germany, Italy, Netherlands, Poland, Spain, Sweden, and the United Kingdom — Amazon OneLink will redirect you automatically.</p>
+      </div>
+    </div>
+
+    <div class="pgp-cell">
+      <div class="pgp-prod">
+        <span class="pgp-prod-badge">Premium</span>
+        <div class="pgp-prod-img"><img src="/media/00" alt="Product name"></div>
+        <h4>Exact Product Name</h4>
+        <div class="pgp-prod-price">$00–$00</div>
+        <div class="pgp-prod-disc">*Price starts from and is subject to change</div>
+        <p>Two sentences of real reasoning, plus one honest caveat.</p>
+        <a class="cta-btn" href="PASTE-AMZN-LINK" target="_blank" rel="nofollow sponsored noopener">Shop on Amazon</a>
+        <p class="pgp-prod-note">Also available in Canada, France, Germany, Italy, Netherlands, Poland, Spain, Sweden, and the United Kingdom — Amazon OneLink will redirect you automatically.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ========== F. WIDE LEFT — big image, narrow text ========== -->
+<div class="pgp-section">
+  <div class="pgp-grid pgp-grid--wide-left">
+    <div class="pgp-cell"><img src="/media/00" alt="Large photo"></div>
+    <div class="pgp-cell"><h3>Heading</h3><p>Narrower supporting text.</p></div>
+  </div>
+</div>
+
+
+<!-- ========== G. ONE COLUMN, TWO ROWS ========== -->
+<div class="pgp-section">
+  <div class="pgp-grid pgp-grid--rows">
+    <div class="pgp-cell">
+      <img src="/media/00" alt="Top photo">
+      <p class="pgp-cap">Row one</p>
+    </div>
+    <div class="pgp-cell">
+      <h3>Row two</h3>
+      <p>Text under the image, in its own row rather than wrapped around it.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ========== H. MIXED — image, text and product side by side ========== -->
+<div class="pgp-section pgp-section--paper">
+  <h2>🍽️ Section heading</h2>
+  <div class="pgp-grid pgp-grid--3 pgp-grid--even">
+    <div class="pgp-cell">
+      <img src="/media/00" alt="Photo">
+      <p class="pgp-cap">Caption</p>
+    </div>
+    <div class="pgp-cell">
+      <h4>Text block</h4>
+      <p>Explanation that sits between the photo and the product.</p>
+    </div>
+    <div class="pgp-cell">
+      <div class="pgp-prod">
+        <span class="pgp-prod-badge pick">✓ Our pick</span>
+        <div class="pgp-prod-img"><img src="/media/00" alt="Product"></div>
+        <h4>Product Name</h4>
+        <div class="pgp-prod-price">$00–$00</div>
+        <div class="pgp-prod-disc">*Price starts from and is subject to change</div>
+        <p>Why we recommend it.</p>
+        <a class="cta-btn" href="PASTE-AMZN-LINK" target="_blank" rel="nofollow sponsored noopener">Shop on Amazon</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==========================================================
+  LAYOUT CLASS REFERENCE
+
+  Section band:   pgp-section
+    backgrounds:  pgp-section--cream | --tint | --paper | --rule
+
+  Grid:           pgp-grid + one of
+                  pgp-grid--2        two equal columns
+                  pgp-grid--3        three equal columns
+                  pgp-grid--4        four equal columns
+                  pgp-grid--wide-left    2fr | 1fr
+                  pgp-grid--wide-right   1fr | 2fr
+                  pgp-grid--rows     one column, stacked rows
+    add           pgp-grid--even     to make cards end level
+
+  Cell:           pgp-cell  (holds an image, text, or a product)
+  Product card:   pgp-prod  (compact - use inside a cell)
+  Caption:        pgp-cap
+
+  All grids collapse to one column below 760px automatically.
+  ========================================================== -->
