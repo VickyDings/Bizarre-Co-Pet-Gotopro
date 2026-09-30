@@ -2,14 +2,24 @@
 // fake D1 that records every statement. Proves the parsing — cents, option
 // ids, per-variant images, disabled variants — without the live API.
 import fs from 'fs';
-const src = fs.readFileSync('./pgp_assets/src/shop.js', 'utf8');
 
-// Stub the module's imports so it can load standalone
-fs.mkdirSync('mock', { recursive: true });
-fs.writeFileSync('mock/hono.js', 'export class Hono{use(){}get(){}post(){}route(){}}');
-fs.writeFileSync('mock/shop.mjs', src
-  .replace("from 'hono'", "from './hono.js'")
-  .replace("from './util.js'", "from './util.js'"));
+// shop.js is server-side and is not kept in the public repo, so find it
+// wherever this is run from: an explicit path wins, then the usual spots.
+const CANDIDATES = [process.argv[2], 'shop.js', 'src/shop.js', '../src/shop.js', '../../src/shop.js']
+  .filter(Boolean);
+const shopPath = CANDIDATES.find(f => { try { return fs.statSync(f).isFile(); } catch { return false; } });
+if (!shopPath) {
+  console.error('Could not find shop.js. Pass its path:\n  node ' + process.argv[1].split(/[\\/]/).pop() +
+    ' path\\to\\src\\shop.js\n\nTried: ' + CANDIDATES.join(', '));
+  process.exit(1);
+}
+const MOCKS = 'shop-sync-test-mocks';
+fs.mkdirSync(MOCKS, { recursive: true });
+// Rebuilt from the live source every run, so a test never passes against a
+// stale copy of the file it is supposed to be checking.
+fs.writeFileSync(MOCKS + '/shop.mjs',
+  fs.readFileSync(shopPath, 'utf8').replace("from 'hono'", "from './hono.js'"));
+
 
 const PRODUCT = {
   id: '5d39b159e7c48c000728c89f',
@@ -58,7 +68,7 @@ const mkStmt = (sql) => ({
 });
 const db = { prepare: mkStmt, batch: async () => [] };
 
-const mod = await import('./mock/shop.mjs');
+const mod = await import('./' + MOCKS + '/shop.mjs');
 const r = await mod.syncFromPrintify({ PRINTIFY_TOKEN: 'x' }, db, { cacheImages: true });
 console.log('sync returned:', JSON.stringify(r));
 

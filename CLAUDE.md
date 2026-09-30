@@ -340,12 +340,46 @@ column gave the search field `flex:1 1 220px` in a vertical container, which put
 the screen before a single product. On a phone it is a grid instead: search
 spans, the two selects sit side by side, the button spans. 240px.
 
+### Editing many products at once
+
+The admin list has a checkbox per row and a bulk bar underneath: set animal,
+item type, status, or a price rule across everything ticked. Fields left on
+*leave alone* are not touched, so one pass can retag a category without
+disturbing prices.
+
+Price rules are **base cost × n**, **base cost + n**, **set all to n**, and
+**clear the override**, with optional rounding up to .99 or to a whole dollar.
+Multiply and add are worked out per row because each product has its own cost;
+set and clear are a single statement.
+
+**A product with no base cost is skipped, not multiplied.** The sync does not
+always get a cost, and `0 × 2.5` is a free t-shirt. Those rows are left alone
+and counted in the confirmation so the number is never silently wrong.
+
+**A checkbox list needs `parseBody({ all: true })`.** Hono keeps only the last
+value for a repeated field name otherwise, so ticking forty products would edit
+exactly one and look like the feature was broken. The handler also accepts a
+bare string, which is what a single ticked box sends.
+
+Everything posted is checked against `SHOP_ANIMALS` / `SHOP_ITEM_TYPES` and the
+known price modes before it reaches SQL.
+
 ### Testing it without the API
 
-`worker-theme/shop-sync-test.mjs` runs the sync against a mock Printify response
-with a fake D1 that records every statement — it checks the cents conversion,
-option resolution, per-variant image matching, disabled variants, the retire
-step and the empty-response guard. Run it from `worker-theme/` after any change
+Three suites in `worker-theme/`, none of which need a token or touch the
+network. Each takes the path to your `src/shop.js`, since that file is not in
+this repo:
+
+| | |
+|---|---|
+| `shop-sync-test.mjs` | 15 — cents conversion, option resolution, per-variant images, disabled variants, the retire step, the empty-response guard |
+| `shop-bulk-test.mjs` | 17 — every price rule and rounding mode, the zero-cost skip, validation, and a single checkbox arriving as a string |
+| `shop-classify-test.mjs` | 15 titles through the animal and item-type guesser |
+
+They rebuild their mock from the live source on every run, so a suite can never
+pass against a stale copy of the file it is meant to be checking. Two of them
+used to overwrite a shared mock on startup and quietly break each other, which
+is why the bootstrap is now identical in all three. Run it from `worker-theme/` after any change
 to the sync:
 
 ```

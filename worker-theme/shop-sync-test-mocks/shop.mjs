@@ -871,6 +871,7 @@ shopAdminRoutes.get('/shop', async (c) => {
 
   const rows = products.map(p => `
     <tr>
+      <td style="width:34px"><input type="checkbox" class="bulk-pick" name="ids" value="${p.id}" aria-label="Select ${esc(p.name)}"></td>
       <td style="width:56px"><img src="${esc(productImg(p))}" alt="" style="width:44px;height:44px;object-fit:cover;border-radius:6px;background:#F1EDF7"></td>
       <td><a href="/admin/shop/${p.id}"><strong>${esc(p.name)}</strong></a><br><span style="font-size:12px;color:#6E6480">/shop/${esc(p.slug)}</span></td>
       <td style="font-size:12px;color:#6E6480">${esc(p.animal || '—')}<br>${esc(p.item_type || '—')}</td>
@@ -938,12 +939,118 @@ shopAdminRoutes.get('/shop', async (c) => {
   </form>
 </div>
 
+<form method="POST" action="/admin/shop/bulk" id="bulkform">
 <table class="list">
-  <tr><th></th><th>Product</th><th>Category</th><th>Base cost</th><th>Your price</th><th>Status</th><th></th></tr>
-  ${rows || `<tr><td colspan="7" style="padding:22px;text-align:center;color:#6E6480">${active
+  <tr>
+    <th style="width:34px"><input type="checkbox" id="bulk-all" aria-label="Select every product shown"></th>
+    <th></th><th>Product</th><th>Category</th><th>Base cost</th><th>Your price</th><th>Status</th><th></th>
+  </tr>
+  ${rows || `<tr><td colspan="8" style="padding:22px;text-align:center;color:#6E6480">${active
     ? 'Nothing matches that filter. <a href="/admin/shop">Clear it</a>.'
     : 'No products yet. Build them in the Printify dashboard, then hit <strong>Sync now</strong>.'}</td></tr>`}
-</table>`;
+</table>
+
+${products.length ? `
+<div class="card" id="bulkbar">
+  <strong>Edit several at once</strong>
+  <p style="font-size:13px;color:#6E6480;margin:4px 0 14px">
+    Tick the products above, then set only the fields you want to change. Anything left on
+    <em>leave alone</em> is not touched.${active ? ' The tick-all box selects everything matching your current filter.' : ''}
+  </p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end">
+    <div style="min-width:150px">
+      <label for="b_animal">Animal</label>
+      <select name="animal" id="b_animal">
+        <option value="">— leave alone —</option>
+        ${SHOP_ANIMALS.map(a => `<option value="${esc(a)}">${esc(a)}</option>`).join('')}
+      </select>
+    </div>
+    <div style="min-width:150px">
+      <label for="b_type">Item type</label>
+      <select name="item_type" id="b_type">
+        <option value="">— leave alone —</option>
+        ${SHOP_ITEM_TYPES.map(t => `<option value="${esc(t)}">${esc(t)}</option>`).join('')}
+      </select>
+    </div>
+    <div style="min-width:150px">
+      <label for="b_status">Status</label>
+      <select name="status" id="b_status">
+        <option value="">— leave alone —</option>
+        <option value="published">Published</option>
+        <option value="draft">Draft</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:end;margin-top:14px">
+    <div style="min-width:200px">
+      <label for="b_pmode">Price</label>
+      <select name="price_mode" id="b_pmode">
+        <option value="">— leave alone —</option>
+        <option value="multiply">Base cost &times;</option>
+        <option value="add">Base cost +</option>
+        <option value="set">Set all to</option>
+        <option value="clear">Clear override (use Printify's)</option>
+      </select>
+    </div>
+    <div style="width:120px">
+      <label for="b_pval">Value</label>
+      <input type="text" name="price_value" id="b_pval" placeholder="2.5" inputmode="decimal">
+    </div>
+    <div style="min-width:150px">
+      <label for="b_round">Round to</label>
+      <select name="price_round" id="b_round">
+        <option value="exact">Exact</option>
+        <option value="99">Nearest .99 up</option>
+        <option value="00">Whole dollar up</option>
+      </select>
+    </div>
+    <button class="btn" id="bulkgo">Apply to selected</button>
+  </div>
+  <p style="font-size:12px;color:#6E6480;margin:12px 0 0">
+    <strong>Base cost &times; 2.5</strong> on a $9.67 item gives $24.18, or $24.99 rounded to .99.
+    Printify's own retail price is used whenever no override is set.
+  </p>
+</div>` : ''}
+</form>
+
+<script>
+(function(){
+  var form = document.getElementById('bulkform');
+  if (!form) return;
+  var all = document.getElementById('bulk-all');
+  var boxes = function(){ return [].slice.call(form.querySelectorAll('.bulk-pick')); };
+  var go = document.getElementById('bulkgo');
+  var mode = document.getElementById('b_pmode');
+  var val = document.getElementById('b_pval');
+
+  function count(){ return boxes().filter(function(b){ return b.checked; }).length; }
+  function refresh(){
+    var n = count();
+    if (go) go.textContent = n ? 'Apply to ' + n + ' selected' : 'Apply to selected';
+    if (all) all.indeterminate = n > 0 && n < boxes().length;
+    // A value is meaningless for "clear", and required for the rest
+    if (val && mode) val.disabled = (mode.value === '' || mode.value === 'clear');
+  }
+  if (all) all.addEventListener('change', function(){
+    boxes().forEach(function(b){ b.checked = all.checked; }); refresh();
+  });
+  form.addEventListener('change', refresh);
+  refresh();
+
+  form.addEventListener('submit', function(e){
+    var n = count();
+    if (!n) { e.preventDefault(); alert('Tick at least one product first.'); return; }
+    var bits = [];
+    ['b_animal','b_type','b_status'].forEach(function(id){
+      var el = document.getElementById(id); if (el && el.value) bits.push(el.options[el.selectedIndex].text);
+    });
+    if (mode && mode.value) bits.push('a new price');
+    if (!bits.length) { e.preventDefault(); alert('Choose at least one thing to change.'); return; }
+    if (!confirm('Change ' + bits.join(', ') + ' on ' + n + ' product' + (n === 1 ? '' : 's') + '?')) e.preventDefault();
+  });
+})();
+</script>`;
 
   return c.html(adminLayout({ title: 'Shop', active: 'shop', body, flash, flashErr }));
 });
@@ -1110,6 +1217,90 @@ shopAdminRoutes.get('/shop/:id', async (c) => {
 </div>`;
 
   return c.html(adminLayout({ title: p.name, active: 'shop', body }));
+});
+
+// Edit many products at once: set a category, a status, or a price rule
+// across everything ticked in the list.
+shopAdminRoutes.post('/shop/bulk', async (c) => {
+  const db = c.env.DB;
+
+  // A checkbox list arrives as the same field name repeated. Hono keeps only
+  // the last value unless asked for all of them, which would silently edit
+  // exactly one product and look like the feature was broken.
+  const f = await c.req.parseBody({ all: true });
+  const ids = [].concat(f.ids || [])
+    .map(x => parseInt(x, 10))
+    .filter(n => Number.isFinite(n) && n > 0)
+    .slice(0, 500);
+  if (!ids.length) return c.redirect(`/admin/shop?err=${encodeURIComponent('Nothing was selected.')}`);
+
+  const one = (v) => Array.isArray(v) ? v[0] : v;
+  const animal = SHOP_ANIMALS.includes(String(one(f.animal))) ? String(one(f.animal)) : '';
+  const itemType = SHOP_ITEM_TYPES.includes(String(one(f.item_type))) ? String(one(f.item_type)) : '';
+  const status = ['published', 'draft'].includes(String(one(f.status))) ? String(one(f.status)) : '';
+  const mode = ['multiply', 'add', 'set', 'clear'].includes(String(one(f.price_mode))) ? String(one(f.price_mode)) : '';
+  const round = ['exact', '99', '00'].includes(String(one(f.price_round))) ? String(one(f.price_round)) : 'exact';
+  const value = parseFloat(String(one(f.price_value) || '').replace(/[^0-9.]/g, ''));
+
+  if (!animal && !itemType && !status && !mode) {
+    return c.redirect(`/admin/shop?err=${encodeURIComponent('Pick at least one thing to change.')}`);
+  }
+  if (mode && mode !== 'clear' && !(value > 0)) {
+    return c.redirect(`/admin/shop?err=${encodeURIComponent('That price rule needs a number greater than zero.')}`);
+  }
+
+  // Smallest price at or above x that ends the way the owner asked
+  const applyRound = (x) => {
+    if (round === '99') return Math.ceil(x - 0.99) + 0.99;
+    if (round === '00') return Math.ceil(x);
+    return Math.round(x * 100) / 100;
+  };
+
+  const stamp = now();
+  const marks = ids.map(() => '?').join(',');
+  let changed = 0, skipped = 0;
+
+  // The flat fields go in one statement
+  const sets = [], args = [];
+  if (animal) { sets.push('animal=?'); args.push(animal); }
+  if (itemType) { sets.push('item_type=?'); args.push(itemType); }
+  if (status) { sets.push('status=?'); args.push(status); }
+  if (mode === 'clear') sets.push('price_override=NULL');
+  if (mode === 'set') { sets.push('price_override=?'); args.push(applyRound(value)); }
+  if (sets.length) {
+    const r = await db.prepare(
+      `UPDATE shop_products SET ${sets.join(', ')}, updated_at=? WHERE id IN (${marks})`
+    ).bind(...args, stamp, ...ids).run();
+    changed = r.meta?.changes ?? ids.length;
+  }
+
+  // multiply and add depend on each product's own base cost, so those are
+  // worked out per row rather than in one statement
+  if (mode === 'multiply' || mode === 'add') {
+    const rows = (await db.prepare(
+      `SELECT id, base_cost FROM shop_products WHERE id IN (${marks})`).bind(...ids).all()).results || [];
+    const batch = [];
+    for (const row of rows) {
+      const cost = Number(row.base_cost) || 0;
+      // No cost means the sync never got one. Multiplying it gives $0.00 and
+      // a free product, so those are left alone and counted instead.
+      if (cost <= 0) { skipped++; continue; }
+      const price = applyRound(mode === 'multiply' ? cost * value : cost + value);
+      batch.push(db.prepare('UPDATE shop_products SET price_override=?, updated_at=? WHERE id=?')
+        .bind(price, stamp, row.id));
+    }
+    if (batch.length) await db.batch(batch);
+    changed = Math.max(changed, batch.length);
+  }
+
+  const bits = [];
+  if (animal) bits.push(`animal → ${animal}`);
+  if (itemType) bits.push(`type → ${itemType}`);
+  if (status) bits.push(`status → ${status}`);
+  if (mode) bits.push(mode === 'clear' ? 'price override cleared' : 'price updated');
+  const note = `Updated ${changed} product${changed === 1 ? '' : 's'} (${bits.join(', ')}).` +
+    (skipped ? ` ${skipped} skipped — no base cost to calculate from, so they would have come out at $0.00.` : '');
+  return c.redirect(`/admin/shop?ok=${encodeURIComponent(note)}`);
 });
 
 shopAdminRoutes.post('/shop/save', async (c) => {
