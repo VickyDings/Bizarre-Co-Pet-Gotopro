@@ -1,0 +1,41 @@
+PHOTO SHOT LIST — crested-gecko-bioactive-setup
+============================================================
+16 images, listed in the order they appear in the post.
+Upload each in Admin -> Media, then replace the Nth /media/00 with its number.
+
+ 1. planted bioactive crested gecko vivarium with cork branches, pothos and leaf litter, gecko visible on a branch
+ 2. hand squeezing a pinch of damp ABG substrate, no water dripping
+ 3. cross-section or side view of a vivarium showing the drainage layer, mesh, substrate and leaf litter as distinct bands
+ 4. healthy adult crested gecko on a branch, straight limbs, full tail, alert eyes
+ 5. Front-opening glass terrarium, 18 by 18 by 24 inches
+ 6. Bag of expanded clay aggregate LECA hydroballs for a drainage layer
+ 7. Bag of ABG mix bioactive terrarium substrate
+ 8. Bag of dried magnolia and sea grape leaf litter
+ 9. Culture of tropical springtails for a bioactive vivarium
+10. Container of live dwarf white isopods
+11. Digital thermometer and hygrometer with a probe for a terrarium
+12. Arcadia ShadeDweller low output T5 UVB fixture for low UV species
+13. LED terrarium plant light bar for a bioactive vivarium
+14. Tub of Pangea complete crested gecko diet powder
+15. Tub of live dubia roaches or crickets for a gecko
+16. Tub of calcium powder with D3 for dusting feeder insects
+
+Images 1-4 are your own vivarium / gecko photos.
+Images 5-16 are product packshots, in shop order:
+  enclosure & layers (4) -> cleanup crew (2) -> light & measuring (3) -> food (3)
+
+REPLACE EVERY /media/00 BEFORE YOU PUBLISH. These are real <img> tags, so an
+unreplaced one renders as a broken-image icon to visitors. If you don't have a
+photo for one yet, delete that whole <img> line rather than publishing it broken.
+
+SEO fields for the admin form:
+  Title       Bioactive Crested Gecko Enclosure: The Complete Setup Guide
+  Slug        crested-gecko-bioactive-setup
+  Category    Reptiles
+  Meta desc   How to build a bioactive crested gecko enclosure layer by layer -
+              substrate, drainage, cleanup crew, plants, and the temperature
+              and humidity numbers that keep it alive.
+  Keywords    bioactive crested gecko enclosure, crested gecko bioactive setup,
+              crested gecko substrate, ABG mix, crested gecko temperature,
+              crested gecko humidity, springtails isopods vivarium,
+              crested gecko terrarium size, crested gecko care
