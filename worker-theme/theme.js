@@ -1,5 +1,5 @@
 // ——— Public site theme: shared CSS + layout ———
-import { esc } from './util.js';
+import { esc, PET_CATEGORIES } from './util.js';
 
 // Image sizing / alignment / frame classes — shared by the public site AND the admin editor
 // so what you see while editing is what visitors get.
@@ -153,9 +153,73 @@ a{color:var(--amber-deep)}
 .site-nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap;align-items:center}
 .site-nav a{color:var(--cream);text-decoration:none;font-size:14px;font-weight:600;padding:8px 12px;border-radius:6px;letter-spacing:.03em}
 .site-nav a:hover{background:rgba(255,61,150,.22);color:#fff}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+
+/* Navigation: a row of links on a desktop, one button on a phone.
+
+   The row is the owner's own menu items plus a Pets dropdown the theme fills
+   from the shared category list. Listing every animal flat would be a
+   fifteen-item nav wrapping three rows deep, which is what "tidy it up" meant.
+
+   Two things keep it working with scripting off. The dropdown opens on hover
+   AND on focus-within, so a keyboard reaches it with no JS at all -- and note
+   the order matters: focus-within makes the panel visible before Tab moves
+   into it, because a visibility:hidden link cannot take focus. And the
+   collapsing phone panel is only armed once the has-js class is on the html
+   element, so with no JS the nav stays the plain visible row it always was
+   rather than a button that does nothing. */
+.nav-toggle{display:none;align-items:center;gap:9px;background:transparent;color:var(--cream);
+  border:1px solid rgba(244,240,247,.26);border-radius:9px;padding:9px 15px;font:inherit;
+  font-size:14px;font-weight:600;letter-spacing:.03em;cursor:pointer}
+.nav-toggle:hover{background:rgba(255,61,150,.22);border-color:var(--amber)}
+.nav-bars{display:block;position:relative;width:16px;height:12px;flex-shrink:0}
+.nav-bars::before,.nav-bars::after,.nav-bars i{content:'';position:absolute;left:0;right:0;
+  height:2px;background:currentColor;border-radius:2px}
+.nav-bars::before{top:0}
+.nav-bars i{top:5px}
+.nav-bars::after{bottom:0}
+
+.nav-drop{position:relative}
+.nav-drop-btn{display:flex;align-items:center;gap:6px;background:transparent;color:var(--cream);
+  border:0;border-radius:6px;padding:8px 12px;font:inherit;font-size:14px;font-weight:600;
+  letter-spacing:.03em;cursor:pointer}
+.nav-drop-btn:hover{background:rgba(255,61,150,.22);color:#fff}
+.nav-drop-btn .caret{font-size:10px;line-height:1;transition:transform .18s}
+/* Anchored by its right edge, not its left. The nav sits hard against the
+   right of the header (margin-left:auto), so a panel opening rightwards from
+   the button ran 26px past the viewport and put a horizontal scrollbar on
+   every page of the site -- and it did it while still closed, because
+   visibility:hidden hides an element without taking it out of the scrollable
+   overflow its containing block reports. */
+.nav-drop-menu{position:absolute;top:calc(100% + 9px);right:0;z-index:60;min-width:212px;
+  background:var(--page-2);border:1px solid var(--hair);border-radius:12px;padding:8px;
+  box-shadow:0 18px 44px rgba(0,0,0,.46);display:grid;gap:2px;
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity .16s,transform .16s,visibility .16s}
+.nav-drop:hover .nav-drop-menu,.nav-drop:focus-within .nav-drop-menu,
+.nav-drop.open .nav-drop-menu{opacity:1;visibility:visible;transform:none}
+.nav-drop:hover .nav-drop-btn .caret,.nav-drop.open .nav-drop-btn .caret{transform:rotate(180deg)}
+.site-nav .nav-drop-menu a{display:flex;align-items:center;gap:11px;padding:9px 12px;
+  border-radius:8px;font-size:14px;white-space:nowrap;color:var(--on-dark)}
+.site-nav .nav-drop-menu a:hover{background:rgba(255,61,150,.22);color:#fff}
+.nav-drop-menu .d-emoji{width:22px;flex-shrink:0;font-size:17px;line-height:1;text-align:center}
 
 /* Hero */
-.home-hero{background:linear-gradient(135deg,#2A2140 0%,var(--ink) 100%);color:var(--cream);padding:64px 24px;text-align:center}
+/* Hero. Three layers: the section paints a gradient, the photo covers it, the
+   scrim darkens the photo, and the words sit on top.
+
+   The photo is a real img and not a CSS background so it can carry
+   fetchpriority and width/height -- it is the biggest thing on the page and so
+   the one Google times the load against, and a background-image cannot be
+   prioritised or sized. The scrim is its own element rather than a gradient on
+   the section because the section's gradient has to stay reachable underneath
+   as the fallback for a photo that never arrives. */
+.home-hero{position:relative;background:linear-gradient(135deg,#2A2140 0%,var(--ink) 100%);color:var(--cream);padding:64px 24px;text-align:center}
+.home-hero--photo{overflow:hidden}
+.hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 38%}
+.hero-scrim{position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(24,15,38,.90) 0%,rgba(24,15,38,.72) 46%,rgba(24,15,38,.89) 100%)}
+.hero-inner{position:relative;max-width:820px;margin:0 auto}
 .home-hero h1{font-family:'Instrument Serif',Georgia,serif;font-size:clamp(30px,5vw,46px);line-height:1.15;max-width:760px;margin:0 auto 16px}
 .home-hero p{font-size:18px;font-style:italic;color:#C0B6CE;max-width:620px;margin:0 auto}
 .home-hero .hero-cta{display:inline-block;margin-top:26px;background:var(--amber);color:#fff;padding:13px 30px;border-radius:6px;text-decoration:none;font-weight:700}
@@ -165,13 +229,56 @@ a{color:var(--amber-deep)}
 .container{max-width:1100px;margin:0 auto;padding:0 24px}
 .section-title{font-family:'Instrument Serif',Georgia,serif;font-size:28px;font-weight:700;margin:52px 0 8px}
 .section-sub{color:var(--ink-soft);font-size:15px;margin-bottom:24px}
+/* The first heading under the hero sat a full 52px down, which reads as a gap
+   rather than as breathing room. Later headings keep the 52px: they are
+   separating one movement of the page from the next and need it. */
+.home-hero + .container > .section-title:first-child{margin-top:26px}
 
 /* Category tiles */
-.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin:20px 0 10px}
+/* 210px, not 160px, because there are seven categories: at 160px the row fits
+   six and leaves Invertebrates stranded on a line of its own, which reads as a
+   mistake. At 210px the grid breaks 4 and 3, which reads as a decision -- and
+   the tiles are half as wide again, which a photo tile wants. */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin:20px 0 10px}
 .cat-tile{background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px 16px;text-align:center;text-decoration:none;color:var(--ink);box-shadow:var(--shadow-soft);transition:box-shadow .15s,transform .15s}
 .cat-tile:hover{box-shadow:var(--shadow-med);transform:translateY(-2px)}
 .cat-tile .emoji{font-size:30px;margin-bottom:8px}
 .cat-tile .name{font-family:'Instrument Serif',Georgia,serif;font-weight:700;font-size:16px}
+
+/* A tile with a photo behind it. Same tile, picture added.
+
+   The photo is a real child and the scrim is the pseudo-element, in that
+   order on purpose: a pseudo-element paints after every real child, so the
+   scrim covers the photo without either one needing a negative z-index. The
+   words then take z-index 1 and clear both.
+
+   The colour rules are written as .cat-tile.cat-tile--photo rather than
+   .cat-tile--photo because the plum pass further down this same stylesheet
+   sets a colour on .cat-tile and on .cat-tile .name. Those are two classes
+   deep and come later, so they would win a tie. Three classes wins whatever
+   the order, which means these rules cannot be broken by someone reordering
+   the file later. */
+.cat-tile--photo{position:relative;overflow:hidden;isolation:isolate;border:0;padding:0;
+  min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+  padding:0 12px 15px;border-radius:14px}
+.cat-tile--photo .cat-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  transition:transform .5s ease}
+.cat-tile--photo::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(16,8,26,.88) 0%,rgba(16,8,26,.40) 56%,rgba(16,8,26,.28) 100%)}
+.cat-tile--photo .emoji,.cat-tile--photo .name{position:relative;z-index:1}
+/* No emoji on a tile that has a photo. The photo is the icon, so the emoji
+   became a sticker sitting on the animal's face -- and the mismatches showed:
+   the scorpion glyph was sitting on a photo of a jumping spider. The element
+   stays in the markup because a category with no photo yet still needs it, and
+   the dropdown, which has no photos at all, keeps its emoji throughout. */
+.cat-tile--photo .emoji{display:none}
+.cat-tile.cat-tile--photo{color:#fff}
+.cat-tile.cat-tile--photo .name{color:#fff;font-size:17px;text-shadow:0 2px 10px rgba(0,0,0,.62)}
+.cat-tile--photo:hover .cat-photo{transform:scale(1.07)}
+@media (prefers-reduced-motion:reduce){
+  .cat-tile--photo .cat-photo{transition:none}
+  .cat-tile--photo:hover .cat-photo{transform:none}
+}
 
 /* Post cards */
 .post-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:20px;margin:20px 0 60px}
@@ -553,7 +660,7 @@ body{background:var(--page);color:var(--on-dark)}
 .brand-bar .brand-name,.brand-bar .site-nav a{color:var(--on-dark)}
 .brand-bar .brand-tag{color:var(--on-dark-dim)}
 .home-hero{background:linear-gradient(150deg,#2A2140 0%,var(--page) 70%);
-  border-bottom:1px solid var(--hair);padding-bottom:72px}
+  border-bottom:1px solid var(--hair);padding-bottom:54px}
 .home-hero .hero-cta{color:#2A0A18;border-radius:999px;padding:14px 32px}
 .home-hero .hero-cta:hover{background:#FF5CA8;color:#2A0A18}
 
@@ -620,6 +727,33 @@ footer .foot-disclosure{border-top-color:var(--hair)}
   .prose h2{font-size:24px}
   .brand-name{font-size:18px}
   .site-nav{margin-left:0}
+  .home-hero{padding:48px 18px}
+  .cat-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}
+
+  /* Everything below is behind .has-js on purpose. With scripting off none of
+     it applies and the nav is the same wrapping row it has always been, which
+     is worse looking but still completely usable -- a hamburger with no
+     JavaScript behind it is a button that does nothing. */
+  .has-js .site-nav{width:100%;flex-direction:column;align-items:stretch;gap:0}
+  .has-js .nav-toggle{display:flex;justify-content:center;align-self:stretch}
+  .has-js .site-nav .nav-links{display:none;flex-direction:column;align-items:stretch;
+    gap:2px;margin-top:10px}
+  .has-js .site-nav.open .nav-links{display:flex}
+  .has-js .site-nav .nav-links > a,.has-js .site-nav .nav-drop-btn{width:100%;padding:11px 12px}
+  .nav-drop{width:100%}
+  /* On a phone the dropdown stops being a floating card and becomes an indented
+     sub-list, and that part is NOT behind .has-js. A 212px absolute panel
+     anchored to a button in a 390px header has nowhere to go: with scripting
+     off it stuck out and dragged 111px of horizontal scroll onto the page.
+     Static costs nothing when the panel is collapsed anyway. */
+  .nav-drop-menu{position:static;opacity:1;visibility:visible;transform:none;
+    background:transparent;border:0;box-shadow:none;padding:2px 0 4px 16px;
+    min-width:0;transition:none}
+  /* Only the collapsing is behind .has-js. With no JS the categories are simply
+     listed -- a longer header than anyone wants, but every link reachable,
+     which a tap-to-open button with no script behind it would not be. */
+  .has-js .nav-drop-menu{display:none}
+  .has-js .nav-drop.open .nav-drop-menu{display:grid}
 }
 `;
 
@@ -687,7 +821,21 @@ export function shareBar({ url, title, description, image, compact, label,
 // Full page layout for the public site
 export function layout({ settings, menu, title, description, canonical, body,
                          ogImage, ogImageAlt, jsonLd, ogType, article }) {
+  // The owner's own menu items, flat. The footer keeps exactly this: a footer
+  // is a list, not a place to hide things behind a hover.
   const nav = (menu || []).map(m => `<a href="${esc(m.url)}">${esc(m.label)}</a>`).join('');
+  // General is a real category but not an animal, so it is not in the dropdown.
+  const petLinks = PET_CATEGORIES.filter(cat => cat.key !== 'General').map(cat =>
+    `<a href="/category/${encodeURIComponent(cat.key)}">` +
+    `<span class="d-emoji" aria-hidden="true">${cat.emoji}</span>${esc(cat.key)}</a>`).join('');
+  // Putting the categories in the header means every page links to every
+  // category, which the homepage tiles alone were not doing.
+  const headerNav = `<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="pgp-nav-links">`
+    + `<span class="nav-bars" aria-hidden="true"><i></i></span>Menu</button>
+    <div class="nav-links" id="pgp-nav-links">${nav}<div class="nav-drop">`
+    + `<button class="nav-drop-btn" type="button" aria-expanded="false">Pets`
+    + `<span class="caret" aria-hidden="true">\u25BE</span></button>`
+    + `<div class="nav-drop-menu">${petLinks}</div></div></div>`;
   const logo = logoUrl(settings);
   return `<!DOCTYPE html>
 <html lang="en">
@@ -721,6 +869,10 @@ ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>` : ''}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
 <style>${PUBLIC_CSS}</style>
+<!-- Set in the head, not with the scripts at the foot of the page: the phone
+     nav is collapsed by a .has-js rule, so marking it any later would show the
+     menu fully expanded for a frame and then snap it shut. -->
+<script>document.documentElement.className += ' has-js';</script>
 </head>
 <body>
 <div class="brand-bar">
@@ -732,7 +884,7 @@ ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>` : ''}
         <div class="brand-tag">${esc(settings.tagline)}</div>
       </div>
     </a>
-    <nav class="site-nav" aria-label="Main navigation">${nav}</nav>
+    <nav class="site-nav" aria-label="Main navigation">${headerNav}</nav>
   </div>
 </div>
 ${body}
@@ -891,6 +1043,58 @@ ${body}
       '&media=' + encodeURIComponent(src) +
       '&description=' + encodeURIComponent(target.alt || document.title),
       '_blank', 'noopener,noreferrer,width=760,height=620');
+  });
+})();
+</script>
+<script>
+/* Navigation. The CSS already opens the dropdown on hover and on focus-within,
+   so this script is only here for the two things CSS cannot do: the phone
+   panel, and tapping on a touch screen where there is no hover at all. */
+(function(){
+  var nav = document.querySelector('.site-nav');
+  if (!nav) return;
+  var toggle = nav.querySelector('.nav-toggle');
+  var drops  = [].slice.call(nav.querySelectorAll('.nav-drop'));
+
+  function setOpen(el, btn, open) {
+    el.classList.toggle('open', open);
+    if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  function closeDrops() {
+    drops.forEach(function(d){ setOpen(d, d.querySelector('.nav-drop-btn'), false); });
+  }
+  function closeAll() {
+    closeDrops();
+    setOpen(nav, toggle, false);
+  }
+
+  if (toggle) toggle.addEventListener('click', function(){
+    var open = !nav.classList.contains('open');
+    setOpen(nav, toggle, open);
+    if (!open) closeDrops();
+  });
+
+  drops.forEach(function(drop){
+    var btn = drop.querySelector('.nav-drop-btn');
+    if (!btn) return;
+    btn.addEventListener('click', function(){
+      var open = !drop.classList.contains('open');
+      closeDrops();
+      setOpen(drop, btn, open);
+    });
+  });
+
+  document.addEventListener('click', function(e){
+    if (!nav.contains(e.target)) closeAll();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key !== 'Escape') return;
+    /* Escape has to hand focus back to the button it came from, or the reader
+       is left with focus on a panel that is no longer on screen. */
+    var inDrop = drops.filter(function(d){ return d.contains(document.activeElement); })[0];
+    closeAll();
+    if (inDrop) { var b = inDrop.querySelector('.nav-drop-btn'); if (b) b.focus(); }
+    else if (toggle && nav.contains(document.activeElement)) toggle.focus();
   });
 })();
 </script>

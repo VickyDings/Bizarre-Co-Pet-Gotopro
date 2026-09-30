@@ -198,6 +198,15 @@ headless Chromium at 900px and 390px and reports float collisions, content escap
 the column and horizontal page scroll. Run it after any edit to a post or to the
 theme; it reads the working files, so it does not need a database export.
 
+It needs a `theme.js` with `util.js` beside it, which the public repo does not
+have. It looks in `$PGP_SRC`, then `pgp_assets/src/`, then `../src/`, and says so
+plainly if it finds none — it used to be one hardcoded path containing a session
+id, so it broke with a stack trace every time it was run from anywhere else:
+
+```
+PGP_SRC=C:\Users\Xvick\...\petgotopro-website\src node layout-check.mjs
+```
+
 One thing it deliberately does not flag: `.pgp-ig-frame` and `.table-wrap` are
 **meant** to scroll sideways on a phone. A detailed cross-section diagram squeezed
 to 350px is unreadable, so the infographic holds its SVG at `min-width` and shows a
@@ -279,6 +288,119 @@ link gets ignored — it is worth more than the buttons.
 
 Facebook caches what it first scrapes. After changing a title or image, re-scrape at
 `developers.facebook.com/tools/debug/`, or the old card persists for weeks.
+
+## The homepage and the header
+
+### One list of animals, in util.js
+
+`PET_CATEGORIES` lives in **`util.js`**, not `public.js`. Three places need it and
+they have to agree: the blog's category pages and chips, the header's Pets
+dropdown, and the homepage tiles. It cannot live in `public.js` because
+`theme.js` needs it and `theme.js` importing `public.js` is a cycle —
+`public.js` already imports `theme.js`.
+
+`public.js` re-exports it under the old name:
+
+```js
+export const CATEGORIES = PET_CATEGORIES;
+```
+
+so `admin.js`, which does `import { CATEGORIES } from './public.js'` for the post
+editor's category picker, keeps working with no change at all.
+
+**`theme.js` now imports from `util.js` by name, so the two deploy together.**
+Copying a new `theme.js` over an old `util.js` does not degrade gracefully — the
+worker fails to start with *does not provide an export named PET_CATEGORIES*, and
+the whole site is down. Ship `theme.js`, `util.js` and `public.js` as a set.
+
+Each entry carries `key`, `emoji`, `photo` (an Unsplash id) and `alt`. The `alt`
+is **documentation, not markup**: the tile prints its own name, so the photo
+ships with an empty alt rather than making a screen reader hear "Dogs" twice.
+What the line is for is checking a photo id still shows the species it claims
+without loading it — the one image mistake that matters here.
+
+`unsplashUrl(id, w)` builds the URL at the size actually wanted. Tiles ask for
+400px, the hero for 1600px. Eight photos at full size would be megabytes on the
+page visitors see first.
+
+### The hero is three layers
+
+Section gradient, then `<img class="hero-photo">`, then `.hero-scrim`, then
+`.hero-inner` holding the words. The photo is a **real `img`, not a CSS
+background**, so it can carry `fetchpriority="high"` and width/height — it is the
+largest thing on the page and therefore what Google times the load against, and
+a `background-image` can be neither prioritised nor sized. The scrim is its own
+element so the section's gradient stays reachable underneath as the fallback for
+a photo that never arrives.
+
+Measured contrast over the actual composited pixels: the h1 runs **9.4:1 at the
+photo's brightest point**, the standfirst 6.9:1. AA wants 4.5.
+
+### Photo tiles
+
+`.cat-tile--photo` is the same tile with a picture behind it. The photo is a real
+child and the scrim is the **pseudo-element, in that order on purpose**: a
+pseudo-element paints after every real child, so the scrim covers the photo
+without either needing a negative z-index. The words take `z-index:1`.
+
+Two things worth keeping:
+
+- The colour rules are written `.cat-tile.cat-tile--photo`, three classes deep,
+  because the plum pass later in the same stylesheet sets a colour on
+  `.cat-tile` and `.cat-tile .name`. Two classes and later beats two classes and
+  earlier, so the photo tile's white text would have lost the tie. Three classes
+  wins whatever the order, which means nobody can break it by reordering the file.
+- **No emoji on a tile that has a photo.** The photo is the icon; the emoji became
+  a sticker on the animal's face, and the mismatches showed — the scorpion glyph
+  was sitting on a photo of a jumping spider. The element stays in the markup for
+  a category with no photo yet, and the dropdown keeps its emoji throughout.
+
+The grid is `minmax(210px,1fr)`, not 160px. There are **seven** categories: at
+160px the row fits six and strands Invertebrates alone on the next line, which
+reads as a mistake. At 210px it breaks 4 and 3, which reads as a decision.
+
+### The nav
+
+The owner's `menu_items` stay the flat top-level row. The theme adds a **Pets**
+dropdown it fills from `PET_CATEGORIES`, which also means every page now links to
+every category — the homepage tiles alone were not doing that.
+
+`menu_items` is `(id, label, url, sort)` with no parent column, and `admin.js`
+rewrites the whole table on save, so owner-defined nesting would be a migration
+plus an admin rebuild. Building the one dropdown that was actually needed from a
+list that already exists needs neither.
+
+**Two rules keep it working with scripting off:**
+
+- The dropdown opens on `:hover` **and** `:focus-within`. The order matters —
+  `focus-within` makes the panel visible before Tab moves into it, because a
+  `visibility:hidden` link cannot take focus.
+- The collapsing phone panel is armed only by a `.has-js` class, set by a one-line
+  script **in the `<head>`**. In the head and not with the scripts at the foot of
+  the page, or the phone menu shows fully expanded for a frame and then snaps
+  shut. With no JS the nav is the plain wrapping row it always was, rather than a
+  hamburger that does nothing.
+
+Phone nav went from 84px to **44px**; tapping Menu opens a 380px panel,
+`aria-expanded` tracks both the toggle and the dropdown, and Escape returns focus
+to the button it came from.
+
+## Gotcha: visibility:hidden still reports its overflow
+
+The Pets panel is `position:absolute` and opened with `visibility:hidden` →
+`visible`. Anchored `left:0` it ran 26px past the right edge of a 1280px window
+and put a **horizontal scrollbar on every page of the site** — while still
+closed, because `visibility:hidden` hides an element without taking it out of the
+scrollable overflow its containing block reports. `display:none` would not have
+done this; `visibility` alone does.
+
+It is anchored `right:0` now, which is correct anyway for a nav sitting hard
+against the right of the header.
+
+The same panel at 390px stuck out 111px whenever JavaScript had not run, because
+the mobile rule that makes it `position:static` was behind `.has-js`. **The rule
+that stops it overflowing must not be behind the flag** — only the collapsing is.
+Check a new overlay at both widths *and* with scripting off.
 
 ## The shop runs on Printify
 

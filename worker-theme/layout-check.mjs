@@ -2,10 +2,38 @@
 // repo rather than a database export, so it can be re-run after an edit.
 import pw from '/opt/node22/lib/node_modules/playwright/index.js';
 import fs from 'fs';
+import os from 'os';
 import path from 'path';
+import { fileURLToPath, pathToFileURL } from 'url';
 const { chromium } = pw;
-const T = await import('./pgp_assets/src/theme.js');
-const DIR = '/home/user/Bizarre-Co-Pet-Gotopro/worker-theme';
+const DIR = path.dirname(fileURLToPath(import.meta.url));
+
+// theme.js imports util.js, which is server-side and deliberately not in this
+// public repo, so the pair has to be found wherever the full src happens to be.
+// This used to be one hardcoded path and it broke the moment anyone ran the
+// checker from anywhere else -- which, since CLAUDE.md says to run it after
+// every edit, meant a stack trace instead of a check.
+const THEME_CANDIDATES = [
+  process.env.PGP_SRC && path.join(process.env.PGP_SRC, 'theme.js'),
+  path.join(DIR, 'pgp_assets/src/theme.js'),
+  path.join(DIR, '../src/theme.js'),
+  path.join(DIR, '../../src/theme.js'),
+].filter(Boolean);
+const themePath = THEME_CANDIDATES.find(f => fs.existsSync(f));
+if (!themePath) {
+  console.error('Cannot find a theme.js with its util.js beside it. Looked in:');
+  THEME_CANDIDATES.forEach(f => console.error('  ' + f));
+  console.error('\nSet PGP_SRC to the folder holding theme.js and util.js, e.g.');
+  console.error('  PGP_SRC=C:\\Users\\Xvick\\...\\petgotopro-website\\src node layout-check.mjs');
+  process.exit(1);
+}
+const T = await import(pathToFileURL(themePath).href);
+
+// Scratch file for the render. Built under the OS temp dir and referenced
+// through the same variable the browser is pointed at, so the write and the
+// read can no longer disagree about where it is.
+const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'pgp-layout-'));
+const SCRATCH = path.join(TMP, 'check.html');
 // Everything in updated/, plus every post-*.html beside it. Globbed rather
 // than listed, so a new post is checked without anyone remembering to add it.
 const files = [
@@ -21,13 +49,13 @@ for (const file of files) {
   const body = fs.readFileSync(file, 'utf8')
     .replace(/src="\/(?:media|img)\/[^"]*"/g, 'src="../imgs/photo.jpg"')
     .replace(/src="https?:\/\/[^"]*"/g, 'src="../imgs/photo.jpg"');
-  fs.writeFileSync('cmp/_f2.html', `<!doctype html><html><head><meta charset="utf-8"><style>${T.PUBLIC_CSS}${T.IMAGE_CSS}${T.SECTION_CSS}
+  fs.writeFileSync(SCRATCH, `<!doctype html><html><head><meta charset="utf-8"><style>${T.PUBLIC_CSS}${T.IMAGE_CSS}${T.SECTION_CSS}
     body{margin:0}.article{max-width:760px;margin:0 auto;padding:30px 24px;background:#fff}</style></head>
     <body><div class="article prose">${body}</div></body></html>`);
   const found = [];
   for (const w of widths) {
     const p = await b.newPage({ viewport: { width: w, height: 1100 } });
-    await p.goto('file:///tmp/claude-0/-home-user-Bizarre-Co-Pet-Gotopro/015a960f-e28a-52d5-8da3-70cb0d65b3a7/scratchpad/cmp/_f2.html', { waitUntil: 'domcontentloaded' });
+    await p.goto(pathToFileURL(SCRATCH).href, { waitUntil: 'domcontentloaded' });
     await p.waitForTimeout(160);
     const bad = await p.evaluate(() => {
       const out = [];
@@ -51,4 +79,6 @@ for (const file of files) {
   console.log('%s %s', path.basename(file).slice(0, 46).padEnd(48), found.length ? found.join('; ') : 'clean');
 }
 console.log('\n%d layout problems', tot);
+console.log('theme: %s', themePath);
 await b.close();
+fs.rmSync(TMP, { recursive: true, force: true });
