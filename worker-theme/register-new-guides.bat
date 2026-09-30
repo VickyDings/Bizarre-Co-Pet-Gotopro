@@ -25,6 +25,10 @@ echo === registering the freshwater shrimp care sheet ===
 call npx wrangler d1 execute petgotopro --remote --command "INSERT OR REPLACE INTO guides (file,title,category,blurb,related,media_id,sort) SELECT 'shrimp-care-sheet.png','Freshwater Shrimp Quick Care Sheet','Invertebrates','Habitat, equipment and diet on one page, with water parameters for both Neocaridina and Caridina, the copper list, the feeding schedule and how to tell a shed shell from a dead shrimp.',COALESCE((SELECT '/blog/' || slug FROM posts WHERE instr(lower(title),'shrimp') AND status='published' ORDER BY id DESC LIMIT 1),''),id,50 FROM media WHERE instr(lower(filename),'shrimp-care-sheet') ORDER BY id DESC LIMIT 1"
 
 echo.
+echo === registering the land hermit crab care sheet ===
+call npx wrangler d1 execute petgotopro --remote --command "INSERT OR REPLACE INTO guides (file,title,category,blurb,related,media_id,sort) SELECT 'hermit-crab-care-sheet.png','Land Hermit Crab Quick Care Sheet','Invertebrates','Habitat, equipment and diet on one page, with the humidity and temperature targets, the substrate recipe, both water dishes, and the molting rules that decide whether a crab reaches its third year or its third month.',COALESCE((SELECT '/blog/' || slug FROM posts WHERE instr(lower(title),'hermit') AND status='published' ORDER BY id DESC LIMIT 1),''),id,51 FROM media WHERE instr(lower(filename),'hermit-crab-care-sheet') ORDER BY id DESC LIMIT 1"
+
+echo.
 echo === done ===
 echo If a sheet did not register, upload its PNG in the admin media library first.
 pause
