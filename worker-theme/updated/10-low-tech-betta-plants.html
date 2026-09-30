@@ -1,0 +1,638 @@
+<style>
+/* ---- Scoped styles for this post only. Safe to leave in place. ---- */
+.pgp-ig{background:var(--cream-deep);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:30px 0;box-shadow:var(--shadow-med)}
+.pgp-ig .pgp-ig-head{background:linear-gradient(135deg,#2A2140 0%,var(--ink) 100%);padding:26px 26px 22px;position:relative}
+.pgp-ig .pgp-ig-head::after{content:"";position:absolute;left:0;right:0;bottom:0;height:4px;background:linear-gradient(90deg,var(--amber),#FFC2DC,var(--amber))}
+.pgp-ig .pgp-ig-eyebrow{font-family:'Source Serif Pro',Georgia,serif;font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#FFC2DC;margin:0 0 8px}
+.pgp-ig h3{font-family:'Playfair Display',Georgia,serif;font-size:25px;color:var(--cream);margin:0 0 8px;line-height:1.25}
+.pgp-ig .pgp-ig-sub{font-size:15px;color:#D6CFE2;margin:0;line-height:1.6}
+.pgp-ig .pgp-ig-frame{background:#123B3B;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.pgp-ig svg{display:block;width:100%;height:auto;border-radius:0;margin:0;box-shadow:none;cursor:default}
+.pgp-ig .pgp-ig-cap{font-size:13px;color:var(--ink-soft);font-style:italic;text-align:center;margin:0;padding:12px 16px 16px}
+.pgp-ig .pgp-ig-swipe{display:none;font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--amber-deep);text-align:center;margin:0;padding:10px 12px 0}
+@media (max-width:700px){
+  .pgp-ig svg{min-width:740px}
+  .pgp-ig .pgp-ig-swipe{display:block}
+  .pgp-ig h3{font-size:21px}
+  .pgp-ig .pgp-ig-head{padding:20px 18px 18px}
+}
+/* ---- Image placeholders. Replace each .pgp-ph block with your photo. ---- */
+.pgp-ph{background:var(--cream-deep);border:2px dashed var(--amber);border-radius:10px;padding:30px 22px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.pgp-ph .pgp-ph-icon{font-size:26px;line-height:1}
+.pgp-ph .pgp-ph-title{font-family:'Playfair Display',Georgia,serif;font-size:17px;color:var(--ink);font-weight:700}
+.pgp-ph .pgp-ph-brief{font-size:13.5px;color:var(--ink-soft);max-width:52ch;line-height:1.55}
+.pgp-ph .pgp-ph-spec{font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--amber-deep);margin-top:2px}
+
+/* ---- Species cards (photo + text) ---- */
+.pgp-species{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin:22px 0}
+.pgp-sp{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow-soft)}
+.pgp-sp .pgp-sp-img{background:var(--cream-deep);height:190px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.pgp-sp .pgp-sp-img img{max-height:190px;width:auto;margin:0;border-radius:0;box-shadow:none;object-fit:contain}
+.pgp-sp .pgp-sp-body{padding:14px 15px 15px;flex:1;display:flex;flex-direction:column}
+.pgp-sp h4{font-family:'Playfair Display',Georgia,serif;font-size:17px;color:var(--ink);margin:0 0 2px;line-height:1.25}
+.pgp-sp .pgp-sp-latin{font-size:12.5px;font-style:italic;color:#8B8098;margin:0 0 8px}
+.pgp-sp .pgp-sp-type{display:inline-block;align-self:flex-start;font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#fff;background:var(--amber);padding:3px 8px;border-radius:20px;margin-bottom:9px}
+.pgp-sp .pgp-sp-type.t-float{background:#1f6f6b}
+.pgp-sp .pgp-sp-type.t-rhiz{background:var(--forest)}
+.pgp-sp .pgp-sp-type.t-carpet{background:#6b4a8a}
+.pgp-sp p{font-size:14px;color:var(--ink-soft);margin:0;line-height:1.55}
+</style>
+
+<p class="deck">A betta in a bare glass box is a betta with nothing to do. Add live plants and you get a different fish within a week — one that patrols, rests on leaves near the surface, and flares at its own reflection far less often. This guide covers the low-tech planted betta tank: no CO₂ injection, no expensive lighting rig, and no plant that needs babysitting.</p>
+
+<p>Wild <em>Betta splendens</em> don't live in open water. They live in shallow, slow, heavily vegetated habitat — rice paddies, marshes and roadside ditches across Thailand and Cambodia, where the water is warm, still and cluttered with plant matter from the substrate to the surface. A betta's entire body plan is built for that: long fins that are useless against current, a labyrinth organ for gulping air where oxygen is low, and an instinct to wedge itself into something and rest.</p>
+
+<p>That last behavior is the one most owners never get to see, because a bare tank gives a betta nothing to wedge into. Plants aren't decoration in a betta tank. They're the difference between a fish that hides in a corner and a fish that uses the whole volume of water you bought for it.</p>
+
+<div class="quick-facts">
+  <h3>🌿 The Low-Tech Planted Betta Tank at a Glance</h3>
+  <div class="qf-grid">
+    <div class="qf-item"><span class="qf-label">Minimum tank</span><span class="qf-value">5 gallons — 10 is far easier to plant</span></div>
+    <div class="qf-item"><span class="qf-label">Temperature</span><span class="qf-value">78–80°F / 25–27°C, heated</span></div>
+    <div class="qf-item"><span class="qf-label">Light</span><span class="qf-value">Low to moderate, 6–8 hours daily</span></div>
+    <div class="qf-item"><span class="qf-label">CO₂ injection</span><span class="qf-value">Not needed for any plant here</span></div>
+    <div class="qf-item"><span class="qf-label">Substrate</span><span class="qf-value">Inert gravel + root tabs, or aquasoil</span></div>
+    <div class="qf-item"><span class="qf-label">Easiest three plants</span><span class="qf-value">Anubias, Java Fern, Hornwort</span></div>
+    <div class="qf-item"><span class="qf-label">Surface cover</span><span class="qf-value">Partial floating cover — never 100%</span></div>
+    <div class="qf-item"><span class="qf-label">Flow</span><span class="qf-value">Gentle — long fins tire in current</span></div>
+  </div>
+</div>
+
+<h2>🐟 What Live Plants Actually Do for a Betta</h2>
+
+<p>The water-quality argument is real but oversold: a few plants in a five-gallon tank will not replace your water changes. Plants do consume nitrate, and a well-planted tank drifts upward more slowly between changes, but the meaningful benefits for a betta specifically are behavioral.</p>
+
+<p><strong>Broad leaves near the surface become furniture.</strong> Bettas sleep resting on something, ideally within a body length of the air they need to breathe. An Anubias leaf, a Java Fern frond or a floating plant's root mass gives them that. Keepers who add a single broad-leaf plant near the top of the tank routinely report the fish claiming it within a day.</p>
+
+<p><strong>Sight breaks lower stress.</strong> A betta that can see the entire tank — and its own reflection in every wall — has no way to break line of sight. Planting so the fish can turn a corner and lose sight of what alarmed it visibly reduces persistent flaring and glass-surfing.</p>
+
+<p><strong>Biofilm becomes grazing.</strong> Mature plant surfaces grow a microbial film that bettas pick at throughout the day. It isn't nutrition in any serious sense, but it's occupation, and an occupied betta is a healthier one.</p>
+
+<div class="vet-tip">
+  <h4>💚 The surface rule</h4>
+  <p>Bettas breathe atmospheric air through a labyrinth organ and <strong>must</strong> be able to reach the surface easily. Floating plants are excellent — but leave roughly a third of the surface clear, and make sure the fish has an unobstructed vertical path to it. A surface completely carpeted in frogbit is a genuine hazard, not a lush aquascape.</p>
+</div>
+
+<h2>The Five Plant Types — and How Deep Each One Goes</h2>
+
+<p>Here's the thing almost nobody tells beginners: the most common reason a new aquarium plant dies is not lighting, fertilizer or CO₂. It's <strong>planting depth</strong>. Two of the five plant types below rot within weeks if you bury them, and one of those two — Anubias — is simultaneously the plant most often recommended to beginners and the plant most often killed by them.</p>
+
+<p>Every plant you can buy falls into one of these five categories, and each has exactly one depth rule.</p>
+
+<div class="pgp-ig">
+  <div class="pgp-ig-head">
+    <p class="pgp-ig-eyebrow">Aquarium Plant Care</p>
+    <h3>Planting Depth: The 5 Aquarium Plant Types</h3>
+    <p class="pgp-ig-sub">Where each type sits relative to the substrate line — the single detail that decides whether a plant establishes or rots.</p>
+  </div>
+  <div class="pgp-ig-frame">
+    <svg viewBox="0 0 1000 540" role="img" aria-label="Cross-section diagram of an aquarium showing five plant types and how deep each is planted relative to the substrate: stem plants buried two to three inches, rosette plants with the crown above the substrate, rhizome plants with the rhizome fully above the substrate, floating plants never planted, and carpeting species planted shallow.">
+      <defs>
+        <linearGradient id="bWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#12484A"></stop><stop offset="100%" stop-color="#0D3234"></stop></linearGradient>
+        <linearGradient id="bSub" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8A7355"></stop><stop offset="100%" stop-color="#5C4A34"></stop></linearGradient>
+        <linearGradient id="bSurf" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1E6A66"></stop><stop offset="100%" stop-color="#12484A"></stop></linearGradient>
+        <linearGradient id="bShade" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#06181A" stop-opacity=".38"></stop><stop offset="100%" stop-color="#06181A" stop-opacity="0"></stop></linearGradient>
+      </defs>
+      <rect x="0" y="0" width="1000" height="540" fill="url(#bWater)"></rect>
+      <rect x="0" y="0" width="1000" height="74" fill="#15111C"></rect>
+      <rect x="0" y="74" width="1000" height="26" fill="url(#bSurf)"></rect>
+      <line x1="0" y1="74" x2="1000" y2="74" stroke="#7FD6C4" stroke-width="1.5" opacity=".4"></line>
+      <line x1="0" y1="100" x2="1000" y2="100" stroke="#7FD6C4" stroke-width="1" opacity=".18"></line>
+      <path d="M0,404 C120,396 200,410 320,404 C440,398 520,410 640,404 C760,398 860,410 1000,404 L1000,540 L0,540 Z" fill="url(#bSub)"></path>
+      <path d="M0,404 C120,396 200,410 320,404 C440,398 520,410 640,404 C760,398 860,410 1000,404" fill="none" stroke="#9A8FA8" stroke-width="2" opacity=".7"></path>
+      <g fill="#9A8FA8" opacity=".33">
+        <circle cx="40" cy="430" r="5"></circle><circle cx="95" cy="452" r="6.5"></circle><circle cx="150" cy="424" r="4.5"></circle>
+        <circle cx="212" cy="460" r="6"></circle><circle cx="268" cy="432" r="5.5"></circle><circle cx="330" cy="454" r="5"></circle>
+        <circle cx="392" cy="428" r="6.5"></circle><circle cx="448" cy="462" r="5"></circle><circle cx="508" cy="434" r="5.5"></circle>
+        <circle cx="566" cy="456" r="6"></circle><circle cx="628" cy="428" r="5"></circle><circle cx="686" cy="458" r="6.5"></circle>
+        <circle cx="744" cy="432" r="5"></circle><circle cx="804" cy="460" r="5.5"></circle><circle cx="862" cy="430" r="6"></circle>
+        <circle cx="922" cy="454" r="5"></circle><circle cx="972" cy="432" r="6"></circle>
+        <circle cx="66" cy="486" r="5.5"></circle><circle cx="188" cy="492" r="5"></circle><circle cx="300" cy="488" r="6"></circle>
+        <circle cx="424" cy="494" r="5.5"></circle><circle cx="548" cy="488" r="5"></circle><circle cx="668" cy="492" r="6"></circle>
+        <circle cx="790" cy="486" r="5.5"></circle><circle cx="906" cy="492" r="5"></circle>
+      </g>
+      <g stroke="#FBFAFD" stroke-width="1" opacity=".14">
+        <line x1="200" y1="82" x2="200" y2="466"></line><line x1="400" y1="82" x2="400" y2="466"></line>
+        <line x1="600" y1="82" x2="600" y2="466"></line><line x1="800" y1="82" x2="800" y2="466"></line>
+      </g>
+
+      <!-- 1 stem -->
+      <g opacity=".55">
+        <line x1="82" y1="404" x2="80" y2="462" stroke="#FF3D96" stroke-width="4" stroke-linecap="round" stroke-dasharray="7 6"></line>
+        <line x1="100" y1="404" x2="100" y2="466" stroke="#FF3D96" stroke-width="4" stroke-linecap="round" stroke-dasharray="7 6"></line>
+        <line x1="118" y1="404" x2="120" y2="460" stroke="#FF3D96" stroke-width="4" stroke-linecap="round" stroke-dasharray="7 6"></line>
+      </g>
+      <g stroke="#2C7A57" stroke-width="5" stroke-linecap="round">
+        <line x1="82" y1="404" x2="76" y2="200"></line><line x1="100" y1="404" x2="102" y2="168"></line><line x1="118" y1="404" x2="126" y2="210"></line>
+      </g>
+      <g fill="#4E9E76">
+        <ellipse cx="60" cy="230" rx="17" ry="7" transform="rotate(-18 60 230)"></ellipse><ellipse cx="94" cy="226" rx="17" ry="7" transform="rotate(18 94 226)"></ellipse>
+        <ellipse cx="59" cy="272" rx="17" ry="7" transform="rotate(-18 59 272)"></ellipse><ellipse cx="95" cy="268" rx="17" ry="7" transform="rotate(18 95 268)"></ellipse>
+        <ellipse cx="60" cy="314" rx="17" ry="7" transform="rotate(-18 60 314)"></ellipse><ellipse cx="96" cy="310" rx="17" ry="7" transform="rotate(18 96 310)"></ellipse>
+        <ellipse cx="62" cy="356" rx="16" ry="6.5" transform="rotate(-18 62 356)"></ellipse><ellipse cx="97" cy="352" rx="16" ry="6.5" transform="rotate(18 97 352)"></ellipse>
+      </g>
+      <g fill="#4E9E76">
+        <ellipse cx="86" cy="196" rx="17" ry="7" transform="rotate(-18 86 196)"></ellipse><ellipse cx="120" cy="244" rx="17" ry="7" transform="rotate(18 120 244)"></ellipse>
+        <ellipse cx="110" cy="288" rx="17" ry="7" transform="rotate(18 110 288)"></ellipse><ellipse cx="126" cy="332" rx="16" ry="6.5" transform="rotate(18 126 332)"></ellipse>
+        <ellipse cx="88" cy="150" rx="15" ry="6.5" transform="rotate(-14 88 150)"></ellipse><ellipse cx="118" cy="186" rx="15" ry="6.5" transform="rotate(16 118 186)"></ellipse>
+      </g>
+      <g stroke="#FF3D96" stroke-width="2.5" fill="none">
+        <line x1="150" y1="406" x2="150" y2="464"></line><line x1="143" y1="406" x2="157" y2="406"></line><line x1="143" y1="464" x2="157" y2="464"></line>
+      </g>
+
+      <!-- 2 rosette -->
+      <g stroke="#E5E0EE" stroke-width="2.5" fill="none" opacity=".8">
+        <path d="M300,410 C284,432 272,450 262,472"></path><path d="M300,410 C296,438 292,458 288,480"></path>
+        <path d="M300,410 C314,432 328,450 340,472"></path><path d="M300,410 C306,440 310,460 314,482"></path>
+      </g>
+      <circle cx="300" cy="402" r="8" fill="#FF3D96"></circle>
+      <circle cx="300" cy="402" r="14" fill="none" stroke="#FF3D96" stroke-width="2" opacity=".5"></circle>
+      <g fill="#2C7A57">
+        <path d="M300,400 C262,344 246,286 250,224 C272,286 288,344 300,400 Z"></path>
+        <path d="M300,400 C338,344 354,286 350,224 C328,286 312,344 300,400 Z"></path>
+      </g>
+      <g fill="#4F8043">
+        <path d="M300,400 C276,330 268,258 278,190 C292,262 300,330 300,400 Z"></path>
+        <path d="M300,400 C324,330 332,258 322,190 C308,262 300,330 300,400 Z"></path>
+      </g>
+      <path d="M300,400 C296,318 298,240 302,178 C306,244 306,320 300,400 Z" fill="#4E9E76"></path>
+
+      <!-- 3 rhizome -->
+      <g stroke="#E5E0EE" stroke-width="2.5" fill="none" opacity=".75">
+        <path d="M474,392 C460,400 452,408 446,418"></path><path d="M486,394 C476,406 470,414 464,426"></path>
+        <path d="M526,392 C540,400 548,408 554,418"></path><path d="M514,394 C524,406 530,414 536,426"></path>
+        <path d="M500,396 C500,408 500,416 500,426"></path>
+      </g>
+      <rect x="454" y="378" width="92" height="17" rx="8.5" fill="#7E5F3A"></rect>
+      <rect x="454" y="378" width="92" height="7" rx="3.5" fill="#9A7648" opacity=".85"></rect>
+      <path d="M470,382 C430,340 414,282 428,222 C452,278 470,332 476,382 Z" fill="#235F44"></path>
+      <path d="M530,382 C570,340 586,282 572,222 C548,278 530,332 524,382 Z" fill="#235F44"></path>
+      <path d="M482,382 C458,318 452,248 468,182 C486,250 492,318 490,382 Z" fill="#2C7A57"></path>
+      <path d="M518,382 C542,318 548,248 532,182 C514,250 508,318 510,382 Z" fill="#2C7A57"></path>
+      <path d="M500,382 C486,300 490,214 500,140 C512,216 514,302 500,382 Z" fill="#55834A"></path>
+      <g stroke="#8FB87A" stroke-width="1.6" fill="none" opacity=".55">
+        <path d="M500,376 C498,300 500,220 500,150"></path><path d="M486,376 C470,318 464,250 470,196"></path><path d="M514,376 C530,318 536,250 530,196"></path>
+      </g>
+      <g stroke="#FF3D96" stroke-width="2.5" fill="none" stroke-linecap="round">
+        <line x1="448" y1="401" x2="552" y2="401"></line><line x1="448" y1="396" x2="448" y2="406"></line><line x1="552" y1="396" x2="552" y2="406"></line>
+      </g>
+
+      <!-- 4 floating -->
+      <g transform="translate(654,96)">
+        <ellipse cx="0" cy="-6" rx="30" ry="17" fill="#4E9E76"></ellipse>
+        <ellipse cx="-13" cy="-13" rx="17" ry="11" fill="#4E9E76"></ellipse>
+        <ellipse cx="14" cy="-12" rx="16" ry="10" fill="#4E9E76"></ellipse>
+        <ellipse cx="0" cy="-21" rx="14" ry="9" fill="#6BB88E"></ellipse>
+        <g stroke="#E5E0EE" stroke-width="2" fill="none" opacity=".8">
+          <path d="M-14,8 C-18,40 -20,66 -22,92"></path><path d="M-4,9 C-5,44 -6,72 -7,100"></path>
+          <path d="M6,9 C8,42 10,70 12,96"></path><path d="M16,7 C20,38 23,62 26,86"></path>
+        </g>
+      </g>
+      <g transform="translate(752,99)">
+        <ellipse cx="0" cy="-6" rx="28" ry="16" fill="#4E9E76"></ellipse>
+        <ellipse cx="-12" cy="-13" rx="16" ry="10" fill="#4E9E76"></ellipse>
+        <ellipse cx="13" cy="-11" rx="15" ry="9.5" fill="#4E9E76"></ellipse>
+        <ellipse cx="1" cy="-20" rx="13" ry="8.5" fill="#6BB88E"></ellipse>
+        <g stroke="#E5E0EE" stroke-width="2" fill="none" opacity=".8">
+          <path d="M-12,7 C-16,36 -18,60 -20,84"></path><path d="M-2,8 C-3,42 -4,68 -5,94"></path>
+          <path d="M8,8 C10,38 12,62 14,88"></path><path d="M18,6 C22,32 25,54 28,76"></path>
+        </g>
+      </g>
+      <path d="M624,100 L788,100 L760,330 L652,330 Z" fill="url(#bShade)"></path>
+      <line x1="668" y1="382" x2="732" y2="382" stroke="#FF3D96" stroke-width="2.5" stroke-dasharray="7 7" stroke-linecap="round" opacity=".7"></line>
+
+      <!-- 5 carpeting -->
+      <g stroke="#E5E0EE" stroke-width="2" fill="none" opacity=".75">
+        <path d="M836,404 C834,414 833,420 832,428"></path><path d="M864,404 C863,414 862,421 861,429"></path>
+        <path d="M892,404 C891,414 890,420 889,428"></path><path d="M920,404 C919,414 918,421 917,429"></path>
+        <path d="M948,404 C947,414 946,420 945,428"></path>
+      </g>
+      <g fill="#4E9E76">
+        <ellipse cx="838" cy="394" rx="15" ry="9"></ellipse><ellipse cx="866" cy="390" rx="16" ry="9.5"></ellipse>
+        <ellipse cx="894" cy="393" rx="15" ry="9"></ellipse><ellipse cx="922" cy="389" rx="16" ry="9.5"></ellipse><ellipse cx="950" cy="393" rx="15" ry="9"></ellipse>
+      </g>
+      <g fill="#6BB88E">
+        <ellipse cx="852" cy="384" rx="13" ry="8"></ellipse><ellipse cx="880" cy="381" rx="14" ry="8.5"></ellipse>
+        <ellipse cx="908" cy="384" rx="13" ry="8"></ellipse><ellipse cx="936" cy="381" rx="14" ry="8.5"></ellipse>
+        <ellipse cx="962" cy="385" rx="12" ry="7.5"></ellipse><ellipse cx="826" cy="385" rx="12" ry="7.5"></ellipse>
+      </g>
+      <g fill="#8FBF6E">
+        <ellipse cx="866" cy="374" rx="11" ry="6.5"></ellipse><ellipse cx="900" cy="372" rx="12" ry="7"></ellipse>
+        <ellipse cx="932" cy="374" rx="11" ry="6.5"></ellipse><ellipse cx="842" cy="375" rx="10" ry="6"></ellipse>
+      </g>
+      <g stroke="#FF3D96" stroke-width="2.5" fill="none">
+        <line x1="972" y1="404" x2="972" y2="430"></line><line x1="966" y1="404" x2="978" y2="404"></line><line x1="966" y1="430" x2="978" y2="430"></line>
+      </g>
+
+      <!-- labels -->
+      <g font-family="'Source Serif Pro',Georgia,serif" text-anchor="middle">
+        <g fill="#FBFAFD" font-size="21" font-weight="700">
+          <text x="100" y="34">Stem</text><text x="300" y="34">Rosette</text><text x="500" y="34">Rhizome</text><text x="700" y="34">Floating</text><text x="900" y="34">Carpeting</text>
+        </g>
+        <g fill="#FFC2DC" font-size="12" font-weight="700" letter-spacing="1.6">
+          <text x="100" y="55">PLANTS</text><text x="300" y="55">PLANTS</text><text x="500" y="55">PLANTS</text><text x="700" y="55">PLANTS</text><text x="900" y="55">SPECIES</text>
+        </g>
+        <g fill="#FBFAFD" font-size="17" font-weight="700">
+          <text x="100" y="484">Bury 2–3″</text><text x="300" y="484">Crown above</text><text x="500" y="484">Rhizome above</text><text x="700" y="484">Never planted</text><text x="900" y="484">Shallow, ½″</text>
+        </g>
+        <g fill="#FFC2DC" font-size="13" font-weight="600">
+          <text x="100" y="504">of bare stem</text><text x="300" y="504">the substrate</text><text x="500" y="504">the substrate</text><text x="700" y="504">free-drifting</text><text x="900" y="504">roots only</text>
+        </g>
+      </g>
+    </svg>
+  </div>
+  <p class="pgp-ig-swipe">Swipe the diagram to see all five →</p>
+  <p class="pgp-ig-cap">Cross-section: how deep each plant type sits relative to the substrate line.</p>
+</div>
+
+<h3>1 · Stem Plants — Bury 2–3 Inches of Bare Stem</h3>
+
+<figure class="pgp-figure img-md img-left">
+  <img class="pgp-img img-full img-center" src="/media/148" alt=""><p></p><figcaption>A typical stem bunch as it arrives. Cut the band off and plant the stems individually.</figcaption>
+</figure>
+
+<p><strong>Examples:</strong> Bacopa caroliniana, Moneywort, Rotala rotundifolia, Ludwigia repens, Hornwort, Water Wisteria.</p>
+
+<p>These are cuttings, not rooted plants. They arrive as a bundle wrapped in a metal strip or a rubber band, and the first thing you do is cut that off. Strip the leaves from the bottom two to three inches of each stem, then push the stems in one at a time, roughly an inch apart. Buried leaves rot, and the rot travels up the stem.</p>
+
+<p>Stem plants are the fastest growers in a low-tech tank and the ones you'll be trimming most. That's a feature in a betta tank — fast growers soak up nitrate and shade the tank, and every trimming is a free new plant. Replant the top half and discard the woody bottom.</p>
+
+<div class="vet-warning">
+  <h4>⚠️ Take the factory band off before planting</h4>
+  <p>Every bundled stem plant ships wrapped this way. Left on, the band crushes the stems it's holding and the middle of the bundle turns to mush within two weeks — while the outside still looks fine, so you don't notice until the whole thing floats loose. Loose, lead-free strips used one stem at a time are a different thing entirely, and genuinely useful (see the gear section below).</p>
+</div>
+
+<h3>2 · Rosette Plants — Crown Above the Substrate</h3>
+
+<figure class="pgp-figure img-md img-left">
+  <img class="pgp-img" src="/media/149" alt="Amazon Sword plant showing broad ribbed leaves rising from a single central crown with roots below">
+  <figcaption>An Amazon Sword grows from one central crown. Bury the roots; leave that collar at substrate level.</figcaption>
+</figure>
+
+<p><strong>Examples:</strong> Amazon Sword, Cryptocoryne wendtii, Vallisneria, Dwarf Sagittaria.</p>
+
+<p>Rosette plants grow from a single central point, sending leaves up and roots down from the same collar. Bury the roots completely, but keep that collar sitting right at the substrate surface. Trim long, straggly roots back to about two inches first — short roots anchor, long roots coil and lift the plant back out overnight.</p>
+
+<p>These are your heaviest root feeders. In plain gravel they will slowly strip their own outer leaves for nutrients, which is what yellowing lower foliage on an otherwise healthy sword actually means. Root tabs fix it.</p>
+
+<div class="vet-tip">
+  <h4>💚 Crypt melt is not plant death</h4>
+  <p>Nursery plants are usually grown out of water. When submerged, they shed almost every existing leaf and regrow submerged-form ones — a process that looks exactly like the plant dying. Leave the roots undisturbed, keep the water stable, and new leaves appear in two to four weeks. Pulling the plant out to "check it" is what actually kills it.</p>
+</div>
+
+<h3>3 · Rhizome Plants — Rhizome Fully Exposed</h3>
+
+<figure class="pgp-figure img-md img-left">
+  <img class="pgp-img" src="/media/150" alt="Anubias barteri in a mesh pot with thick dark green leaves rising from a horizontal rhizome">
+  <figcaption>Anubias arrives potted in rock-wool. Tease it out, then attach the rhizome to wood or rock — never bury it.</figcaption>
+</figure>
+
+<p><strong>Examples:</strong> Anubias barteri, Anubias nana, Java Fern, Bolbitis, Bucephalandra.</p>
+
+<p>These grow from a thick horizontal stalk — the rhizome — that must stay in open water. Tie or glue it to driftwood, lava rock or a decoration and let the roots find their own grip over the following weeks. A dab of cyanoacrylate gel holds instantly; cotton thread works too and simply rots away once the roots have taken.</p>
+
+<p>For a betta tank these are the best plants money can buy. They tolerate the lowest light of any group, need no substrate at all, and Anubias in particular produces thick, near-horizontal leaves that a betta will adopt as a bed within days. Position one about two-thirds of the way up the tank and watch what happens.</p>
+
+<div class="vet-warning">
+  <h4>⚠️ The number one killer of Anubias and Java Fern</h4>
+  <p>A buried rhizome suffocates, blackens and rots — and no amount of light, fertilizer or patience reverses it. If your Anubias is going soft and brown at the base while the leaves look fine, dig it out and re-attach it above the substrate today.</p>
+</div>
+
+<h3>4 · Floating Plants — Never Planted at All</h3>
+
+<figure class="pgp-figure img-full img-center">
+  <img class="pgp-img" src="/media/151" alt="Three floating aquarium plants side by side: Salvinia, Red Root Floater with pink and green leaves, and duckweed">
+  <figcaption>Left to right: Salvinia, Red Root Floater, duckweed. None of these ever touch the substrate.</figcaption>
+</figure>
+
+<p><strong>Examples:</strong> Amazon Frogbit, Salvinia, Red Root Floater, Dwarf Water Lettuce, duckweed.</p>
+
+<p>Drop them on the water and leave them. They pull nutrients directly from the water column, they grow fast, and their trailing roots create exactly the kind of dim, cluttered surface zone a wild betta lives in. If you add one category of plant to a betta tank, make it this one.</p>
+
+<p>The requirement is dry leaf tops and calm surface water. Angle your filter outflow downward, or clip a baffle over it. A spray bar that mists the leaves will melt them, and so will condensation dripping off a tight-fitting lid.</p>
+
+<div class="vet-warning">
+  <h4>⚠️ Think hard before adding duckweed</h4>
+  <p>Duckweed is effectively permanent. Each frond splits every few days, it survives being scooped, netted and siphoned, and a single leaf on a wet hand re-seeds a tank you just cleared. Frogbit and Salvinia give you the same surface cover in pieces large enough to remove by hand.</p>
+</div>
+
+<h3>5 · Carpeting Species — Shallow and Spread Out</h3>
+
+<figure class="pgp-figure img-md img-left">
+  <img class="pgp-img" src="/media/152" alt="Tissue culture cup of a bright green carpeting aquarium plant with small paired leaves, viewed from above">
+  <figcaption>A tissue-culture cup splits into 15–20 plantable portions. Small and spread beats one big clump.</figcaption>
+</figure>
+
+<p><strong>Examples:</strong> Monte Carlo, Micranthemum, Dwarf Hairgrass, Staurogyne repens.</p>
+
+<p>Rinse the gel off a tissue-culture cup, split it into pea-sized portions and plant each one about half an inch deep on a one-inch grid. Planted deep, carpets stay stunted; planted in big clumps, they take months to knit together.</p>
+
+<p>Be honest with yourself about this group: carpets need the most light of the five types, and in a low-tech tank without CO₂ they spread slowly at best. Monte Carlo and Staurogyne repens are the two most forgiving. If you want green ground cover in a low-tech betta tank with minimum effort, Java Moss on a stone achieves a similar look with none of the difficulty.</p>
+
+<h3>Quick reference</h3>
+
+<div class="table-wrap">
+  <table class="compare">
+    <thead>
+      <tr><th>Type</th><th>Goes in substrate?</th><th>Depth</th><th>Root tabs help?</th><th>Low-tech difficulty</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><b>Stem</b></td><td>Yes</td><td>2–3″ of bare stem</td><td>Some — mostly water-column feeders</td><td>Easy</td></tr>
+      <tr><td><b>Rosette</b></td><td>Yes</td><td>Roots only, crown exposed</td><td>Yes — heavy root feeders</td><td>Easy</td></tr>
+      <tr><td><b>Rhizome</b></td><td>No</td><td>Attached to hardscape</td><td>No — feeds from the water</td><td>Easiest</td></tr>
+      <tr><td><b>Floating</b></td><td>No</td><td>Surface only</td><td>No</td><td>Easiest</td></tr>
+      <tr><td><b>Carpeting</b></td><td>Yes</td><td>≈ ½″, on a 1″ grid</td><td>Yes — plus rich substrate</td><td>Hardest</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<h2>🌱 The Nine Best Plants for a Betta Tank</h2>
+
+<p>If you want a shopping list rather than a taxonomy, this is it. Every plant here survives low light, tropical warmth and no CO₂ — and every one is commonly sold online and in shops.</p>
+
+<div class="pgp-species">
+  <div class="pgp-sp">
+    <div class="pgp-sp-img"><img class="pgp-img img-full img-center" src="/media/153" alt="Anubias nana with thick dark green rounded leaves held in a hand"></div>
+    <div class="pgp-sp-body">
+      <h4>Anubias nana</h4>
+      <p class="pgp-sp-latin">Anubias barteri var. nana</p>
+      <span class="pgp-sp-type t-rhiz">Rhizome</span>
+      <p>The single best plant for a betta. Glue it to a rock at mid-height and the thick horizontal leaves become a resting shelf. Nearly impossible to kill in any light.</p>
+    </div>
+  </div>
+  <div class="pgp-sp">
+    <div class="pgp-sp-img"><img class="pgp-img img-full img-center" src="/media/154" alt="Anubias barteri in a black mesh pot with tall broad dark leaves"></div>
+    <div class="pgp-sp-body">
+      <h4>Anubias barteri</h4>
+      <p class="pgp-sp-latin">Anubias barteri</p>
+      <span class="pgp-sp-type t-rhiz">Rhizome</span>
+      <p>The larger cousin. One pot fills the back corner of a five-gallon and throws leaves wide enough for a full-grown betta to lie across.</p>
+    </div>
+  </div>
+  <div class="pgp-sp">
+    <div class="pgp-sp-img"><img class="pgp-img img-full img-center" src="/media/155" alt="Java Fern in a mesh pot with long strap-shaped rippled green leaves"></div>
+    <div class="pgp-sp-body">
+      <h4>Java Fern</h4>
+      <p class="pgp-sp-latin">Microsorum pteropus</p>
+      <span class="pgp-sp-type t-rhiz">Rhizome</span>
+      <p>Tall, feathery and undemanding. Grows baby plantlets along its own leaf edges, which you detach and re-attach elsewhere for free.</p>
+    </div>
+  </div>
+  <div class="pgp-sp">
+    <div class="pgp-sp-img"><img class="pgp-img img-full img-center" src="/media/156" alt="Java Moss growing in a dense green cushion attached to pale rocks"></div>
+    <div class="pgp-sp-body">
+      <h4>Java Moss</h4>
+      <p class="pgp-sp-latin">Taxiphyllum barbieri</p>
+      <span class="pgp-sp-type t-rhiz">Attaches</span>
+      <p>Tie a thin layer to wood or stone. Grows the biofilm a betta grazes on, softens every hard edge, and needs nothing from you.</p>
+    </div>
+  </div>
+  <div class="pgp-sp">
+    <div class="pgp-sp-img"><img class="pgp-img img-full img-center" src="/media/157" alt="Salvinia, Red Root Floater and duckweed shown side by side"></div>
+    <div class="pgp-sp-body">
+      <h4>Floating plants</h4>
+      <p class="pgp-sp-latin">Salvinia · Red Root Floater</p>
+      <span class="pgp-sp-type t-float">Floating</span>
+      <p>Instant surface cover and trailing roots. Salvinia and Red Root Floater stay in removable clumps; duckweed does not.</p>
+    </div>
+  </div>
+  <div class="pgp-sp">
+    <div class="pgp-sp-img"><img class="pgp-img img-full img-center" src="/media/158" alt="Hornwort bunch with feathery bright green whorled needles"></div>
+    <div class="pgp-sp-body">
+      <h4>Hornwort</h4>
+      <p class="pgp-sp-latin">Ceratophyllum demersum</p>
+      <span class="pgp-sp-type ">Stem</span>
+      <p>Plant it or float it — both work. The fastest nitrate sponge on this list and the best plant for outcompeting algae in a new tank.</p>
+    </div>
+  </div>
+  <div class="pgp-sp">
+    <div class="pgp-sp-img"><img class="pgp-img img-full img-center" src="/media/159" alt="Bacopa stem bunch with small round paired leaves and a metal weight at the base"></div>
+    <div class="pgp-sp-body">
+      <h4>Moneywort / Bacopa</h4>
+      <p class="pgp-sp-latin">Bacopa monnieri</p>
+      <span class="pgp-sp-type ">Stem</span>
+      <p>Upright, tidy and slow enough not to take over. Strip the lower leaves, plant the stems separately, and trim the tops to propagate.</p>
+    </div>
+  </div>
+  <div class="pgp-sp">
+    <div class="pgp-sp-img"><img class="pgp-img img-full img-center" src="/media/160" alt="Vallisneria plant with long ribbon-like green blades bound with a metal weight"></div>
+    <div class="pgp-sp-body">
+      <h4>Vallisneria</h4>
+      <p class="pgp-sp-latin">Vallisneria spiralis</p>
+      <span class="pgp-sp-type ">Rosette</span>
+      <p>Long ribbon blades that reach the surface and bend along it — effectively a vertical curtain plus surface cover in one plant.</p>
+    </div>
+  </div>
+  <div class="pgp-sp">
+    <div class="pgp-sp-img"><img class="pgp-img img-full img-center" src="/media/161" alt="Amazon Sword with broad ribbed leaves rising from a central crown"></div>
+    <div class="pgp-sp-body">
+      <h4>Amazon Sword</h4>
+      <p class="pgp-sp-latin">Echinodorus bleheri</p>
+      <span class="pgp-sp-type ">Rosette</span>
+      <p>The centerpiece plant. Needs root tabs and a tank of at least ten gallons, but nothing else matches it for presence.</p>
+    </div>
+  </div>
+</div>
+
+<div class="vet-warning">
+  <h4>⚠️ Three things sold for betta tanks that don't belong in one</h4>
+  <p><strong>Plastic plants.</strong> Betta fins tear on stiff plastic edges, and torn fins invite fin rot. If you must use artificial plants, use silk.</p>
+  <p><strong>"Lucky bamboo" sold as aquatic.</strong> <em>Dracaena sanderiana</em> is a houseplant. Fully submerged, it rots and fouls the water. Only the roots may sit in water, with the leaves in air.</p>
+  <p><strong>Betta bulbs sold loose in tubs.</strong> Usually <em>Aponogeton</em>, and often long dead. If it hasn't sprouted in three weeks, remove it before it decays in the tank.</p>
+</div>
+
+<div class="paw-divider"></div>
+
+<h2>🧰 Planting Day, Step by Step</h2>
+
+<ol class="method-list">
+  <li><b>Cycle the tank first.</b> Plants do not replace cycling. If your tank isn't cycled, plant it anyway and cycle it planted — but the betta waits until ammonia and nitrite read zero.</li>
+  <li><b>Drain to about a third full.</b> Planting in shallow water is dramatically easier than reaching through a full tank, and disturbed substrate settles faster.</li>
+  <li><b>Place hardscape before plants.</b> Wood and stone go in first, because you'll be gluing rhizome plants to them and you don't want to move them afterward.</li>
+  <li><b>Unpack and inspect everything.</b> Cut the factory bands off bunches. Remove rock-wool from potted plants, teasing it out under a gentle tap rather than pulling. Rinse tissue-culture gel off completely. Trim damaged leaves and long roots.</li>
+  <li><b>Plant back to front, tallest to shortest.</b> Stems and rosettes at the back and sides, carpets at the front, rhizome plants glued to hardscape wherever the light is weakest.</li>
+  <li><b>Push root tabs in near heavy feeders.</b> One tab within an inch or two of each sword or crypt, buried fully. Skip this if you used aquasoil.</li>
+  <li><b>Fill slowly onto a plate or your hand.</b> A hard pour uproots everything you just planted. Then add floaters last, once the surface has stopped moving.</li>
+</ol>
+
+<p>Expect the tank to look sparse and slightly sad for about three weeks. Low-tech planting is a slow-motion process, and resisting the urge to rearrange things during that window is most of the skill.</p>
+
+<h2>🛒 The Gear That Makes Planting Day Easier</h2>
+
+<p>None of this is strictly required — people have planted tanks with their fingers and a bag of gravel for a century. But each of these removes a specific, predictable frustration.</p>
+
+<div class="product">
+  <div class="product-ribbon"><span class="rank"><span class="star">★</span> #1 · Most useful</span><span class="asin">Root tabs</span></div>
+  <div class="product-body">
+    <div class="product-image-wrap"><img class="pgp-img img-center img-md" src="/media/163" alt="Seachem Flourish Tabs 10-pack gravel bed supplement for the planted aquarium"></div>
+    <div class="product-content">
+      <div class="product-title">Seachem Flourish Tabs (Root Tabs)</div>
+      <div class="product-price"><span class="dollar">$9.36</span><span class="disclaimer">*price subject to change</span></div>
+      <span class="best-for">Best For: Swords, crypts, Vallisneria and carpets in plain inert gravel</span>
+      <div class="product-desc">
+        <p>Root feeders pull most of their nutrition from the substrate. In plain gravel there's nothing there, so the plant cannibalizes its own outer leaves — which is what yellowing lower foliage on an otherwise healthy sword actually means.</p>
+        <p>Push one tab within an inch or two of the crown, fully buried, roughly every three months. Ten tabs is a year or more of dosing for a small planted betta tank. Skip entirely if you used a nutrient-rich aquasoil.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Fixes yellowing lower leaves</li>
+<li>One pack lasts a small tank a year</li>
+<li>Fed into the substrate, so it does not feed algae</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Easy to forget the reapply date</li>
+<li>Can cloud the water if crushed on the way in</li></ul></div>
+      </div>
+      <a class="cta-btn" href="https://amzn.to/4gaaY3l" target="_blank" rel="noopener">Check price on Amazon</a>
+    </div>
+  </div>
+</div>
+<div class="product">
+  <div class="product-ribbon"><span class="rank"><span class="star">★</span> #2 · Water column</span><span class="asin">Liquid fertilizer</span></div>
+  <div class="product-body">
+    <div class="product-image-wrap"><img class="pgp-img img-full img-center" src="/media/165" alt="Seachem Flourish 500 mL comprehensive supplement for the planted aquarium"></div>
+    <div class="product-content">
+      <div class="product-title">Seachem Flourish (Liquid Supplement)</div>
+      <div class="product-price"><span class="dollar">$10.52</span><span class="disclaimer">*price subject to change</span></div>
+      <span class="best-for">Best For: Anubias, Java Fern, Hornwort and floating plants — everything root tabs cannot reach</span>
+      <div class="product-desc">
+        <p>Rhizome plants, mosses and every floating plant feed from the water column, so root tabs do nothing for them. A comprehensive trace-element supplement dosed once a week after your water change covers the gap in one bottle.</p>
+        <p>In a low-tech tank, dose at the low end of the label. More fertilizer without more light or CO₂ feeds algae, not plants. A 500&nbsp;mL bottle will outlast most five-gallon setups by years.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Covers the plants tabs miss</li>
+<li>Fixes pinholes and pale new growth</li>
+<li>Lasts a very long time in a small tank</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Overdosing feeds algae</li>
+<li>Not a complete NPK fertilizer on its own</li></ul></div>
+      </div>
+      <a class="cta-btn" href="https://amzn.to/4qukjGN" target="_blank" rel="noopener">Check price on Amazon</a>
+    </div>
+  </div>
+</div>
+<div class="product">
+  <div class="product-ribbon"><span class="rank"><span class="star">★</span> #3 · For rhizome plants</span><span class="asin">Aquarium glue</span></div>
+  <div class="product-body">
+    <div class="product-image-wrap"><img class="pgp-img img-full img-center" src="/media/166" alt="WoldoClean Professional aquarium super glue 50 g cyanoacrylate bottle with precision nozzle"></div>
+    <div class="product-content">
+      <div class="product-title">Aquarium-Safe Cyanoacrylate Super Glue</div>
+      <div class="product-price"><span class="dollar">$9.99</span><span class="disclaimer">*price subject to change</span></div>
+      <span class="best-for">Best For: Attaching Anubias, Java Fern, Bucephalandra and moss to wood or rock</span>
+      <div class="product-desc">
+        <p>Cyanoacrylate cures on contact with water and is inert once set, which is why it is the aquascaping standard. A dab on the underside of the rhizome, press to the wood for twenty seconds, done — and the rhizome stays where it belongs, above the substrate.</p>
+        <p>Buy the gel or a thickened formula with a precision nozzle rather than thin liquid, which runs off the rhizome and glues your fingers together instead. A 50&nbsp;g bottle does an entire aquascape several times over.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Instant hold, no thread to tie</li>
+<li>Inert and fish-safe once cured</li>
+<li>Also repairs cracked decor and hardscape</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Turns white where it contacts water</li>
+<li>Bonds skin instantly — work dry and carefully</li></ul></div>
+      </div>
+      <a class="cta-btn" href="https://amzn.to/4hM2y3s" target="_blank" rel="noopener">Check price on Amazon</a>
+    </div>
+  </div>
+</div>
+<div class="product">
+  <div class="product-ribbon"><span class="rank"><span class="star">★</span> #4 · For stem plants</span><span class="asin">Plant weights</span></div>
+  <div class="product-body">
+    <div class="product-image-wrap"><img class="pgp-img img-full img-center" src="/media/167" alt="Twenty-five lead-free aquarium plant weight strips shown flat and curled, with an inset of weighted plants in a tank"></div>
+    <div class="product-content">
+      <div class="product-title">Lead-Free Plant Weight Strips (25 pcs)</div>
+      <div class="product-price"><span class="dollar">$6.99</span><span class="disclaimer">*price subject to change</span></div>
+      <span class="best-for">Best For: Holding individual stems and bunches down during the first two weeks</span>
+      <div class="product-desc">
+        <p>Freshly planted stems float. Roots take one to three weeks to grip, and until then a single tail-flick from the betta lifts them out. A soft, lead-free strip wrapped loosely around the base of one stem — or a small group — solves it without the crushing pressure of a factory band.</p>
+        <p>The distinction matters: the tight metal band a bunch ships in rots the stems inside it. A loose strip you apply yourself, on a stem you have already stripped and planted, is a completely different thing. Remove them once the plants have rooted.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Stops new stems floating loose</li>
+<li>Lead-free and reusable</li>
+<li>Also anchors moss and driftwood</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Must be applied loosely, not crimped tight</li>
+<li>Visible until you remove them</li>
+<li>Not needed once roots take</li></ul></div>
+      </div>
+      <a class="cta-btn" href="https://amzn.to/4wD9MKQ" target="_blank" rel="noopener">Check price on Amazon</a>
+    </div>
+  </div>
+</div>
+<div class="product">
+  <div class="product-ribbon"><span class="rank"><span class="star">★</span> #5 · For floating plants</span><span class="asin">Plant corral</span></div>
+  <div class="product-body">
+    <div class="product-image-wrap"><img class="pgp-img img-full img-center" src="/media/168" alt="Black flexible floating plant corral with suction cups holding duckweed and frogbit to one side of an aquarium surface"></div>
+    <div class="product-content">
+      <div class="product-title">Floating Plant Corral / Surface Guard</div>
+      <div class="product-price"><span class="dollar">$8.89</span><span class="disclaimer">*price subject to change</span></div>
+      <span class="best-for">Best For: Keeping floaters where you want them and off the filter outflow</span>
+      <div class="product-desc">
+        <p>Floating plants drift. Left alone they pile against the filter outflow, get soaked and melt, or cover the entire surface and cut off the light below. A flexible corral suction-cupped across one corner pens them into a defined area.</p>
+        <p>This is what makes the surface rule practical: the betta keeps a clear route to the air, the plants keep a calm patch of still water, and you keep a shaded resting zone in one corner instead of a solid green lid.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Enforces the clear-surface rule automatically</li>
+<li>Stops floaters clogging the filter</li>
+<li>Bends to any tank shape</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Suction cups need occasional re-seating</li>
+<li>Visible across the surface</li>
+<li>Duckweed still escapes it</li></ul></div>
+      </div>
+      <a class="cta-btn" href="https://amzn.to/3SGKSMm" target="_blank" rel="noopener">Check price on Amazon</a>
+    </div>
+  </div>
+</div>
+<div class="product">
+  <div class="product-ribbon"><span class="rank"><span class="star">★</span> #6 · Betta comfort</span><span class="asin">Coconut cave</span></div>
+  <div class="product-body">
+    <div class="product-image-wrap"><img class="pgp-img img-full img-center" src="/media/169" alt="Natural coconut shell cave aquarium hide with a betta fish resting under the opening"></div>
+    <div class="product-content">
+      <div class="product-title">Natural Coconut Shell Cave</div>
+      <div class="product-price"><span class="dollar">$5.93</span><span class="disclaimer">*price subject to change</span></div>
+      <span class="best-for">Best For: A dark, enclosed hide to plant moss and Anubias onto</span>
+      <div class="product-desc">
+        <p>Plants give a betta cover; a cave gives it a door it can close. A coconut half releases mild tannins that gently soften and tint the water — closer to the blackwater conditions bettas evolved in — and gives a shy or newly-moved fish somewhere to decompress.</p>
+        <p>It doubles as hardscape for this guide's purposes: glue Java Moss or an Anubias nana straight onto the fibrous shell and within a couple of months the cave disappears under growth.</p>
+      </div>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Natural tannins suit betta water chemistry</li>
+<li>Perfect glue surface for moss and Anubias</li>
+<li>No sharp edges to catch fins</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Tannins tint the water yellow-brown</li>
+<li>Can float until waterlogged — boil it first</li></ul></div>
+      </div>
+      <a class="cta-btn" href="https://amzn.to/3UczqIL" target="_blank" rel="noopener">Check price on Amazon</a>
+    </div>
+  </div>
+</div>
+
+
+<h2>⚠️ Four Mistakes That Kill New Betta Tank Plants</h2>
+
+<ol class="method-list">
+  <li><b>Leaving the factory band on.</b> Cut it off and separate the stems before anything goes in the water. The crushed center of a bundle rots first and takes the rest with it.</li>
+  <li><b>Burying the rhizome or the crown.</b> Two of the five types are surface-sitters. This is the most common reason a healthy plant dies in its first month, and it's entirely avoidable.</li>
+  <li><b>Panicking during the melt.</b> Crypts and swords shed nearly every leaf after transplant. Leave the roots alone; submerged growth follows in two to four weeks.</li>
+  <li><b>Adding light instead of patience.</b> When a low-tech tank looks slow, the instinct is to run the light longer. That grows algae, not plants. Six to eight hours is the ceiling — if anything, shorten it.</li>
+</ol>
+
+<h2>❓ Frequently Asked Questions</h2>
+
+<details class="faq-item" open=""><summary>Do betta fish actually need live plants?</summary><p>They don't need them to survive, but they use them constantly when present. Plants provide resting surfaces near the surface, break line of sight to reduce stress and flaring, and give the fish a reason to explore the whole tank rather than one corner. Silk plants deliver some of the enrichment without the water-quality benefit; plastic plants risk tearing fins.</p></details>
+
+<details class="faq-item" open=""><summary>How many plants does a 5-gallon betta tank need?</summary><p>Three to five plants is a realistic starting point: one rhizome plant on hardscape at mid-height, one or two substrate plants at the back, and a small handful of floaters. Aim for roughly half to two-thirds of the tank footprint planted, with clear swimming lanes and an unobstructed route to the surface.</p></details>
+
+<details class="faq-item" open=""><summary>Can I keep a planted betta tank without CO₂?</summary><p>Yes — every plant recommended in this guide grows without injected CO₂. What you trade is speed. Low-tech tanks fill in over months rather than weeks, and demanding carpets and red stem plants generally won't thrive. Anubias, Java Fern, Hornwort, mosses and floaters are all genuinely low-tech plants.</p></details>
+
+<details class="faq-item" open=""><summary>Why are my new aquarium plants melting?</summary><p>Most often it's normal transplant melt from emersed-grown stock converting to submerged growth — expected in cryptocorynes especially, and it resolves in two to four weeks. If melt continues past a month, check planting depth first (buried rhizome or crown), then nutrients, then light duration.</p></details>
+
+<details class="faq-item" open=""><summary>Will a betta eat or damage live plants?</summary><p>No. Bettas are carnivores and ignore plants as food. They will rest on leaves, push through dense growth and occasionally dislodge a freshly planted stem — which is another reason to weight new stems and let them root properly before adding the fish.</p></details>
+
+<details class="faq-item" open=""><summary>What light do I need for a low-tech planted betta tank?</summary><p>A basic LED rated for planted tanks, run six to eight hours a day on a timer, is enough for everything in this guide. Longer photoperiods and higher intensity mostly benefit algae in a tank without CO₂. If algae appears, cut the duration before you change anything else.</p></details>
+
+<details class="faq-item" open=""><summary>Should I add plants before or after the betta?</summary><p>Before, ideally by two to four weeks. Plants get to root undisturbed, the tank finishes cycling, and any melt or ammonia leach from new substrate happens before a fish is exposed to it. The betta then arrives to a settled, established tank.</p></details>
+
+<div class="paw-divider"></div>
+
+<h2>The Short Version</h2>
+
+<p>Buy an Anubias, glue it to a rock two-thirds up the tank, and pen a handful of Salvinia into one corner at the surface. That's a planted betta tank, and it will outlive most elaborate aquascapes because there's nothing in it to get wrong.</p>
+
+<p>Everything else in this guide — the swords, the stems, the carpets, the fertilizer schedule — is what you add once you've watched your betta claim that first leaf and decided you want more of it. Get the depth right, give it three patient weeks, and the tank does the rest on its own.</p>

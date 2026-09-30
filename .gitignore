@@ -1,0 +1,5 @@
+# Delivery bundles. These are zipped up from worker-theme/ so the owner can
+# download every post body in one go; the files inside are already tracked
+# individually, and a committed copy would go stale the moment a post changes.
+pet-gotopro-posts.zip
+*.tar.gz
