@@ -32,7 +32,14 @@ function makeDb() {
   const stmt = (sql) => ({
     sql, _b: [],
     bind(...a){ this._b = a; return this; },
-    async run(){ updates.push([sql, this._b]); return { meta: { changes: 1 } }; },
+    // D1 reports the rows the UPDATE matched. A stub that always says 1 is
+    // unrealistic enough to hide a miscount in the message the owner reads,
+    // so this counts the bound ids that actually exist, like SQLite would.
+    async run(){
+      updates.push([sql, this._b]);
+      const ids = PRODUCTS.map(p => p.id);
+      return { meta: { changes: this._b.filter(x => typeof x === 'number' && ids.includes(x)).length } };
+    },
     async first(){ return null; },
     async all(){
       if (/SELECT id, base_cost/.test(sql)) return { results: PRODUCTS.filter(p => this._b.includes(p.id)) };
@@ -82,6 +89,14 @@ r = await run({ ids: ['1','2'], animal: 'Reptiles', item_type: 'Mug', status: 'p
 const flat = r.updates.find(([sql]) => /animal=\?/.test(sql));
 ok('sets animal, type and status in one statement', !!flat && flat[1].slice(0,3).join(',') === 'Reptiles,Mug,published', JSON.stringify(flat && flat[1]));
 ok('scoped to the ids given', !!flat && flat[1].slice(-2).join(',') === '1,2');
+
+console.log('\n--- the count in the confirmation ---');
+r = await run({ ids: ['1','2','3'], status: 'published' });
+ok('publishing three reports three', /Updated 3 products/.test(r.redirect), r.redirect);
+r = await run({ ids: ['1'], status: 'draft' });
+ok('one is singular, not "1 products"', /Updated 1 product \(/.test(r.redirect), r.redirect);
+r = await run({ ids: ['1','2'], status: 'published', animal: 'Cats' });
+ok('names every field it changed', /animal . Cats, status . published/.test(r.redirect), r.redirect);
 
 console.log('\n--- validation ---');
 r = await run({ ids: [], animal: 'Cats' });

@@ -373,7 +373,7 @@ this repo:
 | | |
 |---|---|
 | `shop-sync-test.mjs` | 15 — cents conversion, option resolution, per-variant images, disabled variants, the retire step, the empty-response guard |
-| `shop-bulk-test.mjs` | 17 — every price rule and rounding mode, the zero-cost skip, validation, and a single checkbox arriving as a string |
+| `shop-bulk-test.mjs` | 20 — every price rule and rounding mode, the zero-cost skip, the count in the confirmation, validation, and a single checkbox arriving as a string |
 | `shop-classify-test.mjs` | 15 titles through the animal and item-type guesser |
 
 They rebuild their mock from the live source on every run, so a suite can never
