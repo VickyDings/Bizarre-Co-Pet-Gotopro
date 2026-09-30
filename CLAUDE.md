@@ -1,7 +1,10 @@
 # Pet GoToPro — blog guides
 
-**Read `docs/reference/post-template.html` before writing a post.** It carries the
-real markup, copied from the live guinea pig nutrition guide.
+**Read `docs/reference/guide-template.html` before writing a post.** It is the
+canonical layout, derived from the two guides the owner confirmed in Sept 2026 as
+the house style: **ball-python-care-guide** and **hamster-care-guide**. Match it.
+(`docs/reference/post-template.html` is the older guinea-pig-era markup — still
+accurate for the component classes, superseded on structure.)
 
 ## The live site now lives in this repo, under `petgotopro-live/`
 
@@ -215,42 +218,104 @@ Paste-ready blocks for every combination: `docs/reference/section-layouts.html`.
   (`.pick` = green) / `.gp-img` / `.gp-name` / `.gp-price` / `.gp-disc` / `.gp-onelink`
 - CTA links use `class="cta-btn"` (theme-styled), **not** `.gp-btn`
 
-## Structure
+## Structure — follow `docs/reference/guide-template.html`
 
-1. `<h2>` hook — the thing that goes wrong, stated plainly
-2. `<h3>` expanding it, then a paragraph on why the internet gets it wrong
-3. `.quick-facts` panel
-4. Emoji-prefixed `<h2>` sections — 🌾 🥗 🌶️ ⚖️ 🚫 🔍 💊 📅 🔄 🚑
-5. **A myth-correction section** — two or three `.vet-tip` boxes naming specific
-   wrong advice found online and correcting it with a source
-6. Product shop block, grouped by category, each with a "why this brand" intro
-7. Emergency/before-you-need-it section where the species warrants one
-8. Sample day table
-9. `.funfact`
-10. Free printable + `.download-card`
-11. `details.faq-item` FAQ
-12. `.vet-tip` cross-link to a sibling guide
-13. `<h2>The Bottom Line</h2>` — the guide compressed to a few numbers
+In order. Items marked *optional* appeared in one reference guide but not both.
+
+1. `<!-- SEO ... -->` comment block: `SEO TITLE`, `META DESCRIPTION`, `SLUG`,
+   `CATEGORY`, `FOCUS KEYWORD`, `SECONDARY KEYWORDS`
+2. **Two opening `<p>` paragraphs — no heading above them.** First: how the
+   animal is sold, then the turn to what goes wrong. Second: *"This guide is the
+   setup we would give a friend"* plus a roadmap of specifics
+3. Hero image (Unsplash) + centered italic caption paragraph
+4. `.quick-facts`, `h3` = species emoji + "<Species> at a glance", 10–12 items
+5. "Before you bring one home" — the commitment, sourcing, legality
+6. *Optional* cost table: Cost / Typical range (US) / Notes
+7. Enclosure sizing table: **Bare minimum / What to actually buy / Why**
+8. `.pgp-section--cream` with `h3.pgp-sec-title` "Three rules that decide the
+   enclosure", `pgp-grid--2`
+9. `h3` "Where the enclosure goes"
+10. The husbandry sections — heat, humidity, lighting, diet — tables and
+    `.vet-warning` / `.vet-tip`
+11. `ol.method-list` for the layer-by-layer build
+12. Product cards in `.pgp-section--tint`, sub = "Prices move constantly — these
+    are typical ranges, not quotes."
+13. Feeding chart **by weight, not age**, then `ol.method-list` for technique
+14. `h3` + `.download-card` (care sheet) + `.paw-divider`
+15. "The care routine: daily, weekly and ..." table
+16. One `.callout` pull quote, attr "What every … vet wishes owners knew"
+17. "Health: what to watch, and what is an emergency" — `pgp-grid--2` with
+    `h3` 💚 healthy / ⚠️ call a vet
+18. `h3` + `.download-card` (setup checklist) + `.paw-divider`
+19. "The full shopping list" — two `.kit-section`s: "The essentials"
+    (`.kit-item essential`, check `✓`) and "Worth adding" (`.kit-item optional`,
+    check `+`). Anchor is a bare `<a>`, no class, text "See options →"
+20. *Optional* `.vet-warning` "Products to leave on the shelf"
+21. `p.intl-note` — "We only suggest gear we would use ourselves. Prices are
+    indicative and change constantly — always check the current listing."
+22. `.paw-divider`, a final Unsplash photo + caption
+23. "More fun facts to win an argument with" — **4–5 separate `.funfact` boxes**,
+    label is plain `Fun fact` with no emoji
+24. "Frequently asked questions" — **10** `details.faq-item`, multi-line
+25. *Optional* `.vet-tip` cross-link to sibling guides
+26. `.disclosure` — always last, always the exact house wording
+
+### Hard rules
+
+- **No `<h2>`/`<h3>` hook at the top.** Two paragraphs, straight in.
+- **`<h2>` headings carry no emoji.** Sentence case, often "Topic: the payoff".
+  Emoji appear only in `.quick-facts h3`, `.vet-tip`/`.vet-warning h4`, the
+  healthy/call-a-vet `h3`s, and a cross-link `h4`.
+- **`.pgp-sec-title` is an `h3`,** never an `h2`.
+- **There is no "The Bottom Line" section.** The guide ends FAQ → (cross-link) →
+  `.disclosure`.
+- **Use `<b>`, not `<strong>`,** in body copy. `<strong>` only inside `.funfact`.
+- **Every `table.compare` goes inside `.table-wrap`.** One unwrapped table forces
+  the whole page to 664px on a 390px phone — this shipped as a live bug once.
+
+## Images
+
+- **Editorial photos are Unsplash URLs**, not `/media/NN`. Search with the
+  Unsplash tools and use the `images.unsplash.com/photo-…` form with
+  `?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1400`.
+- Hero and full-width: `class="img-full img-frame"` — **no `pgp-img`, no
+  `img-center`**. In-body: `class="img-md img-right img-frame"` or `img-left`.
+- A hero or closing photo is followed by a caption paragraph with this exact
+  inline style, and the caption should teach something rather than describe the
+  picture:
+  `<p style="text-align:center;font-size:13px;color:#6E6480;font-style:italic;margin-top:-10px">`
+- **`/media/NN` is only for product card images and download-card thumbnails.**
+  Product card images carry `alt=""`.
 
 ## Voice
 
-- Direct, warm, second person. Short sentences. British-leaning register.
-- **Lead with what kills or harms the animal**, and give the number, not the vibe.
-- Cite named authorities (PDSA, vet sources) when correcting a myth.
+- Direct, warm, second person, **first person plural for the publisher** — "the
+  setup we would give a friend", "the most common mistake we see", "we recommend".
+- **American spelling and units**: color, behavior, mold, gray, fecal. Fahrenheit
+  first, metric in parentheses where useful.
+- Short sentences. Lead with what kills or harms the animal, and give the number.
+- Positions the author as a 12-year pet industry professional.
+- Say when a popular product is a bad idea, and why. Never invent review counts.
 - Be explicit that a supplement is not a treatment and a symptom is not a diagnosis.
-- Never invent review counts or ratings.
-- Say when a popular product is a bad idea, and why.
 
 ## Affiliate links
 
-**Amazon Associates store ID: `petgo2pro-20`.** Live posts use **amzn.to SiteStripe
-short links** (e.g. `https://amzn.to/4xYwjTx`), not search URLs. Claude cannot
-generate these — write a tagged Amazon search URL as a working placeholder and
-flag it for the owner to replace with the SiteStripe link.
+**Amazon Associates store ID: `petgo2pro-20`.**
 
-Every product card carries, in order: badge → image → name → price range →
-`*Price starts from and is subject to change` → reasoning → `cta-btn` →
-the OneLink availability note.
+The two reference guides use **`https://link.amazon/XXXXXXXXX`** OneLink short
+links with `rel="noopener"` — not `amzn.to`, not tagged search URLs. Claude cannot
+generate them, so write `https://link.amazon/XXXXXXXXX` as the placeholder and
+list every one for the owner to fill in.
+
+Product cards, in order: badge → image (`/media/NN`, `alt=""`) → name → price
+range → `*Price starts from and is subject to change` → reasoning → `cta-btn`
+reading **"Check price on Amazon"** → note reading **"Link opens your local
+Amazon store where available."**
+
+Shopping-list items end with a bare `<a>` (no class) reading **"See options →"**.
+
+Product **names are generic** — "Dimming or proportional thermostat", not a brand.
+Brands are named in the reasoning text instead.
 
 Two card shapes exist. The full-width `.product` card (or the `#xxshop` scoped
 `.gp-card`) is right for a one-per-row shop. **In a column layout use `.pgp-prod`**,
