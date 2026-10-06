@@ -177,6 +177,35 @@ stay. Aim for **ten or more** through a guide: an `.img-full .img-frame` with an
 italic caption between blocks always fits, and `.img-md .img-left/right` works beside
 two or more paragraphs of running prose.
 
+### Raw Paws is the only CJ advertiser this site can link to
+
+Five live CJ relationships, one of them pet: **Raw Paws Pet Food, advertiser
+7127091**, 10% commission, 30-day cookie, 158 products. The others are FYE,
+Books-A-Million, 2nd and Charles and UntilGone, none of which belong in a pet
+guide. The publisher property is **PID 101894827** (Pet-GoToPro).
+
+Three program terms change how a Raw Paws card is built:
+
+- **Images must come from CJ**, not from rawpawspetfood.com. The feed's
+  `imageLink` is the compliant source. This is the one case where a product
+  photo does not come from the owner's own camera roll.
+- **No fixed prices, and expired deals are the publisher's problem.** The house
+  rule of a price *range* plus "Price starts from and is subject to change"
+  already satisfies this; it is now also a contractual requirement rather than
+  a style preference.
+- **No misspellings or bad grammar in ad copy**, and never "official site" or
+  "authorized wholesaler". The US English scan covers the first part.
+
+`Search Campaigns - Direct Linking: No` reads alarming and is not: it bans paid
+search pointing at the advertiser, and says nothing about linking to a product
+from an article.
+
+**Their `linkCode(pid:)` returns null**, so there are no tracking links yet. The
+same query against FYE returns a working one on the same PID, so the PID and the
+query are both fine and the gap is on Raw Paws' side. Until that is resolved,
+Raw Paws products cannot be linked at all -- a product card for them would be
+unpaid traffic. Amazon search URLs remain the only earning links on the site.
+
 ### Images
 
 Unsplash, via the MCP connector. **Read each result's own description before
