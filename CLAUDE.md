@@ -92,7 +92,19 @@ and "Push a cotton bud into the ear canal". Sheet sources live beside the templa
 
    Existing keys: `budgie-care-sheet.png`, `budgie-breeding-sheet.png`,
    `dog-grooming-sheet.png`, `shrimp-care-sheet.png`, `hermit-crab-care-sheet.png`,
-   `saltwater-care-sheet.png`, plus nine older `.jpg` guides.
+   `saltwater-care-sheet.png`, `cockatiel-care-sheet.png`, plus nine older `.jpg`
+   guides. Checked against the live `guides` table on 6 October: **only the nine
+   `.jpg` rows and the three extensionless ones are actually registered.** Shrimp,
+   hermit crab, saltwater and cockatiel are all uploaded-or-written but absent, so
+   their download cards 404 on the live site. The list above is what the posts
+   link to, not what the database holds — check before assuming.
+
+   **The renderer that builds these is not in this repo**, only
+   `care-sheet-template.html` with `__LOGO__` and `__QR__` base64 placeholders.
+   Both can be recovered from any finished sheet: the footer strip is the bottom
+   260px, the logo sits at roughly x 62–198 and the QR at x 1606–1772 on a
+   2000px-wide render, and cropping them out of `saltwater-care-sheet.png` is how
+   the cockatiel sheet got its pair.
    `register-new-guides.bat` holds the last three and is safe to re-run — a sheet
    whose PNG is not uploaded yet matches nothing and skips.
 
