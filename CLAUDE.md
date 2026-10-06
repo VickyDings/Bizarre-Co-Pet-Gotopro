@@ -72,9 +72,23 @@ and "Push a cotton bud into the ear canal". Sheet sources live beside the templa
    old one, which cost the owner their uploads twice. A name survives that. It also
    puts the sheet on `/free-guides`, which is where the QR code printed on every
    sheet points, and `/download/` sends a real `Content-Disposition: attachment` so
-   no `download` attribute is needed on the anchor. **Keep the `.png` on the guide
-   key** — the saved filename is built from it, and without an extension the file
-   will not open on double-click.
+   no `download` attribute is needed on the anchor. **Keep an extension on the guide
+   key** — without one the downloaded file will not open on a double-click, and
+   three sheets shipped that way (`budgie-care-sheet`, `budgie-breeding-sheet`,
+   `dog-grooming-sheet`); `fix-guide-names.bat` repairs them.
+
+   **The uploaded file is often not the format you saved.** The admin editor
+   re-encodes an image to JPEG whenever that comes out smaller and renames it
+   `.jpg` — so a care sheet rendered and saved as a 1.3 MB PNG arrives in the
+   media table as `saltwater-care-sheet.jpg`, `image/jpeg`. It is not predictable
+   either: a PNG that does not compress well stays a PNG.
+
+   So the guide key keeps whatever extension the article's `/img/` and
+   `/download/` URLs use, and `serveGuide()` builds the **saved filename from the
+   stored mime instead**. Before that, a reader clicking Download on the saltwater
+   sheet would have received a `.png` file containing JPEG bytes. The registration
+   SQL is unaffected — it matches on `instr(filename,'saltwater-care-sheet')`,
+   which finds the row whichever extension it ended up with.
 
    Existing keys: `budgie-care-sheet.png`, `budgie-breeding-sheet.png`,
    `dog-grooming-sheet.png`, `shrimp-care-sheet.png`, `hermit-crab-care-sheet.png`,
