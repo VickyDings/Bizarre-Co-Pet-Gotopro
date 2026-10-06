@@ -186,9 +186,18 @@ guide. The publisher property is **PID 101894827** (Pet-GoToPro).
 
 Three program terms change how a Raw Paws card is built:
 
-- **Images must come from CJ**, not from rawpawspetfood.com. The feed's
-  `imageLink` is the compliant source. This is the one case where a product
-  photo does not come from the owner's own camera roll.
+- **Images must come from CJ**, not from rawpawspetfood.com -- and the feed
+  does not have any. `imageLink` and `additionalImageLink` both exist on
+  `products` and `shoppingProducts` and both are blank across all 158 rows,
+  while titles, prices and tracking links all arrive. So there is no compliant
+  image source at all yet, and a Raw Paws card ships with its photo well empty
+  until the advertiser populates the feed. The well collapses cleanly, so that
+  is a working card rather than a broken one.
+
+  `node cj.mjs imageprobe 7127091` re-checks this. It tries eight field names
+  one query at a time and separates REJECTED (no such field) from EMPTY (field
+  there, advertiser leaves it blank) -- a distinction a single count of zero
+  hides, and the two want completely different responses.
 - **No fixed prices, and expired deals are the publisher's problem.** The house
   rule of a price *range* plus "Price starts from and is subject to change"
   already satisfies this; it is now also a contractual requirement rather than
@@ -200,11 +209,12 @@ Three program terms change how a Raw Paws card is built:
 search pointing at the advertiser, and says nothing about linking to a product
 from an article.
 
-**Their `linkCode(pid:)` returns null**, so there are no tracking links yet. The
-same query against FYE returns a working one on the same PID, so the PID and the
-query are both fine and the gap is on Raw Paws' side. Until that is resolved,
-Raw Paws products cannot be linked at all -- a product card for them would be
-unpaid traffic. Amazon search URLs remain the only earning links on the site.
+**Tracking links work.** `linkCode(pid: "101894827")` returned null on every row
+for about a day and then began returning all 158, with nothing changed on this
+side -- a new relationship takes a while to reach the property. Worth knowing
+before anyone debugs a null again: the same query against FYE returning a
+working link is the test that proves the PID and the query are both fine, and
+after that the only thing to do is wait and re-run.
 
 ### Images
 
