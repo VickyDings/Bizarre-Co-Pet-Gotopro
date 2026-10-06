@@ -209,6 +209,35 @@ Three program terms change how a Raw Paws card is built:
 search pointing at the advertiser, and says nothing about linking to a product
 from an article.
 
+**Every destination URL in their feed is malformed, so no Raw Paws product can
+be linked yet.** All 158 come back as
+
+```
+https://www.rawpawspetfood.com /products/ chicken-necks-for-dogs-2-lb
+                              ^          ^
+```
+
+-- a space after the domain and another after `/products/`, identical on every
+row, so it is a template on their side. CJ encodes them faithfully and the
+tracking link it mints lands nowhere. **A link that exists and does not resolve
+is worse than a missing one**: it looks finished, it survives a glance, and the
+reader is the one who finds out.
+
+Confirmed independently of the API: CJ's own link generator in the member area
+writes the same two spaces into the form it builds, and emits the image
+creative as `<img src="null">`.
+
+`cj.mjs export` now writes `linkRepaired` and `clickUrlRepaired` beside the
+originals, rewriting only the `url=` value and leaving the PID, ad id and
+`cjsku` exactly as CJ wrote them -- rebuilding those by hand is how attribution
+is lost. It never replaces the original, because stripping whitespace is a
+repair nobody has verified against the live store.
+
+**Watch which PID a hand-generated link carries.** A link built in CJ's member
+area came out on `100786792` (Bizarre Collections LLC), not `101894827`
+(Pet-GoToPro). Both properties are active, so nothing errors -- the pet traffic
+simply reports against the wrong property.
+
 **Tracking links work.** `linkCode(pid: "101894827")` returned null on every row
 for about a day and then began returning all 158, with nothing changed on this
 side -- a new relationship takes a while to reach the property. Worth knowing
