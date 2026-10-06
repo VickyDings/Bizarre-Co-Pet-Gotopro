@@ -588,6 +588,38 @@ node shop-sync-test.mjs
 It needs no token and makes no network calls. Thirteen assertions; all should
 say PASS.
 
+## Gotcha: a theme.js from an old session is not a patch
+
+A `theme.js` built in a cloud session is a **whole-file replacement**, carrying
+whatever that session last saw plus its own edits. Saving one over `src/theme.js`
+silently deletes everything added to the real file in between. It happened here:
+a file based on the 30 September copy was saved over a version that had moved on,
+and it removed the affiliate-consent notice and its Impact tag, `shopBanner()` and
+the whole `.shop-band` block, the back-to-top button and service worker, both
+secondary footer rows, and the PWA head tags.
+
+Two rules came out of it.
+
+**Check the whole file, not just the imports.** The first check compared imports
+between files. That caught `shopBanner`, because `public.js` names it — and missed
+every self-contained block in `theme.js`, because nothing imports a CSS rule. The
+report that followed was wrong because the check was too narrow, not because the
+damage was small. Diff the rendered output, not the module graph.
+
+**A live page is a complete backup of a theme.** `layout()` inlines the entire
+stylesheet into every response, and emits every script and every piece of footer
+markup. So as long as nothing has been deployed over the loss:
+
+```
+curl -s https://pet-gotopro.com/ -o home.html
+```
+
+gives back the CSS verbatim, the scripts verbatim, and the exact rendered markup
+to rebuild any missing function from. Recovery here was byte-exact that way, after
+OneDrive version history turned out to hold only the damaged copy.
+
+Best avoided entirely: send the current `src/` before editing, and diff against it.
+
 ## Gotcha: a backtick in theme.js breaks the whole worker
 
 `PUBLIC_CSS`, `SECTION_CSS` and `IMAGE_CSS` are template literals, so a single
