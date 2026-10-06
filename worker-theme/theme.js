@@ -616,6 +616,63 @@ table.compat tbody tr:hover td.m{filter:brightness(.95)}
 #pgp-lb-cap{color:#C0B6CE;font-size:14px;font-style:italic;margin-top:12px;text-align:center;max-width:700px}
 
 /* Footer */
+/* Affiliate-tracking consent. The site loaded no third-party JavaScript at all
+   before Impact, so this is the first thing on it that sets a tracking cookie —
+   Decline genuinely blocks the script rather than only hiding the notice. */
+#pgp-consent{position:fixed;left:12px;right:12px;bottom:12px;z-index:90;max-width:720px;margin:0 auto;
+  background:var(--page-3);border:1px solid var(--hair);border-radius:14px;padding:15px 18px;
+  box-shadow:0 12px 34px rgba(8,4,16,.5);display:none;gap:14px;align-items:center;flex-wrap:wrap;color:var(--on-dark)}
+#pgp-consent.on{display:flex}
+#pgp-consent p{font-size:13.5px;color:var(--on-dark-dim);margin:0;flex:1;min-width:230px;line-height:1.55}
+#pgp-consent a{color:var(--amber)}
+#pgp-consent .cbtns{display:flex;gap:9px;flex-shrink:0}
+#pgp-consent button{font-family:inherit;font-size:14px;font-weight:700;padding:10px 18px;border-radius:999px;
+  cursor:pointer;border:1px solid var(--hair);background:transparent;color:var(--on-dark);min-height:42px}
+#pgp-consent button.yes{background:var(--amber);border-color:var(--amber);color:#15111C}
+#pgp-consent button:hover{border-color:var(--amber)}
+/* Keep the back-to-top button clear of the notice while it is showing. */
+body.consent-open #to-top{bottom:112px}
+@media(max-width:560px){#pgp-consent .cbtns{width:100%}#pgp-consent button{flex:1}
+  body.consent-open #to-top{bottom:150px}}
+/* Back to top. The guides run 6,000-7,500 words and the shop grid is long, so
+   on a phone the way back is a lot of swiping. Hidden until there is something
+   to scroll back over; honours reduced-motion. */
+#to-top{position:fixed;right:16px;bottom:16px;z-index:70;width:46px;height:46px;border:none;
+  border-radius:50%;background:var(--amber);color:#15111C;font-size:20px;line-height:1;cursor:pointer;
+  box-shadow:0 6px 20px rgba(21,17,28,.45);display:grid;place-items:center;padding:0;font-family:inherit;
+  opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .2s,transform .2s,visibility .2s}
+#to-top.on{opacity:1;visibility:visible;transform:none}
+#to-top:hover{background:#fff}
+#to-top:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(prefers-reduced-motion:reduce){#to-top{transition:none}}
+/* Shop promo band. The collage is a background image and the wording is live
+   text, so it scales on a phone and Google can read the heading - a banner with
+   its title baked into the pixels throws both of those away. */
+.shop-band{position:relative;display:block;overflow:hidden;border-radius:16px;margin:46px 0;
+  min-height:236px;text-decoration:none;background:var(--page-2);box-shadow:var(--shadow-med)}
+.shop-band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;border-radius:0}
+.shop-band::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,
+  rgba(21,17,28,.94) 0%,rgba(21,17,28,.88) 36%,rgba(21,17,28,.50) 68%,rgba(21,17,28,.10) 100%)}
+.sb-in{position:relative;z-index:2;padding:32px 36px;max-width:610px;display:flex;
+  flex-direction:column;align-items:flex-start;gap:10px}
+.sb-kicker{font-size:11.5px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--amber)}
+.sb-title{font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:clamp(26px,3.6vw,40px);
+  line-height:1.08;color:#fff;margin:0}
+.sb-sub{font-size:15px;color:var(--on-dark-dim);max-width:430px}
+.sb-cta{margin-top:5px;background:var(--amber);color:#15111C;font-weight:800;font-size:15px;
+  padding:12px 26px;border-radius:999px;display:inline-block}
+.shop-band:hover .sb-cta{background:#fff}
+@media(max-width:720px){
+  /* Portrait has no room for text beside the products, so the scrim turns
+     vertical and the collage shows as a strip above the wording. */
+  .shop-band{min-height:0;border-radius:14px;margin:30px 0}
+  .shop-band::after{background:linear-gradient(180deg,rgba(21,17,28,.55) 0%,rgba(21,17,28,.90) 54%,rgba(21,17,28,.97) 100%)}
+  .sb-in{padding:96px 20px 24px;max-width:none}
+  /* A portrait slice through the middle of the collage lands on the dog bowl,
+     which does not say "merchandise". 72% puts the cat mug in the strip. */
+  .shop-band img{object-position:72% center}
+  .sb-sub{display:none}
+}
 footer.site-footer{background:var(--ink);color:var(--cream);padding:48px 24px;margin-top:80px;text-align:center}
 footer .foot-logo{width:44px;height:44px;border-radius:10px;background:var(--cream);padding:4px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 footer .foot-logo img{width:100%;height:100%;object-fit:contain}
@@ -624,6 +681,12 @@ footer .foot-tag{color:var(--amber);font-style:italic;font-size:14px;margin-top:
 footer .foot-nav{margin-top:18px;display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
 footer .foot-nav a{color:#B0A6C0;font-size:13px;text-decoration:none}
 footer .foot-nav a:hover{color:var(--cream)}
+/* Secondary footer rows: every pet category, and the legal pages a shop
+   needs findable. Both are plain links - a footer is a list, not a dropdown. */
+footer .foot-sub{margin-top:11px;gap:7px 15px;font-size:12px;align-items:center}
+footer .foot-sub a{color:#9A90AC;font-size:12px}
+footer .foot-sub a:hover{color:var(--cream)}
+footer .foot-lead{color:#6F6680;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
 footer .foot-disclosure{max-width:680px;margin:24px auto 0;padding-top:24px;border-top:1px solid #514860;font-size:13px;color:#B0A6C0;line-height:1.6}
 footer .foot-copy{margin-top:20px;font-size:12px;color:#857B96}
 
@@ -759,6 +822,22 @@ footer .foot-disclosure{border-top-color:var(--hair)}
 
 export const PAW_SVG = `<svg viewBox="0 0 24 24"><path d="M12 14c-2.5 0-6 1.5-6 4 0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2 0-2.5-3.5-4-6-4zm-5.5-2.5c1.1 0 2-1.3 2-2.9s-.9-2.9-2-2.9-2 1.3-2 2.9.9 2.9 2 2.9zm11 0c1.1 0 2-1.3 2-2.9s-.9-2.9-2-2.9-2 1.3-2 2.9.9 2.9 2 2.9zM9 8c1.1 0 2-1.3 2-2.9s-.9-2.9-2-2.9-2 1.3-2 2.9S7.9 8 9 8zm6 0c1.1 0 2-1.3 2-2.9s-.9-2.9-2-2.9-2 1.3-2 2.9S13.9 8 15 8z"/></svg>`;
 
+/* The shop promo band, as it appears at the foot of the homepage and of every
+   post. The collage is an img rather than a CSS background and the wording is
+   live text, so it scales on a phone and Google can read the heading — a banner
+   with its title baked into the pixels throws both of those away. */
+export function shopBanner({ cta = 'Browse the shop' } = {}) {
+  return `
+  <a class="shop-band" href="/shop">
+  <img src="/shop-banner.jpg" alt="" loading="lazy" decoding="async">
+  <div class="sb-in">
+    <span class="sb-kicker">Pet-GoToPro Shop</span>
+    <div class="sb-title">Pet parent merchandise</div>
+    <span class="sb-sub">Mugs, tees, totes, pillows and stickers for dog, cat, reptile, bird, fish and small-pet people. Printed when you order.</span>
+    <span class="sb-cta">${esc(cta)} &rarr;</span>
+  </div>`;
+}
+
 export function pawDivider() {
   return `<div class="paw-divider" aria-hidden="true">${PAW_SVG}${PAW_SVG}${PAW_SVG}</div>`;
 }
@@ -846,6 +925,11 @@ export function layout({ settings, menu, title, description, canonical, body,
 <meta name="description" content="${esc(description || '')}">
 ${canonical ? `<link rel="canonical" href="${esc(canonical)}">` : ''}
 <link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="${esc(logo)}">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#15111C">
+<meta name="apple-mobile-web-app-title" content="${esc(settings.site_name)}">
+<meta name="mobile-web-app-capable" content="yes">
 <link rel="alternate" type="application/rss+xml" title="${esc(settings.site_name)} RSS" href="/rss.xml">
 <meta property="og:type" content="${ogType || 'website'}">
 <meta property="og:title" content="${esc(title)}">
@@ -893,6 +977,8 @@ ${body}
   <div class="foot-name">${esc(settings.site_name)}</div>
   <div class="foot-tag">${esc(settings.tagline)}</div>
   <nav class="foot-nav">${nav}</nav>
+  <nav class="foot-nav foot-sub" aria-label="Browse by pet"><span class="foot-lead">Browse by pet</span><a href="/category/Dogs">Dogs</a><a href="/category/Cats">Cats</a><a href="/category/Small%20Pets">Small Pets</a><a href="/category/Birds">Birds</a><a href="/category/Reptiles">Reptiles</a><a href="/category/Aquatics">Aquatics</a><a href="/category/Invertebrates">Invertebrates</a></nav>
+  <nav class="foot-nav foot-sub" aria-label="Site information"><a href="/affiliate-disclosure">Affiliate Disclosure</a><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms</a><a href="/shipping">Shipping</a><a href="/refunds-returns">Refunds &amp; Returns</a><a href="/intellectual-property">Intellectual Property</a></nav>
   <div class="foot-disclosure"><strong style="color:var(--cream);">Affiliate Disclosure:</strong> ${esc(settings.footer_disclosure)}</div>
   <!-- Legal entity, then the trading name. The year is dynamic so it never goes
        stale, and the legal name falls back to a literal rather than requiring a
@@ -1099,6 +1185,63 @@ ${body}
     if (inDrop) { var b = inDrop.querySelector('.nav-drop-btn'); if (b) b.focus(); }
     else if (toggle && nav.contains(document.activeElement)) toggle.focus();
   });
+})();
+</script>
+<button id="to-top" type="button" aria-label="Back to top" title="Back to top">&uarr;</button>
+<script>
+(function(){
+  var b = document.getElementById('to-top'); if (!b) return;
+  var ticking = false;
+  function sync(){ b.classList.toggle('on', (window.scrollY || document.documentElement.scrollTop) > 600); ticking = false; }
+  addEventListener('scroll', function(){ if (!ticking) { ticking = true; requestAnimationFrame(sync); } }, { passive: true });
+  b.addEventListener('click', function(){
+    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    var h = document.querySelector('h1');
+    if (h) { h.setAttribute('tabindex','-1'); h.focus({ preventScroll: true }); }
+  });
+  sync();
+})();
+// Offline support for articles and images. Registered after load so it never
+// competes with first paint, and silent on failure - it is an enhancement.
+if ('serviceWorker' in navigator) {
+  addEventListener('load', function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); });
+}
+</script>
+
+<div id="pgp-consent" role="region" aria-label="Cookie choice">
+  <p>We use affiliate tracking cookies so partners like Chewy and Amazon can credit a purchase you make
+  through our links. It costs you nothing and it is what keeps the guides free.
+  <a href="/privacy-policy">How we handle data</a>.</p>
+  <div class="cbtns">
+    <button type="button" class="no">Decline</button>
+    <button type="button" class="yes">Accept</button>
+  </div>
+</div>
+<script>
+(function(){
+  var KEY = 'pgp-consent-v1';
+  var box = document.getElementById('pgp-consent');
+  function loadImpact(){
+    if (window.impactStat) return;
+    (function(i,m,p,a,c,t){c.ire_o=p;c[p]=c[p]||function(){(c[p].a=c[p].a||[]).push(arguments)};t=a.createElement(m);var z=a.getElementsByTagName(m)[0];t.async=1;t.src=i;z.parentNode.insertBefore(t,z)})("https://utt.impactcdn.com/P-A6799522-bb6d-499d-83ab-091ac86acb071.js",'script','impactStat',document,window);
+    window.impactStat('transformLinks');
+    window.impactStat('trackImpression');
+  }
+  function close(v){
+    try { localStorage.setItem(KEY, v); } catch (e) {}
+    if (box) box.classList.remove('on');
+    document.body.classList.remove('consent-open');
+    if (v === 'yes') loadImpact();
+  }
+  var saved = null;
+  try { saved = localStorage.getItem(KEY); } catch (e) {}
+  if (saved === 'yes') { loadImpact(); return; }
+  if (saved === 'no' || !box) return;
+  box.classList.add('on');
+  document.body.classList.add('consent-open');
+  box.querySelector('.yes').addEventListener('click', function(){ close('yes'); });
+  box.querySelector('.no').addEventListener('click', function(){ close('no'); });
 })();
 </script>
 </body>
