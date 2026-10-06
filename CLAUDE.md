@@ -245,6 +245,24 @@ before anyone debugs a null again: the same query against FYE returning a
 working link is the test that proves the PID and the query are both fine, and
 after that the only thing to do is wait and re-run.
 
+### The disclosure must fire on every network, not just Amazon
+
+`hasAffiliate` tested `/amazon\./i` against the post body, so a post carrying
+only Raw Paws links rendered **no disclosure at all** -- an FTC problem rather
+than a cosmetic one, and one that would not have appeared until the first CJ
+post went live.
+
+It now matches three things: an Amazon host, this site's own `/go/` redirector,
+and **`click-<pid>-<ad id>`**, which is the path shape of every CJ link. Matching
+CJ's hosts instead would go stale -- they rotate across `anrdoezrs.net`,
+`dpbolvw.net`, `kqzyfj.com`, `jdoqocy.com`, `tkqlhce.com` and others, and add
+more.
+
+The wording follows the same split. "As an Amazon Associate..." is required by
+Amazon's operating agreement wherever an Amazon link appears, and is a false
+statement on a page that has none, so it is prefixed only when `hasAmazon` --
+which counts `/go/amazon/<asin>` too, since that href never contains the word.
+
 ### Images
 
 Unsplash, via the MCP connector. **Read each result's own description before
