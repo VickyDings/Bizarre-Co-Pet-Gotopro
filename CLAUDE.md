@@ -670,6 +670,77 @@ of their own admin the first time a session expired. Anything else mounted at
 `/admin` later needs the same exemption. Test it logged **out** — with a valid
 session cookie the gate passes and the bug stays invisible.
 
+## Authors
+
+One real person, Vicky G., in an `authors` table; `posts.author_id` points at
+her. **No invented authors** — the owner adds real people themselves, and
+nothing here ever deletes one. A writer who stops writing gets `active` unticked
+so the posts they already wrote keep their byline.
+
+`profile_path` is the override for a writer who already has a hand-built page.
+Vicky's is `/about-us`, so her byline and card link there and `/author/vicky-g`
+**301s** to it. Without an override they get the generated `/author/<slug>`.
+That is also why the sitemap lists only authors *without* an override: putting a
+redirect in a sitemap asks Google to crawl a page that is not there.
+
+### The desk rides on PET_CATEGORIES
+
+The byline reads `By {name} · {desk} · Updated {date} · {N} min read`. The desk
+is the part of the site the piece belongs to, and it is a `desk` field on each
+`PET_CATEGORIES` entry rather than a lookup table of its own — a separate map
+would quietly miss a new category. `General` has no desk on purpose: it is the
+catch-all, so a post filed there falls back to the author's `credit_line`.
+
+`deskFor()` is in `util.js` beside the list it reads.
+
+### Every author lookup can come back empty
+
+An unassigned post, a deactivated writer, a row that is not there yet. Each one
+falls back to the old `By The Pet-GoToPro Team` byline, no card, and an
+Organization author in the JSON-LD rather than rendering "By undefined" or
+claiming a person who is not on the record.
+
+### Gotcha: the dark pass does not know about a new component
+
+`theme.js` has a **plum pass** near the foot of `PUBLIC_CSS` that re-grounds the
+chrome and the listing surfaces for the dark page, and its own comment says
+*"everything inside `.article` is untouched"*. So a new card gets two different
+treatments depending on where it sits, and only one of them is automatic:
+
+- Inside `.article` it keeps the light reading sheet. Nothing to do.
+- Anywhere else it lands on `#15111C` with whatever colours it was given. The
+  author card on `/author/<slug>` shipped white-on-dark with a near-invisible
+  `<h1>` until `.pgp-au--page` was added to the dark pass next to `.post-card`.
+
+So: build a component, then **render it on a page that is not an article**
+before believing it. The in-article screenshot will look perfect either way.
+
+The second half of that bug is worth its own line: `.pgp-au-name` set a font and
+a size but no colour. As an `<a>` on a post it inherited the link colour and
+looked fine; as a bare `<h1>` on the author page it inherited the dark theme's
+light heading colour and vanished into the white card. **Set a colour on any
+element that renders as more than one tag.**
+
+### The pink pill is 3.3:1, like every other button on the site
+
+`white on --amber` measures 3.30, below the 4.5 that AA wants for 14px bold.
+That is not the author card's doing — `.cta-btn`, `.dl-btn`, `.g-btn`, `.rc-btn`
+and `.hero-cta` are all the same pair, so the card matches the site rather than
+being the one odd button. Two fixes exist if it is ever worth doing: ink on the
+same pink (**5.63**, which the shop band CTA already uses) or white on
+`--amber-deep` (**5.38**, already the hover state). Both are a site-wide theme
+change, not a one-component one.
+
+### Testing it
+
+`worker-theme/authors-public-test.mjs` — 59 assertions through the real route
+handlers with a mock D1: the byline, every category's desk, the card and its
+dedupe, the 301, the author page, both JSON-LD blocks and the sitemap. Takes
+`PGP_SRC` like the others.
+
+`worker-theme/authors-admin-test.mjs` — 32 for the editor dropdown and the
+admin pages.
+
 ## Restyling the older posts
 
 The owner chose a mixed approach for the nine or so posts written before the

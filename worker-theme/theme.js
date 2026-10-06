@@ -304,8 +304,47 @@ a{color:var(--amber-deep)}
 .deck{font-size:19px;color:var(--ink-soft);font-style:italic;max-width:680px;margin-bottom:28px}
 .byline{display:flex;align-items:center;gap:14px;font-size:14px;color:var(--ink-soft);padding-bottom:24px;border-bottom:1px solid var(--line);margin-bottom:32px;flex-wrap:wrap}
 .byline-dot{width:4px;height:4px;border-radius:50%;background:var(--amber)}
+.byline a{text-underline-offset:3px}
 .disclosure{background:var(--cream-deep);border-left:3px solid var(--amber);padding:14px 20px;font-size:14px;color:var(--ink-soft);margin:0 0 32px;border-radius:0 4px 4px 0}
 .hero-img{border-radius:12px;overflow:hidden;margin-bottom:32px;box-shadow:var(--shadow-med)}
+
+/* Author card. Rendered at the foot of every article and again, larger, at the
+   head of an author page. The two share everything but their size, so the page
+   variant is a modifier rather than a second component.
+
+   The img resets exist because a card pasted into a post body would land inside
+   .prose, where .prose img adds a 10px radius, a 24px margin and a shadow --
+   all three wrong on a photo that is already a circle inside a ring. */
+.pgp-au{clear:both;background:#fff;border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:0 12px 12px 0;box-shadow:var(--shadow-soft);padding:26px 28px;margin:36px 0;display:grid;grid-template-columns:104px 1fr;gap:26px;align-items:start}
+.pgp-au-photo{width:104px;height:104px;border-radius:50%;overflow:hidden;border:3px solid var(--amber);background:var(--cream-deep);display:flex;align-items:center;justify-content:center;font-size:40px;line-height:1}
+.pgp-au-photo img{width:100%;height:100%;object-fit:cover;display:block;margin:0;border-radius:0;box-shadow:none}
+.pgp-au-eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--amber-deep);margin-bottom:7px}
+.pgp-au-name{font-family:'Instrument Serif',Georgia,serif;font-size:27px;font-weight:400;letter-spacing:-.01em;line-height:1.15;margin:0 0 5px;color:var(--ink)}
+.pgp-au-name a{color:var(--ink);text-decoration:none}
+.pgp-au-name a:hover{color:var(--amber-deep)}
+.pgp-au-title{font-size:14px;color:var(--ink-soft);margin:0 0 11px;line-height:1.45}
+.pgp-au-bio{font-size:15px;color:var(--ink-soft);margin:0 0 14px;line-height:1.6;max-width:62ch}
+.pgp-au-chip{display:inline-block;background:var(--cream-deep);color:var(--amber-deep);font-size:12px;font-weight:700;letter-spacing:.03em;padding:6px 14px;border-radius:999px;margin:0 0 14px}
+.pgp-au-btn{display:inline-block;background:var(--amber);color:#fff;font-size:14px;font-weight:700;text-decoration:none;padding:11px 24px;border-radius:999px;transition:background .15s}
+.pgp-au-btn:hover{background:var(--amber-deep);color:#fff}
+
+/* Author page header: no left accent (nothing to run alongside at the top of a
+   page), a bigger photo, and the long bio in place of the short one. */
+.pgp-au--page{border-left:1px solid var(--line);border-radius:12px;grid-template-columns:150px 1fr;padding:32px;margin:32px 0 8px}
+.pgp-au--page .pgp-au-photo{width:150px;height:150px;font-size:56px}
+.pgp-au--page .pgp-au-name{font-size:clamp(30px,4.4vw,40px)}
+.pgp-au--page .pgp-au-bio{font-size:16px;max-width:68ch}
+.pgp-au--page .pgp-au-bio p{margin:0 0 14px}
+.pgp-au--page .pgp-au-bio p:last-child{margin-bottom:0}
+
+/* Stacking point is 560px, not the 520px the share bar uses: at 104px of photo
+   plus 26px of gap the bio hits about 22 characters a line before that, which
+   is a column of single words. */
+@media (max-width:560px){
+  .pgp-au,.pgp-au--page{grid-template-columns:1fr;gap:16px;padding:22px 20px}
+  .pgp-au-photo,.pgp-au--page .pgp-au-photo{margin:0 auto}
+  .pgp-au--page .pgp-au-photo{width:112px;height:112px;font-size:42px}
+}
 
 /* Prose */
 .prose p{margin-bottom:20px}
@@ -757,6 +796,16 @@ body{background:var(--page);color:var(--on-dark)}
 .review-card.soon .rc-score{background:var(--page-3)}
 .review-card.soon .rc-score .l{color:var(--on-dark-faint)}
 .guide-card h3{color:var(--on-dark)}
+
+/* An author page header is not inside .article, so it does not get the light
+   reading sheet. Same component, grounded like the post cards it sits above --
+   the in-article copy of this card is untouched and stays white. */
+.pgp-au--page{background:var(--page-2);border-color:var(--hair);color:var(--on-dark);
+  box-shadow:0 8px 22px rgba(0,0,0,.28)}
+.pgp-au--page .pgp-au-name{color:var(--on-dark)}
+.pgp-au--page .pgp-au-title,.pgp-au--page .pgp-au-bio{color:var(--on-dark-dim)}
+.pgp-au--page .pgp-au-eyebrow{color:var(--amber)}
+.pgp-au--page .pgp-au-chip{background:var(--page-3);color:var(--amber)}
 
 /* Buttons on the dark ground */
 .cta-btn,.review-card .rc-btn,.guide-card .g-btn,.download-card .dl-btn{
