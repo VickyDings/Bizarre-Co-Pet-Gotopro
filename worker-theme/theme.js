@@ -894,7 +894,10 @@ ${body}
   <div class="foot-tag">${esc(settings.tagline)}</div>
   <nav class="foot-nav">${nav}</nav>
   <div class="foot-disclosure"><strong style="color:var(--cream);">Affiliate Disclosure:</strong> ${esc(settings.footer_disclosure)}</div>
-  <div class="foot-copy">© ${new Date().getFullYear()} ${esc(settings.site_name)}. All rights reserved.</div>
+  <!-- Legal entity, then the trading name. The year is dynamic so it never goes
+       stale, and the legal name falls back to a literal rather than requiring a
+       settings row, so this keeps working on a database that has not got one. -->
+  <div class="foot-copy">© ${new Date().getFullYear()} ${esc(settings.legal_name || 'Bizarre Collections LLC')}, trading as ${esc(settings.site_name)}. All rights reserved.</div>
 </footer>
 
 <!-- Click-to-expand lightbox -->
