@@ -107,8 +107,24 @@ and "Push a cotton bud into the ear canal". Sheet sources live beside the templa
    260px, the logo sits at roughly x 62–198 and the QR at x 1606–1772 on a
    2000px-wide render, and cropping them out of `saltwater-care-sheet.png` is how
    the cockatiel sheet got its pair.
-   `register-new-guides.bat` holds the last three and is safe to re-run — a sheet
-   whose PNG is not uploaded yet matches nothing and skips.
+   **`register-all-guides.bat` does the whole job in one pass** and is what to
+   run: the extension repair first, then all five registrations, then a report
+   naming any sheet still waiting on its upload. The four single-purpose scripts
+   (`fix-guide-names.bat`, `register-new-guides.bat`, `register-cockatiel-guide.bat`,
+   `register-dog-chew-guide.bat`) still work and hold the same statements.
+
+   The extension repair has to run **first**. Registering on top of a key that is
+   still missing its `.png` leaves two rows for the same sheet.
+
+   All of it is safe to re-run — every INSERT is `OR REPLACE` and takes its
+   `media_id` from a subquery on `media`, so a sheet whose PNG is not uploaded yet
+   matches nothing and skips rather than writing a row with a null media id.
+   Re-run after each upload and the rows fill in.
+
+   Verified against a mock `guides`/`media`/`posts` database that reproduces the
+   live oddities: the three extensionless keys, shrimp and saltwater stored as
+   `.jpg`, and no hermit crab row at all. Both `.jpg` sheets registered correctly
+   under their `.png` keys, hermit crab skipped and was named in the report.
 
    **Lay the page out at its final height before measuring it.** The renderer
    used to compute the content box, then resize the viewport, then screenshot
