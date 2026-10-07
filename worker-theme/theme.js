@@ -485,8 +485,31 @@ a{color:var(--amber-deep)}
    rule exists. The .product-image-wrap line above is fine on one class only
    because its own base rule is one class too. */
 .pgp-prod-img:not(:has(img)),.pgp-prod .pgp-prod-img:not(:has(img)){display:none}
-.product-image-wrap{float:left;width:240px;margin:0 24px 18px 0;aspect-ratio:1;background:var(--cream-deep);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
-@media(max-width:620px){.product-image-wrap{float:none;width:100%;margin:0 0 18px}}
+.product-image-wrap{float:left;width:240px;max-width:38%;margin:0 24px 18px 0;aspect-ratio:1;background:var(--cream-deep);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+/* A CONTAINER query, not a media query. Twelve of these cards sit two-up inside
+   a .pgp-grid--2, so on a 1280px desktop the card itself is about 320px wide
+   while the window is not narrow at all. A viewport rule left a 240px photo
+   floated in a 320px card with roughly 76px for the text, which came out one
+   word per line and clipped at the card edge on the live hermit crab page.
+   Same lesson as the share bar: a narrow column is not a narrow window. The
+   threshold is on the card, so a full-width .product keeps its float and a card
+   in a two-up grid drops it at any window size. max-width:38% above is the
+   fallback for a browser with no container query support - cramped rather than
+   broken. */
+.product{container-type:inline-size}
+@container (max-width:560px){
+  .product-image-wrap{float:none;width:100%;max-width:none;margin:0 0 18px}
+  /* .product-price is a flex row, so in a narrow card the disclaimer takes
+     enough of it that the figure itself breaks - "$8-" on one line and "$18"
+     on the next. Stacked, the figure gets the full width and reads as a price.
+     Written .product-content .product-price, two classes deep, because the base
+     ".product-price{display:flex}" sits a dozen lines BELOW this block. A
+     container query carries no extra specificity, so at equal weight the later
+     rule wins and this silently did nothing. */
+  .product-content .product-price{display:block}
+  .product-content .product-price .dollar{display:block}
+  .product-content .product-price .disclaimer{display:block;margin-top:3px}
+}
 .product-image-wrap img{width:100%;height:100%;object-fit:cover}
 .product-image-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:13px;text-align:center;padding:16px;font-style:italic}
 .product-content h2.product-title,.product-content .product-title{font-family:'Instrument Serif',Georgia,serif;font-size:24px;line-height:1.25;margin:0 0 8px}

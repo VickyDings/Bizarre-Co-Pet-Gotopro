@@ -259,6 +259,28 @@ untouched at 713px.
 The old `:not(:has(.product-image-wrap img))` single-column rule is harmless now and
 stays; `::after{clear:both}` on `.product-body` contains the float.
 
+**The breakpoint that drops the float is a CONTAINER query, not a media query.**
+Twelve of these cards sit two-up inside a `.pgp-grid--2` -- four each in the shrimp,
+hermit crab and saltwater guides -- so on a 1280px desktop the card is about 346px
+wide while the window is not narrow at all. A `@media(max-width:620px)` rule left a
+240px photo floated in a 346px card with roughly 76px for the text, which went live
+on the hermit crab page as one word per line, clipped at the card edge.
+
+This is the share bar lesson again, word for word: **a narrow column is not a narrow
+window.** `.product` carries `container-type:inline-size` and the rule is
+`@container (max-width:560px)`, so the threshold is on the card. A full-width
+`.product` (716px) keeps its float on desktop and drops it on a phone; a card in a
+two-up grid drops it at any window size. `max-width:38%` on the well is the fallback
+for a browser without container query support -- cramped rather than broken.
+
+**A container query carries no extra specificity.** The same block stacks
+`.product-price`, which is a flex row that breaks "$8-" and "$18" onto separate lines
+in a narrow card. Written as `.product-price{display:block}` it silently did nothing,
+because the base `.product-price{display:flex}` sits a dozen lines further down the
+file and wins at equal weight. It is `.product-content .product-price` now. Being
+inside `@container` or `@media` does not help a rule win a tie -- check the order and
+the weight exactly as you would anywhere else.
+
 **Render a component with its content actually in before trusting it.** An empty
 well, a placeholder, a one-line stub — none of them exercise the layout. Both of the
 image bugs in this file came from looking at the empty state and assuming.
