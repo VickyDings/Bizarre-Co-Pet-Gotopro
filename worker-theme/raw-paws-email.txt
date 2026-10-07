@@ -1,0 +1,64 @@
+To:      customerservice@rawpawspet.com
+Subject: Two faults in the Raw Paws CJ product feed (advertiser 7127091)
+
+
+Hello,
+
+Could this be passed to whoever manages your CJ Affiliate program or your
+product feed? It is not a customer order question.
+
+I am an approved affiliate for Raw Paws Pet Food through CJ, publishing at
+pet-gotopro.com (CJ advertiser 7127091, publisher property 101894827). I have
+been building product recommendations from your feed and found two faults that
+affect all 158 products. Neither looks specific to my account.
+
+
+1. Every destination URL contains two spaces
+
+The feed returns product URLs in this form:
+
+    https://www.rawpawspetfood.com /products/ chicken-necks-for-dogs-2-lb
+                                  ^          ^
+
+One space after the domain, a second after /products/. It is identical on every
+one of the 158 products, so it reads as a template rather than individual bad
+records.
+
+A space is not valid in a URL. CJ encodes it faithfully, the browser receives
+%20 in both positions, and the page does not load. I checked this two ways:
+through the Product Feed API, and through CJ's own link generator in the member
+area, which writes the same two spaces into the form it builds.
+
+The practical effect is that a tracking link built from your feed today does not
+reach your store, so any affiliate traffic generated from it is lost.
+
+
+2. The product feed carries no images
+
+Both image fields are present but empty across all 158 products:
+
+    imageLink            empty
+    additionalImageLink  empty
+
+CJ's link generator reflects the same thing - the image creative it builds for a
+product comes out as an img tag with src="null".
+
+Your program terms ask publishers to use only images supplied through the CJ
+Account Manager. The banner creatives there do work, and I am using two of them.
+But with the feed empty there is no approved image for an individual product, so
+a product recommendation has to run without a photo. In my experience that costs
+a meaningful share of the clicks.
+
+
+Everything else arrives correctly - titles, descriptions, prices, availability
+and SKUs are all fine, so this looks like two narrow faults rather than anything
+broad.
+
+I would be glad to confirm a fix once it is deployed. I can re-pull the feed and
+check both items the same day.
+
+Thanks very much,
+
+Vicky
+Pet-GoToPro
+contact@pet-gotopro.com

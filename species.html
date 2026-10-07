@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About | Pet-Go'to'Pro</title>
-<meta name="description" content="Who writes Pet-Go'to'Pro, how guides are reviewed, and our affiliate disclosure.">
+<title>Species | Pet-Go'to'Pro</title>
+<meta name="description" content="Care guides organised by species — dogs, cats, small animals, birds, reptiles, aquatics, crustaceans and arthropods.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700;800&family=Quicksand:wght@500;600;700&display=swap">
@@ -62,7 +62,7 @@
     <button class="burger" type="button" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
-    <div class="nav-links"><a href="species.html">Species</a><a href="guides.html">Care Guides</a><a href="gear.html">Gear</a><a href="about.html" class="active">About</a><a href="contact.html">Ask a Pro</a></div>
+    <div class="nav-links"><a href="species.html" class="active">Species</a><a href="guides.html">Care Guides</a><a href="gear.html">Gear</a><a href="about.html">About</a><a href="contact.html">Ask a Pro</a></div>
     <div class="nav-end">
       <a class="btn btn-ghost" href="contact.html">Ask a Pro</a>
       <a class="btn btn-solid" href="#subscribe">Subscribe</a>
@@ -73,42 +73,78 @@
 <main id="main">
 <section class="pagehead">
   <div class="shell">
-    <p class="crumb"><a href="index.html">Home</a> &rsaquo; About</p>
-    <h1 class="display d-lg">Trusted information<br>from the Pet Pros.</h1>
+    <p class="crumb"><a href="index.html">Home</a> &rsaquo; Species</p>
+    <h1 class="display d-lg">Seven kinds of pet,<br>seven sets of rules.</h1>
+    <p class="lede">A retriever and a rosy boa share almost nothing. Every hub below is written by keepers of that species, with husbandry numbers rather than generalities.</p>
   </div>
 </section>
 
-<section class="ask">
-  <div class="shell ask-grid">
-    <div class="prose">
-      <p>Pet-Go'to'Pro exists because of a gap. Search almost any dog or cat question and you'll find a thousand answers. Search &ldquo;correct UVI for a bearded dragon at basking height&rdquo; or &ldquo;how many isopods for a 12&times;12&times;18 bioactive&rdquo; and you'll find a forum thread from 2014.</p>
-      <p>We write for <strong>seven kinds of pet</strong> &mdash; dogs, cats, small animals, birds, reptiles and amphibians, aquatics, and crustaceans and arthropods &mdash; at the same standard. The exotics aren't an afterthought section. They're half the reason the site exists.</p>
-      <p>Every guide is written by someone who keeps that species, reviewed by a vet or specialist who isn't the writer, and dated so you can see when it was last checked. Husbandry advice ages badly; ours gets revisited rather than left to rot.</p>
-    </div>
-    <div class="shot" style="aspect-ratio:4/5;border-radius:var(--r-panel)">
-      <img src="https://images.unsplash.com/photo-1698409135463-a34e381db17b?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=700&h=875" alt="African grey parrot" loading="lazy">
-    </div>
-  </div>
-</section>
-
-<section class="ask" id="disclosure">
-  <div class="shell ask-grid">
-    <div>
-      <span class="label">Affiliate disclosure</span>
-      <h2 class="display d-lg" style="margin-top:12px">How we make money,<br>plainly.</h2>
-      <p class="lede">Some links to Amazon and other retailers earn us a commission when you buy, at no extra cost to you. That's how the site pays for itself.</p>
-      <p class="lede" style="margin-top:14px">It has never determined a recommendation. Every gear list names products we think you should avoid alongside the ones we'd buy, and the disclosure sits above the picks rather than buried in the footer.</p>
-    </div>
-    <div class="creds">
-      <div class="cred"><span class="cred-num">01</span><div>
-        <h4>Named writers</h4>
-        <p>Bylines state years of hands-on keeping with the species, not a generic job title.</p></div></div>
-      <div class="cred"><span class="cred-num">02</span><div>
-        <h4>Independent review</h4>
-        <p>An exotics vet or specialist keeper signs off each guide before it publishes.</p></div></div>
-      <div class="cred"><span class="cred-num">03</span><div>
-        <h4>Dated and revisited</h4>
-        <p>Each guide shows when it was last verified against current veterinary guidance.</p></div></div>
+<section class="hubs">
+  <div class="shell">
+    <div class="hub-grid">
+      <a class="hub" id="dogs" href="guides.html">
+        <div class="shot"><img src="https://images.unsplash.com/photo-1730804784104-c47540448b97?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=640&h=400" alt="" loading="lazy"></div>
+        <div class="hub-body">
+          <span class="story-tag" style="color:var(--dog)"><i style="background:var(--dog)"></i>Dogs</span>
+          <h3 class="display d-sm">Dogs</h3>
+          <p>Behaviour, nutrition and the health checks that matter by breed and by age.</p>
+          <p class="hub-count">212 guides</p>
+        </div>
+      </a>
+      <a class="hub" id="cats" href="guides.html">
+        <div class="shot"><img src="https://images.unsplash.com/photo-1596854372745-0906a0593bca?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=640&h=400" alt="" loading="lazy"></div>
+        <div class="hub-body">
+          <span class="story-tag" style="color:var(--cat)"><i style="background:var(--cat)"></i>Cats</span>
+          <h3 class="display d-sm">Cats</h3>
+          <p>Indoor enrichment, litter problems, and the urinary and dental issues vets see most.</p>
+          <p class="hub-count">186 guides</p>
+        </div>
+      </a>
+      <a class="hub" id="small" href="guides.html">
+        <div class="shot"><img src="https://images.unsplash.com/photo-1591561582301-7ce6588cc286?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=640&h=400" alt="" loading="lazy"></div>
+        <div class="hub-body">
+          <span class="story-tag" style="color:var(--small)"><i style="background:var(--small)"></i>Small Animals</span>
+          <h3 class="display d-sm">Small Animals</h3>
+          <p>Rabbits, guinea pigs, rats and hamsters &mdash; species with very different needs, often sold alike.</p>
+          <p class="hub-count">143 guides</p>
+        </div>
+      </a>
+      <a class="hub" id="birds" href="guides.html">
+        <div class="shot"><img src="https://images.unsplash.com/photo-1693218722743-eba71402ab37?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=640&h=400" alt="" loading="lazy"></div>
+        <div class="hub-body">
+          <span class="story-tag" style="color:var(--bird)"><i style="background:var(--bird)"></i>Birds</span>
+          <h3 class="display d-sm">Birds</h3>
+          <p>Budgies to macaws: airway safety, foraging enrichment, and flock behaviour.</p>
+          <p class="hub-count">128 guides</p>
+        </div>
+      </a>
+      <a class="hub" id="reptiles" href="guides.html">
+        <div class="shot"><img src="https://images.unsplash.com/photo-1769986289575-d402e93d5885?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=640&h=400" alt="" loading="lazy"></div>
+        <div class="hub-body">
+          <span class="story-tag" style="color:var(--reptile)"><i style="background:var(--reptile)"></i>Reptiles &amp; Amphibians</span>
+          <h3 class="display d-sm">Reptiles &amp; Amphibians</h3>
+          <p>Heat gradients, UVB, humidity cycles and the husbandry numbers each species actually needs.</p>
+          <p class="hub-count">231 guides</p>
+        </div>
+      </a>
+      <a class="hub" id="aquatics" href="guides.html">
+        <div class="shot"><img src="https://images.unsplash.com/photo-1636045466232-539c7bd7817e?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=640&h=400" alt="" loading="lazy"></div>
+        <div class="hub-body">
+          <span class="story-tag" style="color:var(--aqua)"><i style="background:var(--aqua)"></i>Aquatics</span>
+          <h3 class="display d-sm">Aquatics</h3>
+          <p>Freshwater, planted and marine &mdash; cycling, water chemistry and stocking that works.</p>
+          <p class="hub-count">197 guides</p>
+        </div>
+      </a>
+      <a class="hub" id="bugs" href="guides.html">
+        <div class="shot"><img src="https://images.unsplash.com/photo-1596710658461-dcf5a63c482e?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=640&h=400" alt="" loading="lazy"></div>
+        <div class="hub-body">
+          <span class="story-tag" style="color:var(--bug)"><i style="background:var(--bug)"></i>Crustaceans &amp; Arthropods</span>
+          <h3 class="display d-sm">Crustaceans &amp; Arthropods</h3>
+          <p>Tarantulas, isopods, mantids, crabs and shrimp. The keepers' corner nobody else writes for.</p>
+          <p class="hub-count">143 guides</p>
+        </div>
+      </a>
     </div>
   </div>
 </section>

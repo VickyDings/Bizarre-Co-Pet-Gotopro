@@ -1,0 +1,37 @@
+Read CLAUDE.md in this folder first — it has the house rules for this site
+and they matter.
+
+I have Tiki Cat product photos somewhere in my Downloads folder. I also have
+a finished blog post that needs them: worker-theme/post-tiki-cat-review.html
+if the repo is here, otherwise I will tell you where it is.
+
+Please do this:
+
+1. Search C:\Users\Xvick\Downloads and its subfolders for Tiki Cat product
+   images. Look for any folder with "tiki" in the name.
+
+2. Open each image and tell me which product it shows. The line, the recipe
+   and the can or pouch size are all printed on the packaging.
+
+3. Match them against these ten product cards, in this order:
+      01  After Dark — Chicken & Duck
+      02  Born Carnivore — Chicken & Egg (dry food)
+      03  Luau — Succulent Chicken
+      04  Velvet Mousse — variety pack
+      05  Silver — variety pack (senior)
+      06  Baby — Chicken & Egg (kitten)
+      07  Friends — Tuna & Pumpkin Mousse  (also sold as "Aloha Friends")
+      08  Grill — variety pack
+      09  Luau Lean — Gelee
+      10  Stix — lickable treats
+
+4. Copy the matches into a new folder called tiki-upload, renamed so they
+   sort in card order: 01-after-dark.webp, 02-born-carnivore.webp and so on.
+   Keep the original files where they are.
+
+5. Tell me which of the ten have no photo, so I know what is still missing.
+
+Important: do NOT put the images into the article HTML, and do not base64
+them in. Product photos go in the card wells, uploaded through the website's
+admin editor. CLAUDE.md explains why — it is the only place they survive the
+article being re-pasted later.
