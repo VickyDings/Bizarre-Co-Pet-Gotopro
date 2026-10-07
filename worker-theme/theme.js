@@ -88,7 +88,13 @@ export const SECTION_CSS = `
    unfilled box leaves no empty furniture behind either. */
 .pgp-cell-ph{display:none}
 .pgp-cell:not(:has(img))>.pgp-cap{display:none}
-.pgp-prod-img:not(:has(img)){display:none}
+/* Scoped two classes deep ON PURPOSE. The base rule below is
+   ".pgp-prod .pgp-prod-img{...display:flex}" - two classes and later in the
+   file - so a one-class collapse rule loses the cascade and every unfilled
+   well paints a blank white square on the live page. Same lesson as
+   .product-image-wrap: a visible drop target in the editor, nothing at all
+   for the reader. Check the specificity, not just that the rule exists. */
+.pgp-prod-img:not(:has(img)),.pgp-prod .pgp-prod-img:not(:has(img)){display:none}
 .pgp-section .pgp-cap,.pgp-grid .pgp-cap{display:block;font-size:13px;color:#6E6480;font-style:italic;text-align:center;margin-top:9px;line-height:1.5}
 
 /* Compact product card — the full .product card is too wide for a column */
@@ -108,6 +114,14 @@ export const SECTION_CSS = `
 .pgp-prod .pgp-prod-disc{font-size:11px;color:#6E6480;font-style:italic;margin:0 0 10px;line-height:1.4}
 .pgp-prod .pgp-prod-why{font-size:14px;color:#514860;line-height:1.55;margin:0 0 14px;flex:1}
 .pgp-prod .cta-btn{width:100%;text-align:center;padding:10px 14px;font-size:14px}
+/* Buttons line up across a row of product cards. .pgp-grid is align-items:start,
+   so each cell is its own natural height and the CTAs came out at three
+   different heights in a three-across row. Scoped with :has so only a grid that
+   actually holds product cards stretches - the two-up explainer sections keep
+   their start alignment. The card is already a flex column, so the button only
+   needs margin-top:auto to sit on the floor of it. */
+.pgp-grid:has(.pgp-prod){align-items:stretch}
+.pgp-prod .cta-btn{margin-top:auto}
 .pgp-prod .pgp-prod-note{font-size:11px;color:#6E6480;font-style:italic;margin:9px 0 0;line-height:1.45}
 
 /* Three and four columns get too narrow to read well before the phone

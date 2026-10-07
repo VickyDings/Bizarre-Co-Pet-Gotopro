@@ -172,6 +172,21 @@ https://www.amazon.com/s?k=SEARCH+TERMS&tag=petgo2pro-20
 the affiliate disclosure on any page matching `/amazon\./i`. Always give a price
 *range* plus the `*Price starts from and is subject to change` line — never a fixed price.
 
+**The full shopping list is a three-across product grid, not a row of checkboxes.**
+Section 14 uses `.pgp-section` + `.pgp-grid--3` + `.pgp-cell` + `.pgp-prod`, the same
+component as the product row at section 7, with a `.pgp-prod-img` well on every card.
+The owner's reasoning: a reader is more likely to click a link that has the product
+beside it, and the old `.kit-item` rows had nowhere to put a picture. Nine items make
+three clean rows; size the list to a multiple of three where the content allows.
+
+Keep the exact product name on the `.pricenote` line rather than in the `<h4>` --
+`<em>Thin Bully Sticks, 6-inch &middot; *Price starts from and is subject to change</em>`.
+The heading stays the numbered plain-English item, so the list still reads as a
+checklist, and the thing being bought is still named.
+
+`.kit-section` / `.kit-item` are not deprecated, but nothing new should use them for a
+shopping list.
+
 **Hiding a grid item does not remove its track.** `.product-body` is a
 `240px 1fr` grid. Taking the empty image well out with `display:none` left the
 240px column behind, so the text rendered in the narrow one with 394px of dead
@@ -193,6 +208,26 @@ already had `:not(:has(img)){display:none}`; `.product-image-wrap` now does too,
 and the rule sits in the **public-only** part of `PUBLIC_CSS` so the editor still
 shows the well as a drop target. Any new card component needs the same pair:
 a visible target in the editor, nothing at all on the page.
+
+**A collapse rule has to out-specify the rule it is fighting.** `.pgp-prod-img` had
+exactly that pair and the well still painted a blank white square on every card,
+because the base rule is written `.pgp-prod .pgp-prod-img{...display:flex}` -- two
+classes -- while the collapse was `.pgp-prod-img:not(:has(img))`, which is one class
+plus a `:not(:has(img))` worth (0,1,1). (0,2,0) beats (0,1,1) and it came later in the
+file as well, so `display:none` never applied. It is now written both ways in one
+selector list, so it wins whatever the base rule is scoped to.
+
+`.product-image-wrap` is fine because *its* base rule is a single class. So the pair
+existing is not the test -- compare the two selectors. The symptom is a well that is
+empty rather than absent: `.pgp-cell-ph` is `display:none` on its own, so the
+placeholder text correctly disappears and the empty box it was sitting in does not,
+which reads as a deliberate white square rather than as a bug.
+
+**Buttons across a row of product cards line up** via `.pgp-grid:has(.pgp-prod)
+{align-items:stretch}` and `.pgp-prod .cta-btn{margin-top:auto}`. `.pgp-grid` is
+`align-items:start`, so without this each card is its own height and a three-across row
+ends with three CTAs at three different heights. The `:has()` scope matters -- the
+two-up explainer sections want to keep their start alignment.
 
 **Never put an editorial photo inside a product card.** The `.pgp-prod-img` well is
 where the owner's real product shot goes, so a nice stock photo parked there is
@@ -316,6 +351,24 @@ originals, rewriting only the `url=` value and leaving the PID, ad id and
 `cjsku` exactly as CJ wrote them -- rebuilding those by hand is how attribution
 is lost. It never replaces the original, because stripping whitespace is a
 repair nobody has verified against the live store.
+
+**Banner creatives are the only Raw Paws imagery that exists.** The product feed has
+no images and their terms forbid taking any from rawpawspetfood.com, so a product card
+ships with an empty well. The banners in CJ's member area are a different thing: they
+are CJ-hosted, which is exactly what the terms require, and they carry their own
+`image-<pid>-<ad id>` URL. Three are in use -- *Fresh, Healthy Pet Food* (17234885),
+*Healthy Pet Treats* (17234931) and *Long Lasting Dog Chews* (17234932).
+
+Build one as a plain anchor with `class="img-full"` on the link and `class="no-zoom"`
+on the image. Both the lightbox and the Pinterest hover button already skip any image
+inside an `<a>` (`im.closest('a, .pgp-prod, ...)`), so neither can steal the click --
+`no-zoom` is only there to drop the magnifier cursor from something that is an ad.
+
+**Read what a banner says against what the article argues.** The *Long Lasting Dog
+Chews* creative cannot go in the chew safety guide: that article names "long-lasting"
+as a warning sign in so many words, and a reader who notices the contradiction has
+every reason to conclude the advice is for sale. A banner is ad copy the advertiser
+wrote, not a neutral image.
 
 **Watch which PID a hand-generated link carries.** A link built in CJ's member
 area came out on `100786792` (Bizarre Collections LLC), not `101894827`
