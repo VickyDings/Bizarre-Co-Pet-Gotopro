@@ -92,11 +92,13 @@ and "Push a cotton bud into the ear canal". Sheet sources live beside the templa
 
    Existing keys: `budgie-care-sheet.png`, `budgie-breeding-sheet.png`,
    `dog-grooming-sheet.png`, `shrimp-care-sheet.png`, `hermit-crab-care-sheet.png`,
-   `saltwater-care-sheet.png`, `cockatiel-care-sheet.png`, plus nine older `.jpg`
+   `saltwater-care-sheet.png`, `cockatiel-care-sheet.png`,
+   `dog-chew-safety-sheet.png`, plus nine older `.jpg`
    guides. Checked against the live `guides` table on 6 October: **only the nine
    `.jpg` rows and the three extensionless ones are actually registered.** Shrimp,
    hermit crab, saltwater and cockatiel are all uploaded-or-written but absent, so
-   their download cards 404 on the live site. The list above is what the posts
+   their download cards 404 on the live site. The chew sheet is newer than that
+   check and is in the same position until `register-dog-chew-guide.bat` runs. The list above is what the posts
    link to, not what the database holds — check before assuming.
 
    **The renderer that builds these is not in this repo**, only
