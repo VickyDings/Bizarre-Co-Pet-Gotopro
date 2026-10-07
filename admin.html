@@ -68,7 +68,7 @@
             <h6>Manage</h6>
             <button class="side-link" data-panel="library"><i class="fas fa-box-archive"></i> Content library <span class="pill" id="pillLibrary">0</span></button>
             <button class="side-link" data-panel="settings"><i class="fas fa-sliders"></i> Settings</button>
-            <button class="side-link" data-panel="help"><i class="fas fa-circle-question"></i> How this works</button>
+            <button class="side-link" data-panel="help"><i class="fas fa-circle-question"></i> Step-by-step guide</button>
         </nav>
 
         <!-- ---------- Main ---------- -->
@@ -537,50 +537,407 @@
                 </div>
             </section>
 
-            <!-- ======== Help ======== -->
+            <!-- ======== Step-by-step guide ======== -->
             <section class="panel" id="panel-help" hidden>
                 <div class="panel-head">
-                    <h1>How this works</h1>
-                    <p>What is real, what is a shortcut, and what needs a server.</p>
+                    <h1>Step-by-step guide</h1>
+                    <p>Part 1 is a one-time setup. Part 2 onward is what you do for every article.
+                       Each step says exactly where in the console to click.</p>
                 </div>
 
+                <div class="notice info">
+                    <i class="fas fa-rocket"></i>
+                    <div><strong>Want to see it work before reading any of this?</strong>
+                        Go to the composer, press <strong>Load a sample post</strong>, then
+                        <strong>Publish &amp; share</strong>. You will see the whole flow end to end with a
+                        real bearded dragon care guide, and nothing is posted anywhere until you click a
+                        network yourself.</div>
+                </div>
+
+                <!-- ---- Part 1 ---- -->
                 <div class="card">
-                    <h3><i class="fas fa-list-check"></i> The publishing flow</h3>
-                    <ol style="padding-left:20px;display:grid;gap:9px;font-size:14px">
-                        <li>Write the post in the composer and pick the animal group.</li>
-                        <li>Run the AI SEO analysis. Fix whatever the score panel flags &mdash; word count,
-                            keyphrase placement and the semantic gaps move the needle most.</li>
-                        <li>Press <strong>Publish &amp; share</strong>. The post is saved to the library, a
-                            ready-to-commit HTML file downloads with all meta tags and JSON-LD already in the head,
-                            and the multi-share window opens.</li>
-                        <li>In the share window, review each caption, then hit <strong>Open all intent networks</strong>.
-                            Finish the compose-only networks with the stepper beneath it.</li>
+                    <div class="guide-part">Part 1 &mdash; First-time setup <span class="time-chip">about 5 minutes, done once</span></div>
+                    <ol class="steps">
+                        <li>
+                            <span class="where">Settings <i class="fas fa-chevron-right"></i> Site</span>
+                            <b>Put in your live site URL</b>
+                            <p>Type the address your blog will actually live at, for example
+                               <code>https://bizarreco.com</code> &mdash; no trailing slash.</p>
+                            <span class="why"><strong>Why it matters:</strong> every share link, every tracked
+                               URL and the canonical tag are built from this. Leave it blank and your captions
+                               go out with no link in them.</span>
+                        </li>
+                        <li>
+                            <span class="where">Settings <i class="fas fa-chevron-right"></i> Amazon Associates</span>
+                            <b>Add your Associate tag</b>
+                            <p>The tag looks like <code>yourname-20</code>. You get it from your Amazon
+                               Associates dashboard.</p>
+                            <span class="why"><strong>Why it matters:</strong> without it the product links the
+                               assistant generates still work, but earn you nothing. The SEO panel will warn you
+                               in red until it is set.</span>
+                        </li>
+                        <li>
+                            <span class="where">Settings <i class="fas fa-chevron-right"></i> Campaign tracking</span>
+                            <b>Leave UTM on the defaults</b>
+                            <p><code>utm_medium</code> of <code>social</code> is right for almost everyone.
+                               Leave <code>utm_campaign</code> blank and each post uses its own slug.</p>
+                            <span class="why"><strong>Why it matters:</strong> this is how your analytics tells
+                               Pinterest traffic from Instagram traffic. Without it everything lands in one
+                               undifferentiated "social" bucket.</span>
+                        </li>
+                        <li>
+                            <span class="where">Social SEO setup</span>
+                            <b>Switch off the networks you do not use</b>
+                            <p>Thirteen networks are on by default. Toggle off anything you have no account
+                               for &mdash; you will not have to skip past it on every publish.</p>
+                            <p>For the ones you keep, fill in your handle and profile URL. The
+                               <strong>Extra default tags</strong> box is for a brand tag you want on every
+                               post, like <code>#bizarreco</code>.</p>
+                        </li>
+                        <li>
+                            <span class="where">Social SEO setup <i class="fas fa-chevron-right"></i> top of page</span>
+                            <b>Set your brand name and default call to action</b>
+                            <p>The call to action is the closing line of every caption. Something like
+                               &ldquo;Full care guide on the blog&rdquo; works.</p>
+                        </li>
+                        <li>
+                            <span class="where">Settings <i class="fas fa-chevron-right"></i> Fan-out webhook</span>
+                            <b>Optional: set up true simultaneous posting</b>
+                            <p>If you want posts going out to every network without you touching each
+                               composer, make a catch hook in Zapier, Make or Buffer and paste the URL here.
+                               Press <strong>Send a test payload</strong> to confirm it arrives, then
+                               <strong>Show the payload shape</strong> so you know what fields to map.</p>
+                            <span class="why"><strong>This is the only hands-off route.</strong> Skip it and
+                               publishing still works &mdash; you just click through the networks yourself,
+                               which takes about a minute.</span>
+                        </li>
+                        <li>
+                            <span class="where">Settings <i class="fas fa-chevron-right"></i> Console passcode</span>
+                            <b>Optional: set a passcode</b>
+                            <p>Keeps the console out of the way if someone else uses your screen.</p>
+                            <span class="why"><strong>Not security.</strong> It is checked in the browser, so
+                               anyone who can read the page source can read it. Before this site goes live,
+                               put real access control in front of <code>admin.html</code> &mdash; HTTP basic
+                               auth or a host access rule.</span>
+                        </li>
+                        <li>
+                            <b>Press Save settings</b>
+                            <p>Everything is stored in this browser only. Setup is now done forever
+                               &mdash; from here on you go straight to Part 2.</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- ---- Part 2 ---- -->
+                <div class="card">
+                    <div class="guide-part">Part 2 &mdash; Write the article <span class="time-chip">every post</span></div>
+                    <ol class="steps">
+                        <li>
+                            <span class="where">Post composer <i class="fas fa-chevron-right"></i> Headline</span>
+                            <b>Write the headline</b>
+                            <p>Aim for 30&ndash;60 characters, with the thing people search for in the first
+                               half. The counter beside the label turns green when you are in range.</p>
+                            <span class="good"><strong>Good:</strong> &ldquo;Bearded Dragon Basking Temperature:
+                               Getting UVB and Heat Right&rdquo;<br>
+                               <strong>Weak:</strong> &ldquo;Some thoughts on lizard lighting&rdquo; &mdash;
+                               nobody searches that.</span>
+                            <p>Stuck? Put in any rough headline, run the analysis in step 10, and the
+                               <strong>Headline angles</strong> card gives you ten proven shapes filled in with
+                               your species. Click one to use it.</p>
+                        </li>
+                        <li>
+                            <span class="where">Post composer <i class="fas fa-chevron-right"></i> Animal group</span>
+                            <b>Pick the animal group</b>
+                            <p>This is the most important dropdown on the page. It selects the entire keyword
+                               corpus &mdash; the seed terms, the husbandry vocabulary, the hashtag sets, the
+                               product pairings and the health problems used for your questions.</p>
+                            <span class="why"><strong>Get this wrong and everything downstream is wrong.</strong>
+                               A hermit crab post filed under Aquatics will suggest filters and water
+                               parameters instead of shell shops and moulting.</span>
+                        </li>
+                        <li>
+                            <span class="where">Post composer <i class="fas fa-chevron-right"></i> Species focus</span>
+                            <b>Leave species blank unless you need to force it</b>
+                            <p>The assistant reads your text and detects the species itself. Only type here if
+                               your draft mentions several animals and you want the suggestions pinned to one.
+                               The box suggests valid options as you type.</p>
+                        </li>
+                        <li>
+                            <span class="where">Post composer <i class="fas fa-chevron-right"></i> URL slug</span>
+                            <b>Leave the slug blank</b>
+                            <p>The assistant builds a short, keyphrase-led slug from your headline and strips
+                               the filler words. Only override it if you have an existing URL to match.</p>
+                        </li>
+                        <li>
+                            <span class="where">Post composer <i class="fas fa-chevron-right"></i> Excerpt</span>
+                            <b>Write the excerpt &mdash; this one earns its keep</b>
+                            <p>One or two sentences, 80&ndash;200 characters. State the problem the article
+                               solves, not what the article contains.</p>
+                            <span class="why"><strong>It gets used three times:</strong> as your meta
+                               description in Google, as the opening line of every social caption, and as the
+                               bold lead paragraph of the published post. It is the single highest-leverage
+                               field on this page.</span>
+                            <span class="good"><strong>Good:</strong> &ldquo;Most bearded dragon health problems
+                               trace back to one number on a thermometer.&rdquo;</span>
+                        </li>
+                        <li>
+                            <span class="where">Post composer <i class="fas fa-chevron-right"></i> Article body</span>
+                            <b>Write the body, using ## for subheadings</b>
+                            <p>Start a line with <code>##</code> to make a subheading and <code>-</code> to
+                               make a bullet. That is the whole formatting syntax.</p>
+                            <p>The word counter beside the label goes green at 900 words. Care guides that
+                               rank in this niche usually run 1,200&ndash;2,000.</p>
+                            <span class="why"><strong>Why the ## matters:</strong> each subheading is a chance
+                               at a featured snippet. The score panel counts them, and step 14 can generate
+                               the whole outline for you.</span>
+                        </li>
+                        <li>
+                            <span class="where">Post composer <i class="fas fa-chevron-right"></i> Featured image</span>
+                            <b>Paste an image URL, then press Suggest alt text</b>
+                            <p>1200&times;630 is the size for link cards on Facebook, X and LinkedIn. For
+                               Pinterest you also want a tall 1000&times;1500 version.</p>
+                            <p>The <strong>Suggest alt text</strong> button writes a description from your
+                               species and keyphrase. Edit it so it describes what is actually in the photo
+                               &mdash; alt text is for people using screen readers first, search engines second.</p>
+                        </li>
+                        <li>
+                            <span class="where">Post composer <i class="fas fa-chevron-right"></i> Author &amp; trust signals</span>
+                            <b>Fill in both the author and the reviewer</b>
+                            <p>Pet health is what search engines call a YMYL topic &mdash; &ldquo;your money or
+                               your life&rdquo;. Pages that can affect an animal's wellbeing are held to a
+                               higher bar on who wrote them.</p>
+                            <p>The reviewer can be an exotics vet, a long-time keeper, a breeder or a groomer.
+                               Put their actual credential: &ldquo;Dr. A. Patel BVSc, exotics&rdquo;, not
+                               &ldquo;our team&rdquo;.</p>
+                            <span class="why">Both names go into the published page's structured data as the
+                               author and <code>reviewedBy</code> fields, which is where search engines look
+                               for them. Leaving them blank costs you points on the score.</span>
+                        </li>
+                        <li>
+                            <span class="where">Post composer <i class="fas fa-chevron-right"></i> Search intent</span>
+                            <b>Pick which intents to target</b>
+                            <p>The three on by default are right for a care guide. Add
+                               <strong>Transactional</strong> and <strong>Local</strong> only for shop pages
+                               &mdash; those phrases belong on a product page, not a blog post, and the table
+                               will tell you so in the &ldquo;Use as&rdquo; column.</p>
+                        </li>
+                        <li>
+                            <b>Press Run AI SEO analysis</b>
+                            <p>The big purple button at the bottom of the composer. It takes you straight to
+                               the next part.</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- ---- Part 3 ---- -->
+                <div class="card">
+                    <div class="guide-part">Part 3 &mdash; Work the score up <span class="time-chip">the part that actually moves rankings</span></div>
+                    <ol class="steps" start="11">
+                        <li>
+                            <span class="where">AI SEO assistant <i class="fas fa-chevron-right"></i> On-page score</span>
+                            <b>Read the failing checks, top down</b>
+                            <p>Failed checks sort to the top and each one tells you the specific fix. Work
+                               down the list. <strong>Word count, keyphrase in the title and keyphrase in the
+                               opening lines carry the most weight</strong> &mdash; fix those first.</p>
+                            <p>Aim for 85 or above before publishing. Below 50 the post is not ready.</p>
+                        </li>
+                        <li>
+                            <span class="where">AI SEO assistant <i class="fas fa-chevron-right"></i> Focus keyphrase</span>
+                            <b>Confirm or swap the focus keyphrase</b>
+                            <p>This is the one phrase the page should own. The assistant picks the best
+                               candidate from your draft; the chips below are the alternatives, with how many
+                               times each appears.</p>
+                            <p>Click a chip to switch and the whole analysis re-runs instantly. Prefer a
+                               two or three word phrase that names the <em>topic</em>, not the animal &mdash;
+                               &ldquo;basking temperature&rdquo; beats &ldquo;bearded dragon&rdquo;, because
+                               thousands of pages are about bearded dragons.</p>
+                        </li>
+                        <li>
+                            <span class="where">AI SEO assistant <i class="fas fa-chevron-right"></i> Semantic gaps</span>
+                            <b>Click the gaps that genuinely belong in your article</b>
+                            <p>These are terms search engines expect on a page about this topic that your
+                               draft does not mention. Clicking one appends it to the end of your body as a
+                               <code>TODO cover:</code> note.</p>
+                            <p>Then go back to the composer and <strong>actually write those sections</strong>,
+                               deleting the TODO lines as you go. Leaving the notes in place helps nothing
+                               &mdash; the point is the coverage, not the words.</p>
+                            <span class="why">Skip any gap that does not fit your article. A post about
+                               moulting does not need to cover brackish water just because the term exists in
+                               the corpus.</span>
+                        </li>
+                        <li>
+                            <span class="where">AI SEO assistant <i class="fas fa-chevron-right"></i> Questions to answer</span>
+                            <b>Press Insert as H2 outline</b>
+                            <p>This appends every question to your body as a subheading with an
+                               &ldquo;ANSWER in 40&ndash;60 words&rdquo; placeholder. Answer them in your own
+                               words, delete the ones that do not fit, and delete every placeholder you did
+                               not answer.</p>
+                            <span class="why"><strong>Important:</strong> these questions also become the FAQ
+                               structured data in the published file. Shipping the page with placeholder
+                               answers still in it breaches Google's structured-data policy and can get the
+                               rich result pulled. Answer them or remove them.</span>
+                        </li>
+                        <li>
+                            <span class="where">AI SEO assistant <i class="fas fa-chevron-right"></i> Long-tail keyword set</span>
+                            <b>Skim the keyphrase table and use the &ldquo;Use as&rdquo; column</b>
+                            <p>Each row tells you where the phrase belongs. &ldquo;H2 inside this post&rdquo;
+                               means work it into a subheading here. &ldquo;Shop page, not the blog&rdquo;
+                               means leave it alone for this article.</p>
+                            <span class="why"><strong>About the competition labels:</strong> they are
+                               calculated from phrase length and specificity, not live search volume. Treat
+                               them as a shortlist to check in a proper keyword tool, not a forecast.</span>
+                        </li>
+                        <li>
+                            <span class="where">AI SEO assistant <i class="fas fa-chevron-right"></i> Amazon product pairings</span>
+                            <b>Pick two or three products and put them in the article</b>
+                            <p><strong>Copy HTML</strong> gives you a ready link with
+                               <code>rel="nofollow sponsored"</code> already on it. Paste it into your body
+                               where the product is genuinely the answer to a problem.</p>
+                            <p>These are category search links. Once you have tested a specific product, swap
+                               the link for that product's own page.</p>
+                            <span class="why"><strong>Amazon's terms require a visible affiliate disclosure</strong>
+                               on any page carrying these links. The published file includes one automatically
+                               at the bottom. The same terms forbid putting these links in emails or PDFs
+                               &mdash; so do not paste them into your newsletter.</span>
+                        </li>
+                        <li>
+                            <span class="where">Search &amp; social preview</span>
+                            <b>Check how it looks before anyone else does</b>
+                            <p>You see the Google result and the shared link card exactly as they will appear.
+                               The meta title and description are editable right here &mdash; rewrite them to
+                               earn the click rather than just describe the page.</p>
+                            <p>Keep the title under 60 characters and the description between 120 and 155, or
+                               Google truncates them mid-word.</p>
+                        </li>
+                        <li>
+                            <b>Re-run the analysis and check the score again</b>
+                            <p>Go back to the composer and press <strong>Run AI SEO analysis</strong>. Repeat
+                               Part 3 until the score is where you want it.</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- ---- Part 4 ---- -->
+                <div class="card">
+                    <div class="guide-part">Part 4 &mdash; Publish and share <span class="time-chip">about a minute</span></div>
+                    <ol class="steps" start="19">
+                        <li>
+                            <span class="where">Top bar <i class="fas fa-chevron-right"></i> Publish &amp; share</span>
+                            <b>Press Publish &amp; share</b>
+                            <p>Two things happen: the post is saved to your content library, and the
+                               multi-share window opens with a caption ready for every enabled network.</p>
+                            <p><strong>Nothing is posted anywhere yet.</strong> Nothing leaves this page until
+                               you click one of the buttons below.</p>
+                        </li>
+                        <li>
+                            <span class="where">Multi-share <i class="fas fa-chevron-right"></i> Download post HTML</span>
+                            <b>Download the post file and commit it</b>
+                            <p>Bottom-left of the share window. You get a complete HTML file with the meta
+                               tags, Open Graph tags, Twitter card and JSON-LD already in the head.</p>
+                            <p>Put it in a <code>blog/</code> folder in your repository and commit. That file
+                               <em>is</em> the published article &mdash; the share links point at it, so put it
+                               live before or shortly after you share.</p>
+                        </li>
+                        <li>
+                            <span class="where">Multi-share <i class="fas fa-chevron-right"></i> caption cards</span>
+                            <b>Read the captions and edit anything that reads oddly</b>
+                            <p>Every card is editable with a live character count. A red count means you are
+                               over that network's limit. The X card already accounts for links counting as
+                               23 characters regardless of their real length.</p>
+                            <p>Toggle off any network you do not want this particular post going to.</p>
+                        </li>
+                        <li>
+                            <span class="where">Multi-share <i class="fas fa-chevron-right"></i> Open all intent networks</span>
+                            <b>Press Open all intent networks</b>
+                            <p>Ten networks open in one click, each with the caption and tracked link already
+                               filled in where that network allows it.</p>
+                            <p>If your popup blocker stops some, they are listed underneath with their own
+                               button &mdash; nothing is dropped silently. Allowing popups for this page makes
+                               the whole set open together next time.</p>
+                            <span class="why"><strong>Facebook and LinkedIn will need a paste.</strong> Both
+                               strip pre-filled text from their share dialogs, so use the
+                               <strong>Copy</strong> button on those two cards and paste into the dialog that
+                               opens.</span>
+                        </li>
+                        <li>
+                            <span class="where">Multi-share <i class="fas fa-chevron-right"></i> Start compose stepper</span>
+                            <b>Press Start compose stepper for Instagram, TikTok and YouTube</b>
+                            <p>These three have no public pre-fill URL, so they cannot be opened pre-filled by
+                               any tool. The stepper handles them one at a time: it copies the caption, opens
+                               the composer, and moves to the next when you come back.</p>
+                            <span class="why"><strong>Why not automatic?</strong> There is no legitimate way to
+                               post to these from a web page. Anything claiming to do it is either riding your
+                               logged-in session, which breaks their terms and can get you banned, or using
+                               their official API behind OAuth and app review. The webhook in step 24 is the
+                               proper route.</span>
+                        </li>
+                        <li>
+                            <span class="where">Multi-share <i class="fas fa-chevron-right"></i> Fire fan-out webhook</span>
+                            <b>Or, if you set up a webhook, just press that instead</b>
+                            <p>One click sends the post, every caption, every hashtag set and every tracked URL
+                               to your automation, which publishes to all connected profiles at once. This
+                               replaces steps 22 and 23 entirely.</p>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- ---- Part 5 ---- -->
+                <div class="card">
+                    <div class="guide-part">Part 5 &mdash; Afterwards <span class="time-chip">where the compounding happens</span></div>
+                    <ol class="steps" start="25">
+                        <li>
+                            <span class="where">Best times &amp; cadence</span>
+                            <b>Work the repost ladder</b>
+                            <p>One article is worth eight posts over three months. The table there lays out
+                               what goes where on day 0, 1, 2, 4, 7, 21 and 90.</p>
+                            <p>The day 90 row matters most: refresh the post, update the year, re-share.
+                               Refreshed pages outrank abandoned ones.</p>
+                        </li>
+                        <li>
+                            <span class="where">Content library <i class="fas fa-chevron-right"></i> Re-share</span>
+                            <b>Use Re-share for every later touch</b>
+                            <p>Re-share rebuilds the captions from the saved post and opens the share window
+                               again. Edit the caption to a different angle each time &mdash; posting the same
+                               words repeatedly gets throttled on most networks.</p>
+                        </li>
+                        <li>
+                            <span class="where">Content library <i class="fas fa-chevron-right"></i> Export library</span>
+                            <b>Export the library every so often</b>
+                            <p>Everything lives in this browser. Clearing site data or switching device loses
+                               it. Export the JSON, or rely on the committed post files, to keep anything that
+                               matters.</p>
+                        </li>
                     </ol>
                 </div>
 
                 <div class="card">
-                    <h3><i class="fas fa-circle-half-stroke"></i> Honest limits</h3>
+                    <h3><i class="fas fa-circle-half-stroke"></i> Honest limits, in one place</h3>
                     <ul style="padding-left:20px;display:grid;gap:9px;font-size:14px">
                         <li><strong>Browsers cannot post to Instagram, TikTok or YouTube from a page like this.</strong>
-                            Those platforms have no public pre-fill URL. Anything claiming otherwise is either using
-                            your logged-in session illegally or needs their official API with OAuth and app review.
-                            The webhook route in Settings is the legitimate hands-off path.</li>
+                            Those platforms have no public pre-fill URL. The webhook route in Settings is the
+                            legitimate hands-off path.</li>
                         <li><strong>Popup blockers cap how many tabs open at once.</strong> The share window opens
                             every intent network in one click and then lists any the browser blocked with its own
                             button, so nothing is silently dropped.</li>
                         <li><strong>Competition labels are heuristics</strong> based on phrase length and specificity.
                             They are a shortlist to check in a real keyword tool, not search volume.</li>
+                        <li><strong>The posting windows are general pet-niche guidance</strong>, not your analytics.
+                            Once you have 30 days of data in each platform's insights, trust that instead.</li>
                         <li><strong>Everything is stored in this browser</strong> (localStorage). Export the library
                             or commit the downloaded files to keep your work.</li>
                         <li><strong>The passcode is not security.</strong> Put HTTP auth, a host access rule or a real
                             login in front of <code>admin.html</code> before this site goes live.</li>
+                        <li><strong>The assistant is a keyword engine, not a writer.</strong> It will not write the
+                            article, and it cannot tell you whether your husbandry advice is correct. That part is
+                            still yours.</li>
                     </ul>
                 </div>
 
                 <div class="card">
                     <h3><i class="fas fa-paw"></i> Animal groups covered</h3>
                     <p class="card-sub">Each group carries its own seed terms, semantic entities, species list,
-                       behaviours, health problems, hashtag sets and product pairings.</p>
+                       behaviours, health problems, hashtag sets and product pairings. Click one to select it
+                       in the composer.</p>
                     <div class="chip-set" id="catChips"></div>
                 </div>
             </section>
