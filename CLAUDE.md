@@ -214,9 +214,17 @@ The heading stays the numbered plain-English item, so the list still reads as a
 checklist, and the thing being bought is still named.
 
 `.kit-section` / `.kit-item` are not deprecated, but nothing new should use them for a
-shopping list. The chew, cockatiel and Tiki guides are all converted. Cockatiel's
-eleven items run 3-3-3-2; a trailing short row reads fine, so do not pad a list to
-reach a multiple of three.
+shopping list. **All six are converted** -- chew, cockatiel, Tiki, shrimp, hermit crab
+and saltwater -- so no post still uses the old rows. Cockatiel, shrimp, hermit crab and
+saltwater all run eleven items at 3-3-3-2; a trailing short row reads fine, so do not
+pad a list to reach a multiple of three.
+
+**Renumber the whole list after merging two sections into one grid.** The shrimp,
+hermit crab and saltwater lists numbered their essentials 1-8 and left the
+nice-to-haves unnumbered, which was fine while they sat under separate
+"Essentials" and "Worth having" headings. Merged into one grid it reads as eight
+numbered items followed by three the author forgot to number. They continue to 11
+now, and the intro paragraph names where the essentials stop instead.
 
 **Two things carry over from the old markup and are worth checking after a
 conversion.** Cockatiel kept its prices at the end of each description, so they move
