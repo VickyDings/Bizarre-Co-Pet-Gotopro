@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Console | Pet Go Pro</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="description" content="Pet Go Pro admin console: blog composer, AI SEO assistant and multi-channel social publishing.">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="admin">
+
+<!-- ============ Passcode gate ============ -->
+<div class="gate" id="gate" hidden>
+    <div class="gate-box">
+        <div class="logo-icon"><i class="fas fa-dragon"></i></div>
+        <h1>Pet Go Pro Admin</h1>
+        <p>Enter the console passcode to continue.</p>
+        <form id="gateForm">
+            <div class="field">
+                <label for="gatePass">Passcode</label>
+                <input type="password" id="gatePass" autocomplete="current-password" required>
+            </div>
+            <button type="submit" class="btn-a btn-block">Unlock console</button>
+        </form>
+        <p style="margin-top:16px;font-size:11.5px;">
+            This is a convenience lock that keeps the panel out of the way on a shared screen.
+            It runs in the browser, so it is <strong>not</strong> site security &mdash; put real
+            authentication in front of this file before hosting it publicly.
+        </p>
+    </div>
+</div>
+
+<!-- ============ Console ============ -->
+<div id="console" hidden>
+
+    <header class="admin-bar">
+        <span class="logo-icon"><i class="fas fa-dragon"></i></span>
+        <div class="admin-bar-title">
+            <strong>Pet Go Pro Admin</strong>
+            <span>Content &amp; Social SEO</span>
+        </div>
+        <div class="admin-bar-actions">
+            <span class="save-state" id="saveState"><i class="fas fa-circle-check"></i> Saved</span>
+            <button class="btn-b btn-sm" id="btnSaveDraft"><i class="fas fa-floppy-disk"></i> Save draft</button>
+            <button class="btn-c btn-sm" id="btnPublish"><i class="fas fa-rocket"></i> Publish &amp; share</button>
+        </div>
+    </header>
+
+    <div class="admin-shell">
+
+        <!-- ---------- Sidebar ---------- -->
+        <nav class="admin-side" aria-label="Admin sections">
+            <h6>Create</h6>
+            <button class="side-link active" data-panel="composer"><i class="fas fa-pen-nib"></i> Post composer</button>
+            <button class="side-link" data-panel="seo"><i class="fas fa-wand-magic-sparkles"></i> AI SEO assistant <span class="pill" id="pillScore">&ndash;</span></button>
+            <button class="side-link" data-panel="preview"><i class="fas fa-eye"></i> Search &amp; social preview</button>
+
+            <h6>Distribute</h6>
+            <button class="side-link" data-panel="social"><i class="fas fa-share-nodes"></i> Social SEO setup <span class="pill" id="pillPlatforms">0</span></button>
+            <button class="side-link" data-panel="calendar"><i class="fas fa-clock"></i> Best times &amp; cadence</button>
+
+            <h6>Manage</h6>
+            <button class="side-link" data-panel="library"><i class="fas fa-box-archive"></i> Content library <span class="pill" id="pillLibrary">0</span></button>
+            <button class="side-link" data-panel="settings"><i class="fas fa-sliders"></i> Settings</button>
+            <button class="side-link" data-panel="help"><i class="fas fa-circle-question"></i> How this works</button>
+        </nav>
+
+        <!-- ---------- Main ---------- -->
+        <main class="admin-main">
+
+            <!-- ======== Composer ======== -->
+            <section class="panel" id="panel-composer">
+                <div class="panel-head">
+                    <h1>Post composer</h1>
+                    <p>Write the article, pick the animal group, then run the AI SEO assistant. Everything
+                       downstream &mdash; keywords, hashtags, captions, schema &mdash; is generated from these fields.</p>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-heading"></i> Article</h3>
+                    <div class="field">
+                        <label for="fTitle">Headline <span class="counter" id="cTitle">0</span></label>
+                        <input type="text" id="fTitle" placeholder="e.g. Bearded Dragon Basking Temperature: Getting UVB and Heat Right">
+                        <p class="help">30&ndash;60 characters ranks best. Lead with the keyphrase where it reads naturally.</p>
+                    </div>
+
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="fCategory">Animal group</label>
+                            <select id="fCategory"></select>
+                        </div>
+                        <div class="field">
+                            <label for="fSpecies">Species focus <span class="opt">(optional)</span></label>
+                            <input type="text" id="fSpecies" list="speciesList" placeholder="Auto-detected from your text">
+                            <datalist id="speciesList"></datalist>
+                        </div>
+                        <div class="field">
+                            <label for="fDate">Publish date</label>
+                            <input type="date" id="fDate">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="fSlug">URL slug <span class="counter" id="cSlug">0</span></label>
+                        <input type="text" id="fSlug" placeholder="auto-generated from the headline">
+                        <p class="help">Leave blank to let the assistant build a short, keyphrase-led slug.</p>
+                    </div>
+
+                    <div class="field">
+                        <label for="fExcerpt">Excerpt / hook <span class="counter" id="cExcerpt">0</span></label>
+                        <textarea id="fExcerpt" placeholder="One or two sentences. This becomes the meta description and the first line of every social caption."></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label for="fBody">Article body <span class="counter" id="cBody">0 words</span></label>
+                        <textarea id="fBody" class="tall" placeholder="Write the guide. Use ## for subheadings - the assistant counts them for snippet potential."></textarea>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="card">
+                        <h3><i class="fas fa-image"></i> Featured image</h3>
+                        <div class="field">
+                            <label for="fImage">Image URL</label>
+                            <input type="url" id="fImage" placeholder="https://...">
+                            <p class="help">1200&times;630 for link cards. Pinterest also wants a 1000&times;1500 vertical.</p>
+                        </div>
+                        <div class="field">
+                            <label for="fImageAlt">Alt text <span class="counter" id="cAlt">0</span></label>
+                            <input type="text" id="fImageAlt" placeholder="Describe the animal and what it is doing">
+                        </div>
+                        <button class="btn-b btn-sm" id="btnAltSuggest"><i class="fas fa-wand-magic-sparkles"></i> Suggest alt text</button>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-user-pen"></i> Author &amp; trust signals</h3>
+                        <p class="card-sub">Pet health is a &ldquo;your money or your life&rdquo; topic. Search engines
+                           weigh who wrote it and who checked it.</p>
+                        <div class="field">
+                            <label for="fAuthor">Author</label>
+                            <input type="text" id="fAuthor" placeholder="Your name">
+                        </div>
+                        <div class="field">
+                            <label for="fReviewer">Reviewed by <span class="opt">(vet, breeder, keeper)</span></label>
+                            <input type="text" id="fReviewer" placeholder="e.g. Dr. A. Patel BVSc, exotics">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-bullseye"></i> Search intent to target</h3>
+                    <p class="card-sub">Drives which long-tail keyword sets the assistant builds.</p>
+                    <div class="checks" id="intentChecks"></div>
+                </div>
+
+                <div class="btn-bar">
+                    <button class="btn-a" id="btnAnalyse"><i class="fas fa-wand-magic-sparkles"></i> Run AI SEO analysis</button>
+                    <button class="btn-b" id="btnLoadSample"><i class="fas fa-flask"></i> Load a sample post</button>
+                    <span class="spacer"></span>
+                    <button class="btn-b" id="btnClear"><i class="fas fa-eraser"></i> Clear composer</button>
+                </div>
+            </section>
+
+            <!-- ======== AI SEO ======== -->
+            <section class="panel" id="panel-seo" hidden>
+                <div class="panel-head">
+                    <h1>AI SEO assistant</h1>
+                    <p>Keyphrases, semantic gaps, hashtags, meta tags and structured data, generated from your
+                       draft against a pet-niche corpus covering dogs, cats, small animals, birds, reptiles,
+                       aquatics, crustaceans and arthropods.</p>
+                </div>
+
+                <div id="seoEmpty" class="card">
+                    <div class="empty">
+                        <i class="fas fa-wand-magic-sparkles"></i>
+                        <p>Nothing analysed yet. Write a headline and a few paragraphs, then run the analysis.</p>
+                        <button class="btn-a" style="margin-top:14px" data-goto="composer">Back to the composer</button>
+                    </div>
+                </div>
+
+                <div id="seoResults" hidden>
+
+                    <div class="card">
+                        <h3><i class="fas fa-gauge-high"></i> On-page score</h3>
+                        <div class="score-wrap">
+                            <div class="dial" id="scoreDial">
+                                <svg width="116" height="116" viewBox="0 0 116 116" aria-hidden="true">
+                                    <circle class="dial-track" cx="58" cy="58" r="50" fill="none" stroke-width="10"></circle>
+                                    <circle class="dial-fill" id="dialFill" cx="58" cy="58" r="50" fill="none"
+                                            stroke-width="10" stroke-linecap="round"
+                                            stroke-dasharray="314" stroke-dashoffset="314"></circle>
+                                </svg>
+                                <div class="dial-label"><b id="scoreNum">0</b><span id="scoreGrade">&mdash;</span></div>
+                            </div>
+                            <div class="score-facts" id="scoreFacts"></div>
+                        </div>
+                        <ul class="check-list" id="checkList"></ul>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-crosshairs"></i> Focus keyphrase</h3>
+                        <p class="card-sub">The one phrase this page should own. Click an alternative to switch,
+                           or type your own and re-run.</p>
+                        <div class="field">
+                            <label for="fFocus">Focus keyphrase</label>
+                            <input type="text" id="fFocus">
+                        </div>
+                        <div class="chip-set" id="focusAlts"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-key"></i> Long-tail keyword set <span class="count" id="ltCount">0</span></h3>
+                        <p class="card-sub">Competition is a heuristic from phrase length and specificity, not live
+                           search-volume data. Treat it as a shortlist to verify, not a forecast.</p>
+                        <div class="tbl-wrap">
+                            <table class="tbl">
+                                <thead><tr><th>Keyphrase</th><th>Intent</th><th>Competition</th><th>Use as</th><th></th></tr></thead>
+                                <tbody id="ltBody"></tbody>
+                            </table>
+                        </div>
+                        <div class="btn-bar" style="margin-top:14px">
+                            <button class="btn-b btn-sm" id="btnCopyKeywords"><i class="fas fa-copy"></i> Copy all keyphrases</button>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="card">
+                            <h3><i class="fas fa-puzzle-piece"></i> Semantic gaps <span class="count" id="gapCount">0</span></h3>
+                            <p class="card-sub">Terms Google expects on a page about this topic that your draft
+                               does not mention yet. Click one to append it as a note at the end of your body text.</p>
+                            <div class="chip-set" id="gapChips"></div>
+                            <h3 style="margin-top:20px"><i class="fas fa-circle-check"></i> Already covered <span class="count" id="coveredCount">0</span></h3>
+                            <div class="chip-set" id="coveredChips" style="margin-top:10px"></div>
+                        </div>
+
+                        <div class="card">
+                            <h3><i class="fas fa-comments"></i> Questions to answer</h3>
+                            <p class="card-sub">Each one is an H2 that can win a featured snippet, and they feed
+                               the FAQ structured data below.</p>
+                            <div class="chip-set" id="questionChips"></div>
+                            <div class="btn-bar" style="margin-top:14px">
+                                <button class="btn-b btn-sm" id="btnInsertFaq"><i class="fas fa-list-ol"></i> Insert as H2 outline</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-lightbulb"></i> Headline angles that rank in this niche</h3>
+                        <p class="card-sub">Proven article shapes, filled in with your species and topic. Click to use as the headline.</p>
+                        <div class="chip-set" id="angleChips"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-hashtag"></i> Platform hashtag &amp; tag sets</h3>
+                        <p class="card-sub">Sized to each network's sweet spot &mdash; 25 for Instagram, 5 for TikTok,
+                           2 for X, keyword-style for Pinterest, plain tags for YouTube.</p>
+                        <div id="tagSets"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-cart-shopping"></i> Amazon product pairings</h3>
+                        <p class="card-sub">Product lines that genuinely match this animal group, as tagged search
+                           links. Swap any link for a specific ASIN once you have picked a product.</p>
+                        <div class="tbl-wrap">
+                            <table class="tbl">
+                                <thead><tr><th>Product line</th><th>Search link</th><th></th></tr></thead>
+                                <tbody id="prodBody"></tbody>
+                            </table>
+                        </div>
+                        <p class="help" style="margin-top:12px">
+                            <i class="fas fa-circle-info"></i> Amazon's Associates terms require a visible affiliate
+                            disclosure on any page carrying these links, and the links must not be emailed or put in a PDF.
+                        </p>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-code"></i> Structured data (JSON-LD)</h3>
+                        <p class="card-sub">Paste into the <code>&lt;head&gt;</code> of the published post. Replace the
+                           FAQ answer placeholders with real 40&ndash;60 word answers before publishing &mdash; empty
+                           placeholders breach Google's structured-data policy.</p>
+                        <pre class="code" id="schemaOut"></pre>
+                        <div class="btn-bar" style="margin-top:12px">
+                            <button class="btn-b btn-sm" id="btnCopySchema"><i class="fas fa-copy"></i> Copy JSON-LD</button>
+                            <button class="btn-b btn-sm" id="btnCopyHead"><i class="fas fa-copy"></i> Copy full &lt;head&gt; block</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ======== Preview ======== -->
+            <section class="panel" id="panel-preview" hidden>
+                <div class="panel-head">
+                    <h1>Search &amp; social preview</h1>
+                    <p>How the post looks in a results page and as a shared link card.</p>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fab fa-google"></i> Google result</h3>
+                    <div class="field">
+                        <label for="fMetaTitle">Meta title <span class="counter" id="cMetaTitle">0</span></label>
+                        <input type="text" id="fMetaTitle">
+                    </div>
+                    <div class="field">
+                        <label for="fMetaDesc">Meta description <span class="counter" id="cMetaDesc">0</span></label>
+                        <textarea id="fMetaDesc" style="min-height:76px"></textarea>
+                    </div>
+                    <div class="serp">
+                        <div class="crumb" id="pvCrumb">example.com &rsaquo; blog</div>
+                        <div class="t" id="pvTitle">Your headline appears here</div>
+                        <div class="d" id="pvDesc">Your meta description appears here.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-share-nodes"></i> Shared link card</h3>
+                    <div class="og-card">
+                        <div class="og-img" id="pvImg">No featured image set</div>
+                        <div class="og-body">
+                            <div class="og-dom" id="pvDom">example.com</div>
+                            <div class="og-t" id="pvOgTitle">Your headline appears here</div>
+                            <div class="og-d" id="pvOgDesc">Your meta description appears here.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ======== Social setup ======== -->
+            <section class="panel" id="panel-social" hidden>
+                <div class="panel-head">
+                    <h1>Social SEO setup</h1>
+                    <p>Set this up once. Every publish then builds captions, hashtags and tracked links for each
+                       enabled network automatically.</p>
+                </div>
+
+                <div class="notice info">
+                    <i class="fas fa-circle-info"></i>
+                    <div>
+                        <strong>How &ldquo;all at the same time&rdquo; actually works.</strong>
+                        Networks marked <span class="mode-tag intent">intent</span> have an official share URL, so
+                        Publish opens them all together in one click. Networks marked
+                        <span class="mode-tag compose">compose</span> (Instagram, TikTok, YouTube, LinkedIn's
+                        composer) have no public pre-fill API &mdash; no tool can post to them from a static page.
+                        For those the caption is copied and the composer is opened, one tap each.
+                        For genuinely hands-off simultaneous posting, set a
+                        <strong>fan-out webhook</strong> in Settings (Zapier, Make, Buffer or your own endpoint):
+                        one POST and every connected profile publishes at once.
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-at"></i> Brand handles &amp; defaults</h3>
+                    <p class="card-sub">Used in captions, UTM tags and the publisher fields of your structured data.</p>
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="sBrand">Brand name</label>
+                            <input type="text" id="sBrand" placeholder="Bizarre Co - Pet Go Pro">
+                        </div>
+                        <div class="field">
+                            <label for="sCta">Default call to action</label>
+                            <input type="text" id="sCta" placeholder="Full guide on the blog">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="plat-grid" id="platGrid"></div>
+            </section>
+
+            <!-- ======== Calendar ======== -->
+            <section class="panel" id="panel-calendar" hidden>
+                <div class="panel-head">
+                    <h1>Best times &amp; cadence</h1>
+                    <p>Posting windows that generally perform for pet content, and a repost rhythm that gets more
+                       out of every article you write.</p>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-clock"></i> Posting windows by network</h3>
+                    <p class="card-sub">General pet-niche guidance, not your own analytics. Once you have 30 days
+                       of data in each platform's insights, trust that instead.</p>
+                    <div class="tbl-wrap">
+                        <table class="tbl">
+                            <thead><tr><th>Network</th><th>Window</th><th>Caption limit</th><th>Tags</th><th>Share mode</th></tr></thead>
+                            <tbody id="timesBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-repeat"></i> One article, eight touches</h3>
+                    <p class="card-sub">The repost ladder for a single care guide.</p>
+                    <div class="tbl-wrap">
+                        <table class="tbl">
+                            <thead><tr><th>When</th><th>What goes out</th><th>Where</th></tr></thead>
+                            <tbody>
+                                <tr><td>Day 0</td><td>Link post with the hook line</td><td>Facebook, X, Threads, LinkedIn</td></tr>
+                                <tr><td>Day 0</td><td>Carousel: the 5 key numbers from the guide</td><td>Instagram</td></tr>
+                                <tr><td>Day 1</td><td>Tall pin per subheading, keyword description</td><td>Pinterest</td></tr>
+                                <tr><td>Day 2</td><td>30&ndash;45s clip of the single biggest mistake</td><td>TikTok, Reels, Shorts</td></tr>
+                                <tr><td>Day 4</td><td>Genuine answer in the species subreddit or forum</td><td>Reddit</td></tr>
+                                <tr><td>Day 7</td><td>Newsletter with the guide plus the product picks</td><td>Email</td></tr>
+                                <tr><td>Day 21</td><td>Quote-card of the most-shared line</td><td>Instagram, Threads</td></tr>
+                                <tr><td>Day 90</td><td>Refresh the post, update the year, re-share</td><td>Everywhere</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ======== Library ======== -->
+            <section class="panel" id="panel-library" hidden>
+                <div class="panel-head">
+                    <h1>Content library</h1>
+                    <p>Everything you have saved or published from this browser.</p>
+                </div>
+                <div class="card">
+                    <h3><i class="fas fa-box-archive"></i> Saved posts <span class="count" id="libCount">0</span></h3>
+                    <div id="libList"></div>
+                    <div class="btn-bar" style="margin-top:16px">
+                        <button class="btn-b btn-sm" id="btnExportLib"><i class="fas fa-download"></i> Export library as JSON</button>
+                        <button class="btn-b btn-sm" id="btnImportLib"><i class="fas fa-upload"></i> Import JSON</button>
+                        <input type="file" id="fileImport" accept="application/json" hidden>
+                    </div>
+                </div>
+                <div class="notice warn">
+                    <i class="fas fa-triangle-exclamation"></i>
+                    <div><strong>This library lives in this browser only.</strong> Clearing site data or switching
+                        device loses it. Export the JSON, or commit the downloaded post files to the repo, to keep anything.</div>
+                </div>
+            </section>
+
+            <!-- ======== Settings ======== -->
+            <section class="panel" id="panel-settings" hidden>
+                <div class="panel-head">
+                    <h1>Settings</h1>
+                    <p>Site details, tracking and the optional integrations that make publishing hands-off.</p>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-globe"></i> Site</h3>
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="sSiteUrl">Live site URL</label>
+                            <input type="url" id="sSiteUrl" placeholder="https://bizarreco.com">
+                            <p class="help">Needed to build the post URL that every share link points at.</p>
+                        </div>
+                        <div class="field">
+                            <label for="sAuthor">Default author</label>
+                            <input type="text" id="sAuthor">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-chart-line"></i> Campaign tracking (UTM)</h3>
+                    <p class="card-sub">Appended to every share link so your analytics can tell Instagram traffic
+                       from Pinterest traffic.</p>
+                    <div class="field-row">
+                        <div class="field">
+                            <label for="sUtmMedium">utm_medium</label>
+                            <input type="text" id="sUtmMedium" placeholder="social">
+                        </div>
+                        <div class="field">
+                            <label for="sUtmCampaign">utm_campaign <span class="opt">(blank = post slug)</span></label>
+                            <input type="text" id="sUtmCampaign" placeholder="auto from slug">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fab fa-amazon"></i> Amazon Associates</h3>
+                    <div class="field">
+                        <label for="sAmazonTag">Associate tag</label>
+                        <input type="text" id="sAmazonTag" placeholder="yourtag-20">
+                        <p class="help">Added to every generated product link. Keep your affiliate disclosure visible
+                           on any page that carries them.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-bolt"></i> Fan-out webhook <span class="count">true simultaneous posting</span></h3>
+                    <p class="card-sub">The only way to publish to every network at once without touching each
+                       composer. Point this at a Zapier catch hook, a Make webhook, a Buffer/Publer automation or your
+                       own server route. Publish sends one JSON POST containing the post, every caption, every
+                       hashtag set and the tracked URLs.</p>
+                    <div class="field">
+                        <label for="sWebhook">Webhook URL</label>
+                        <input type="url" id="sWebhook" placeholder="https://hooks.zapier.com/hooks/catch/...">
+                    </div>
+                    <div class="field">
+                        <label><input type="checkbox" id="sWebhookAuto"> Fire the webhook automatically on publish</label>
+                        <p class="help">Leave off to review the captions first and fire it with a button.</p>
+                    </div>
+                    <div class="btn-bar">
+                        <button class="btn-b btn-sm" id="btnTestWebhook"><i class="fas fa-paper-plane"></i> Send a test payload</button>
+                        <button class="btn-b btn-sm" id="btnShowPayload"><i class="fas fa-code"></i> Show the payload shape</button>
+                    </div>
+                    <pre class="code" id="payloadOut" hidden></pre>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-robot"></i> Live model endpoint <span class="count">optional</span></h3>
+                    <p class="card-sub">The assistant runs its own keyword engine in this page, so it needs no key.
+                       If you want a language model writing the suggestions instead, point this at a route on
+                       <em>your</em> server that calls the model and returns the same JSON shape.</p>
+                    <div class="field">
+                        <label for="sAiEndpoint">Endpoint URL</label>
+                        <input type="url" id="sAiEndpoint" placeholder="https://yourserver.com/api/seo-suggest">
+                    </div>
+                    <div class="notice warn" style="margin:0">
+                        <i class="fas fa-key"></i>
+                        <div><strong>Never put a provider API key in this page.</strong> Anything in front-end
+                            JavaScript is readable by every visitor and will be scraped and billed to you. The key
+                            belongs on the server behind that endpoint.</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-lock"></i> Console passcode</h3>
+                    <div class="field">
+                        <label for="sPass">Passcode <span class="opt">(blank = no prompt)</span></label>
+                        <input type="text" id="sPass" placeholder="Leave blank to open the console directly">
+                        <p class="help">A convenience lock only. It is stored in this browser and checked in
+                           JavaScript, so treat it as a screen guard, not as security.</p>
+                    </div>
+                </div>
+
+                <div class="btn-bar">
+                    <button class="btn-a" id="btnSaveSettings"><i class="fas fa-floppy-disk"></i> Save settings</button>
+                    <span class="spacer"></span>
+                    <button class="btn-danger btn-sm" id="btnResetAll"><i class="fas fa-trash"></i> Reset everything</button>
+                </div>
+            </section>
+
+            <!-- ======== Help ======== -->
+            <section class="panel" id="panel-help" hidden>
+                <div class="panel-head">
+                    <h1>How this works</h1>
+                    <p>What is real, what is a shortcut, and what needs a server.</p>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-list-check"></i> The publishing flow</h3>
+                    <ol style="padding-left:20px;display:grid;gap:9px;font-size:14px">
+                        <li>Write the post in the composer and pick the animal group.</li>
+                        <li>Run the AI SEO analysis. Fix whatever the score panel flags &mdash; word count,
+                            keyphrase placement and the semantic gaps move the needle most.</li>
+                        <li>Press <strong>Publish &amp; share</strong>. The post is saved to the library, a
+                            ready-to-commit HTML file downloads with all meta tags and JSON-LD already in the head,
+                            and the multi-share window opens.</li>
+                        <li>In the share window, review each caption, then hit <strong>Open all intent networks</strong>.
+                            Finish the compose-only networks with the stepper beneath it.</li>
+                    </ol>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-circle-half-stroke"></i> Honest limits</h3>
+                    <ul style="padding-left:20px;display:grid;gap:9px;font-size:14px">
+                        <li><strong>Browsers cannot post to Instagram, TikTok or YouTube from a page like this.</strong>
+                            Those platforms have no public pre-fill URL. Anything claiming otherwise is either using
+                            your logged-in session illegally or needs their official API with OAuth and app review.
+                            The webhook route in Settings is the legitimate hands-off path.</li>
+                        <li><strong>Popup blockers cap how many tabs open at once.</strong> The share window opens
+                            every intent network in one click and then lists any the browser blocked with its own
+                            button, so nothing is silently dropped.</li>
+                        <li><strong>Competition labels are heuristics</strong> based on phrase length and specificity.
+                            They are a shortlist to check in a real keyword tool, not search volume.</li>
+                        <li><strong>Everything is stored in this browser</strong> (localStorage). Export the library
+                            or commit the downloaded files to keep your work.</li>
+                        <li><strong>The passcode is not security.</strong> Put HTTP auth, a host access rule or a real
+                            login in front of <code>admin.html</code> before this site goes live.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-paw"></i> Animal groups covered</h3>
+                    <p class="card-sub">Each group carries its own seed terms, semantic entities, species list,
+                       behaviours, health problems, hashtag sets and product pairings.</p>
+                    <div class="chip-set" id="catChips"></div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+</div>
+
+<!-- ============ Multi-share modal ============ -->
+<div class="modal" id="shareModal" hidden>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="shareTitle">
+        <div class="modal-head">
+            <div>
+                <h2 id="shareTitle">Multi-share</h2>
+                <p id="shareSub">Review each caption, then push them out together.</p>
+            </div>
+            <button class="modal-close" id="shareClose" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="notice good" id="shareSaved" hidden>
+                <i class="fas fa-circle-check"></i>
+                <div id="shareSavedText"></div>
+            </div>
+
+            <div class="card" style="margin-bottom:16px">
+                <h3><i class="fas fa-bolt"></i> Push it out</h3>
+                <div class="btn-bar">
+                    <button class="btn-c" id="btnOpenAll"><i class="fas fa-arrow-up-right-from-square"></i> Open all intent networks</button>
+                    <button class="btn-a" id="btnStepper"><i class="fas fa-forward-step"></i> Start compose stepper</button>
+                    <button class="btn-b" id="btnFireWebhook"><i class="fas fa-satellite-dish"></i> Fire fan-out webhook</button>
+                    <span class="spacer"></span>
+                    <button class="btn-b btn-sm" id="btnCopyAll"><i class="fas fa-copy"></i> Copy every caption</button>
+                </div>
+                <div id="shareStatus" style="margin-top:13px"></div>
+            </div>
+
+            <div class="share-grid" id="shareGrid"></div>
+        </div>
+        <div class="modal-foot">
+            <span style="font-size:12.5px;color:var(--gray-500)" id="shareCountLabel"></span>
+            <span class="spacer"></span>
+            <button class="btn-b" id="btnDownloadPost"><i class="fas fa-file-code"></i> Download post HTML</button>
+            <button class="btn-a" id="btnShareDone"><i class="fas fa-check"></i> Done</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast-stack" id="toasts" aria-live="polite"></div>
+
+<script src="js/admin-seo-data.js"></script>
+<script src="js/admin-seo.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
