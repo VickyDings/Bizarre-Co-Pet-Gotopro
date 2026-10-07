@@ -203,6 +203,64 @@ stay. Aim for **ten or more** through a guide: an `.img-full .img-frame` with an
 italic caption between blocks always fits, and `.img-md .img-left/right` works beside
 two or more paragraphs of running prose.
 
+### A shopping list item is a component, not a heading and a button
+
+`.kit-item` is a flex row expecting an exact inner structure, and writing an
+`<h4>` and a `<p>` into it instead renders as bare text with an oversized
+button and no checkbox, no price pill and no image. The chew guide shipped that
+way until the owner's screenshot of the live editor showed it:
+
+```html
+<div class="kit-item essential"><div class="kit-check">&#10003;</div><div class="kit-body">
+  <span class="kit-name">1. Name</span>
+  <span class="kit-why">Why it is on the list</span>
+  <div class="product"><div class="product-body">
+    <div class="product-image-wrap"><div class="product-image-placeholder">Drop your product photo here</div></div>
+    <div class="product-content">
+      <div class="product-title"><a href="..." target="_blank" rel="nofollow noopener sponsored">Title</a></div>
+      <div class="product-price"><span class="dollar">$8.99+</span><span class="disclaimer">* price starts from and is subject to change</span></div>
+    </div>
+  </div></div>
+</div></div>
+```
+
+**The shopping list has always supported product photos** -- `.product-body` is
+a `240px 1fr` grid and `.product-image-wrap` is the well. It collapses to a
+single column when the well is empty, which is why a list with no photos still
+looks deliberate. The owner asked for images on the list believing it needed
+new CSS; it needed the markup it was designed for.
+
+Copy a `.kit-item` out of an existing guide rather than writing one from the
+class names.
+
+### Affiliate links carry rel="nofollow noopener sponsored"
+
+`sponsored` is what Google asks for on a paid link and `nofollow` is the older
+form of the same signal; `noopener` is the ordinary safety attribute for
+`target="_blank"`. Every Amazon and CJ anchor gets all three. The guides written
+before this did it; the chew guide did not until it was checked.
+
+### The disclosure goes before the first link, not only at the foot
+
+A 6,000-word guide whose only disclosure is in the last block is not "clear and
+conspicuous" by any sensible reading. The chew guide now carries a `.disclosure`
+immediately above its first product row, naming the advertiser, and the
+closing one stays.
+
+It also says which products are **not** linked and why. Raw Paws sells marrow
+bones and water buffalo horns; the article puts both in its Avoid column, so
+neither is linked. Saying so out loud is worth more to a reader than any
+recommendation in the piece.
+
+### What CJ lets you use from the advertiser
+
+Raw Paws' terms allow "logos and images provided in the CJ Account Manager".
+The **Links & Products** page in the member area is that -- it carries banner
+and image creatives, and several of their category links (toppers, treats,
+chews, freeze-dried) have artwork attached. So the product feed having no
+images does not mean there are none to use; they are in a different part of CJ
+entirely.
+
 ### Raw Paws is the only CJ advertiser this site can link to
 
 Five live CJ relationships, one of them pet: **Raw Paws Pet Food, advertiser
