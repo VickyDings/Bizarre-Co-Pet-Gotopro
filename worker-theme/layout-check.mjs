@@ -56,7 +56,26 @@ for (const file of files) {
   for (const w of widths) {
     const p = await b.newPage({ viewport: { width: w, height: 1100 } });
     await p.goto(pathToFileURL(SCRATCH).href, { waitUntil: 'domcontentloaded' });
-    await p.waitForTimeout(160);
+
+    // Put a stand-in photo in every empty product well before measuring.
+    // Without this the check can never see the bug it exists for: the post
+    // files in this repo have empty wells, an empty well is display:none, and
+    // a collapsed well floats nothing. The owner's live pages have photos in.
+    // "Render a component with its content actually in before trusting it"
+    // applies to the checker as much as to the eye.
+    await p.evaluate(() => {
+      const stand = 'data:image/svg+xml;base64,' + btoa(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800">' +
+        '<rect width="800" height="800" fill="#ddd"/></svg>');
+      for (const well of document.querySelectorAll('.product-image-wrap, .pgp-prod-img')) {
+        if (well.querySelector('img')) continue;
+        const im = document.createElement('img');
+        im.src = stand; im.alt = '';
+        well.innerHTML = '';
+        well.appendChild(im);
+      }
+    });
+    await p.waitForTimeout(260);
     const bad = await p.evaluate(() => {
       const out = [];
       const floats = [...document.querySelectorAll('.img-left,.img-right,[style*="float"]')];
@@ -70,6 +89,49 @@ for (const file of files) {
         if (q.width > 0 && (q.right > innerWidth + 2 || q.left < -2) && !el.closest('.table-wrap,.pgp-ig-frame,[style*="overflow-x"]'))
           out.push('.' + (String(el.className).split(' ')[0] || el.tagName) + ' escapes column'); });
       if (document.documentElement.scrollWidth > innerWidth + 2) out.push('horizontal PAGE scroll');
+
+      // Text squeezed into an unreadably narrow column inside a card. This is
+      // the one that got away: a 240px photo floated in a 346px card left about
+      // 76px for the text and it went live on the hermit crab page as one word
+      // per line. Nothing above sees it, because a block beside a float keeps
+      // its FULL width - only its line boxes shorten - so getBoundingClientRect
+      // reports the whole card and the text never escapes the column either.
+      // A Range reports one rect per rendered line, which is what to measure.
+      const MIN_LINE = 150;
+      for (const card of document.querySelectorAll('.product, .pgp-prod, .kit-item')) {
+        // Walk TEXT NODES, not elements. The body copy in a .product card is a
+        // bare text node sitting directly in .product-content with no <p>
+        // around it, so a 'p, li, h4' selector finds nothing at all and the
+        // check silently passes - which is exactly what it did at first.
+        const walk = document.createTreeWalker(card, NodeFilter.SHOW_TEXT);
+        let node;
+        while ((node = walk.nextNode())) {
+          // 25, not 60. The float breaks the TITLE before it reaches the body
+          // copy - a 240px photo is only 240px tall, so the first block or two
+          // beside it take the squeeze and the paragraph below runs full width.
+          // "Digital Hygrometer and Thermometer" is 34 characters, so a 60 floor
+          // skipped the very thing that went live broken. Anything that still
+          // fits on one line is dropped by the two-line rule below instead.
+          if (node.textContent.trim().length < 25) continue;
+          // A ribbon rank, a button label and a price pill are labels, not
+          // reading text. They are MEANT to be short and they wrap happily; the
+          // ribbon in particular is a two-part header whose left half is always
+          // narrow on a phone. Flagging them buried the one finding that mattered
+          // under eight that did not.
+          if (node.parentElement.closest('.product-ribbon, .cta-btn, .dl-btn, .price, .pricenote, .product-price, .kit-check')) continue;
+          const r = document.createRange();
+          r.selectNodeContents(node);
+          const lines = [...r.getClientRects()].filter(x => x.width > 0 && x.height > 0);
+          if (lines.length < 2) continue;              // one line, nothing to judge
+          const widest = Math.max(...lines.map(x => x.width));
+          if (widest < MIN_LINE) {
+            out.push('text squeezed to ' + Math.round(widest) + 'px in .' +
+                     (String(card.className).split(' ')[0] || card.tagName) +
+                     ' - "' + node.textContent.trim().slice(0, 32) + '..."');
+            break;                                     // one report per card is enough
+          }
+        }
+      }
       return [...new Set(out)];
     });
     await p.close();

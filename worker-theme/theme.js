@@ -485,7 +485,13 @@ a{color:var(--amber-deep)}
    rule exists. The .product-image-wrap line above is fine on one class only
    because its own base rule is one class too. */
 .pgp-prod-img:not(:has(img)),.pgp-prod .pgp-prod-img:not(:has(img)){display:none}
-.product-image-wrap{float:left;width:240px;max-width:38%;margin:0 24px 18px 0;aspect-ratio:1;background:var(--cream-deep);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+/* White, not --cream-deep. Supplier product shots are usually transparent
+   PNGs with the product on a third of the canvas, so a tinted well shows
+   through as a coloured square around a small product - which is what the
+   live hermit crab cards looked like. object-fit:cover is already filling
+   the well; the padding is inside the file and no CSS can grow the product.
+   On white the same shot reads as a product sitting on the card. */
+.product-image-wrap{float:left;width:240px;max-width:38%;margin:0 24px 18px 0;aspect-ratio:1;background:#fff;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:14px}
 /* A CONTAINER query, not a media query. Twelve of these cards sit two-up inside
    a .pgp-grid--2, so on a 1280px desktop the card itself is about 320px wide
    while the window is not narrow at all. A viewport rule left a 240px photo
@@ -510,7 +516,13 @@ a{color:var(--amber-deep)}
   .product-content .product-price .dollar{display:block}
   .product-content .product-price .disclaimer{display:block;margin-top:3px}
 }
-.product-image-wrap img{width:100%;height:100%;object-fit:cover}
+/* contain, not cover. Supplier photos are every shape: a tall salt bucket, a
+   wide multi-panel box shot, a transparent PNG with the product on a third
+   of the canvas. cover filled the square by cropping, which sliced the side
+   panel off the saltwater test kit and left a strip of unreadable packaging
+   text down the edge. A product card must never crop the product. contain on
+   white shows the whole thing, centered, at the largest size that fits. */
+.product-image-wrap img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border-radius:0;margin:0;box-shadow:none}
 .product-image-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:13px;text-align:center;padding:16px;font-style:italic}
 .product-content h2.product-title,.product-content .product-title{font-family:'Instrument Serif',Georgia,serif;font-size:24px;line-height:1.25;margin:0 0 8px}
 .product-price{display:flex;align-items:baseline;gap:10px;margin-bottom:14px}

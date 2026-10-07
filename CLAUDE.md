@@ -285,6 +285,28 @@ the weight exactly as you would anywhere else.
 well, a placeholder, a one-line stub — none of them exercise the layout. Both of the
 image bugs in this file came from looking at the empty state and assuming.
 
+### The two wells are the same component now
+
+The owner looked at a shopping list full of photos and said the review cards above
+should match it, which was right. `.product-image-wrap` now carries the identical
+rule to `.pgp-prod-img`: a square white well with 14px padding, and the image
+`max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain`.
+
+**`width:auto` is the part that matters.** The image is bounded by the well, never
+stretched to it, so a tall salt bucket and a wide multi-panel box both sit whole and
+centered at their own proportions. `object-fit:cover` was the alternative and it
+cropped: it sliced the side panel off the saltwater test kit and left a strip of
+unreadable packaging text down the edge. **A product card must never crop the
+product.**
+
+Two things about the empty space around a photo, since both came up:
+
+- The well was `--cream-deep`, and supplier shots are usually **transparent PNGs**
+  with the product on a third of the canvas, so the tint showed through as a coloured
+  square around a small product. White reads as the product sitting on the card.
+- No CSS can make the product bigger. That padding is inside the file. `contain` shows
+  it at the largest size that fits and that is the whole of what is available.
+
 **A product card only looks like the Stella & Chewy's one when it has a photo
 in the well.** Same component, same CSS — the two-column layout is the image
 column plus the content column. With no photo it is a clean full-width card,
@@ -563,6 +585,28 @@ id, so it broke with a stack trace every time it was run from anywhere else:
 ```
 PGP_SRC=C:\Users\Xvick\...\petgotopro-website\src node layout-check.mjs
 ```
+
+**It fills every empty photo well with a stand-in image before measuring.** Without
+that it can never see anything about a filled card: the post files here have empty
+wells, an empty well is `display:none`, and a collapsed well floats nothing. The
+owner's live pages have photos in. "Render a component with its content actually in"
+applies to the checker too.
+
+**It measures LINE BOXES, with a Range, not elements.** A block beside a float keeps
+its full width -- only its lines shorten -- so `getBoundingClientRect` reports the
+whole card and sees nothing. It walks **text nodes**, because the body copy in a
+`.product` card is a bare text node sitting in `.product-content` with no `<p>` around
+it; an element selector found nothing and the check passed silently. Labels are
+skipped (`.product-ribbon`, `.cta-btn`, `.price`, `.product-price`, `.kit-check`) --
+they are short by design, and flagging them buried the one finding that mattered
+under eight that did not.
+
+**Honest limit: it was NOT shown to catch the hermit crab bug.** Rendering the
+saltwater post against the exact theme that shipped that bug gives a 186px title and
+283px body -- not squeezed -- so something about the live page is not reproduced from
+the repo files alone. The check does catch a real 130px squeeze in the slow feeder
+review at 900px. Treat it as one more net, not as proof that class of bug cannot
+reach the site.
 
 One thing it deliberately does not flag: `.pgp-ig-frame` and `.table-wrap` are
 **meant** to scroll sideways on a phone. A detailed cross-section diagram squeezed
