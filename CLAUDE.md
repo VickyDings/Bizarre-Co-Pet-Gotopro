@@ -229,13 +229,31 @@ says "Check price on Amazon" and fits it on one line; in a `.pgp-prod` grid cell
 same label wraps to two. Grid cells say "Check price". The Tiki review has both and
 is the example.
 
-**Hiding a grid item does not remove its track.** `.product-body` is a
-`240px 1fr` grid. Taking the empty image well out with `display:none` left the
-240px column behind, so the text rendered in the narrow one with 394px of dead
-space beside it — a card crushed to a third of its width. `.product-body` now
-drops to a single column when there is no `img` in the well. Check what happens
-to the *siblings* whenever something is hidden inside a grid or flex parent;
-hiding it cleanly is only half the test.
+**The review card's photo floats; it is not a grid column.** `.product-body` was a
+`240px 1fr` grid, which is fine until a card actually has a photo in it. Then the
+image track is 240px tall against a content column running 750px, so the card gets
+about **500px of dead white down its left side and comes out 40% taller** than the
+same card with no photo, because the text has to squeeze into 398px.
+
+Nobody had ever seen that. **Twenty cards across the Tiki and Stella and Chewy's
+reviews and not one has a photo in its well**, so the two-column layout had only
+ever been looked at empty — including by whoever wrote the note above saying a card
+"only looks like the Stella & Chewy's one when it has a photo in the well". It does
+not; that card has no photo either.
+
+So `.product-body` is `display:block` with `.product-image-wrap` floated 240px left,
+and the title and opening paragraphs sit beside the photo while the rest flows
+underneath at full width. `.pros-cons` already carries `clear:both` from the theme,
+so the lists drop below the photo by themselves. Under 620px the float is dropped and
+the photo goes full width. The card goes 996px to 875px, and the empty case is
+untouched at 713px.
+
+The old `:not(:has(.product-image-wrap img))` single-column rule is harmless now and
+stays; `::after{clear:both}` on `.product-body` contains the float.
+
+**Render a component with its content actually in before trusting it.** An empty
+well, a placeholder, a one-line stub — none of them exercise the layout. Both of the
+image bugs in this file came from looking at the empty state and assuming.
 
 **A product card only looks like the Stella & Chewy's one when it has a photo
 in the well.** Same component, same CSS — the two-column layout is the image

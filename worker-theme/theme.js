@@ -456,7 +456,18 @@ a{color:var(--amber-deep)}
 .product:hover{box-shadow:var(--shadow-med)}
 .product-ribbon{display:flex;align-items:center;justify-content:space-between;padding:12px 22px;background:var(--ink);color:var(--cream);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:600}
 .product-ribbon .star{color:var(--amber)}
-.product-body{display:grid;grid-template-columns:240px 1fr;gap:24px;padding:26px}
+/* The photo FLOATS, it does not take a grid column. As a two-column grid the
+   image track was 240px tall against a content column running 750px, so a
+   review card with a real photo in it had around 500px of dead white down its
+   left side and was 40 percent TALLER than the same card with no photo -
+   the text had to squeeze into 398px. Nobody had seen that: twenty cards
+   across the Tiki and Stella and Chewy's reviews and not one of them has ever
+   had a photo in the well, so the two-column layout had only ever been looked
+   at empty. Floated, the title and opening paragraphs sit beside the photo and
+   the rest flows underneath at full width. .pros-cons already carries
+   clear:both from the theme, so the lists drop below the photo on their own. */
+.product-body{display:block;padding:26px}
+.product-body::after{content:"";display:table;clear:both}
 /* Hiding the empty well takes it out of the grid, but the 240px track stays,
    so the text landed in the narrow column with 394px of dead space beside it.
    No photo means one column, full width. */
@@ -474,7 +485,8 @@ a{color:var(--amber-deep)}
    rule exists. The .product-image-wrap line above is fine on one class only
    because its own base rule is one class too. */
 .pgp-prod-img:not(:has(img)),.pgp-prod .pgp-prod-img:not(:has(img)){display:none}
-.product-image-wrap{aspect-ratio:1;background:var(--cream-deep);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.product-image-wrap{float:left;width:240px;margin:0 24px 18px 0;aspect-ratio:1;background:var(--cream-deep);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+@media(max-width:620px){.product-image-wrap{float:none;width:100%;margin:0 0 18px}}
 .product-image-wrap img{width:100%;height:100%;object-fit:cover}
 .product-image-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:13px;text-align:center;padding:16px;font-style:italic}
 .product-content h2.product-title,.product-content .product-title{font-family:'Instrument Serif',Georgia,serif;font-size:24px;line-height:1.25;margin:0 0 8px}
