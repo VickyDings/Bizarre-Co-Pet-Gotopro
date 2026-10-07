@@ -130,7 +130,12 @@ def phrase_allows(text, m):
 
 MIDCAP = re.compile(r'\b[a-z]+[A-Z][a-zA-Z]*\b')
 MIDCAP_OK = {'pH', 'pHs', 'mL', 'dKH', 'dGH', 'kH', 'gH', 'iPettie',
-             'PetSafe', 'PetFusion', 'YouTube', 'ZooMed', 'ExoTerra'}
+             'PetSafe', 'PetFusion', 'YouTube', 'ZooMed', 'ExoTerra',
+             # CJ feed field names, quoted verbatim when reporting a fault to
+             # an advertiser. Renaming them to look like prose would make the
+             # report wrong.
+             'imageLink', 'additionalImageLink', 'shoppingProducts',
+             'clickUrl', 'linkCode', 'cjsku'}
 
 LEXICAL_PAT = re.compile(
     r'\b(' + '|'.join(re.escape(k) for k in
