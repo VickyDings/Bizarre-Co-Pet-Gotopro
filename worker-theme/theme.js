@@ -82,19 +82,23 @@ export const SECTION_CSS = `
 .pgp-section .pgp-cell p:last-child,.pgp-grid .pgp-cell p:last-child{margin-bottom:0}
 .pgp-section .pgp-cell ul,.pgp-grid .pgp-cell ul{margin:0 0 12px 22px}
 .pgp-section .pgp-cell li,.pgp-grid .pgp-cell li{font-size:15.5px;line-height:1.6;margin-bottom:7px}
-/* Unfilled image placeholders are invisible to visitors — they only show in the
-   admin editor, so a box you forgot to fill never renders as a broken image.
-   The caption and the product card's photo well collapse with them, so an
-   unfilled box leaves no empty furniture behind either. */
-.pgp-cell-ph{display:none}
+/* This half of the stylesheet is the half the ADMIN EDITOR loads - admin.js
+   imports IMAGE_CSS and SECTION_CSS and never PUBLIC_CSS. So an unfilled photo
+   well is dressed as a drop target here, and the rule that hides it from a
+   reader lives in the public-only block instead. It used to be the other way
+   round by accident: ".pgp-cell-ph{display:none}" sat in this shared half with
+   a comment saying placeholders "only show in the admin editor", which they
+   never did - the owner had no target to click on a .pgp-prod card at all. */
+.pgp-cell-ph{display:flex;width:100%;height:100%;align-items:center;justify-content:center;
+  text-align:center;color:var(--amber);font-size:13px;font-style:italic;padding:14px;
+  border:2px dashed #E5E0EE;border-radius:8px;line-height:1.45}
 .pgp-cell:not(:has(img))>.pgp-cap{display:none}
-/* Scoped two classes deep ON PURPOSE. The base rule below is
-   ".pgp-prod .pgp-prod-img{...display:flex}" - two classes and later in the
-   file - so a one-class collapse rule loses the cascade and every unfilled
-   well paints a blank white square on the live page. Same lesson as
-   .product-image-wrap: a visible drop target in the editor, nothing at all
-   for the reader. Check the specificity, not just that the rule exists. */
-.pgp-prod-img:not(:has(img)),.pgp-prod .pgp-prod-img:not(:has(img)){display:none}
+/* An EMPTY well is a short strip, not a square. The well is aspect-ratio:1 so a
+   filled one stays square, but a guide with a nine-card shopping list would
+   otherwise show the owner twelve empty squares to scroll past in the editor.
+   Two classes deep again, for the same reason as the collapse rule - the base
+   ".pgp-prod .pgp-prod-img" would win a one-class override. */
+.pgp-prod .pgp-prod-img:not(:has(img)){aspect-ratio:auto;min-height:96px;padding:10px}
 .pgp-section .pgp-cap,.pgp-grid .pgp-cap{display:block;font-size:13px;color:#6E6480;font-style:italic;text-align:center;margin-top:9px;line-height:1.5}
 
 /* Compact product card — the full .product card is too wide for a column */
@@ -463,6 +467,13 @@ a{color:var(--amber-deep)}
    rule sits in the public-only block, so the editor still shows the well as
    a drop target while a reader never sees an empty square or the text. */
 .product-image-wrap:not(:has(img)){display:none}
+/* The same pair for the .pgp-prod well, and it has to be written twice over.
+   The base rule is ".pgp-prod .pgp-prod-img{...display:flex}" - two classes -
+   so the one-class form at (0,1,1) loses the cascade and every unfilled well
+   paints a blank white square. Check the specificity, not just that a collapse
+   rule exists. The .product-image-wrap line above is fine on one class only
+   because its own base rule is one class too. */
+.pgp-prod-img:not(:has(img)),.pgp-prod .pgp-prod-img:not(:has(img)){display:none}
 .product-image-wrap{aspect-ratio:1;background:var(--cream-deep);border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .product-image-wrap img{width:100%;height:100%;object-fit:cover}
 .product-image-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--amber);font-size:13px;text-align:center;padding:16px;font-style:italic}

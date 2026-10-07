@@ -203,25 +203,44 @@ unlike an old one, this is almost always why.
 
 **An unfilled well must collapse, not print its own instructions.** The Tiki
 review shipped ten wells reading *"Drop your product photo here"* with nothing
-hiding them — that text would have gone out to every visitor. `.pgp-prod-img`
-already had `:not(:has(img)){display:none}`; `.product-image-wrap` now does too,
-and the rule sits in the **public-only** part of `PUBLIC_CSS` so the editor still
-shows the well as a drop target. Any new card component needs the same pair:
-a visible target in the editor, nothing at all on the page.
+hiding them — that text would have gone out to every visitor. `.product-image-wrap` collapses in the
+**public-only** part of `PUBLIC_CSS` so the editor still shows the well as a drop
+target. Any new card component needs the same pair: a visible target in the editor,
+nothing at all on the page. `.pgp-prod-img` looked like it already had this and did
+not -- see the section below, which is the general rule.
 
-**A collapse rule has to out-specify the rule it is fighting.** `.pgp-prod-img` had
-exactly that pair and the well still painted a blank white square on every card,
-because the base rule is written `.pgp-prod .pgp-prod-img{...display:flex}` -- two
-classes -- while the collapse was `.pgp-prod-img:not(:has(img))`, which is one class
-plus a `:not(:has(img))` worth (0,1,1). (0,2,0) beats (0,1,1) and it came later in the
-file as well, so `display:none` never applied. It is now written both ways in one
-selector list, so it wins whatever the base rule is scoped to.
+### Which half of theme.js a rule goes in decides who sees it
 
-`.product-image-wrap` is fine because *its* base rule is a single class. So the pair
-existing is not the test -- compare the two selectors. The symptom is a well that is
-empty rather than absent: `.pgp-cell-ph` is `display:none` on its own, so the
-placeholder text correctly disappears and the empty box it was sitting in does not,
-which reads as a deliberate white square rather than as a bug.
+**`admin.js` imports `IMAGE_CSS` and `SECTION_CSS`. It never imports `PUBLIC_CSS`.**
+That one line is the whole mechanism behind "a visible target in the editor, nothing
+at all on the page", and getting a rule into the wrong half breaks one side or the
+other silently:
+
+| Put it in | Editor | Public page |
+|---|---|---|
+| `SECTION_CSS` / `IMAGE_CSS` | yes | yes |
+| the `PUBLIC_CSS` block itself | no | yes |
+
+So an unfilled `.pgp-prod-img` is **dressed as a drop target in `SECTION_CSS`** --
+dashed border, the placeholder text, and a short `min-height:96px` strip instead of
+the square a filled one gets -- and **hidden in the `PUBLIC_CSS` block**. A filled
+well is untouched by any of it and stays square in both.
+
+It was the other way round by accident for a long time. `.pgp-cell-ph{display:none}`
+sat in the shared half under a comment claiming placeholders "only show in the admin
+editor", which they never did -- there was no drop target on a `.pgp-prod` card at
+all, in the editor or anywhere, which is why the owner went looking for the editor's
+own Product button instead. **Read where a rule lives, not what its comment says it
+does.**
+
+**A collapse rule also has to out-specify the rule it is fighting.** The base rule is
+`.pgp-prod .pgp-prod-img{...display:flex}` -- two classes -- so a collapse written
+`.pgp-prod-img:not(:has(img))` is (0,1,1) against (0,2,0) and loses, whichever order
+they appear in. Every unfilled well painted a blank white square on the live page for
+exactly that reason. Both forms are in the selector list now. `.product-image-wrap` was
+never affected because *its* base rule is a single class, so the pair existing is not
+the test -- compare the two selectors. The `min-height` override for an empty well
+needs the same two-class scope for the same reason.
 
 **Buttons across a row of product cards line up** via `.pgp-grid:has(.pgp-prod)
 {align-items:stretch}` and `.pgp-prod .cta-btn{margin-top:auto}`. `.pgp-grid` is
