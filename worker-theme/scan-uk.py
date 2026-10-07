@@ -135,7 +135,10 @@ MIDCAP_OK = {'pH', 'pHs', 'mL', 'dKH', 'dGH', 'kH', 'gH', 'iPettie',
              # an advertiser. Renaming them to look like prose would make the
              # report wrong.
              'imageLink', 'additionalImageLink', 'shoppingProducts',
-             'clickUrl', 'linkCode', 'cjsku'}
+             'clickUrl', 'linkCode', 'cjsku',
+             # tooling and API names quoted in notes and handoffs
+             'deviceScaleFactor', 'aspectRatio', 'objectFit', 'maxWidth',
+             'minHeight', 'getBoundingClientRect', 'naturalWidth'}
 
 LEXICAL_PAT = re.compile(
     r'\b(' + '|'.join(re.escape(k) for k in
