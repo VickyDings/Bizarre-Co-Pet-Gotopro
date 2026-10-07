@@ -113,6 +113,21 @@ KEEP_AS_IS = {'greyhound', 'greyhounds', 'jumper', 'jumpers', 'hob',
               'pavement', 'pepper', 'garden', 'post', 'plaster', 'torch',
               'rocket', 'holiday', 'jab', 'jabs', 'mince', 'swede',
               'frise'}
+# Some words are only British on their own. "Cooker" means a stove and is a
+# real hit; "slow cooker", "pressure cooker" and "rice cooker" are the ordinary
+# US names for those appliances, and the cockatiel guide's PTFE list names all
+# three. A whole-word exception would hide the real one, so these are matched
+# with the word in front of them.
+PHRASE_OK = {'cooker': ('slow', 'pressure', 'rice', 'egg', 'multi')}
+
+def phrase_allows(text, m):
+    """True when the word in front of this match makes it correct US English."""
+    prev = PHRASE_OK.get(m.group(0).lower())
+    if not prev:
+        return False
+    before = text[max(0, m.start() - 24):m.start()].rstrip('- ')
+    return before.lower().endswith(prev)
+
 MIDCAP = re.compile(r'\b[a-z]+[A-Z][a-zA-Z]*\b')
 MIDCAP_OK = {'pH', 'pHs', 'mL', 'dKH', 'dGH', 'kH', 'gH', 'iPettie',
              'PetSafe', 'PetFusion', 'YouTube', 'ZooMed', 'ExoTerra'}
@@ -125,6 +140,12 @@ LEXICAL_PAT = re.compile(
 
 def visible_text(raw):
     """Everything a visitor reads, and nothing a browser executes."""
+    # HTML comments first. The tag strip below is "<[^>]*>", which stops at the
+    # first ">" inside a comment, so a note mentioning <style> or a > character
+    # leaks the rest of itself into the body text - that is how the parakeet
+    # guide's paste-instructions comment reported applyAmazonTag as a mid-word
+    # capital. A comment is not something a visitor reads, so it goes entirely.
+    raw = re.sub(r'(?s)<!--.*?-->', ' ', raw)
     raw = re.sub(r'(?is)<script\b.*?</script>', ' ', raw)
     raw = re.sub(r'(?is)<style\b.*?</style>', ' ', raw)
     # alt, title and aria-label are all read out to somebody, so they count
@@ -142,7 +163,7 @@ def check(text):
     hits = collections.Counter()
     for m in LEXICAL_PAT.finditer(text):
         w = m.group(0)
-        if w.lower() in KEEP_AS_IS:
+        if w.lower() in KEEP_AS_IS or phrase_allows(text, m):
             continue
         hits['[word]  %s → %s' % (w, LEXICAL[w.lower()])] += 1
     for m in ISE_SHAPE.finditer(text):

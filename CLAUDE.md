@@ -45,6 +45,17 @@ Two false positives worth knowing: **HOB** is a hang-on-back filter, not a stove
 and **pavement** is correct US English for a paved surface. Keep **greyhound comb**
 and **Jumper** (the jumping spider) as they are.
 
+Two more came out of the cockatiel and parakeet guides, and each needed a different
+kind of fix rather than another word on a list:
+
+- **"Slow cooker" is correct US English**, while a bare "cooker" really does mean a
+  stove. A whole-word exception would have hidden the real one, so `PHRASE_OK` checks
+  the word in front of the match -- slow, pressure, rice, egg, multi.
+- **HTML comments are not visitor-readable** and are now stripped first. The tag
+  strip is `<[^>]*>`, which stops at the first `>` inside a comment, so the parakeet
+  guide's paste-instructions note leaked itself into the body text the moment it
+  mentioned `<style>` -- and reported `applyAmazonTag` as a mid-word capital.
+
 This applies to the care-sheet HTML too, since that text ends up baked into a PNG
 where it cannot be corrected later without a re-render — the dog grooming sheet had
 to be re-rendered for exactly this: it read "Bath a dog you have not brushed out"
@@ -203,7 +214,20 @@ The heading stays the numbered plain-English item, so the list still reads as a
 checklist, and the thing being bought is still named.
 
 `.kit-section` / `.kit-item` are not deprecated, but nothing new should use them for a
-shopping list.
+shopping list. The chew, cockatiel and Tiki guides are all converted. Cockatiel's
+eleven items run 3-3-3-2; a trailing short row reads fine, so do not pad a list to
+reach a multiple of three.
+
+**Two things carry over from the old markup and are worth checking after a
+conversion.** Cockatiel kept its prices at the end of each description, so they move
+to their own `.price` line and come off the paragraph. Tiki has no prices anywhere,
+and these are Amazon *search* URLs, so the card ships with no price line at all
+rather than an invented range -- the CTA does that job.
+
+**The button label depends on the component, not the post.** A wide `.product` card
+says "Check price on Amazon" and fits it on one line; in a `.pgp-prod` grid cell the
+same label wraps to two. Grid cells say "Check price". The Tiki review has both and
+is the example.
 
 **Hiding a grid item does not remove its track.** `.product-body` is a
 `240px 1fr` grid. Taking the empty image well out with `display:none` left the
