@@ -1,21 +1,24 @@
 """Builds a browsable HTML catalog from cj-pet-products.json.
 
-Usage: python3 -I make_catalog.py <products.json> <out.html> [CJ_WEBSITE_ID]
+Usage: python3 -I make_catalog.py <products.json> <out.html>
 
-CJ's product feed hands back the merchant's own URL, which earns nothing. The
-tracked form is the automated deep link
-  https://www.anrdoezrs.net/links/<WEBSITE_ID>/type/dlg/<destination>
-so passing the website ID (PID) rewrites every link in one pass.
+Each product links to its `clickUrl` — the tracked link CJ generates, requested
+per product by fetch.mjs via the schema's linkCode(pid:) field.
+
+Do not hand-build the wrapper. The documented-looking form
+  https://www.anrdoezrs.net/links/<PID>/type/dlg/<destination>
+was tried and returns ERR_TOO_MANY_REDIRECTS, encoded or raw. A product without
+a clickUrl falls back to the plain merchant URL, which earns nothing, so the page
+counts those and warns.
 """
 import json, sys, html, collections, urllib.parse as up
 
 SRC, OUT = sys.argv[1], sys.argv[2]
-PID = sys.argv[3] if len(sys.argv) > 3 else None
 d = json.load(open(SRC))
+untracked = sum(1 for x in d if not x.get('clickUrl'))
 
-def track(url):
-    if not PID: return url
-    return f"https://www.anrdoezrs.net/links/{PID}/type/dlg/{up.quote(url, safe='')}"
+def track(x):
+    return x.get('clickUrl') or x['link']
 
 ORDER = ['Dogs', 'Cats', 'Small Pets', 'Birds', 'Reptiles', 'Aquatics',
          'Poultry', 'Horses', 'General pet', 'Books']
@@ -34,10 +37,11 @@ for sp in ORDER:
     rows = [x for x in d if x['species'] == sp]
     if rows: groups[sp] = rows
 
-banner = ('' if PID else
-  '<p class="warn">⚠️ Links below are the raw merchant URLs from the feed — they '
-  'pay nothing. Re-run with your CJ Website ID to wrap all of them as tracked '
-  'deep links.</p>')
+banner = ('' if not untracked else
+  f'<p class="warn">⚠️ {untracked} of {len(d)} products have no CJ tracked link, '
+  'so they fall back to the plain merchant URL and earn nothing. Re-run '
+  '<code>fetch.mjs</code> with <code>CJ_PID</code> set to pick up the tracked '
+  'links CJ generates.</p>')
 
 parts = [f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -96,11 +100,11 @@ for sp, rows in groups.items():
           f'<div class="card">{img}<p class="adv">{html.escape(x["advertiser"])}</p>'
           f'<p class="nm">{html.escape(x["title"][:110])}</p>'
           f'<p class="pr">{money(x)}</p>'
-          f'<a class="go" href="{html.escape(track(x["link"]))}" target="_blank" '
+          f'<a class="go" href="{html.escape(track(x))}" target="_blank" '
           f'rel="nofollow noopener sponsored">View product</a>{tags}</div>')
     parts.append('</div></section>')
 
 parts.append('</div></body></html>')
 open(OUT, 'w').write('\n'.join(parts))
 print(f"wrote {OUT}  ({len(open(OUT).read())//1024} KB, {len(d)} products, "
-      f"{len(groups)} groups, links {'TRACKED' if PID else 'UNTRACKED'})")
+      f"{len(groups)} groups, {len(d)-untracked} tracked / {untracked} untracked)")

@@ -82,13 +82,17 @@ for p in d:
                 'price': s(p.get('price')), 'salePrice': s(p.get('salePrice')),
                 'availability': s(p.get('availability')), 'category': s(p.get('category')),
                 'image': s(p.get('image')), 'link': s(p.get('link')),
+                'clickUrl': s(p.get('clickUrl')),
                 'description': s(p.get('description'))[:600]})
 
 out.sort(key=lambda x: (x['species'], x['advertiser'], x['title']))
 json.dump(out, open(OUT, 'w'), indent=1)
 
 print(f"{len(out)} pet products  (from {len(d)} raw)")
-print(f"matched by: {dict(collections.Counter(x['matched'] for x in out))}\n")
+print(f"matched by: {dict(collections.Counter(x['matched'] for x in out))}")
+tracked = sum(1 for x in out if x['clickUrl'])
+print(f"with a CJ tracked clickUrl: {tracked}/{len(out)}"
+      + ("  <-- re-run fetch.mjs with CJ_PID set" if tracked < len(out) else "") + "\n")
 for sp, n in collections.Counter(x['species'] for x in out).most_common():
     also = sum(1 for x in out if sp in x['serves'] and x['species'] != sp)
     adv = collections.Counter(x['advertiser'] for x in out if x['species'] == sp).most_common(3)

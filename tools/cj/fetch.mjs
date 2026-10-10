@@ -9,6 +9,9 @@ import fs from 'node:fs';
 const TOKEN = process.env.CJ_TOKEN;
 const CID   = process.env.CJ_CID;  // CJ publisher company ID — kept out of this
                                    // file because the repo is public.
+const PID   = process.env.CJ_PID || '5930903';  // CJ Website ID. Used to ask CJ
+                                   // for its own tracked clickUrl per product —
+                                   // hand-built anrdoezrs wrappers do not work.
 const API   = 'https://ads.api.cj.com/query';
 
 const PARTNERS = {
@@ -78,6 +81,32 @@ for (const [n, subs] of Object.entries(WANT_OBJECT)) {
   const ok = subs.filter(s => sub.fields.some(x => x.name === s));
   sel.push(ok.length ? `${n} { ${ok.join(' ')} }` : n);
 }
+// --- CJ's own tracked link, if this schema offers one -----------------------
+// A hand-built https://www.anrdoezrs.net/links/<pid>/type/dlg/<url> wrapper
+// gives ERR_TOO_MANY_REDIRECTS, so take the link CJ generates instead of
+// constructing one. Field and argument names are read, not assumed.
+let linkSel = '', linkField = null, linkUrlKeys = [];
+{
+  const withArgs = (await gql(`{ __type(name:"${itemTypeName}") { fields { name args { name } type { kind name ofType { kind name ofType { kind name } } } } } }`)).__type;
+  const cand = withArgs.fields.find(f => /^link_?code$/i.test(f.name))
+            || withArgs.fields.find(f => f.args.length && /link|click|track/i.test(f.name));
+  if (!cand) {
+    console.log('! no linkCode field on this schema — links will be untracked');
+  } else {
+    const argName = (cand.args.find(a => /^pid$|website/i.test(a.name)) || cand.args[0] || {}).name;
+    const sub = (await gql(`{ __type(name:"${unwrap(cand.type)}") { fields { name } } }`)).__type;
+    linkUrlKeys = (sub?.fields || []).map(f => f.name).filter(n => /url|link/i.test(n));
+    if (argName && linkUrlKeys.length) {
+      linkField = cand.name;
+      linkSel = `${cand.name}(${argName}:"${PID}") { ${linkUrlKeys.join(' ')} }`;
+      console.log(`tracked links via: ${linkSel}`);
+    } else {
+      console.log(`! ${cand.name} found but unusable (arg=${argName}, urls=${linkUrlKeys})`);
+    }
+  }
+}
+if (linkSel) sel.push(linkSel);
+
 const hasTotal = resultType.fields.some(f => f.name === 'totalCount');
 console.log(`asking for: ${sel.join(', ')}\n`);
 
@@ -104,7 +133,9 @@ for (const [pid, name] of Object.entries(PARTNERS)) {
           price:num(p.price)||null, salePrice:num(p.salePrice)||null,
           brand:p.brand||null, availability:p.availability||null,
           category:p.googleProductCategory?.name||p.productType||null,
-          image:p.imageLink||null, link:p.link });
+          image:p.imageLink||null, link:p.link,
+          clickUrl: (linkField && p[linkField])
+            ? (linkUrlKeys.map(k => p[linkField][k]).find(Boolean) || null) : null });
         kept++;
       }
       offset += list.length;
@@ -118,6 +149,9 @@ for (const [pid, name] of Object.entries(PARTNERS)) {
 
 out.sort((a,b)=>a.advertiser.localeCompare(b.advertiser)||a.title.localeCompare(b.title));
 fs.writeFileSync('cj-products.json', JSON.stringify(out,null,2));
+const tracked = out.filter(o => o.clickUrl).length;
+console.log(`\n${tracked} of ${out.length} carry a CJ tracked clickUrl` +
+            (tracked ? `\nexample: ${out.find(o=>o.clickUrl).clickUrl.slice(0,120)}` : ''));
 
 const esc = s => String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 fs.writeFileSync('cj-products.html', `<!doctype html><meta charset="utf-8"><title>CJ pet products</title>
@@ -137,7 +171,7 @@ ${p.image?`<img loading="lazy" src="${esc(p.image)}" alt="">`:''}<div class="b">
 <div class="m">${esc(p.advertiser)}</div><div class="t">${esc(p.title)}</div>
 ${p.price?`<div class="p">${esc(p.salePrice||p.price)}</div>`:''}
 <div class="d">${esc(p.description.slice(0,160))}</div>
-<a href="${esc(p.link)}" target="_blank" rel="nofollow noopener sponsored">Open product</a></div></div>`).join('')}</div>
+<a href="${esc(p.clickUrl||p.link)}" target="_blank" rel="nofollow noopener sponsored">Open product</a></div></div>`).join('')}</div>
 <script>function f(){const v=q.value.toLowerCase();for(const c of g.children)c.style.display=c.dataset.s.includes(v)?'':'none'}</script>`);
 
 console.log(`\n${out.length} pet products -> cj-products.json + cj-products.html`);

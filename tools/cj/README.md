@@ -64,43 +64,49 @@ python3 -I tools/cj/make_catalog.py data/cj/pet-products.json data/cj/catalog.ht
 
 Open `data/cj/catalog.html` to browse all 940 grouped by species.
 
-## 4. Tracked links
+## 4. Tracked links — ask CJ, do not build them
 
-The feed returns the merchant's own URL (`www.aosom.com/item/...`), which pays no
-commission. The tracked form is CJ's automated deep link:
+**Do not hand-build the wrapper.** This form looks right and is widely repeated:
 
 ```
-https://www.anrdoezrs.net/links/5930903/type/dlg/<url-encoded destination>
+https://www.anrdoezrs.net/links/<PID>/type/dlg/<destination>
+```
+
+It was tried with the real Website ID, both URL-encoded and raw, and returns
+`ERR_TOO_MANY_REDIRECTS`. The documented programmatic form is
+`anrdoezrs.net/click-<PID>-<AID>?url=...`, which needs a per-advertiser link ID
+(AID) the product feed never returns.
+
+So `fetch.mjs` asks CJ for the link instead. The product schema exposes
+`linkCode(pid:)` returning a `clickUrl`, which is CJ's own correctly-formed
+tracked link for that exact product. The script introspects the field and
+argument names rather than assuming them, and skips the field with a warning if
+a schema does not have it.
+
+```
+set CJ_TOKEN=your_personal_access_token
+set CJ_CID=your_cj_company_id
+set CJ_PID=5930903
+node tools/cj/fetch.mjs
 ```
 
 `5930903` is the **CJ Website ID (PID)** for pet-gotopro.com — not the company
-ID, which is a different number and stays out of this repo. The PID is safe here
-because it appears in every affiliate link on the live site anyway. The API does
-not return it; it is read off CJ -> Account -> Websites.
+ID, which is a different number and stays out of this repo. The PID is fine here
+because it appears in every affiliate link on the live site anyway.
 
-Pass it as the third argument and all 940 links are rewritten:
-
-```
-python3 -I tools/cj/make_catalog.py data/cj/pet-products.json data/cj/catalog.html 5930903
-```
-
-Without it the catalog falls back to raw URLs and prints a warning banner.
-
-### Unverified: encoded vs raw destination, per advertiser
-
-CJ accepts the destination appended either URL-encoded or plain. We encode,
-because most of these URLs carry query strings (`?sku=`, `?variant=`,
-`?utm_source=cj`) whose `?` and `&` would otherwise be read as the wrapper's own
-parameters. **This has not been click-tested.** Separately, `type/dlg` only
-deep-links for advertisers who have enabled automated deep linking — for the
-others it lands on the homepage and a per-product link from CJ's link search is
-needed instead.
-
-`data/cj/link-test.html` pins this down: both forms plus an untracked control for
-each of the five advertisers, with the steps to read the result. Worth doing once
-before any of these links ship in a guide.
+The run prints how many products came back with a `clickUrl`. `classify.py` and
+`make_catalog.py` carry it through, and a product without one falls back to the
+plain merchant URL and is counted in a warning banner on the catalog page.
 
 Links are written `rel="nofollow noopener sponsored"`.
+
+### Still unverified
+
+Nobody has clicked a `clickUrl` yet. Two things to confirm on the first run:
+that it lands on the right product page rather than the advertiser's homepage,
+and that the click shows up in CJ -> Reports -> Clicks within the hour. Deep
+linking also has to be enabled per advertiser, so check one product from each of
+the five before any of these links ship in a guide.
 
 ## Note on the two affiliate programs
 
