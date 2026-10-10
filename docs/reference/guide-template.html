@@ -149,7 +149,13 @@ SECONDARY KEYWORDS: <6-8 comma-separated long-tail phrases>
 </div>
 
 <!-- DOWNLOAD CARD — always preceded by an <h3> repeating its title, and always
-     followed by a paw divider. Two per guide: care sheet, then checklist. -->
+     followed by a paw divider. Two per guide: care sheet, then checklist.
+
+     NO .dl-btn. The thumbnail is the download: clicking it opens the platform's
+     own lightbox, which already carries Zoom in / Download free / Close. A
+     second <a class="dl-btn"> pointing at /download/<file> is redundant, and in
+     practice it 404s while the image still works, because wireDownloadCards()
+     rewires the thumbnail but not the button. Owner's call, Oct 2026. -->
 <h3><Species> Quick Care Sheet</h3>
 <div class="download-card">
   <div class="dl-thumb"><img src="/media/00" alt="<Species> Quick Care Sheet preview" class="pgp-img img-full img-center"></div>
@@ -157,7 +163,6 @@ SECONDARY KEYWORDS: <6-8 comma-separated long-tail phrases>
     <span class="dl-tag">Free download</span>
     <h3><Species> Quick Care Sheet</h3>
     <p>What is on it, as a run of specifics — one printable page for next to the enclosure.</p>
-    <a class="dl-btn" href="/download/<slug>-care-sheet.pdf">⬇ Download the care sheet</a>
     <span class="dl-note">Free to print and share. No email needed.</span>
   </div>
 </div>

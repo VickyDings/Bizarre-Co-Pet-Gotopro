@@ -42,6 +42,9 @@ notes = (h.count('Link opens your local Amazon store where available.')
          + len(re.findall(r'Ships direct from [^<.]+\.', h)))
 chk("product note wording on every card", notes == prods, f"{prods} cards, {notes} notes")
 chk("two download cards", h.count('class=' + Q + 'download-card' + Q) == 2)
+# The thumbnail IS the download -- it opens the platform lightbox, which has its
+# own Download free button. A .dl-btn alongside it 404s while the image works.
+chk("no .dl-btn (the thumbnail is the download)", 'dl-btn' not in h)
 paws = h.count('class=' + Q + 'paw-divider' + Q)
 chk("paw dividers", paws >= 3, f"{paws}")
 chk("one callout", h.count('class=' + Q + 'callout' + Q) == 1)

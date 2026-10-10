@@ -246,7 +246,13 @@ Paste-ready blocks for every combination: `docs/reference/section-layouts.html`.
 - `details.faq-item` > `summary` + `p` — native accordion, **no JavaScript**
 - `.pgp-figure` + `.pgp-img`, sizes `img-sm|md|lg|full`, align `img-left|right|center`,
   extras `img-frame`, `no-zoom`
-- `.download-card` > `.dl-thumb` + `.dl-body` > `.dl-tag` `.dl-btn` `.dl-note`
+- `.download-card` > `.dl-thumb` + `.dl-body` > `.dl-tag` `.dl-note`
+  — **no `.dl-btn`.** The thumbnail *is* the download: clicking it opens the
+  platform's lightbox, which already has Zoom in / Download free / Close. A
+  separate button 404s while the image still works, because
+  `wireDownloadCards()` rewires the thumbnail and not the button. Owner's call,
+  Oct 2026: "lets just remove the link, the image alone works fine."
+  The thumb keeps `class="no-zoom"`, matching the owner's own seed SQL.
 - Product cards: scoped `<style>` + `#xxshop` wrapper > `.gp-card` > `.gp-badge`
   (`.pick` = green) / `.gp-img` / `.gp-name` / `.gp-price` / `.gp-disc` / `.gp-onelink`
 - CTA links use `class="cta-btn"` (theme-styled), **not** `.gp-btn`
@@ -274,12 +280,13 @@ In order. Items marked *optional* appeared in one reference guide but not both.
 12. Product cards in `.pgp-section--tint`, sub = "Prices move constantly — these
     are typical ranges, not quotes."
 13. Feeding chart **by weight, not age**, then `ol.method-list` for technique
-14. `h3` + `.download-card` (care sheet) + `.paw-divider`
+14. `h3` + `.download-card` (care sheet) + `.paw-divider` — thumbnail only, no
+    `.dl-btn`
 15. "The care routine: daily, weekly and ..." table
 16. One `.callout` pull quote, attr "What every … vet wishes owners knew"
 17. "Health: what to watch, and what is an emergency" — `pgp-grid--2` with
     `h3` 💚 healthy / ⚠️ call a vet
-18. `h3` + `.download-card` (setup checklist) + `.paw-divider`
+18. `h3` + `.download-card` (setup checklist) + `.paw-divider` — thumbnail only
 19. "The full shopping list" — two `.kit-section`s: "The essentials"
     (`.kit-item essential`, check `✓`) and "Worth adding" (`.kit-item optional`,
     check `+`). Anchor is a bare `<a>`, no class, text "See options →"
@@ -317,8 +324,12 @@ In order. Items marked *optional* appeared in one reference guide but not both.
   inline style, and the caption should teach something rather than describe the
   picture:
   `<p style="text-align:center;font-size:13px;color:#6E6480;font-style:italic;margin-top:-10px">`
-- **`/media/NN` is only for product card images and download-card thumbnails.**
-  Product card images carry `alt=""`.
+- **`/media/NN` is only for product card images.** Product card images carry
+  `alt=""`.
+- **Download-card thumbnails use `/img/<file>`**, matching the owner's seed SQL,
+  where `<file>` is the key in the `guides` table. Free guides are **images, not
+  PDFs** — `serveGuide()` reads the mime off the media row, and one image is both
+  the thumbnail and the download.
 
 ## Voice
 

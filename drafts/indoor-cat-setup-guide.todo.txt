@@ -62,9 +62,11 @@ File: drafts/indoor-cat-setup-guide.cms.html
    Both then appear on /free-guides automatically, and the cards in the post
    start working.
 
-   Worth checking once: util.js has a wireDownloadCards() that runs over every
-   post body before it renders. I have not seen that function, so load the post
-   after publishing and confirm the two cards look right.
+   The download cards are thumbnail-only now. The old .dl-btn was removed on
+   2026-10-10: the thumbnail already opens the platform lightbox with its own
+   Zoom in / Download free / Close, while the button 404'd. wireDownloadCards()
+   rewires the thumbnail and not the button, which is why one worked and the
+   other did not. The template and check-guide.py now both enforce this.
 
    Source for the sheets is in drafts/sheet-source/ — data-driven, so the text
    can be edited and re-rendered without redrawing anything.
