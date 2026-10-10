@@ -1,0 +1,96 @@
+import json, re, collections, sys, html
+SRC, OUT = sys.argv[1], sys.argv[2]
+d = json.load(open(SRC))
+
+def s(v):
+    if v is None: return ''
+    if isinstance(v, list): return ' | '.join(str(x) for x in v)
+    return str(v)
+
+RAW_PAWS = '7127091'
+# phrases that mean "suitable for homes with pets", not "a pet product"
+NOT_PET = re.compile(r'pet[- ]friendly|kid and pet|safe for (kids|pets)|cat licensed|caterpillar'
+                     r'|tortoise(shell)? (glasses|frame)|blue light blocking', re.I)
+# things that are decor/apparel wearing a pet word
+JUNK = re.compile(r'\barea rug\b|fireplace|wallpaper|\bcurtain|medicine cabinet|\bwalker\b'
+                  r'|blocking glasses|\bt-?shirt\b|\bhoodie\b|funko|vinyl figure'
+                  r'|ride[- ]on|chia pet|ace ventura|pet detective|all-region|blu-?ray'
+                  r'|\bdvd\b|\bvhs\b|soundtrack|\bcd\b', re.I)
+PET_WORD = re.compile(r'\b(dog|dogs|puppy|puppies|cat|cats|kitten|pet|pets|bird|birds|reptile'
+                      r'|aquarium|aquatic|hamster|gerbil|rabbit|bunny|guinea pig|ferret|chinchilla'
+                      r'|parrot|cockatiel|budgie|parakeet|gecko|tortoise|turtle|chicken|hen|poultry'
+                      r'|horse|equine|canine|feline)\b', re.I)
+
+def classify(p):
+    title, cat = s(p['title']), s(p.get('category'))
+    if JUNK.search(title) or NOT_PET.search(title): return None
+    if cat.startswith('Animals & Pet Supplies'): return 'category'
+    if p['advertiserId'] == RAW_PAWS: return 'advertiser'
+    if PET_WORD.search(title):
+        return 'book' if cat.startswith('Media > Books') else 'title'
+    return None
+
+# order matters: first match wins, so the specific patterns come first
+SPECIES = [
+    ('Poultry',    r'chicken|\bhen\b|\bhens\b|poultry|coop|rooster|duck house'),
+    ('Reptiles',   r'reptile|gecko|\bsnake\b|python|\bboa\b|bearded dragon|tortoise|terrarium|vivarium|basking|\buvb\b'),
+    ('Aquatics',   r'aquarium|fish tank|fishbowl|\bbetta\b|\bshrimp\b|aquatic'),
+    ('Small Pets', r'hamster|gerbil|guinea pig|\brabbit|bunny|ferret|chinchilla|hedgehog|small animal|\bhay\b'),
+    ('Birds',      r'\bbird|parrot|cockatiel|budgie|parakeet|aviary|canary|finch'),
+    ('Horses',     r'\bhorse|equine|\bpony\b'),
+    ('Cats',       r'\bcat\b|\bcats\b|kitten|feline|litter box|catnip|scratching post|cat tree|cat tower'),
+    ('Dogs',       r'\bdog|puppy|puppies|canine|kennel|leash|harness'),
+]
+SPECIES = [(n, re.compile(r, re.I)) for n, r in SPECIES]
+
+AUDIENCE = [
+    ('Dogs',       r'for [\w\s,&-]*\b(dogs?|puppies|puppy)\b'),
+    ('Cats',       r'for [\w\s,&-]*\b(cats?|kittens?)\b'),
+    ('Small Pets', r'for [\w\s,&-]*\b(rabbits?|guinea pigs?|hamsters?|ferrets?|chinchillas?|small animals?)\b'),
+    ('Birds',      r'for [\w\s,&-]*\b(birds?|parrots?|parakeets?|budgies|finches|cockatiels?)\b'),
+    ('Reptiles',   r'for [\w\s,&-]*\b(reptiles?|geckos?|snakes?|tortoises?|turtles?|lizards?)\b'),
+    ('Poultry',    r'for [\w\s,&-]*\b(chickens?|hens?|ducks?|poultry)\b'),
+]
+AUDIENCE = [(n, re.compile(r, re.I)) for n, r in AUDIENCE]
+
+def species(p, why):
+    """Returns (primary, [every species this product serves]).
+
+    A trailing audience phrase is authoritative: 'Chicken Necks for Dogs' is dog
+    food, not poultry gear, so the audience pass runs before the keyword pass."""
+    if why == 'book': return 'Books', ['Books']
+    title, hay = s(p['title']), s(p['title']) + ' || ' + s(p.get('category'))
+    aud = [n for n, rx in AUDIENCE if rx.search(title)]
+    if aud: return aud[0], aud
+    for name, rx in SPECIES:
+        if rx.search(hay): return name, [name]
+    return 'General pet', ['General pet']
+
+def norm(t): return re.sub(r'[^a-z0-9]+', '', t.lower())[:70]
+
+seen, out = set(), []
+for p in d:
+    why = classify(p)
+    if not why: continue
+    k = (p['advertiserId'], norm(s(p['title'])))
+    if k in seen: continue
+    seen.add(k)
+    primary, serves = species(p, why)
+    out.append({'species': primary, 'serves': serves, 'matched': why,
+                'advertiser': p['advertiser'], 'advertiserId': p['advertiserId'],
+                'title': s(p['title']), 'brand': s(p.get('brand')),
+                'price': s(p.get('price')), 'salePrice': s(p.get('salePrice')),
+                'availability': s(p.get('availability')), 'category': s(p.get('category')),
+                'image': s(p.get('image')), 'link': s(p.get('link')),
+                'description': s(p.get('description'))[:600]})
+
+out.sort(key=lambda x: (x['species'], x['advertiser'], x['title']))
+json.dump(out, open(OUT, 'w'), indent=1)
+
+print(f"{len(out)} pet products  (from {len(d)} raw)")
+print(f"matched by: {dict(collections.Counter(x['matched'] for x in out))}\n")
+for sp, n in collections.Counter(x['species'] for x in out).most_common():
+    also = sum(1 for x in out if sp in x['serves'] and x['species'] != sp)
+    adv = collections.Counter(x['advertiser'] for x in out if x['species'] == sp).most_common(3)
+    extra = f" (+{also} shared)" if also else ""
+    print(f"  {sp:<13}{n:>5}{extra:<14}{', '.join(f'{a} ({c})' for a, c in adv)}")
