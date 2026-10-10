@@ -6,43 +6,37 @@ the house style: **ball-python-care-guide** and **hamster-care-guide**. Match it
 (`docs/reference/post-template.html` is the older guinea-pig-era markup — still
 accurate for the component classes, superseded on structure.)
 
-## The live site now lives in this repo, under `petgotopro-live/`
+## The live site's source is NOT in this repo
 
 pet-gotopro.com runs a **self-hosted publishing platform on Cloudflare**. The
-owner uploaded the project in Sept 2026 and it is now committed here — it is not
-on GitHub anywhere else, so this is the only copy under version control.
+only current copy lives on the owner's machine at
+`C:\Users\Xvick\OneDrive\Documents\petgotopro-website`. That folder *is* the
+project root, so they deploy with `npx wrangler deploy` and no `cd`.
 
-### ⚠️ `petgotopro-live/` IN THIS REPO IS STALE — NEVER SEND IT TO THE OWNER
+### ⚠️ To change the site, ASK FOR THE FILE FIRST
 
-The owner's working copy is `C:\Users\Xvick\OneDrive\Documents\petgotopro-website`
-and it is **far ahead** of the snapshot committed here. As of Oct 2026:
+`petgotopro-live/src/` was **deleted in Oct 2026**. It held a snapshot of the
+seven Worker source files and it had drifted badly behind the owner's machine:
+`public.js` 353 lines against their 787, `theme.js` 656 against their 1298. The
+snapshot had none of their `shareBar`, `shopBanner`, authors system, service
+worker, sitemap index, `/go/amazon/` redirector or CJ affiliate detection.
 
-| File | Here | Theirs |
-|---|---|---|
-| `public.js` | 353 lines | **787** |
-| `theme.js` | 656 lines | **1298** |
+**It caused two incidents.** A stale `admin.js` nearly went live missing an
+export `shop.js` needed. A stale `theme.js` *was* pasted over their good one and
+broke their build on `shareBar`; they recovered from OneDrive version history.
+Two bugs were also reported off it that their real code had already fixed — a
+broken `og:image` for absolute URLs, and a missing `twitter:image`.
 
-Their version has `shareBar`, `shopBanner`, an authors system with `/author/<slug>`,
-a service worker, a sitemap index, the `/go/amazon/` redirector, and CJ affiliate
-detection. None of that exists here.
+So the workflow for any change to the live platform is:
 
-**This has caused two incidents.** A stale `admin.js` nearly went live missing an
-export `shop.js` needed, and a stale `theme.js` was actually pasted over their
-good one and broke their build on `shareBar`. They recovered it from OneDrive
-version history.
+1. **Ask the owner for the current file.** Never work from memory or from this
+   repo.
+2. Edit *their* file, changing only what is needed.
+3. Send it back and have them run `npx wrangler deploy` from
+   `petgotopro-website`.
 
-So: **never hand the owner a file from `petgotopro-live/`, and never diagnose
-their live behavior from it.** Ask for the current file, edit *that*, send it
-back. Two bugs were reported from this stale copy that their real code had
-already fixed — a broken `og:image` for absolute URLs and a missing
-`twitter:image`. Both were long since correct on their machine.
-
-Note the deploy path differs too: it is `petgotopro-live/` here, but on their
-machine the project root *is* `petgotopro-website`, so they run `npx wrangler
-deploy` with no `cd`.
-
-**Deploy from `petgotopro-live/` with `npx wrangler deploy`.** Nothing you change
-in that folder reaches visitors until someone runs that command.
+These files are also on the deliberately-withheld list, so they must never be
+committed here again. The repo is public.
 
 - **Cloudflare Workers** — deployed with `npx wrangler deploy`, configured by
   `wrangler.jsonc`
@@ -54,17 +48,26 @@ in that folder reaches visitors until someone runs that command.
 - **Cloudflare Workers AI** for the SEO assistant and blog-idea suggestions
 - Free tier: 100k visits/day, 5 GB database, ~100–200 AI calls/day
 
-### Where things are in `petgotopro-live/`
+### Where things are, on the owner's machine
+
+Ask for whichever file a change touches — these notes are a map, not a copy, and
+they describe the snapshot as it was in Oct 2026.
 
 | File | What it holds |
 |---|---|
 | `src/index.js` | Worker entry, route mounting, **and the real schema** — `SCHEMA[]` runs on every request, so it is authoritative, not `schema.sql` |
-| `src/theme.js` | `IMAGE_CSS`, `SECTION_CSS`, `PUBLIC_CSS`, and `layout()` — all public styling |
+| `src/theme.js` | `IMAGE_CSS`, `SECTION_CSS`, `PUBLIC_CSS`, `layout()`, `shareBar()`, `shopBanner()`, `pawDivider()`, `logoUrl()` |
 | `src/admin.js` | The whole `/admin` app: auth, post editor, page editor, media, menus, settings |
-| `src/public.js` | Public routes, `CATEGORIES`, guides, 404 |
+| `src/public.js` | Public routes, `CATEGORIES`, authors and `/author/<slug>`, guides, service worker, sitemap index, `/go/amazon/`, 404 |
+| `src/shop.js` | The shop, its listing and product pages |
 | `src/ai.js` | Workers AI — SEO suggestions and topic ideas |
-| `src/util.js` | esc/slugify/auth/sessions/`applyAmazonTag` |
-| `seed/` | One-off SQL and HTML used to load existing posts |
+| `src/util.js` | esc/slugify/auth/sessions/`applyAmazonTag`, `PET_CATEGORIES`, `deskFor`, `unsplashUrl` |
+| `seed/` | One-off SQL and HTML used to load existing posts (still in this repo) |
+
+**The platform writes its own affiliate disclosure.** `public.js` scans a post
+body for Amazon links and for the CJ shape `click-<pid>-<ad id>`, and renders a
+disclosure at the top when it finds either. A guide that also ends with the
+house `.disclosure` block, as the template requires, therefore carries two.
 
 `IMAGE_CSS` and `SECTION_CSS` are imported by **both** `PUBLIC_CSS` and
 `ADMIN_CSS`, so the editor renders those components exactly as visitors see them.
@@ -81,6 +84,7 @@ editor silently stops being a true preview.
 
 Note: `schema.sql` is a **stale copy** — it is missing `slug_history` and
 `guides`, both of which `src/index.js` creates. Trust `index.js`.
+(`schema.sql` is still in this repo; the source files are not.)
 
 **Posts are added through the admin**, by pasting HTML into the `</>` view. That
 is why the paste-ready fragment format is the right deliverable for content.
@@ -185,7 +189,7 @@ pins serif headings to `font-weight:400` because synthesised bold goes muddy.
 
 ## Sections and column layouts — now a button in the editor
 
-`SECTION_CSS` in `petgotopro-live/src/theme.js` ships these to the live site and
+`SECTION_CSS` in the owner's `src/theme.js` ships these to the live site and
 the admin editor. `.pgp-section` uses `display:flow-root`, which is what stops an
 image dropped between two sections being absorbed into the previous one.
 

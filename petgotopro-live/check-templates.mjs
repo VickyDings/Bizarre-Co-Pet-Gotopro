@@ -1,9 +1,21 @@
 // A backtick inside these CSS template literals silently truncates the stylesheet.
+// The symptom is media queries going missing, so columns stop collapsing on
+// phones. It has happened three times.
+//
+// RUN THIS ON THE OWNER'S MACHINE, from petgotopro-website. The src/ files are
+// no longer in this repo -- they went stale and were deleted in Oct 2026.
 import fs from 'fs';
 let bad = 0;
 for (const [file, names] of [['src/admin.js',['ADMIN_CSS','SECTION_DIALOG_HTML','LINK_DIALOG_HTML','UNDO_JS','SECTION_JS','MOVE_JS']],
                              ['src/theme.js',['IMAGE_CSS','SECTION_CSS','PUBLIC_CSS']]]) {
-  const src = fs.readFileSync(file,'utf8');
+  let src;
+  try {
+    src = fs.readFileSync(file,'utf8');
+  } catch {
+    console.error(`cannot read ${file} -- run this from the project root on the`
+      + ` owner's machine (petgotopro-website), not from this repo.`);
+    process.exit(2);
+  }
   for (const n of names) {
     const i = src.indexOf(n + ' =');
     if (i < 0) { console.log('  MISSING', n, 'in', file); bad++; continue; }
