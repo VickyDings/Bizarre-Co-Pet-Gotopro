@@ -26,8 +26,8 @@ AIDS = {
     '5360120': '13998414',   # Aosom.com
     '6446547': '15513660',   # FYE — recorded, but FYE has no pet products left
     '129899':  '13599892',   # Books-A-Million
-    # '7127091': '',         # Raw Paws Pet Food
-    # '6185946': '',         # UntilGone
+    '6185946': '15292997',   # UntilGone
+    '7127091': '17234724',   # Raw Paws Pet Food
 }
 
 def sku_of(x):
@@ -45,6 +45,9 @@ def sku_of(x):
         return re.sub(r'-(\d+)$', r'.\1', m.group(1)).upper()
     if adv == '129899':                        # Books-A-Million: /p/Title/Author/<isbn>
         m = re.search(r'/([0-9A-Za-z]{10,14})/?(?:\?|$)', link)
+        return m.group(1) if m else None
+    if adv == '6185946':                       # UntilGone: ...?sku=SKU10368659
+        m = re.search(r'[?&]sku=([^&]+)', link)
         return m.group(1) if m else None
     return None
 

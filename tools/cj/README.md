@@ -135,10 +135,15 @@ Links, pick any link, copy the generated code, and read the second number out of
 | Advertiser | ID | AID | SKU lives in | Products |
 |---|---|---|---|---|
 | Aosom.com | 5360120 | `13998414` | `~D10-056.html` | 436 |
-| Raw Paws Pet Food | 7127091 | — | — | 165 |
-| UntilGone | 6185946 | — | — | 92 |
+| Raw Paws Pet Food | 7127091 | `17234724` | not in the URL | 165 |
+| UntilGone | 6185946 | `15292997` | `?sku=` | 92 |
 | Books-A-Million | 129899 | `13599892` | last path segment | 10 |
 | FYE | 6446547 | `15513660` | `_aec-cen583029-2` | 1 |
+
+All five collected, so **704 of 704 products are tracked** and the API route is
+no longer needed. Raw Paws puts no SKU in its URLs, so its links carry no
+`cjsku` — CJ will report earnings against the advertiser rather than the
+product. Everything still works; the reporting is just coarser.
 
 CJ rotates the redirect domain and the owner's three links came back on three
 different ones, so `make_catalog.py` picks `tkqlhce.com` for all of them. They
@@ -149,8 +154,8 @@ show which product earned. Aosom puts the SKU in the URL as `~D10-056.html`, so
 `make_catalog.py` lifts it from there; other advertisers may need their own rule
 or none at all.
 
-Asking the API for `clickUrl` gets all five at once and is still the better
-route if the token is to hand.
+Asking the API for `clickUrl` gets all five at once, and remains the better
+route for any advertiser added later.
 
 The run prints how many products came back with a `clickUrl`. `classify.py` and
 `make_catalog.py` carry it through, and a product without one falls back to the
