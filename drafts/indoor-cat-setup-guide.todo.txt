@@ -62,21 +62,21 @@ File: drafts/indoor-cat-setup-guide.cms.html
    in-body  photo-1759165440303-40ef25cc6053  Siamese scratching a chair leg
    closing  photo-1768055526025-dc779188e6fd  ginger cat in a window
 
-8. TWO CODE FIXES THAT NEED DEPLOYING
-   Found while wiring up the share image. Both are in files you deploy, not in
-   the post.
+8. NO CODE CHANGES NEEDED — WITHDRAWN
+   An earlier version of this file claimed two bugs in public.js and theme.js.
+   Both were wrong. They came from the stale copy of your site committed in
+   this repo, not from your real code, which already handles both:
+     - public.js already returns an absolute hero URL unchanged (its own
+       comment explains why), so share images were never broken
+     - theme.js already emits twitter:image, plus twitter:image:alt and
+       og:image:alt, which the stale copy did not have
+   Nothing to deploy. Just set the hero image field in point 3.
 
-   a) src/public.js — the og:image line was broken for absolute URLs. The old
-      ternary returned '' on both branches, so the site prepended the domain
-      even to a full https:// URL and produced
-        https://pet-gotopro.com/https://images.unsplash.com/photo-...
-      Every post with an off-site hero image has had a dead share image. Fixed.
-
-   b) src/theme.js — the page declares twitter:card=summary_large_image but
-      never emitted a twitter:image tag. Added.
-
-   Verified with npx wrangler deploy --dry-run: builds clean, 1037.61 KiB.
-   Deploy with:  cd petgotopro-live && npx wrangler deploy
+   Related: your platform already renders its own affiliate disclosure at the
+   top of any post containing CJ or Amazon links, and it detects all 24 CJ
+   links in this guide. The guide also ends with the house .disclosure block,
+   as the template requires, so the page carries two. That matches how your
+   existing guides already behave — flagging it only so it is not a surprise.
 
 9. HOW TO PASTE IT
    Admin -> new post -> </> HTML view -> paste the whole file -> Update.

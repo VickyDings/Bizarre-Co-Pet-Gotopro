@@ -12,6 +12,35 @@ pet-gotopro.com runs a **self-hosted publishing platform on Cloudflare**. The
 owner uploaded the project in Sept 2026 and it is now committed here — it is not
 on GitHub anywhere else, so this is the only copy under version control.
 
+### ⚠️ `petgotopro-live/` IN THIS REPO IS STALE — NEVER SEND IT TO THE OWNER
+
+The owner's working copy is `C:\Users\Xvick\OneDrive\Documents\petgotopro-website`
+and it is **far ahead** of the snapshot committed here. As of Oct 2026:
+
+| File | Here | Theirs |
+|---|---|---|
+| `public.js` | 353 lines | **787** |
+| `theme.js` | 656 lines | **1298** |
+
+Their version has `shareBar`, `shopBanner`, an authors system with `/author/<slug>`,
+a service worker, a sitemap index, the `/go/amazon/` redirector, and CJ affiliate
+detection. None of that exists here.
+
+**This has caused two incidents.** A stale `admin.js` nearly went live missing an
+export `shop.js` needed, and a stale `theme.js` was actually pasted over their
+good one and broke their build on `shareBar`. They recovered it from OneDrive
+version history.
+
+So: **never hand the owner a file from `petgotopro-live/`, and never diagnose
+their live behavior from it.** Ask for the current file, edit *that*, send it
+back. Two bugs were reported from this stale copy that their real code had
+already fixed — a broken `og:image` for absolute URLs and a missing
+`twitter:image`. Both were long since correct on their machine.
+
+Note the deploy path differs too: it is `petgotopro-live/` here, but on their
+machine the project root *is* `petgotopro-website`, so they run `npx wrangler
+deploy` with no `cd`.
+
 **Deploy from `petgotopro-live/` with `npx wrangler deploy`.** Nothing you change
 in that folder reaches visitors until someone runs that command.
 
