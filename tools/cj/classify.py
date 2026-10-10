@@ -21,13 +21,32 @@ PET_WORD = re.compile(r'\b(dog|dogs|puppy|puppies|cat|cats|kitten|pet|pets|bird|
                       r'|parrot|cockatiel|budgie|parakeet|gecko|tortoise|turtle|chicken|hen|poultry'
                       r'|horse|equine|canine|feline)\b', re.I)
 
+# An animal word alone is not enough. FYE sells Doja Cat, Pet Shop Boys, Stray
+# Cats and Pet Sematary; 49 of its 50 "pet products" were records and films. So
+# a title match also has to name a thing an animal actually uses.
+PET_THING = re.compile(r'\b(toy|toys|bed|beds|cage|cages|crate|kennel|hutch|coop|habitat'
+                       r'|enclosure|terrarium|vivarium|aquarium|tank|leash|lead|collar|harness'
+                       r'|muzzle|treat|treats|chew|chews|food|kibble|feed|feeder|bowl|waterer'
+                       r'|litter|bedding|hay|substrate|grooming|brush|clipper|shampoo|carrier'
+                       r'|stroller|playpen|\bpen\b|gate|ramp|stairs|scratching|perch|nesting'
+                       r'|supplement|dewormer|flea|tick|collar|tag|harness|muzzle|waste|poop'
+                       r'|heat(ing)? (lamp|mat|pad)|\buvb\b|filter|thermostat|hammock|tunnel'
+                       r'|wheel|burrow|nest|aviary|run|fence|house|mat|pad|blanket|towel)\b', re.I)
+
+# Pet-care books are worth having; a manga with a cat in the title is not.
+BOOK_TOPIC = re.compile(r'\bcare|training|train|guide|handbook|manual|breed|breeds|grooming'
+                        r'|health|nutrition|feeding|veterinar|owner|raising|keeping|behaviou?r'
+                        r'|first aid|encyclopedia|complete\b', re.I)
+
 def classify(p):
     title, cat = s(p['title']), s(p.get('category'))
     if JUNK.search(title) or NOT_PET.search(title): return None
     if cat.startswith('Animals & Pet Supplies'): return 'category'
     if p['advertiserId'] == RAW_PAWS: return 'advertiser'
     if PET_WORD.search(title):
-        return 'book' if cat.startswith('Media > Books') else 'title'
+        if cat.startswith('Media > Books'):
+            return 'book' if BOOK_TOPIC.search(title) else None
+        return 'title' if PET_THING.search(title) else None
     return None
 
 # order matters: first match wins, so the specific patterns come first

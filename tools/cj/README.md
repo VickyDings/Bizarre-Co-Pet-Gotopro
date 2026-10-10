@@ -34,8 +34,8 @@ python3 -I tools/cj/classify.py cj.json data/cj/pet-products.json
 |---|---|---|
 | `category` | 518 | Google product category starts `Animals & Pet Supplies` |
 | `advertiser` | 165 | Raw Paws Pet Food — every line is pet food |
-| `book` | 136 | `Media > Books` with a pet word in the title |
-| `title` | 121 | pet word in the title, no usable category |
+| `title` | 12 | animal word **and** a pet-thing word, no usable category |
+| `book` | 9 | `Media > Books`, animal word **and** a care/training word |
 
 ### Why the obvious filter does not work
 
@@ -43,6 +43,17 @@ Matching "pet" anywhere in the description admits an **electric fireplace**
 ("safe for kids, pets, and the elderly"). Matching the title admits **area rugs**
 ("Kid and Pet Friendly"). So `NOT_PET` drops the suitability phrasings and `JUNK`
 drops decor, apparel, DVDs and CDs that merely carry a pet word.
+
+An animal word on its own is still not enough. FYE is an entertainment retailer:
+49 of the 50 products it first matched were Doja Cat, Pet Shop Boys, Stray Cats,
+Pet Sematary and Slaughter Beach Dog. The survivor is a rope dog toy. So a title
+match now also needs a `PET_THING` word — something an animal actually uses —
+and a book match needs a `BOOK_TOPIC` word, which keeps *Complete Cat Care
+Manual* and drops cat manga.
+
+That took the catalog from 940 to 704. Everything removed was checked: the only
+non-duplicate losses were a kids' excavator, a garden fountain, a rocking horse
+and a novel by an author named Cat Adams.
 
 ### Why species routing runs audience-first
 
@@ -123,11 +134,11 @@ Links, pick any link, copy the generated code, and read the second number out of
 
 | Advertiser | ID | AID | Products |
 |---|---|---|---|
-| Aosom.com | 5360120 | `13998414` | 441 |
+| Aosom.com | 5360120 | `13998414` | 436 |
 | Raw Paws Pet Food | 7127091 | — | 165 |
-| Books-A-Million | 129899 | — | 146 |
-| UntilGone | 6185946 | — | 138 |
-| FYE | 6446547 | — | 50 |
+| UntilGone | 6185946 | — | 92 |
+| Books-A-Million | 129899 | — | 10 |
+| FYE | 6446547 | `15513660` | 1 |
 
 `cjsku` is optional but worth setting, because it is what makes CJ's reports
 show which product earned. Aosom puts the SKU in the URL as `~D10-056.html`, so

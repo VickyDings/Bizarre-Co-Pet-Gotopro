@@ -24,17 +24,26 @@ PID = '100786792'
 # from the product feed, so each one is read off a link generated in CJ's UI.
 AIDS = {
     '5360120': '13998414',   # Aosom.com
+    '6446547': '15513660',   # FYE — recorded, but FYE has no pet products left
     # '7127091': '',         # Raw Paws Pet Food
     # '6185946': '',         # UntilGone
     # '129899':  '',         # Books-A-Million
-    # '6446547': '',         # FYE
 }
 
 def sku_of(x):
-    """Aosom puts the SKU in the URL as ~D10-056.html. cjsku is optional, but it
-    is what makes CJ's reports show which product earned."""
-    m = re.search(r'~([A-Za-z0-9-]+)\.html', x['link'])
-    return m.group(1) if m else None
+    """cjsku is optional, but it is what makes CJ's reports show which product
+    earned rather than just which advertiser. Each merchant hides it somewhere
+    different in the URL, so the rule is per-advertiser and returns None when
+    there is nothing reliable to take."""
+    adv, link = x['advertiserId'], x['link']
+    if adv == '5360120':                       # Aosom: ...~D10-056.html
+        m = re.search(r'~([A-Za-z0-9-]+)\.html', link)
+        return m.group(1) if m else None
+    if adv == '6446547':                       # FYE: ..._aec-cen583029-2 -> CEN583029.2
+        m = re.search(r'_aec-([a-z0-9-]+)', link)
+        if not m: return None                  # the _pid- form carries no SKU
+        return re.sub(r'-(\d+)$', r'.\1', m.group(1)).upper()
+    return None
 
 def track(x):
     if x.get('clickUrl'):                      # CJ's own link, always preferred
