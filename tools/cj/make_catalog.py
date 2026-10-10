@@ -11,14 +11,45 @@ was tried and returns ERR_TOO_MANY_REDIRECTS, encoded or raw. A product without
 a clickUrl falls back to the plain merchant URL, which earns nothing, so the page
 counts those and warns.
 """
-import json, sys, html, collections, urllib.parse as up
+import json, sys, re, html, collections, urllib.parse as up
 
 SRC, OUT = sys.argv[1], sys.argv[2]
 d = json.load(open(SRC))
-untracked = sum(1 for x in d if not x.get('clickUrl'))
+
+# CJ tracking PID for pet-gotopro.com, read off a link CJ generated. It is NOT
+# the Website ID shown under Account — that one produces links that never track.
+PID = '100786792'
+
+# Per-advertiser link ID, the second number in a CJ click-PID-AID link. Absent
+# from the product feed, so each one is read off a link generated in CJ's UI.
+AIDS = {
+    '5360120': '13998414',   # Aosom.com
+    # '7127091': '',         # Raw Paws Pet Food
+    # '6185946': '',         # UntilGone
+    # '129899':  '',         # Books-A-Million
+    # '6446547': '',         # FYE
+}
+
+def sku_of(x):
+    """Aosom puts the SKU in the URL as ~D10-056.html. cjsku is optional, but it
+    is what makes CJ's reports show which product earned."""
+    m = re.search(r'~([A-Za-z0-9-]+)\.html', x['link'])
+    return m.group(1) if m else None
 
 def track(x):
-    return x.get('clickUrl') or x['link']
+    if x.get('clickUrl'):                      # CJ's own link, always preferred
+        return x['clickUrl']
+    aid = AIDS.get(x['advertiserId'])
+    if not aid:
+        return x['link']                       # untracked, counted and warned about
+    u = f"https://www.tkqlhce.com/click-{PID}-{aid}?url={up.quote(x['link'], safe='')}"
+    sku = sku_of(x)
+    return u + (f"&cjsku={up.quote(sku)}" if sku else '')
+
+def is_tracked(x):
+    return bool(x.get('clickUrl') or AIDS.get(x['advertiserId']))
+
+untracked = sum(1 for x in d if not is_tracked(x))
 
 ORDER = ['Dogs', 'Cats', 'Small Pets', 'Birds', 'Reptiles', 'Aquatics',
          'Poultry', 'Horses', 'General pet', 'Books']
@@ -37,11 +68,11 @@ for sp in ORDER:
     rows = [x for x in d if x['species'] == sp]
     if rows: groups[sp] = rows
 
+missing = sorted({x['advertiser'] for x in d if not is_tracked(x)})
 banner = ('' if not untracked else
-  f'<p class="warn">⚠️ {untracked} of {len(d)} products have no CJ tracked link, '
-  'so they fall back to the plain merchant URL and earn nothing. Re-run '
-  '<code>fetch.mjs</code> with <code>CJ_PID</code> set to pick up the tracked '
-  'links CJ generates.</p>')
+  f'<p class="warn">⚠️ {untracked} of {len(d)} products are not tracked yet and '
+  'earn nothing — they fall back to the plain merchant URL. Still needed: a link '
+  'ID (AID) for ' + ', '.join(missing) + '.</p>')
 
 parts = [f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">

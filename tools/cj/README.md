@@ -112,8 +112,30 @@ https://www.tkqlhce.com/click-100786792-13998414?url=<encoded>&cjsku=D10-056
 ```
 
 CJ rotates the redirect domain (`tkqlhce.com`, `dpbolvw.net`, `anrdoezrs.net`,
-`jdoqocy.com`, `kqzyfj.com`); they are equivalent. Asking the API for `clickUrl`
-avoids having to collect an AID per advertiser by hand.
+`jdoqocy.com`, `kqzyfj.com`); they are equivalent.
+
+### Collecting AIDs by hand
+
+One AID per advertiser is enough for every product that advertiser sells, so in
+practice this is five copy-pastes, not 940. In CJ: open the advertiser, go to
+Links, pick any link, copy the generated code, and read the second number out of
+`click-<PID>-<AID>`. They go in the `AIDS` map in `make_catalog.py`.
+
+| Advertiser | ID | AID | Products |
+|---|---|---|---|
+| Aosom.com | 5360120 | `13998414` | 441 |
+| Raw Paws Pet Food | 7127091 | — | 165 |
+| Books-A-Million | 129899 | — | 146 |
+| UntilGone | 6185946 | — | 138 |
+| FYE | 6446547 | — | 50 |
+
+`cjsku` is optional but worth setting, because it is what makes CJ's reports
+show which product earned. Aosom puts the SKU in the URL as `~D10-056.html`, so
+`make_catalog.py` lifts it from there; other advertisers may need their own rule
+or none at all.
+
+Asking the API for `clickUrl` gets all five at once and is still the better
+route if the token is to hand.
 
 The run prints how many products came back with a `clickUrl`. `classify.py` and
 `make_catalog.py` carry it through, and a product without one falls back to the
