@@ -1,0 +1,50 @@
+INDOOR CAT SETUP GUIDE — what is needed before publishing
+=========================================================
+File: drafts/indoor-cat-setup-guide.cms.html
+6,900 words. Passes docs/reference/check-guide.py with no problems.
+
+1. AFFILIATE LINKS — DONE, nothing to fill in
+   All 16 links are live CJ tracked links, built from the real PID (100786792)
+   and the per-advertiser AIDs. No XXXXXXXXX placeholders anywhere.
+     Aosom     13998414   trees, litter boxes, fountain, bed, carrier, stairs, catio
+     UntilGone 15292997   kitten tree, playpen, treats
+     Raw Paws  17234724   brush, dematting comb, deshedding gloves
+   Every link carries rel="nofollow noopener sponsored".
+   NOT YET CLICK-TESTED — see point 4.
+
+2. PRODUCT CARD IMAGES — a decision for you
+   The eight cards use the merchant's own product photos straight from the CJ
+   feed (img-us.aosomcdn.com, cdn11.bigcommerce.com) rather than /media/NN.
+   That is why the cards work with no uploading.
+   House style says product images are /media/NN. This departs from it on
+   purpose, because a product feed supplies images for exactly this use.
+   If you would rather host them yourself, download the eight images, upload
+   them in Admin -> Media, and swap each src for /media/NN.
+
+3. STILL NEEDED FROM YOU — two slots only
+   a) /media/00 x2  — thumbnails for the two download cards
+        - "Indoor Cat Quick Care Sheet"
+        - "Indoor Cat Setup Checklist"
+   b) Two PDFs at these paths:
+        /download/indoor-cat-setup-guide-care-sheet.pdf
+        /download/indoor-cat-setup-guide-checklist.pdf
+      Contents are described in each card's body text.
+
+4. BEFORE IT GOES LIVE
+   Click one product link from each of the three advertisers, then check
+   CJ -> Reports -> Clicks about an hour later. If clicks register, the whole
+   catalog is good. If they do not, the links need rebuilding and it is better
+   to find that out now than after the post is indexed.
+
+5. CROSS-LINKS USED
+   /blog/hamster-care-guide and /blog/ball-python-care-guide.
+   Check both slugs are right before publishing.
+
+6. PHOTOS — Unsplash, three of them
+   hero     photo-1718995398658-4469fd08cb04  two cats on a cat tree by a window
+   in-body  photo-1759165440303-40ef25cc6053  Siamese scratching a chair leg
+   closing  photo-1768055526025-dc779188e6fd  ginger cat in a window
+
+7. HOW TO PASTE IT
+   Admin -> new post -> </> HTML view -> paste the whole file -> Update.
+   Do NOT switch back to the visual editor first; it strips the custom markup.

@@ -27,10 +27,20 @@ chk("editorial photos are Unsplash", h.count('images.unsplash.com') >= 3, f"{h.c
 chk("house caption style", h.count('text-align:center;font-size:13px;color:#6E6480;font-style:italic;margin-top:-10px') >= 3)
 ml = h.count('<ol class=' + Q + 'method-list' + Q + '>')
 chk("ol.method-list used", ml >= 2, f"{ml} lists")
-chk("CTA is 'Check price on Amazon'", 'Check price on Amazon' in h and 'Shop on Amazon' not in h)
-chk("links use link.amazon, no search URLs", h.count('https://link.amazon/') > 0 and 'amazon.com/s?k=' not in h, f"{h.count('https://link.amazon/')} links")
+# Two affiliate programs are in use. Amazon guides say "Check price on Amazon";
+# guides built from the CJ catalog name the merchant, because the link goes to
+# Aosom or Raw Paws and promising Amazon would be a lie.
+cj = 'anrdoezrs.net/click-' in h or 'tkqlhce.com/click-' in h
+cta_ok = ('Check price on Amazon' in h) or (cj and re.search(r'>Check price at [A-Z]', h))
+chk("CTA names where the link goes", bool(cta_ok) and 'Shop on Amazon' not in h,
+    'CJ' if cj else 'Amazon')
+n_az, n_cj = h.count('https://link.amazon/'), len(re.findall(r'(?:anrdoezrs\.net|tkqlhce\.com)/click-\d+-\d+', h))
+chk("affiliate links are OneLink or CJ, no search URLs",
+    (n_az + n_cj) > 0 and 'amazon.com/s?k=' not in h, f"{n_az} OneLink, {n_cj} CJ")
 prods = h.count('class=' + Q + 'pgp-prod' + Q)
-chk("product note wording on every card", h.count('Link opens your local Amazon store where available.') == prods, f"{prods} cards")
+notes = (h.count('Link opens your local Amazon store where available.')
+         + len(re.findall(r'Ships direct from [^<.]+\.', h)))
+chk("product note wording on every card", notes == prods, f"{prods} cards, {notes} notes")
 chk("two download cards", h.count('class=' + Q + 'download-card' + Q) == 2)
 paws = h.count('class=' + Q + 'paw-divider' + Q)
 chk("paw dividers", paws >= 3, f"{paws}")
@@ -45,7 +55,10 @@ chk("ends on .disclosure", h.rstrip().rfind('class="disclosure"') > h.rstrip().r
 chk("gear intl-note present", 'We only suggest gear we would use ourselves' in h)
 
 print("\n=== voice / spelling ===")
-brit = [w for w in ['mould','colour','behaviour','fertiliser','favourable','grey','litre','metre','practise','recognise'] if re.search(r'\b' + w, h, re.I)]
+# Strip href values before checking: a merchant URL slug such as
+# ...carrier-kennel-material-grey~D00-080V02 is not prose we wrote.
+visible = re.sub(r'href="[^"]*"', 'href=""', h)
+brit = [w for w in ['mould','colour','behaviour','fertiliser','favourable','grey','litre','metre','practise','recognise'] if re.search(r'\b' + w, visible, re.I)]
 chk("American spelling", not brit, f"British forms: {brit}")
 strongs = len(re.findall(r'<strong>', h))
 ff = re.findall(r'<div class="funfact">.*?</div>', h, re.S)
