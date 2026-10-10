@@ -37,14 +37,37 @@ File: drafts/indoor-cat-setup-guide.cms.html
    NOTE: this needs the public.js fix in point 8 deployed first, or the share
    image will be broken.
 
-4. STILL NEEDED FROM YOU — two slots only
-   a) /media/00 x2  — thumbnails for the two download cards
-        - "Indoor Cat Quick Care Sheet"
-        - "Indoor Cat Setup Checklist"
-   b) Two PDFs at these paths:
-        /download/indoor-cat-setup-guide-care-sheet.pdf
-        /download/indoor-cat-setup-guide-checklist.pdf
-      Contents are described in each card's body text.
+4. THE TWO PRINTABLES — MADE, they just need registering
+
+   drafts/indoor-cat-care-sheet.png        1500 x 2570
+   drafts/indoor-cat-setup-checklist.png   1500 x 2751
+
+   Built to the house layout taken from your leopard-gecko-care-sheet.png,
+   in the current plum/magenta rather than the old brown.
+
+   No PDFs. Your free guides are images: serveGuide() reads the mime off the
+   media row and the existing ones are .jpg. One image is both the thumbnail
+   and the download, so there are no separate thumbnails to make either. The
+   post's download cards now point at /img/<file> and /download/<file> the way
+   your seed SQL does, with class="no-zoom" on the thumb.
+
+   To register them:
+     1. Admin -> Media -> upload both PNGs. Note the number each one gets.
+     2. Open drafts/indoor-cat-setup-guide.guides.sql, replace
+        <CARE_MEDIA_ID> and <CHECKLIST_MEDIA_ID> with those numbers.
+     3. Run it against D1:
+          npx wrangler d1 execute <your-db> --remote --file=guides.sql
+        (or paste the two INSERTs into the D1 console)
+
+   Both then appear on /free-guides automatically, and the cards in the post
+   start working.
+
+   Worth checking once: util.js has a wireDownloadCards() that runs over every
+   post body before it renders. I have not seen that function, so load the post
+   after publishing and confirm the two cards look right.
+
+   Source for the sheets is in drafts/sheet-source/ — data-driven, so the text
+   can be edited and re-rendered without redrawing anything.
 
 5. BEFORE IT GOES LIVE
    Click one product link from each of the three advertisers, then check
