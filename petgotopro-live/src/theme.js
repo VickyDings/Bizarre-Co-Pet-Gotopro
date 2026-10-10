@@ -579,6 +579,7 @@ ${ogImage ? `<meta property="og:image" content="${esc(ogImage)}">` : ''}
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="${esc(title)}">
 <meta name="twitter:description" content="${esc(description || '')}">
+${ogImage ? `<meta name="twitter:image" content="${esc(ogImage)}">` : ''}
 ${jsonLd ? `<script type="application/ld+json">${jsonLd}</script>` : ''}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

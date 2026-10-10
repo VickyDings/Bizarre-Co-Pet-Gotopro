@@ -21,7 +21,23 @@ File: drafts/indoor-cat-setup-guide.cms.html
    If you would rather host them yourself, download the eight images, upload
    them in Admin -> Media, and swap each src for /media/NN.
 
-3. STILL NEEDED FROM YOU — two slots only
+3. HERO IMAGE AND SHARE IMAGE — paste this into the post's "Hero image" field
+
+   https://images.unsplash.com/photo-1758228147081-8cf6aaf9d72a?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=1200&h=630
+
+   One field does both jobs. hero_image is what shows on the blog index card and
+   at the top of the post, and public.js also feeds it to og:image, so it is the
+   picture that appears when the post is shared on Facebook, X, WhatsApp or
+   Slack. Cropped to 1200x630, which is the social card ratio.
+
+   It is a deliberately different photo from the in-body hero (two cats on a
+   tree). Using the same URL in both places would show the same picture twice
+   within one screen of each other.
+
+   NOTE: this needs the public.js fix in point 8 deployed first, or the share
+   image will be broken.
+
+4. STILL NEEDED FROM YOU — two slots only
    a) /media/00 x2  — thumbnails for the two download cards
         - "Indoor Cat Quick Care Sheet"
         - "Indoor Cat Setup Checklist"
@@ -30,21 +46,38 @@ File: drafts/indoor-cat-setup-guide.cms.html
         /download/indoor-cat-setup-guide-checklist.pdf
       Contents are described in each card's body text.
 
-4. BEFORE IT GOES LIVE
+5. BEFORE IT GOES LIVE
    Click one product link from each of the three advertisers, then check
    CJ -> Reports -> Clicks about an hour later. If clicks register, the whole
    catalog is good. If they do not, the links need rebuilding and it is better
    to find that out now than after the post is indexed.
 
-5. CROSS-LINKS USED
+6. CROSS-LINKS USED
    /blog/hamster-care-guide and /blog/ball-python-care-guide.
    Check both slugs are right before publishing.
 
-6. PHOTOS — Unsplash, three of them
+7. PHOTOS — Unsplash, four of them
+   hero/share  photo-1758228147081-8cf6aaf9d72a  cat on a sofa (the field above)
    hero     photo-1718995398658-4469fd08cb04  two cats on a cat tree by a window
    in-body  photo-1759165440303-40ef25cc6053  Siamese scratching a chair leg
    closing  photo-1768055526025-dc779188e6fd  ginger cat in a window
 
-7. HOW TO PASTE IT
+8. TWO CODE FIXES THAT NEED DEPLOYING
+   Found while wiring up the share image. Both are in files you deploy, not in
+   the post.
+
+   a) src/public.js — the og:image line was broken for absolute URLs. The old
+      ternary returned '' on both branches, so the site prepended the domain
+      even to a full https:// URL and produced
+        https://pet-gotopro.com/https://images.unsplash.com/photo-...
+      Every post with an off-site hero image has had a dead share image. Fixed.
+
+   b) src/theme.js — the page declares twitter:card=summary_large_image but
+      never emitted a twitter:image tag. Added.
+
+   Verified with npx wrangler deploy --dry-run: builds clean, 1037.61 KiB.
+   Deploy with:  cd petgotopro-live && npx wrangler deploy
+
+9. HOW TO PASTE IT
    Admin -> new post -> </> HTML view -> paste the whole file -> Update.
    Do NOT switch back to the visual editor first; it strips the custom markup.
