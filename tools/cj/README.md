@@ -90,9 +90,30 @@ set CJ_PID=5930903
 node tools/cj/fetch.mjs
 ```
 
-`5930903` is the **CJ Website ID (PID)** for pet-gotopro.com — not the company
-ID, which is a different number and stays out of this repo. The PID is fine here
-because it appears in every affiliate link on the live site anyway.
+`100786792` is the **CJ tracking PID**. Read it off any link CJ generates, which
+has the shape `click-<PID>-<AID>`. Three different numbers are in play and only
+this one belongs in a link:
+
+| Number | What it is | Where it comes from |
+|---|---|---|
+| `6386969` | company ID | pairs with the API token — kept out of this repo |
+| `5930903` | Website ID under Account | **not** the tracking PID; links built with it fail |
+| `100786792` | tracking PID | the first number in a CJ-generated `click-PID-AID` link |
+
+The PID is fine in this public repo because it appears in every affiliate link on
+the live site anyway.
+
+The second number, the **AID**, is a per-advertiser link ID — `13998414` is
+Aosom.com. It is not in the product feed, which is the whole reason links cannot
+be constructed from feed data alone. A full manual link looks like:
+
+```
+https://www.tkqlhce.com/click-100786792-13998414?url=<encoded>&cjsku=D10-056
+```
+
+CJ rotates the redirect domain (`tkqlhce.com`, `dpbolvw.net`, `anrdoezrs.net`,
+`jdoqocy.com`, `kqzyfj.com`); they are equivalent. Asking the API for `clickUrl`
+avoids having to collect an AID per advertiser by hand.
 
 The run prints how many products came back with a `clickUrl`. `classify.py` and
 `make_catalog.py` carry it through, and a product without one falls back to the

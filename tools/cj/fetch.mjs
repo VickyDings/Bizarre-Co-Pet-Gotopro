@@ -9,9 +9,11 @@ import fs from 'node:fs';
 const TOKEN = process.env.CJ_TOKEN;
 const CID   = process.env.CJ_CID;  // CJ publisher company ID — kept out of this
                                    // file because the repo is public.
-const PID   = process.env.CJ_PID || '5930903';  // CJ Website ID. Used to ask CJ
-                                   // for its own tracked clickUrl per product —
-                                   // hand-built anrdoezrs wrappers do not work.
+const PID   = process.env.CJ_PID || '100786792';  // CJ tracking PID. Read off a
+                                   // link CJ generated: click-<PID>-<AID>. It is
+                                   // NOT the Website ID shown under Account.
+                                   // Used to ask CJ for its own clickUrl per
+                                   // product — hand-built wrappers do not work.
 const API   = 'https://ads.api.cj.com/query';
 
 const PARTNERS = {
