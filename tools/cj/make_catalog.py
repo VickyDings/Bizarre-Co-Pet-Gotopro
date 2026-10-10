@@ -25,9 +25,9 @@ PID = '100786792'
 AIDS = {
     '5360120': '13998414',   # Aosom.com
     '6446547': '15513660',   # FYE — recorded, but FYE has no pet products left
+    '129899':  '13599892',   # Books-A-Million
     # '7127091': '',         # Raw Paws Pet Food
     # '6185946': '',         # UntilGone
-    # '129899':  '',         # Books-A-Million
 }
 
 def sku_of(x):
@@ -43,6 +43,9 @@ def sku_of(x):
         m = re.search(r'_aec-([a-z0-9-]+)', link)
         if not m: return None                  # the _pid- form carries no SKU
         return re.sub(r'-(\d+)$', r'.\1', m.group(1)).upper()
+    if adv == '129899':                        # Books-A-Million: /p/Title/Author/<isbn>
+        m = re.search(r'/([0-9A-Za-z]{10,14})/?(?:\?|$)', link)
+        return m.group(1) if m else None
     return None
 
 def track(x):

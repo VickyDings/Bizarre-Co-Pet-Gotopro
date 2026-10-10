@@ -342,25 +342,6 @@
   "description": "Watch your child's imagination flourish as they host tea parties, play pretend cooking, or garden adventures with their furry friend, who has their own special entrance. This Qaba outdoor playhouse, built from robust, weather-resistant fir wood, offers a secure haven for creative play. It's an all-weather retreat where endless adventures and heartwarming moments unfold, creating cherished memories right in your backyard."
  },
  {
-  "species": "Birds",
-  "serves": [
-   "Birds"
-  ],
-  "matched": "category",
-  "advertiser": "UntilGone",
-  "advertiserId": "6185946",
-  "title": "Scoochie Pet Squeaky Plush Dog Chew Toy - Sebby Bird Squeaky Dog Toy",
-  "brand": "Scoochie Pet",
-  "price": "12.99 USD",
-  "salePrice": "",
-  "availability": "out of stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Toys",
-  "image": "https://cdn11.bigcommerce.com/s-yqzpac968l/products/44085/images/695381/1481302_MA7fcfe830c54f881e08ae28c0b06aada0_std__46879.1757614123.386.513.jpg?c=1",
-  "link": "https://untilgone.com/products/scoochie-pet-squeaky-plush-dog-chew-toy.html?sku=SKU16817096",
-  "clickUrl": "",
-  "description": "<p>Treat your furry friend to Scoochie Pet Squeaky Plush Dog Chew Toys and watch them light up with joy! These durable toys keep boredom at bay, promoting good behavior and teaching new skills. Strengthen your bond through interactive play, providing comfort and relief from anxiety. Built to withstand even the most enthusiastic chewers, Scoochie Pet toys are the perfect solution for a happy and stimulated pup. Bring home the fun&mdash;order your Scoochie Pet toy today!</p> <p><strong>What&#39;s in the Box?</strong></p> <ul> <li>Scoochie Pet Squeaky Plush Dog Chew Toy - Sebby Bird Squeaky Dog T"
- },
- {
   "species": "Books",
   "serves": [
    "Books"
@@ -653,6 +634,25 @@
   "matched": "category",
   "advertiser": "Aosom.com",
   "advertiserId": "5360120",
+  "title": "PawHut 2 Pack XL Stainless Steel Litter Box, Metal Cat Litter Box High Sided with Tracking Step & Stainless Steel Scoops",
+  "brand": "PawHut",
+  "price": "74.99 USD",
+  "salePrice": "64.99 USD",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
+  "image": "https://img-us.aosomcdn.com/100/product/2026/09/02/Fal0901a0626ec76f.jpg",
+  "link": "https://www.aosom.com/item/pawhut-2-pack-xl-stainless-steel-litter-box-metal-cat-litter-box-high-sided-with-tracking-step-stainless-steel-scoops~27ASMVVVK5800.html?utm_source=cj&utm_medium=display",
+  "clickUrl": "",
+  "description": "Tired of plastic litter boxes that trap odors and stains within weeks? Every scrub feels pointless as smells seep deeper, and your cat's space turns into a daily frustration. PawHut changes this with a stainless steel litter box featuring high sides and a tracking-control step. The XL metal pan resists scratch, wipes clean instantly, and never absorbs odors \u2014 giving your cat a fresh, hygienic space every single day"
+ },
+ {
+  "species": "Cats",
+  "serves": [
+   "Cats"
+  ],
+  "matched": "category",
+  "advertiser": "Aosom.com",
+  "advertiserId": "5360120",
   "title": "PawHut 2 in 1 Cat Tree Tower 3-Step Pet Stairs with Scratching Posts, Tickling Post, Toy Balls, for High Beds, Couch",
   "brand": "PawHut",
   "price": "55.99 USD",
@@ -796,25 +796,6 @@
   "link": "https://www.aosom.com/item/pawhut-3-in-1-cat-wall-shelves-with-condo-bed-hammock-scratching-post-and-spring-ball-gray~283H0KP5S6000.html?utm_source=cj&utm_medium=display",
   "clickUrl": "",
   "description": "When floors feel crowded and your cat keeps claiming sofas, the PawHut cat wall shelves turn blank walls into a calming retreat. These wall-mounted cat shelves add perches, a bed, hammock and hideaway box, giving indoor cats a safer high-up zone in apartments or small rooms. A jute post, scratch board and teaser ball help redirect claws and energy, so your home stays tidier and daily life feels easier"
- },
- {
-  "species": "Cats",
-  "serves": [
-   "Cats"
-  ],
-  "matched": "category",
-  "advertiser": "Aosom.com",
-  "advertiserId": "5360120",
-  "title": "PawHut 30\"-41\" Extra Wide Walk Through Dog Gate w/ Cat Door, 3-Inch & 5.5-Inch Extension Kits, 30\" High",
-  "brand": "PawHut",
-  "price": "68.99 USD",
-  "salePrice": "59.99 USD",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Pet Playpens",
-  "image": "https://img-us.aosomcdn.com/100/product/2026/09/01/kbP3371a05c6c6ced.jpg",
-  "link": "https://www.aosom.com/item/pawhut-30-41-extra-wide-walk-through-dog-gate-w-cat-door-3-inch-5-5-inch-extension-kits-30-high~1PPLDFR4K9G00.html?utm_source=cj&utm_medium=display",
-  "clickUrl": "",
-  "description": "Discover the PawHut pet gate, a sleek 30.3\" high barrier that adjusts between 29.9\" and -40.9\" to fit your space. It features a convenient double-locking system and effortless single-handed use. Also, it includes a handy cat door that's great for keeping dogs in check while letting smaller pets roam freely. Suitable for stairways, hallways, and doorways this stylish and functional gate is great for every pet-loving home."
  },
  {
   "species": "Cats",
@@ -1280,6 +1261,63 @@
   "matched": "category",
   "advertiser": "Aosom.com",
   "advertiserId": "5360120",
+  "title": "PawHut Cat Litter Box with Lid with Scoop and Filter, Light Gray",
+  "brand": "PawHut",
+  "price": "70.99 USD",
+  "salePrice": "56.99 USD",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
+  "image": "https://img-us.aosomcdn.com/100/product/2025/02/25/V8Xec31953a7a8033.jpg",
+  "link": "https://www.aosom.com/item/pawhut-cat-litter-box-with-lid-with-scoop-and-filter-light-gray~1MTDMF48K9000.html?utm_source=cj&utm_medium=display",
+  "clickUrl": "",
+  "description": "The PawHut hooded litter box will give your cat complete privacy to put them at ease. Our covered cat litter box features an air filter to stop smells from escaping. It comes with a litter scoop that attaches to the side so it won't get lost, and its removable tray makes cleaning dirty litter easy. The cat litter mat in front catches spill outs preventing the transfer of litter to the carpet. A sleek piece with simple colors, its cute hut-like shape is an easy fit for your home."
+ },
+ {
+  "species": "Cats",
+  "serves": [
+   "Cats"
+  ],
+  "matched": "category",
+  "advertiser": "Aosom.com",
+  "advertiserId": "5360120",
+  "title": "PawHut Cat Litter Box with Lid with Scoop and Filter, Pink",
+  "brand": "PawHut",
+  "price": "70.99 USD",
+  "salePrice": "56.99 USD",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
+  "image": "https://img-us.aosomcdn.com/100/product/2025/02/08/6cZca4194e300c191.jpg",
+  "link": "https://www.aosom.com/item/pawhut-cat-litter-box-with-lid-with-scoop-and-filter-pink~1MTDMFGU4C000.html?utm_source=cj&utm_medium=display",
+  "clickUrl": "",
+  "description": "The PawHut hooded litter box will give your cat complete privacy to put them at ease. Our covered cat litter box features an air filter to stop smells from escaping. It comes with a litter scoop that attaches to the side so it won't get lost, and its removable tray makes cleaning dirty litter easy. The cat litter mat in front catches spill outs preventing the transfer of litter to the carpet. A sleek piece with simple colors, its cute hut-like shape is an easy fit for your home."
+ },
+ {
+  "species": "Cats",
+  "serves": [
+   "Cats"
+  ],
+  "matched": "category",
+  "advertiser": "Aosom.com",
+  "advertiserId": "5360120",
+  "title": "PawHut Cat Litter Box with Lid with Scoop and Filter, White",
+  "brand": "PawHut",
+  "price": "70.99 USD",
+  "salePrice": "56.99 USD",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
+  "image": "https://img-us.aosomcdn.com/100/product/2025/07/03/5Lg011197cdb26643.jpg",
+  "link": "https://www.aosom.com/item/pawhut-cat-litter-box-with-lid-covered-litter-box-for-indoor-cats-with-tray-scoop-filter-17-x-17-x-18-5-white~1GAIQRRG0M800.html?utm_source=cj&utm_medium=display",
+  "clickUrl": "",
+  "description": "The PawHut hooded litter box will give your cat complete privacy to put them at ease. Our covered cat litter box features an air filter to stop smells from escaping. It comes with a litter scoop that attaches to the side so it won't get lost, and its removable tray makes cleaning dirty litter easy. The cat litter mat in front catches spill outs preventing the transfer of litter to the carpet. A sleek piece with simple colors, its cute hut-like shape is an easy fit for your home."
+ },
+ {
+  "species": "Cats",
+  "serves": [
+   "Cats"
+  ],
+  "matched": "category",
+  "advertiser": "Aosom.com",
+  "advertiserId": "5360120",
   "title": "PawHut Cat Litter Box with Lid, Enclosed Litter Box for Medium Cats, Front-Entry and Top-Exit, Scoop, Deodorizer Bag, Pink",
   "brand": "PawHut",
   "price": "40.99 USD",
@@ -1527,6 +1565,44 @@
   "matched": "category",
   "advertiser": "Aosom.com",
   "advertiserId": "5360120",
+  "title": "PawHut Covered Cat Litter Box with Lid, Scoop, Deodorizing Bags for Odor Control, Privacy, Easy to Clean, Green",
+  "brand": "PawHut",
+  "price": "45.99 USD",
+  "salePrice": "39.99 USD",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
+  "image": "https://img-us.aosomcdn.com/100/product/2025/01/23/C7796619490883539.jpg",
+  "link": "https://www.aosom.com/item/pawhut-covered-cat-litter-box-with-lid-scoop-deodorizing-bags-for-odor-control-privacy-easy-to-clean-green~1R6I7D2B45O01.html?utm_source=cj&utm_medium=display",
+  "clickUrl": "",
+  "description": "Discover the PawHut enclosed cat box that offers privacy and cleanliness with its translucent flap door and dual-deodorizing bags to keep odors at bay. Its easy-to-clean design features a bottom drawer and a litter scoop, while the litter-proof entrance pedal prevents tracking. Plus, it's portable with a handy carrying handle."
+ },
+ {
+  "species": "Cats",
+  "serves": [
+   "Cats"
+  ],
+  "matched": "category",
+  "advertiser": "Aosom.com",
+  "advertiserId": "5360120",
+  "title": "PawHut Covered Cat Litter Box, Easy Cleaning Kitty Litter Box with Front Entrance, Top Exit, Scoop, for Odor Control, White",
+  "brand": "PawHut",
+  "price": "63.99 USD",
+  "salePrice": "49.99 USD",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
+  "image": "https://img-us.aosomcdn.com/100/product/2026/08/31/rQAddf1a05787aee1.jpg",
+  "link": "https://www.aosom.com/item/pawhut-covered-cat-litter-box-easy-cleaning-kitty-litter-box-with-front-entrance-top-exit-scoop-for-odor-control-white~1T3UJM1RC4O00.html?utm_source=cj&utm_medium=display",
+  "clickUrl": "",
+  "description": "This large cat litter box from PawHut provides pets with comfort and privacy. Your cat won't be seen, thanks to its enclosed design, which also traps unwanted odors, keeping your space smelling fresh. Getting in and out is simple - they'll enter through the front door, then exit through the top. It comes with a scoop to remove litter, whilst the openable top makes cleaning easy. Compact and stylish, it's great for any room."
+ },
+ {
+  "species": "Cats",
+  "serves": [
+   "Cats"
+  ],
+  "matched": "category",
+  "advertiser": "Aosom.com",
+  "advertiserId": "5360120",
   "title": "PawHut Dome Covered Cat Litter Box with Lid, White and Black",
   "brand": "PawHut",
   "price": "47.99 USD",
@@ -1651,6 +1727,44 @@
   "link": "https://www.aosom.com/item/pawhut-extra-large-stainless-steel-cat-litter-box-for-big-cats-with-flip-cover-high-sided-enclosure-scoop~20IMN1GESCG01.html?utm_source=cj&utm_medium=display",
   "clickUrl": "",
   "description": "Tired of constant litter box mess and odors? The PawHut stainless steel litter box offers a solution with its scratch-resistant and odor-resistant design, ensuring easy maintenance and a healthier space for your cat. Its spacious XL interior comforts even large cats, reducing cleaning hassles and enhancing your pet's experience. The top's flip-over design is great for busy pet owners to clean the tray, making routine tasks easier."
+ },
+ {
+  "species": "Cats",
+  "serves": [
+   "Cats"
+  ],
+  "matched": "category",
+  "advertiser": "Aosom.com",
+  "advertiserId": "5360120",
+  "title": "PawHut Extra Large Stainless Steel Cat Litter Box with Scoop & Pad, Anti-Urine Leakage, Easy Cleaning, Non-Sticky",
+  "brand": "PawHut",
+  "price": "53.99 USD",
+  "salePrice": "46.99 USD",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
+  "image": "https://img-us.aosomcdn.com/100/product/2026/08/31/Y0L84b1a055573c52.jpg",
+  "link": "https://www.aosom.com/item/pawhut-extra-large-stainless-steel-cat-litter-box-with-scoop-pad-anti-urine-leakage-easy-cleaning-non-sticky~268LGMLA42001.html?utm_source=cj&utm_medium=display",
+  "clickUrl": "",
+  "description": "Imagine your cat enjoying a wonderful sanctuary with the PawHut stainless steel litter box. Crafted from robust 201 stainless steel, it ensures lasting freshness and effortless cleaning. The XL design offers spacious comfort for larger breeds or multi-cat households, while the high 5.9\" walls keep stray litter contained. Transform your home into a neat, stress-free space, enhancing both your and your cat's quality of life."
+ },
+ {
+  "species": "Cats",
+  "serves": [
+   "Cats"
+  ],
+  "matched": "category",
+  "advertiser": "Aosom.com",
+  "advertiserId": "5360120",
+  "title": "PawHut Extra Large Stainless Steel Litter Box, Enclosed Cat Litter Box with Scoop, Deodorizer Bag, Sand Drop Pedal",
+  "brand": "PawHut",
+  "price": "72.99 USD",
+  "salePrice": "62.99 USD",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
+  "image": "https://img-us.aosomcdn.com/100/product/2025/08/15/MeFf4b198adb82a4d.jpg",
+  "link": "https://www.aosom.com/item/pawhut-extra-large-stainless-steel-litter-box-enclosed-cat-litter-box-with-scoop-deodorizer-bag-sand-drop-pedal~20I24B01S8801.html?utm_source=cj&utm_medium=display",
+  "clickUrl": "",
+  "description": "Let your cat enjoy the PawHut stainless steel litter box, where cleanliness meets convenience for a fresh litter experience! Designed with an odor-resistant, scratch-proof interior, this litter box helps keep your cat's space clean with less effort. The fully enclosed design features a front-entry and top-exit layout to reduce litter scatter, while the built-in sand drop area and step-on pedal catch loose grains before they hit your floor. Say goodbye to messy paws and hello to a tidier home!"
  },
  {
   "species": "Cats",
@@ -2078,6 +2192,25 @@
   "matched": "category",
   "advertiser": "Aosom.com",
   "advertiserId": "5360120",
+  "title": "PawHut Stainless Steel Cat Litter Box with Flip Lid, XXL Enclosed Litter Box, High Sided, Step, Metal Scoop, 2 Deodorizing Bags",
+  "brand": "PawHut",
+  "price": "87.99 USD",
+  "salePrice": "77.99 USD",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
+  "image": "https://img-us.aosomcdn.com/100/product/2026/09/02/L3t6281a063b86e82.jpg",
+  "link": "https://www.aosom.com/item/pawhut-stainless-steel-cat-litter-box-with-flip-lid-xxl-enclosed-litter-box-high-sided-step-metal-scoop-2-deodorizing~285SHJK1CC800.html?utm_source=cj&utm_medium=display",
+  "clickUrl": "",
+  "description": "Small pans and awkward lids can make daily cat care messy, while sudden changes may cause cautious cats to reject a new setup. Tracked litter, tight turning space, and hard-to-reach corners only add frustration. The PawHut solves it with a large cat litter box featuring 17.7\" x 22.2\" x 17.5\" interior space, 95\u00b0 flip-top access, and a 3-in-1 covered cat litter box design for gradual adjustment."
+ },
+ {
+  "species": "Cats",
+  "serves": [
+   "Cats"
+  ],
+  "matched": "category",
+  "advertiser": "Aosom.com",
+  "advertiserId": "5360120",
   "title": "PawHut Stainless Steel Litter Box, XL Sifting Cat Litter Box for Medium, Large Cat, Non-Sticky, Odour Free, Easy Clean, Silver",
   "brand": "PawHut",
   "price": "86.99 USD",
@@ -2145,25 +2278,6 @@
   "link": "https://www.aosom.com/item/pawhut-wooden-98-cat-tunnel-for-outdoor-with-combinable-design-8-doors-white~23AQP38TCE800.html?utm_source=cj&utm_medium=display",
   "clickUrl": "",
   "description": "Unleash fun with PawHut's cat play tunnel, a playground and outdoor cat house combinable play heaven. Its flexible design quickly transforms from separate play areas into a rectangle or an L-shaped adventure, making it a great addition to any outdoor cat shelter or cat enclosure. With eight doors for easy entry, it's a beautiful hide-and-seek spot for your furry friend under 10 lbs."
- },
- {
-  "species": "Cats",
-  "serves": [
-   "Cats"
-  ],
-  "matched": "category",
-  "advertiser": "Aosom.com",
-  "advertiserId": "5360120",
-  "title": "PawHut Wooden Cat Crate, Furniture Style Dog Cage, Puppy Kennel Indoor, End Table Pet House with Cushion and Sliding Doors, Rustic Brown",
-  "brand": "PawHut",
-  "price": "132.99 USD",
-  "salePrice": "68.99 USD",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
-  "image": "https://img-us.aosomcdn.com/100/product/2025/02/09/MRK7a3194eb039d3f.jpg",
-  "link": "https://www.aosom.com/item/pawhut-wooden-cat-house-end-table-elevated-kennel-pet-bed-w-removable-cushion-brown~D30-500V01.html?utm_source=cj&utm_medium=display",
-  "clickUrl": "",
-  "description": "<p style=\"white-space:normal;\">Do you need a comfortable indoor home for your cat? Look no further than our stylishly designed cat kennel with cushion from PawHut. This pet crate is secure, stable, and easy to assemble. The steel wire windows will ensure that your furry friend stays comfortable with proper ventilation. At the same time, it works as an end table, so feel free to store pet products or display items on top. Make sure that your cat loves the home you provide.</p><h3 style=\"white-space:normal;\">Features:</h3><ul style=\"white-space:normal;\"><li>- 2 shelves and wide top offer storage"
  },
  {
   "species": "Cats",
@@ -2373,6 +2487,25 @@
   "link": "https://www.aosom.com/item/spacious-cat-house-with-tempered-glass-modern-style-sturdy-fir-wood-and-iron-frame-55-12-l-x-22-83-w-x-29-92-h-black-brown~1OPT9NFOS3000.html?utm_source=cj&utm_medium=display",
   "clickUrl": "",
   "description": "Give your feline friend a luxurious retreat with this 55.12\" Spacious Cat House with Tempered Glass. Crafted from high-quality fir wood and an iron frame, this cat house is both sturdy and stylish, featuring a modern black and brown design that complements any home d\u00e9cor. The spacious interior allows your cat to play, rest, and even use a litter basin, while the hollow-out design ensures excellent ventilation and light. Easy to assemble and maintain, this cat house is perfect for your living room, hallway, study, or any other space in your home."
+ },
+ {
+  "species": "Cats",
+  "serves": [
+   "Cats"
+  ],
+  "matched": "title",
+  "advertiser": "Books-A-Million",
+  "advertiserId": "129899",
+  "title": "Meowsterpiece Chicken Breast Freeze-Dried Cat Treats",
+  "brand": "GivePet",
+  "price": "12.99 USD",
+  "salePrice": "12.99 USD",
+  "availability": "in stock",
+  "category": "",
+  "image": "https://covers.booksamillion.com/covers/gift/7/56/519/189/756519189131-1.jpg",
+  "link": "https://www.booksamillion.com/p/Meowsterpiece-Chicken-Breast-Freeze-Dried/GivePet/F756519189131",
+  "clickUrl": "",
+  "description": "Find Meowsterpiece Chicken Breast Freeze-Dried Cat Treats by GivePet."
  },
  {
   "species": "Cats",
@@ -2610,25 +2743,6 @@
   "matched": "category",
   "advertiser": "UntilGone",
   "advertiserId": "6185946",
-  "title": "Chef Scoochie's Dog and Cat Wet Food (6- or 12-Pack) - Real Duck & Chk in Savory Gravy Dog Food",
-  "brand": "Scoochie Pet",
-  "price": "41.99 USD",
-  "salePrice": "",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies",
-  "image": "https://cdn11.bigcommerce.com/s-yqzpac968l/product_images/attribute_rule_images/176006_source_1787689877.jpg",
-  "link": "https://untilgone.com/products/chef-scoochie-s-dog-and-cat-wet-food-6-or-12-pack.html?sku=SKU18100431",
-  "clickUrl": "",
-  "description": "<p>Serve your pet Chef Scoochie&#39;s Recipe Dog and Cat Food! This delicious wet food is brimming with real chicken, seafood, or duck in a mouthwatering gravy that your furry friend will devour. This recipe is fortified with essential vitamins and minerals, plus choline chloride, for radiant fur and a healthy heart. The high moisture content also promotes healthy digestion. With an easy-open pop-top can, serving is a snap. Give your companion the nutrition they deserve. Buy a 6- or 12-pack today and see the difference!</p> <p><strong>What&#39;s in the Box?</strong></p> <ul> <li>Chef Scoochie'"
- },
- {
-  "species": "Cats",
-  "serves": [
-   "Cats"
-  ],
-  "matched": "category",
-  "advertiser": "UntilGone",
-  "advertiserId": "6185946",
   "title": "Chef Scoochie's Dog and Cat Wet Food (6- or 12-Pack) - Real Seafood Chunks Cat Food",
   "brand": "Scoochie Pet",
   "price": "41.99 USD",
@@ -2810,6 +2924,44 @@
   "link": "https://untilgone.com/products/scoochie-pet-crunchy-cat-treats-1-to-4-pack.html?sku=SKU18137329",
   "clickUrl": "",
   "description": "<p>Spoil your cat with Scoochie Pet Chicken, Tuna &amp; Catnip Crunchy Cat Treats! These irresistible treats combine a satisfying crunch with a creamy filling, featuring a trio of delectable flavors: chicken, tuna, and catnip. Perfect for rewarding good behavior, training, or anytime you want to show your cat some love, each 8.8-oz tub offers freshness and convenience. These tasty morsels are free from artificial additives, providing a wholesome snack your feline friend will adore. Bring home the variety pack today and watch your cat purr with delight!</p> <p><strong>What&#39;s in the Box?</st"
+ },
+ {
+  "species": "Cats",
+  "serves": [
+   "Cats"
+  ],
+  "matched": "category",
+  "advertiser": "UntilGone",
+  "advertiserId": "6185946",
+  "title": "Scoochie Pet Crunchy Cat Treats (1- to 4-Pack) - Chicken Crunchy Cat Treats 1 CT",
+  "brand": "Scoochie Pet",
+  "price": "13.99 USD",
+  "salePrice": "",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Treats",
+  "image": "https://cdn11.bigcommerce.com/s-yqzpac968l/product_images/attribute_rule_images/178309_source_1787689977.jpg",
+  "link": "https://untilgone.com/products/scoochie-pet-crunchy-cat-treats-1-to-4-pack.html?sku=SKU18137332",
+  "clickUrl": "",
+  "description": "<p>Spoil your cat with Scoochie Pet Chicken, Tuna &amp; Catnip Crunchy Cat Treats! These irresistible treats combine a satisfying crunch with a creamy filling, featuring a trio of delectable flavors: chicken, tuna, and catnip. Perfect for rewarding good behavior, training, or anytime you want to show your cat some love, each 8.8-oz tub offers freshness and convenience. These tasty morsels are free from artificial additives, providing a wholesome snack your feline friend will adore. Bring home the variety pack today and watch your cat purr with delight!</p> <p><strong>What&#39;s in the Box?</st"
+ },
+ {
+  "species": "Cats",
+  "serves": [
+   "Cats"
+  ],
+  "matched": "category",
+  "advertiser": "UntilGone",
+  "advertiserId": "6185946",
+  "title": "Scoochie Pet Salmon, Chicken Stew Wet Cat Food (4, 8, or 16-Pack) - VRTY PK Chk & Salmon Wet Cat Food, 4 CT",
+  "brand": "Scoochie Pet",
+  "price": "16.99 USD",
+  "salePrice": "",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Food",
+  "image": "https://cdn11.bigcommerce.com/s-yqzpac968l/product_images/attribute_rule_images/178490_source_1791410477.png",
+  "link": "https://untilgone.com/products/scoochie-pet-salmon-chicken-stew-wet-cat-food-4-8-or-16-pack.html?sku=SKU18037629",
+  "clickUrl": "",
+  "description": "<p>Delight your discerning cat with Scoochie Salmon &amp; Chicken Stew, a delectable adventure in every bite. Tender morsels of real salmon and savory chicken swim in a rich, irresistible gravy, crafted to satisfy even the most particular palates. This grain-free formula is made with natural ingredients, ensuring a wholesome, nutritious meal your cat will adore. Perfect as a standalone treat or a scrumptious topper to their favorite kibble, each convenient 3.5-ounce pouch delivers pure feline joy. Elevate mealtime for your beloved companion &ndash; purchase Scoochie Salmon &amp; Chicken Stew t"
  },
  {
   "species": "Cats",
@@ -3307,6 +3459,25 @@
   "link": "https://www.aosom.com/item/pawhut-pet-stroller-for-small-dogs-medium-dogs-blue~1JHE529J43000.html?utm_source=cj&utm_medium=display",
   "clickUrl": "",
   "description": "Make pet travel a delightful experience for everyone with the PawHut pet stroller. This stroller has three large wheels, ensuring easy maneuverability on any terrain. Pets can relax in a cozy cabin with a soft mat for added comfort. The mesh windows allow fresh air to circulate, keeping pets cool. An adjustable canopy protects pets from the weather, allowing them a better outdoor experience. When done, the stroller effortlessly folds and stores, making it ready for your next adventure together."
+ },
+ {
+  "species": "Dogs",
+  "serves": [
+   "Dogs"
+  ],
+  "matched": "category",
+  "advertiser": "Aosom.com",
+  "advertiserId": "5360120",
+  "title": "PawHut 30\"-41\" Extra Wide Walk Through Dog Gate w/ Cat Door, 3-Inch & 5.5-Inch Extension Kits, 30\" High",
+  "brand": "PawHut",
+  "price": "68.99 USD",
+  "salePrice": "59.99 USD",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Pet Playpens",
+  "image": "https://img-us.aosomcdn.com/100/product/2026/09/01/kbP3371a05c6c6ced.jpg",
+  "link": "https://www.aosom.com/item/pawhut-30-41-extra-wide-walk-through-dog-gate-w-cat-door-3-inch-5-5-inch-extension-kits-30-high~1PPLDFR4K9G00.html?utm_source=cj&utm_medium=display",
+  "clickUrl": "",
+  "description": "Discover the PawHut pet gate, a sleek 30.3\" high barrier that adjusts between 29.9\" and -40.9\" to fit your space. It features a convenient double-locking system and effortless single-handed use. Also, it includes a handy cat door that's great for keeping dogs in check while letting smaller pets roam freely. Suitable for stairways, hallways, and doorways this stylish and functional gate is great for every pet-loving home."
  },
  {
   "species": "Dogs",
@@ -5632,6 +5803,26 @@
   "link": "https://www.aosom.com/item/pawhut-4-sturdy-legs-elevated-cushioned-pe-rattan-dog-cat-house-with-comfortable-protective-anti-slip-sleeping-pad-weather-fighting-material~D02-029.html?utm_source=cj&utm_medium=display",
   "clickUrl": "",
   "description": "<p style=\"white-space:normal;\">Give your dog a place that they can call home both indoors and out. You can provide the best rest they can receive with this rattan canopy bed from PawHut. This pet bed is suited for small to medium-sized animals to use as a home, with plenty of space to bring toys, blankets, treats. Use the dog bed outdoors and not worry about falling apart, thanks to the solid steel frame and all-weather rattan. Let PawHut help you bring home a cabana that's easy to assemble and keeps pets comfortable.</p><h3 style=\"white-space:normal;\">Features:</h3><ul style=\"white-space:norm"
+ },
+ {
+  "species": "Dogs",
+  "serves": [
+   "Dogs",
+   "Cats"
+  ],
+  "matched": "category",
+  "advertiser": "Aosom.com",
+  "advertiserId": "5360120",
+  "title": "PawHut Wooden Cat Crate, Furniture Style Dog Cage, Puppy Kennel Indoor, End Table Pet House with Cushion and Sliding Doors, Rustic Brown",
+  "brand": "PawHut",
+  "price": "132.99 USD",
+  "salePrice": "68.99 USD",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
+  "image": "https://img-us.aosomcdn.com/100/product/2025/02/09/MRK7a3194eb039d3f.jpg",
+  "link": "https://www.aosom.com/item/pawhut-wooden-cat-house-end-table-elevated-kennel-pet-bed-w-removable-cushion-brown~D30-500V01.html?utm_source=cj&utm_medium=display",
+  "clickUrl": "",
+  "description": "<p style=\"white-space:normal;\">Do you need a comfortable indoor home for your cat? Look no further than our stylishly designed cat kennel with cushion from PawHut. This pet crate is secure, stable, and easy to assemble. The steel wire windows will ensure that your furry friend stays comfortable with proper ventilation. At the same time, it works as an end table, so feel free to store pet products or display items on top. Make sure that your cat loves the home you provide.</p><h3 style=\"white-space:normal;\">Features:</h3><ul style=\"white-space:normal;\"><li>- 2 shelves and wide top offer storage"
  },
  {
   "species": "Dogs",
@@ -8701,6 +8892,25 @@
   "matched": "category",
   "advertiser": "UntilGone",
   "advertiserId": "6185946",
+  "title": "6-Inch Chicken Crunchy Rolls Dog Treats by The Treat Shack - 6\" Chicken Crunchy Rolls Dog Treat ,6 Ct",
+  "brand": "The Treat Shack",
+  "price": "13.99 USD",
+  "salePrice": "",
+  "availability": "out of stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Treats",
+  "image": "https://cdn11.bigcommerce.com/s-yqzpac968l/products/38348/images/538921/949502_PT1deb7fc6c34b5e65575740f26618ef389_std__83911.1741590350.386.513.jpg?c=1",
+  "link": "https://untilgone.com/products/6-inch-chicken-crunchy-rolls-dog-treats-by-the-treat-shack.html?sku=SKU11003381",
+  "clickUrl": "",
+  "description": "<p>Indulge your furry friend in the ultimate bargain with The Treat Shack&#39;s 6-Inch Chicken Crunchy Rolls Dog Treats! These budget-friendly treats are packed with collagen, a powerhouse nutrient that keeps your dog&#39;s joints healthy and mobile. The act of chewing helps reduce plaque and tartar, promoting dental health and fresher breath. Plus, collagen enhances coat shine and supports healthy skin, giving your dog a radiant glow. Easy to digest and free from artificial additives, fillers, and common allergens, these treats are a wholesome and satisfying way to pamper your pup. And with t"
+ },
+ {
+  "species": "Dogs",
+  "serves": [
+   "Dogs"
+  ],
+  "matched": "category",
+  "advertiser": "UntilGone",
+  "advertiserId": "6185946",
   "title": "American Kennel Club\u00ae Quilted Dog Puffer Jacket with Faux Fur Hood - Blue - Extra Small",
   "brand": "American Kennel Club",
   "price": "11.99 USD",
@@ -8711,6 +8921,25 @@
   "link": "https://untilgone.com/products/american-kennel-club-quilted-dog-puffer-jacket-with-faux-fur-hood.html?sku=YUG67121",
   "clickUrl": "",
   "description": "<p>Outfit your pup in the American Kennel Club&reg; Quilted Dog Puffer Jacket and make walks a stylish treat! Boasting a water-resistant quilted nylon shell and toasty microfleece lining, this jacket ensures warmth and comfort no matter the weather. The removable faux fur hood adds flair, while leather detailing and a fleece-lined belly provide extra coziness. With secure Velcro closures, a comfortable fit, and a convenient harness hole, your furry friend will strut confidently through any adventure. Get yours today and let your dog experience the perfect blend of fashion and function!</p> <p>"
+ },
+ {
+  "species": "Dogs",
+  "serves": [
+   "Dogs"
+  ],
+  "matched": "category",
+  "advertiser": "UntilGone",
+  "advertiserId": "6185946",
+  "title": "Chef Scoochie's Dog and Cat Wet Food (6- or 12-Pack) - Real Duck & Chk in Savory Gravy Dog Food",
+  "brand": "Scoochie Pet",
+  "price": "41.99 USD",
+  "salePrice": "",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies",
+  "image": "https://cdn11.bigcommerce.com/s-yqzpac968l/product_images/attribute_rule_images/176006_source_1787689877.jpg",
+  "link": "https://untilgone.com/products/chef-scoochie-s-dog-and-cat-wet-food-6-or-12-pack.html?sku=SKU18100431",
+  "clickUrl": "",
+  "description": "<p>Serve your pet Chef Scoochie&#39;s Recipe Dog and Cat Food! This delicious wet food is brimming with real chicken, seafood, or duck in a mouthwatering gravy that your furry friend will devour. This recipe is fortified with essential vitamins and minerals, plus choline chloride, for radiant fur and a healthy heart. The high moisture content also promotes healthy digestion. With an easy-open pop-top can, serving is a snap. Give your companion the nutrition they deserve. Buy a 6- or 12-pack today and see the difference!</p> <p><strong>What&#39;s in the Box?</strong></p> <ul> <li>Chef Scoochie'"
  },
  {
   "species": "Dogs",
@@ -9148,6 +9377,44 @@
   "link": "https://untilgone.com/products/scoochie-pet-squeaky-plush-dog-chew-toy.html?sku=SKU16817100",
   "clickUrl": "",
   "description": "<p>Treat your furry friend to Scoochie Pet Squeaky Plush Dog Chew Toys and watch them light up with joy! These durable toys keep boredom at bay, promoting good behavior and teaching new skills. Strengthen your bond through interactive play, providing comfort and relief from anxiety. Built to withstand even the most enthusiastic chewers, Scoochie Pet toys are the perfect solution for a happy and stimulated pup. Bring home the fun&mdash;order your Scoochie Pet toy today!</p> <p><strong>What&#39;s in the Box?</strong></p> <ul> <li>Scoochie Pet Squeaky Plush Dog Chew Toy - Marc the Mouse Squeaky D"
+ },
+ {
+  "species": "Dogs",
+  "serves": [
+   "Dogs"
+  ],
+  "matched": "category",
+  "advertiser": "UntilGone",
+  "advertiserId": "6185946",
+  "title": "Scoochie Pet Squeaky Plush Dog Chew Toy - Sebby Bird Squeaky Dog Toy",
+  "brand": "Scoochie Pet",
+  "price": "12.99 USD",
+  "salePrice": "",
+  "availability": "out of stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Toys",
+  "image": "https://cdn11.bigcommerce.com/s-yqzpac968l/products/44085/images/695381/1481302_MA7fcfe830c54f881e08ae28c0b06aada0_std__46879.1757614123.386.513.jpg?c=1",
+  "link": "https://untilgone.com/products/scoochie-pet-squeaky-plush-dog-chew-toy.html?sku=SKU16817096",
+  "clickUrl": "",
+  "description": "<p>Treat your furry friend to Scoochie Pet Squeaky Plush Dog Chew Toys and watch them light up with joy! These durable toys keep boredom at bay, promoting good behavior and teaching new skills. Strengthen your bond through interactive play, providing comfort and relief from anxiety. Built to withstand even the most enthusiastic chewers, Scoochie Pet toys are the perfect solution for a happy and stimulated pup. Bring home the fun&mdash;order your Scoochie Pet toy today!</p> <p><strong>What&#39;s in the Box?</strong></p> <ul> <li>Scoochie Pet Squeaky Plush Dog Chew Toy - Sebby Bird Squeaky Dog T"
+ },
+ {
+  "species": "Dogs",
+  "serves": [
+   "Dogs"
+  ],
+  "matched": "category",
+  "advertiser": "UntilGone",
+  "advertiserId": "6185946",
+  "title": "Scoochie Pet Squeaky Plush Dog Chew Toy - Suzy Sea Horse Squeaky Plush Dog Toy",
+  "brand": "Scoochie Pet",
+  "price": "14.99 USD",
+  "salePrice": "",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Toys",
+  "image": "https://cdn11.bigcommerce.com/s-yqzpac968l/product_images/attribute_rule_images/173209_source_1785796666.jpg",
+  "link": "https://untilgone.com/products/scoochie-pet-squeaky-plush-dog-chew-toy.html?sku=SKU16817098",
+  "clickUrl": "",
+  "description": "<p>Treat your furry friend to Scoochie Pet Squeaky Plush Dog Chew Toys and watch them light up with joy! These durable toys keep boredom at bay, promoting good behavior and teaching new skills. Strengthen your bond through interactive play, providing comfort and relief from anxiety. Built to withstand even the most enthusiastic chewers, Scoochie Pet toys are the perfect solution for a happy and stimulated pup. Bring home the fun&mdash;order your Scoochie Pet toy today!</p> <p><strong>What&#39;s in the Box?</strong></p> <ul> <li>Scoochie Pet Squeaky Plush Dog Chew Toy - Suzy Sea Horse Squeaky P"
  },
  {
   "species": "Dogs",
@@ -9987,25 +10254,6 @@
   "description": "<p>Empower yourself with three&nbsp;different tools to achieve amazing results when deshedding and nail clipping your pets.&nbsp;Regular brushing improves blood circulation to promote a healthy and shiny coat. Also promotes a healthy home by reducing pet dander and&nbsp;allergens.</p> <p>These grooming tools with safety guards are&nbsp;made from the finest quality stainless steel to give&nbsp;long-lasting, sharp cutting edges. Nail trimming should be a regular part of your pet&#39;s&nbsp;grooming; it is important to your pet&#39;s well-being to do so. Be sure to accustom your dog or cat to hav"
  },
  {
-  "species": "Horses",
-  "serves": [
-   "Horses"
-  ],
-  "matched": "category",
-  "advertiser": "UntilGone",
-  "advertiserId": "6185946",
-  "title": "Scoochie Pet Squeaky Plush Dog Chew Toy - Suzy Sea Horse Squeaky Plush Dog Toy",
-  "brand": "Scoochie Pet",
-  "price": "14.99 USD",
-  "salePrice": "",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Toys",
-  "image": "https://cdn11.bigcommerce.com/s-yqzpac968l/product_images/attribute_rule_images/173209_source_1785796666.jpg",
-  "link": "https://untilgone.com/products/scoochie-pet-squeaky-plush-dog-chew-toy.html?sku=SKU16817098",
-  "clickUrl": "",
-  "description": "<p>Treat your furry friend to Scoochie Pet Squeaky Plush Dog Chew Toys and watch them light up with joy! These durable toys keep boredom at bay, promoting good behavior and teaching new skills. Strengthen your bond through interactive play, providing comfort and relief from anxiety. Built to withstand even the most enthusiastic chewers, Scoochie Pet toys are the perfect solution for a happy and stimulated pup. Bring home the fun&mdash;order your Scoochie Pet toy today!</p> <p><strong>What&#39;s in the Box?</strong></p> <ul> <li>Scoochie Pet Squeaky Plush Dog Chew Toy - Suzy Sea Horse Squeaky P"
- },
- {
   "species": "Poultry",
   "serves": [
    "Poultry"
@@ -10118,25 +10366,6 @@
   "link": "https://www.aosom.com/item/pawhut-17-1-ft-x-15-7-ft-chicken-run-for-19-25-chickens-with-cover~1JSHG1I4C2G00.html?utm_source=cj&utm_medium=display",
   "clickUrl": "",
   "description": "The extra room in this PawHut metal chicken run accommodates an abundance of chickens while giving you the luxury of space to walk around inside. Keep your animals cool, dry, and covered in an octagon roofed setting that offers shade and rainproof protection. This large chicken coop has the strength to outlast harsh use. Dipped mesh wire and galvanized steel prevent predators from getting in while allowing air circulation."
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
-  "matched": "category",
-  "advertiser": "Aosom.com",
-  "advertiserId": "5360120",
-  "title": "PawHut 2 Pack XL Stainless Steel Litter Box, Metal Cat Litter Box High Sided with Tracking Step & Stainless Steel Scoops",
-  "brand": "PawHut",
-  "price": "74.99 USD",
-  "salePrice": "64.99 USD",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
-  "image": "https://img-us.aosomcdn.com/100/product/2026/09/02/Fal0901a0626ec76f.jpg",
-  "link": "https://www.aosom.com/item/pawhut-2-pack-xl-stainless-steel-litter-box-metal-cat-litter-box-high-sided-with-tracking-step-stainless-steel-scoops~27ASMVVVK5800.html?utm_source=cj&utm_medium=display",
-  "clickUrl": "",
-  "description": "Tired of plastic litter boxes that trap odors and stains within weeks? Every scrub feels pointless as smells seep deeper, and your cat's space turns into a daily frustration. PawHut changes this with a stainless steel litter box featuring high sides and a tracking-control step. The XL metal pan resists scratch, wipes clean instantly, and never absorbs odors \u2014 giving your cat a fresh, hygienic space every single day"
  },
  {
   "species": "Poultry",
@@ -10393,63 +10622,6 @@
   "matched": "category",
   "advertiser": "Aosom.com",
   "advertiserId": "5360120",
-  "title": "PawHut Cat Litter Box with Lid with Scoop and Filter, Light Gray",
-  "brand": "PawHut",
-  "price": "70.99 USD",
-  "salePrice": "56.99 USD",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
-  "image": "https://img-us.aosomcdn.com/100/product/2025/02/25/V8Xec31953a7a8033.jpg",
-  "link": "https://www.aosom.com/item/pawhut-cat-litter-box-with-lid-with-scoop-and-filter-light-gray~1MTDMF48K9000.html?utm_source=cj&utm_medium=display",
-  "clickUrl": "",
-  "description": "The PawHut hooded litter box will give your cat complete privacy to put them at ease. Our covered cat litter box features an air filter to stop smells from escaping. It comes with a litter scoop that attaches to the side so it won't get lost, and its removable tray makes cleaning dirty litter easy. The cat litter mat in front catches spill outs preventing the transfer of litter to the carpet. A sleek piece with simple colors, its cute hut-like shape is an easy fit for your home."
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
-  "matched": "category",
-  "advertiser": "Aosom.com",
-  "advertiserId": "5360120",
-  "title": "PawHut Cat Litter Box with Lid with Scoop and Filter, Pink",
-  "brand": "PawHut",
-  "price": "70.99 USD",
-  "salePrice": "56.99 USD",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
-  "image": "https://img-us.aosomcdn.com/100/product/2025/02/08/6cZca4194e300c191.jpg",
-  "link": "https://www.aosom.com/item/pawhut-cat-litter-box-with-lid-with-scoop-and-filter-pink~1MTDMFGU4C000.html?utm_source=cj&utm_medium=display",
-  "clickUrl": "",
-  "description": "The PawHut hooded litter box will give your cat complete privacy to put them at ease. Our covered cat litter box features an air filter to stop smells from escaping. It comes with a litter scoop that attaches to the side so it won't get lost, and its removable tray makes cleaning dirty litter easy. The cat litter mat in front catches spill outs preventing the transfer of litter to the carpet. A sleek piece with simple colors, its cute hut-like shape is an easy fit for your home."
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
-  "matched": "category",
-  "advertiser": "Aosom.com",
-  "advertiserId": "5360120",
-  "title": "PawHut Cat Litter Box with Lid with Scoop and Filter, White",
-  "brand": "PawHut",
-  "price": "70.99 USD",
-  "salePrice": "56.99 USD",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
-  "image": "https://img-us.aosomcdn.com/100/product/2025/07/03/5Lg011197cdb26643.jpg",
-  "link": "https://www.aosom.com/item/pawhut-cat-litter-box-with-lid-covered-litter-box-for-indoor-cats-with-tray-scoop-filter-17-x-17-x-18-5-white~1GAIQRRG0M800.html?utm_source=cj&utm_medium=display",
-  "clickUrl": "",
-  "description": "The PawHut hooded litter box will give your cat complete privacy to put them at ease. Our covered cat litter box features an air filter to stop smells from escaping. It comes with a litter scoop that attaches to the side so it won't get lost, and its removable tray makes cleaning dirty litter easy. The cat litter mat in front catches spill outs preventing the transfer of litter to the carpet. A sleek piece with simple colors, its cute hut-like shape is an easy fit for your home."
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
-  "matched": "category",
-  "advertiser": "Aosom.com",
-  "advertiserId": "5360120",
   "title": "PawHut Chicken Activity Play Set with Multiple Chicken Perches, Swing, Ladder, Platform for 3-4 Chickens, Coffee",
   "brand": "PawHut",
   "price": "102.99 USD",
@@ -10498,25 +10670,6 @@
   "link": "https://www.aosom.com/item/pawhut-wooden-chicken-toys-for-coop-with-swings-chicken-activity-center-for-resting-play-with-ladder-multiple~1DG4K2UB0F001.html?utm_source=cj&utm_medium=display",
   "clickUrl": "",
   "description": "The chicken toys for hens in coop from PawHut are the perfect option if you're looking for ways to keep your chickens amused or get some rest while you're away. They will have enough room to spread their wings while playing and relaxing on the chicken swings. The top platform is included to let them climb higher for enjoyment instead of playing on the ground. It is secure for your hens to play on, unwind on, and peck on because it has a sturdy fir wood framework and a strong base."
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
-  "matched": "category",
-  "advertiser": "Aosom.com",
-  "advertiserId": "5360120",
-  "title": "PawHut Chicken Coop Hen House with Nesting Box, Elevated Rabbit Hutch with Ramp, Asphalt Openable Roof and Elevated Legs",
-  "brand": "PawHut",
-  "price": "195.99 USD",
-  "salePrice": "159.99 USD",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Small Animal Supplies > Small Animal Habitats & Cages",
-  "image": "https://img-us.aosomcdn.com/100/product/2026/08/24/eAz88d1a034667626.jpg",
-  "link": "https://www.aosom.com/item/pawhut-chicken-coop-hen-house-with-nesting-box-elevated-rabbit-hutch-with-ramp-asphalt-openable-roof-and-elevated-legs~23SPBDL5C7801.html?utm_source=cj&utm_medium=display",
-  "clickUrl": "",
-  "description": "Tired of damp, smelly coops and difficult cleaning routines? Wet ground can compromise your flock's health, and scrubbing tight corners steals your precious time. The PawHut rabbit hutch provides a solution. Its elevated design keeps the hen house dry, a openable roof makes cleaning effortless, and robust, all-weather construction offers you complete peace of mind through every season."
  },
  {
   "species": "Poultry",
@@ -10716,44 +10869,6 @@
   "matched": "category",
   "advertiser": "Aosom.com",
   "advertiserId": "5360120",
-  "title": "PawHut Covered Cat Litter Box with Lid, Scoop, Deodorizing Bags for Odor Control, Privacy, Easy to Clean, Green",
-  "brand": "PawHut",
-  "price": "45.99 USD",
-  "salePrice": "39.99 USD",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
-  "image": "https://img-us.aosomcdn.com/100/product/2025/01/23/C7796619490883539.jpg",
-  "link": "https://www.aosom.com/item/pawhut-covered-cat-litter-box-with-lid-scoop-deodorizing-bags-for-odor-control-privacy-easy-to-clean-green~1R6I7D2B45O01.html?utm_source=cj&utm_medium=display",
-  "clickUrl": "",
-  "description": "Discover the PawHut enclosed cat box that offers privacy and cleanliness with its translucent flap door and dual-deodorizing bags to keep odors at bay. Its easy-to-clean design features a bottom drawer and a litter scoop, while the litter-proof entrance pedal prevents tracking. Plus, it's portable with a handy carrying handle."
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
-  "matched": "category",
-  "advertiser": "Aosom.com",
-  "advertiserId": "5360120",
-  "title": "PawHut Covered Cat Litter Box, Easy Cleaning Kitty Litter Box with Front Entrance, Top Exit, Scoop, for Odor Control, White",
-  "brand": "PawHut",
-  "price": "63.99 USD",
-  "salePrice": "49.99 USD",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
-  "image": "https://img-us.aosomcdn.com/100/product/2026/08/31/rQAddf1a05787aee1.jpg",
-  "link": "https://www.aosom.com/item/pawhut-covered-cat-litter-box-easy-cleaning-kitty-litter-box-with-front-entrance-top-exit-scoop-for-odor-control-white~1T3UJM1RC4O00.html?utm_source=cj&utm_medium=display",
-  "clickUrl": "",
-  "description": "This large cat litter box from PawHut provides pets with comfort and privacy. Your cat won't be seen, thanks to its enclosed design, which also traps unwanted odors, keeping your space smelling fresh. Getting in and out is simple - they'll enter through the front door, then exit through the top. It comes with a scoop to remove litter, whilst the openable top makes cleaning easy. Compact and stylish, it's great for any room."
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
-  "matched": "category",
-  "advertiser": "Aosom.com",
-  "advertiserId": "5360120",
   "title": "PawHut Extra Large Run Included Chicken Coop with Removable Tray Orange",
   "brand": "PawHut",
   "price": "275.99 USD",
@@ -10764,63 +10879,6 @@
   "link": "https://www.aosom.com/item/pawhut-extra-large-run-included-chicken-coop-with-removable-tray-orange~1KJ2F7ANK2801.html?utm_source=cj&utm_medium=display",
   "clickUrl": "",
   "description": "A safe hen coop is a happy coop. Give your chickens a cozy new living space in a PawHut chicken coop. Let a cage be a place of hominess, it offers shade in the sun and a dry space under the rain. With climate-safe non-polluting materials, you can avoid unhealthy ingredients and treat your animal home with care while protecting the planet we live on. Give your hens room for happiness with PawHut."
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
-  "matched": "category",
-  "advertiser": "Aosom.com",
-  "advertiserId": "5360120",
-  "title": "PawHut Extra Large Stainless Steel Cat Litter Box with Scoop & Pad, Anti-Urine Leakage, Easy Cleaning, Non-Sticky",
-  "brand": "PawHut",
-  "price": "53.99 USD",
-  "salePrice": "46.99 USD",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
-  "image": "https://img-us.aosomcdn.com/100/product/2026/08/31/Y0L84b1a055573c52.jpg",
-  "link": "https://www.aosom.com/item/pawhut-extra-large-stainless-steel-cat-litter-box-with-scoop-pad-anti-urine-leakage-easy-cleaning-non-sticky~268LGMLA42001.html?utm_source=cj&utm_medium=display",
-  "clickUrl": "",
-  "description": "Imagine your cat enjoying a wonderful sanctuary with the PawHut stainless steel litter box. Crafted from robust 201 stainless steel, it ensures lasting freshness and effortless cleaning. The XL design offers spacious comfort for larger breeds or multi-cat households, while the high 5.9\" walls keep stray litter contained. Transform your home into a neat, stress-free space, enhancing both your and your cat's quality of life."
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
-  "matched": "category",
-  "advertiser": "Aosom.com",
-  "advertiserId": "5360120",
-  "title": "PawHut Extra Large Stainless Steel Litter Box, Enclosed Cat Litter Box with Scoop, Deodorizer Bag, Sand Drop Pedal",
-  "brand": "PawHut",
-  "price": "72.99 USD",
-  "salePrice": "62.99 USD",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
-  "image": "https://img-us.aosomcdn.com/100/product/2025/08/15/MeFf4b198adb82a4d.jpg",
-  "link": "https://www.aosom.com/item/pawhut-extra-large-stainless-steel-litter-box-enclosed-cat-litter-box-with-scoop-deodorizer-bag-sand-drop-pedal~20I24B01S8801.html?utm_source=cj&utm_medium=display",
-  "clickUrl": "",
-  "description": "Let your cat enjoy the PawHut stainless steel litter box, where cleanliness meets convenience for a fresh litter experience! Designed with an odor-resistant, scratch-proof interior, this litter box helps keep your cat's space clean with less effort. The fully enclosed design features a front-entry and top-exit layout to reduce litter scatter, while the built-in sand drop area and step-on pedal catch loose grains before they hit your floor. Say goodbye to messy paws and hello to a tidier home!"
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
-  "matched": "category",
-  "advertiser": "Aosom.com",
-  "advertiserId": "5360120",
-  "title": "PawHut Floating Duck Coop, Wooden Duck House with Ramp and Waterproof Asphalt Roof, Small Animal House",
-  "brand": "PawHut",
-  "price": "278.99 USD",
-  "salePrice": "238.99 USD",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Small Animal Supplies > Small Animal Habitats & Cages",
-  "image": "https://img-us.aosomcdn.com/100/product/2026/08/24/ONr47b1a031ef0fe1.jpg",
-  "link": "https://www.aosom.com/item/pawhut-floating-duck-coop-wooden-duck-house-with-ramp-and-waterproof-asphalt-roof-small-animal-house~24K0L2GFS9001.html?utm_source=cj&utm_medium=display",
-  "clickUrl": "",
-  "description": "Struggling to provide a safe and pleasant home for your ducks on the water? The worry of sudden storms and unpleasant odors can spoil the tranquility of your pond. This PawHut outdoor duck coop offers a stable, floating solution. Crafted from fir wood with an asphalt roof, it provides all-weather protection, while dual doors ensure fresh air, creating a serene and secure duck house."
  },
  {
   "species": "Poultry",
@@ -10954,25 +11012,6 @@
   "link": "https://www.aosom.com/item/pawhut-pvc-coated-steel-chicken-rabbit-mesh-fencing-wire-garden-galvanised-fence-border~D1-0076.html?utm_source=cj&utm_medium=display",
   "clickUrl": "",
   "description": "Are you looking for a multi-purpose and convenient solution to enhance or establish fencing protection? This wire mesh fencing can be utilized with any existing poultry henhouse, animal kennel, bird aviary, and even fruits and vegetable gardens. This mesh pet and garden fencing is rust-resistant due to pvc coating, but will not fall apart easily due to steel wire construction. In addition, you can bend and cut apart the metal wire fence to suit a variety of situations and ensure peace of mind that your set up will not be easily destroyed."
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
-  "matched": "category",
-  "advertiser": "Aosom.com",
-  "advertiserId": "5360120",
-  "title": "PawHut Stainless Steel Cat Litter Box with Flip Lid, XXL Enclosed Litter Box, High Sided, Step, Metal Scoop, 2 Deodorizing Bags",
-  "brand": "PawHut",
-  "price": "87.99 USD",
-  "salePrice": "77.99 USD",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Litter Boxes",
-  "image": "https://img-us.aosomcdn.com/100/product/2026/09/02/L3t6281a063b86e82.jpg",
-  "link": "https://www.aosom.com/item/pawhut-stainless-steel-cat-litter-box-with-flip-lid-xxl-enclosed-litter-box-high-sided-step-metal-scoop-2-deodorizing~285SHJK1CC800.html?utm_source=cj&utm_medium=display",
-  "clickUrl": "",
-  "description": "Small pans and awkward lids can make daily cat care messy, while sudden changes may cause cautious cats to reject a new setup. Tracked litter, tight turning space, and hard-to-reach corners only add frustration. The PawHut solves it with a large cat litter box featuring 17.7\" x 22.2\" x 17.5\" interior space, 95\u00b0 flip-top access, and a 3-in-1 covered cat litter box design for gradual adjustment."
  },
  {
   "species": "Poultry",
@@ -11169,25 +11208,6 @@
   "serves": [
    "Poultry"
   ],
-  "matched": "title",
-  "advertiser": "Books-A-Million",
-  "advertiserId": "129899",
-  "title": "Meowsterpiece Chicken Breast Freeze-Dried Cat Treats",
-  "brand": "GivePet",
-  "price": "12.99 USD",
-  "salePrice": "12.99 USD",
-  "availability": "in stock",
-  "category": "",
-  "image": "https://covers.booksamillion.com/covers/gift/7/56/519/189/756519189131-1.jpg",
-  "link": "https://www.booksamillion.com/p/Meowsterpiece-Chicken-Breast-Freeze-Dried/GivePet/F756519189131",
-  "clickUrl": "",
-  "description": "Find Meowsterpiece Chicken Breast Freeze-Dried Cat Treats by GivePet."
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
   "matched": "category",
   "advertiser": "UntilGone",
   "advertiserId": "6185946",
@@ -11286,25 +11306,6 @@
   "matched": "category",
   "advertiser": "UntilGone",
   "advertiserId": "6185946",
-  "title": "6-Inch Chicken Crunchy Rolls Dog Treats by The Treat Shack - 6\" Chicken Crunchy Rolls Dog Treat ,6 Ct",
-  "brand": "The Treat Shack",
-  "price": "13.99 USD",
-  "salePrice": "",
-  "availability": "out of stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Dog Supplies > Dog Treats",
-  "image": "https://cdn11.bigcommerce.com/s-yqzpac968l/products/38348/images/538921/949502_PT1deb7fc6c34b5e65575740f26618ef389_std__83911.1741590350.386.513.jpg?c=1",
-  "link": "https://untilgone.com/products/6-inch-chicken-crunchy-rolls-dog-treats-by-the-treat-shack.html?sku=SKU11003381",
-  "clickUrl": "",
-  "description": "<p>Indulge your furry friend in the ultimate bargain with The Treat Shack&#39;s 6-Inch Chicken Crunchy Rolls Dog Treats! These budget-friendly treats are packed with collagen, a powerhouse nutrient that keeps your dog&#39;s joints healthy and mobile. The act of chewing helps reduce plaque and tartar, promoting dental health and fresher breath. Plus, collagen enhances coat shine and supports healthy skin, giving your dog a radiant glow. Easy to digest and free from artificial additives, fillers, and common allergens, these treats are a wholesome and satisfying way to pamper your pup. And with t"
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
-  "matched": "category",
-  "advertiser": "UntilGone",
-  "advertiserId": "6185946",
   "title": "81\u201d Large Outdoor Chicken Coop",
   "brand": "AECOJOY",
   "price": "379.99 USD",
@@ -11372,44 +11373,6 @@
   "link": "https://untilgone.com/products/newagepet-fontana-chicken-coop.html?sku=SKU4700814",
   "clickUrl": "",
   "description": "<p>Looking for a stylish and eco-friendly chicken coop for your feathered friends? Look no further than the NewAgePet&reg; Fontana Chicken Coop with Removable Roof, made with innovative ECOFLEX&reg; material.</p> <p>ECOFLEX&reg; is a proprietary blend of recycled polymers and reclaimed wood fiber by-products, making it the perfect choice for a non-toxic, eco-friendly, and moisture-resistant coop. Plus, with a 10-year limited manufacturer warranty, you can rest assured that your investment is protected.</p> <p>This coop features a side-mounted nesting box with an easy-to-open hinged lid for has"
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
-  "matched": "category",
-  "advertiser": "UntilGone",
-  "advertiserId": "6185946",
-  "title": "Scoochie Pet Crunchy Cat Treats (1- to 4-Pack) - Chicken Crunchy Cat Treats 1 CT",
-  "brand": "Scoochie Pet",
-  "price": "13.99 USD",
-  "salePrice": "",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Treats",
-  "image": "https://cdn11.bigcommerce.com/s-yqzpac968l/product_images/attribute_rule_images/178309_source_1787689977.jpg",
-  "link": "https://untilgone.com/products/scoochie-pet-crunchy-cat-treats-1-to-4-pack.html?sku=SKU18137332",
-  "clickUrl": "",
-  "description": "<p>Spoil your cat with Scoochie Pet Chicken, Tuna &amp; Catnip Crunchy Cat Treats! These irresistible treats combine a satisfying crunch with a creamy filling, featuring a trio of delectable flavors: chicken, tuna, and catnip. Perfect for rewarding good behavior, training, or anytime you want to show your cat some love, each 8.8-oz tub offers freshness and convenience. These tasty morsels are free from artificial additives, providing a wholesome snack your feline friend will adore. Bring home the variety pack today and watch your cat purr with delight!</p> <p><strong>What&#39;s in the Box?</st"
- },
- {
-  "species": "Poultry",
-  "serves": [
-   "Poultry"
-  ],
-  "matched": "category",
-  "advertiser": "UntilGone",
-  "advertiserId": "6185946",
-  "title": "Scoochie Pet Salmon, Chicken Stew Wet Cat Food (4, 8, or 16-Pack) - VRTY PK Chk & Salmon Wet Cat Food, 4 CT",
-  "brand": "Scoochie Pet",
-  "price": "16.99 USD",
-  "salePrice": "",
-  "availability": "in stock",
-  "category": "Animals & Pet Supplies > Pet Supplies > Cat Supplies > Cat Food",
-  "image": "https://cdn11.bigcommerce.com/s-yqzpac968l/product_images/attribute_rule_images/178490_source_1791410477.png",
-  "link": "https://untilgone.com/products/scoochie-pet-salmon-chicken-stew-wet-cat-food-4-8-or-16-pack.html?sku=SKU18037629",
-  "clickUrl": "",
-  "description": "<p>Delight your discerning cat with Scoochie Salmon &amp; Chicken Stew, a delectable adventure in every bite. Tender morsels of real salmon and savory chicken swim in a rich, irresistible gravy, crafted to satisfy even the most particular palates. This grain-free formula is made with natural ingredients, ensuring a wholesome, nutritious meal your cat will adore. Perfect as a standalone treat or a scrumptious topper to their favorite kibble, each convenient 3.5-ounce pouch delivers pure feline joy. Elevate mealtime for your beloved companion &ndash; purchase Scoochie Salmon &amp; Chicken Stew t"
  },
  {
   "species": "Reptiles",
@@ -12461,6 +12424,26 @@
  {
   "species": "Small Pets",
   "serves": [
+   "Small Pets",
+   "Poultry"
+  ],
+  "matched": "category",
+  "advertiser": "Aosom.com",
+  "advertiserId": "5360120",
+  "title": "PawHut Chicken Coop Hen House with Nesting Box, Elevated Rabbit Hutch with Ramp, Asphalt Openable Roof and Elevated Legs",
+  "brand": "PawHut",
+  "price": "195.99 USD",
+  "salePrice": "159.99 USD",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Small Animal Supplies > Small Animal Habitats & Cages",
+  "image": "https://img-us.aosomcdn.com/100/product/2026/08/24/eAz88d1a034667626.jpg",
+  "link": "https://www.aosom.com/item/pawhut-chicken-coop-hen-house-with-nesting-box-elevated-rabbit-hutch-with-ramp-asphalt-openable-roof-and-elevated-legs~23SPBDL5C7801.html?utm_source=cj&utm_medium=display",
+  "clickUrl": "",
+  "description": "Tired of damp, smelly coops and difficult cleaning routines? Wet ground can compromise your flock's health, and scrubbing tight corners steals your precious time. The PawHut rabbit hutch provides a solution. Its elevated design keeps the hen house dry, a openable roof makes cleaning effortless, and robust, all-weather construction offers you complete peace of mind through every season."
+ },
+ {
+  "species": "Small Pets",
+  "serves": [
    "Small Pets"
   ],
   "matched": "category",
@@ -12495,6 +12478,26 @@
   "link": "https://www.aosom.com/item/pawhut-extra-large-wooden-hamster-cage-with-opening-roof-hut-ramps-gray~1KVPSKLAS0O00.html?utm_source=cj&utm_medium=display",
   "clickUrl": "",
   "description": "Create a safe and active space for your hamster to feel at home with the multiple levels of this PawHut hamster cage. The clear front offers easy sight, featuring large durable windows. With a tunnel, two ramps, and three tiers providing plentiful space to hike up and back down, your hamster will be healthy and happy."
+ },
+ {
+  "species": "Small Pets",
+  "serves": [
+   "Small Pets",
+   "Poultry"
+  ],
+  "matched": "category",
+  "advertiser": "Aosom.com",
+  "advertiserId": "5360120",
+  "title": "PawHut Floating Duck Coop, Wooden Duck House with Ramp and Waterproof Asphalt Roof, Small Animal House",
+  "brand": "PawHut",
+  "price": "278.99 USD",
+  "salePrice": "238.99 USD",
+  "availability": "in stock",
+  "category": "Animals & Pet Supplies > Pet Supplies > Small Animal Supplies > Small Animal Habitats & Cages",
+  "image": "https://img-us.aosomcdn.com/100/product/2026/08/24/ONr47b1a031ef0fe1.jpg",
+  "link": "https://www.aosom.com/item/pawhut-floating-duck-coop-wooden-duck-house-with-ramp-and-waterproof-asphalt-roof-small-animal-house~24K0L2GFS9001.html?utm_source=cj&utm_medium=display",
+  "clickUrl": "",
+  "description": "Struggling to provide a safe and pleasant home for your ducks on the water? The worry of sudden storms and unpleasant odors can spoil the tranquility of your pond. This PawHut outdoor duck coop offers a stable, floating solution. Crafted from fir wood with an asphalt roof, it provides all-weather protection, while dual doors ensure fresh air, creating a serene and secure duck house."
  },
  {
   "species": "Small Pets",

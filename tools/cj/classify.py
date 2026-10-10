@@ -72,6 +72,24 @@ AUDIENCE = [
 ]
 AUDIENCE = [(n, re.compile(r, re.I)) for n, r in AUDIENCE]
 
+# "Chicken Breast Cat Treats" is cat food. An "<animal> <thing>" phrase names
+# who the product is for just as plainly as "for Cats" does, and it has to beat
+# the keyword pass for the same reason: chicken is an ingredient here, not a
+# customer.
+THING = (r'(treats?|food|chews?|toys?|beds?|litter|collars?|leash(es)?|harness(es)?'
+         r'|bowls?|cages?|hutch(es)?|crates?|kennels?|habitats?|carriers?|feeders?'
+         r'|supplements?|shampoos?|brush(es)?|gates?|ramps?|houses?|coops?)')
+OWNER = [
+    ('Dogs',       r'\b(dog|dogs|puppy|puppies)\s+' + THING),
+    ('Cats',       r'\b(cat|cats|kitten|kittens)\s+' + THING),
+    ('Small Pets', r'\b(rabbit|rabbits|hamster|hamsters|guinea pig|guinea pigs|ferret|ferrets'
+                   r'|chinchilla|chinchillas|small animal)\s+' + THING),
+    ('Birds',      r'\b(bird|birds|parrot|parrots|parakeet|parakeets|cockatiel|cockatiels)\s+' + THING),
+    ('Reptiles',   r'\b(reptile|reptiles|gecko|geckos|snake|snakes|tortoise|tortoises|turtle|turtles)\s+' + THING),
+    ('Poultry',    r'\b(chicken|chickens|hen|hens|duck|ducks|poultry)\s+(coops?|runs?|houses?|feeders?|nesting)'),
+]
+OWNER = [(n, re.compile(r, re.I)) for n, r in OWNER]
+
 def species(p, why):
     """Returns (primary, [every species this product serves]).
 
@@ -81,6 +99,8 @@ def species(p, why):
     title, hay = s(p['title']), s(p['title']) + ' || ' + s(p.get('category'))
     aud = [n for n, rx in AUDIENCE if rx.search(title)]
     if aud: return aud[0], aud
+    own = [n for n, rx in OWNER if rx.search(title)]
+    if own: return own[0], own
     for name, rx in SPECIES:
         if rx.search(hay): return name, [name]
     return 'General pet', ['General pet']

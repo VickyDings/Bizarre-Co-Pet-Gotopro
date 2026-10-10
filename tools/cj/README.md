@@ -132,13 +132,17 @@ practice this is five copy-pastes, not 940. In CJ: open the advertiser, go to
 Links, pick any link, copy the generated code, and read the second number out of
 `click-<PID>-<AID>`. They go in the `AIDS` map in `make_catalog.py`.
 
-| Advertiser | ID | AID | Products |
-|---|---|---|---|
-| Aosom.com | 5360120 | `13998414` | 436 |
-| Raw Paws Pet Food | 7127091 | — | 165 |
-| UntilGone | 6185946 | — | 92 |
-| Books-A-Million | 129899 | — | 10 |
-| FYE | 6446547 | `15513660` | 1 |
+| Advertiser | ID | AID | SKU lives in | Products |
+|---|---|---|---|---|
+| Aosom.com | 5360120 | `13998414` | `~D10-056.html` | 436 |
+| Raw Paws Pet Food | 7127091 | — | — | 165 |
+| UntilGone | 6185946 | — | — | 92 |
+| Books-A-Million | 129899 | `13599892` | last path segment | 10 |
+| FYE | 6446547 | `15513660` | `_aec-cen583029-2` | 1 |
+
+CJ rotates the redirect domain and the owner's three links came back on three
+different ones, so `make_catalog.py` picks `tkqlhce.com` for all of them. They
+are interchangeable.
 
 `cjsku` is optional but worth setting, because it is what makes CJ's reports
 show which product earned. Aosom puts the SKU in the URL as `~D10-056.html`, so
