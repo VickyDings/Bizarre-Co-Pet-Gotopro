@@ -45,8 +45,15 @@ BOOK_TOPIC = re.compile(r'\bcare|training|train|guide|handbook|manual|breed|bree
                         r'|health|nutrition|feeding|veterinar|owner|raising|keeping|behaviou?r'
                         r'|first aid|encyclopedia|complete\b', re.I)
 
+def cat_of(p):
+    """The schema lost googleProductCategory in Oct 2026, which had been the
+    strongest signal. catalogName / itemListName / customLabel0-4 are what is
+    left that might carry category text, so they stand in for it."""
+    return (s(p.get('category')) or s(p.get('catalogName'))
+            or s(p.get('itemListName')) or s(p.get('labels')))
+
 def classify(p):
-    title, cat = s(p['title']), s(p.get('category'))
+    title, cat = s(p['title']), cat_of(p)
     if JUNK.search(title) or NOT_PET.search(title): return None
     if cat.startswith('Animals & Pet Supplies'): return 'category'
     if p['advertiserId'] == RAW_PAWS: return 'advertiser'
@@ -104,7 +111,7 @@ def species(p, why):
     A trailing audience phrase is authoritative: 'Chicken Necks for Dogs' is dog
     food, not poultry gear, so the audience pass runs before the keyword pass."""
     if why == 'book': return 'Books', ['Books']
-    title, hay = s(p['title']), s(p['title']) + ' || ' + s(p.get('category'))
+    title, hay = s(p['title']), s(p['title']) + ' || ' + cat_of(p)
     aud = [n for n, rx in AUDIENCE if rx.search(title)]
     if aud: return aud[0], aud
     if PET_APPAREL.search(title): return 'Costumes', ['Costumes']
@@ -128,7 +135,7 @@ for p in d:
                 'advertiser': p['advertiser'], 'advertiserId': p['advertiserId'],
                 'title': s(p['title']), 'brand': s(p.get('brand')),
                 'price': s(p.get('price')), 'salePrice': s(p.get('salePrice')),
-                'availability': s(p.get('availability')), 'category': s(p.get('category')),
+                'availability': s(p.get('availability')), 'category': cat_of(p),
                 'image': s(p.get('image')), 'link': s(p.get('link')),
                 'clickUrl': s(p.get('clickUrl')),
                 'description': s(p.get('description'))[:600]})

@@ -25,6 +25,17 @@ Abracadabra NYC.
 
 ## 2. Classify
 
+**Run the whole pipeline on the machine that has the data.** The catalogues are
+too big to move — FYE alone lists 329,657 products — so there are Node ports of
+both steps, checked against the Python originals for identical output:
+
+```
+node tools/cj/classify.mjs cj-products.json pet-products.json
+node tools/cj/make_catalog.mjs pet-products.json catalog.html
+```
+
+The Python versions are equivalent and still here:
+
 ```
 python3 -I tools/cj/classify.py cj.json data/cj/pet-products.json
 ```
@@ -37,6 +48,16 @@ python3 -I tools/cj/classify.py cj.json data/cj/pet-products.json
 | `advertiser` | 165 | Raw Paws Pet Food — every line is pet food |
 | `title` | 12 | animal word **and** a pet-thing word, no usable category |
 | `book` | 9 | `Media > Books`, animal word **and** a care/training word |
+
+### No category field since Oct 2026
+
+CJ dropped `googleProductCategory` from the product type. It had been the
+strongest signal by far, 519 of 705 matches. `catalogName`, `itemListName` and
+`customLabel0-4` now stand in for it, in that order.
+
+It does survive as a **query argument**, `googleProductCategoryIds`, so
+`fetch.mjs` probes it per advertiser and prints `[no category filter]` where it
+is unsupported. None of the seven supported it as of Oct 2026.
 
 ### Why the obvious filter does not work
 

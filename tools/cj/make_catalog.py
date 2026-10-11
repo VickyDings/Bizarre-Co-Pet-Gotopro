@@ -71,10 +71,17 @@ def is_tracked(x):
 untracked = sum(1 for x in d if not is_tracked(x))
 
 ORDER = ['Dogs', 'Cats', 'Small Pets', 'Birds', 'Reptiles', 'Aquatics',
-         'Poultry', 'Horses', 'General pet', 'Books']
+         'Poultry', 'Horses', 'Costumes', 'General pet', 'Books']
 EMOJI = {'Dogs': '🐕', 'Cats': '🐈', 'Small Pets': '🐹', 'Birds': '🦜',
          'Reptiles': '🦎', 'Aquatics': '🐠', 'Poultry': '🐔', 'Horses': '🐴',
-         'General pet': '🐾', 'Books': '📚'}
+         'Costumes': '🎃', 'General pet': '🐾', 'Books': '📚'}
+
+# The page is built by walking ORDER, so a species missing from it vanishes
+# silently. That is how two costumes disappeared when the Costumes bucket was
+# added to the classifier and not here.
+unknown = sorted({x['species'] for x in d} - set(ORDER))
+if unknown:
+    raise SystemExit(f"species not in ORDER, they would be dropped: {unknown}")
 
 def money(x):
     sale, reg = x['salePrice'], x['price']
