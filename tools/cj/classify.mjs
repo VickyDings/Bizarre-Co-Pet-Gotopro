@@ -14,7 +14,7 @@ const s = v => v == null ? '' : Array.isArray(v) ? v.map(String).join(' | ') : S
 
 const RAW_PAWS = '7127091';
 const NOT_PET = /pet[- ]friendly|kid and pet|safe for (kids|pets)|cat licensed|caterpillar|tortoise(shell)? (glasses|frame)|blue light blocking/i;
-const JUNK = /\barea rug\b|fireplace|wallpaper|\bcurtain|medicine cabinet|\bwalker\b|blocking glasses|funko|vinyl figure|ride[- ]on|chia pet|ace ventura|pet detective|all-region|blu-?ray|kitan club|blind box|gashapon|tumbler|car coasters|\bdvd\b|\bvhs\b|soundtrack|\bcd\b/i;
+const JUNK = /\barea rug\b|fireplace|wallpaper|\bcurtain|medicine cabinet|\bwalker\b|blocking glasses|funko|vinyl figure|ride[- ]on|chia pet|ace ventura|pet detective|all-region|blu-?ray|kitan club|blind box|gashapon|tumbler|car coasters|mcfarlane|action figure|latex mask|trick or treat studios|picture disc|box set|criterion collection|sprinkler|\bdvd\b|\bvhs\b|soundtrack|\bcd\b/i;
 const PET_WORD = /\b(dog|dogs|puppy|puppies|cat|cats|kitten|pet|pets|bird|birds|reptile|aquarium|aquatic|hamster|gerbil|rabbit|bunny|guinea pig|ferret|chinchilla|parrot|cockatiel|budgie|parakeet|gecko|tortoise|turtle|chicken|hen|poultry|horse|equine|canine|feline)\b/i;
 const PET_THING = /\b(toy|toys|bed|beds|cage|cages|crate|kennel|hutch|coop|habitat|enclosure|terrarium|vivarium|leash|lead|collar|harness|muzzle|treat|treats|chew|chews|food|kibble|feed|feeder|bowl|waterer|litter|bedding|hay|substrate|grooming|brush|clipper|shampoo|carrier|stroller|playpen|\bpen\b|gate|ramp|stairs|scratching|perch|nesting|supplement|dewormer|flea|tick|collar|tag|harness|muzzle|waste|poop|heat(ing)? (lamp|mat|pad)|\buvb\b|filter|thermostat|hammock|tunnel|wheel|burrow|nest|aviary|run|fence|house|mat|pad|blanket|towel|gravel|heater|pump|canister|siphon|skimmer|air stone|airstone|water conditioner|dechlorinator)\b/i;
 const APPAREL = 'costumes?|outfits?|hoodies?|sweaters?|jumpers?|jackets?|coats?|shirts?|bandanas?|scarves|scarfs?|capes?|tutus?|dresses|boots?|booties|hats?|caps?|bowties?|bow ties?|wigs?|pyjamas|pajamas|onesies?';
@@ -32,9 +32,21 @@ const catOf = p => s(p.category) || s(p.catalogName) || s(p.itemListName) || s(p
    carry one and its one real product, freeze-dried cat treats, does not. */
 const IS_BOOK_URL = /\/(97[89]\d{10}|\d{9}[\dX])\/?$/;
 
+/* FYE is an entertainment retailer, and an album called "Reptile House" is
+   indistinguishable by title from a reptile house. Across this whole project it
+   has produced exactly one genuine pet product -- an Elvis-branded rope dog toy
+   -- against hundreds of records, films and figures. So its titles must name an
+   unambiguous consumer pet product, not merely an animal and an object.
+   "Bird Cage" is deliberately NOT on this list: Buck Gooter have an album
+   called "Head In A Bird Cage". */
+const LOW_YIELD = new Set(['6446547']);          // FYE
+const EXPLICIT_PET = /\bfor (dogs?|cats?|puppies|kittens|pets?)\b|\b(dog|cat|pet|puppy|kitten)s?[\s-]+(toys?|beds?|treats?|food|costumes?|collars?|leash(es)?|harness(es)?|carriers?|bowls?|litter|shampoos?|brush(es)?|crates?|strollers?)\b/i;
+
+
 function classify(p) {
   const title = s(p.title), cat = catOf(p);
   if (JUNK.test(title) || NOT_PET.test(title)) return null;
+  if (LOW_YIELD.has(p.advertiserId) && !EXPLICIT_PET.test(title)) return null;
   if (cat.startsWith('Animals & Pet Supplies')) return 'category';
   if (p.advertiserId === RAW_PAWS) return 'advertiser';
   if (PET_WORD.test(title)) {

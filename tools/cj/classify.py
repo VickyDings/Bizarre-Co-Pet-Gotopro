@@ -14,7 +14,7 @@ NOT_PET = re.compile(r'pet[- ]friendly|kid and pet|safe for (kids|pets)|cat lice
 # things that are decor/apparel wearing a pet word
 JUNK = re.compile(r'\barea rug\b|fireplace|wallpaper|\bcurtain|medicine cabinet|\bwalker\b'
                   r'|blocking glasses|funko|vinyl figure'
-                  r'|ride[- ]on|chia pet|ace ventura|pet detective|all-region|blu-?ray|kitan club|blind box|gashapon|tumbler|car coasters'
+                  r'|ride[- ]on|chia pet|ace ventura|pet detective|all-region|blu-?ray|kitan club|blind box|gashapon|tumbler|car coasters|mcfarlane|action figure|latex mask|trick or treat studios|picture disc|box set|criterion collection|sprinkler'
                   r'|\bdvd\b|\bvhs\b|soundtrack|\bcd\b', re.I)
 PET_WORD = re.compile(r'\b(dog|dogs|puppy|puppies|cat|cats|kitten|pet|pets|bird|birds|reptile'
                       r'|aquarium|aquatic|hamster|gerbil|rabbit|bunny|guinea pig|ferret|chinchilla'
@@ -58,9 +58,24 @@ def cat_of(p):
 # carry one and its one real product, freeze-dried cat treats, does not.
 IS_BOOK_URL = re.compile(r'/(97[89]\d{10}|\d{9}[\dX])/?$')
 
+# FYE is an entertainment retailer, and an album called "Reptile House" is
+# indistinguishable by title from a reptile house. Across this whole project it
+# has produced exactly one genuine pet product -- an Elvis-branded rope dog toy
+# -- against hundreds of records, films and figures. So its titles must name an
+# unambiguous consumer pet product, not merely an animal and an object.
+# "Bird Cage" is deliberately NOT on this list: Buck Gooter have an album
+# called "Head In A Bird Cage".
+LOW_YIELD = {'6446547'}          # FYE
+EXPLICIT_PET = re.compile(r'\bfor (dogs?|cats?|puppies|kittens|pets?)\b'
+                          r'|\b(dog|cat|pet|puppy|kitten)s?[\s-]+(toys?|beds?|treats?|food|'
+                          r'costumes?|collars?|leash(es)?|harness(es)?|carriers?|bowls?|'
+                          r'litter|shampoos?|brush(es)?|crates?|strollers?)\b', re.I)
+
+
 def classify(p):
     title, cat = s(p['title']), cat_of(p)
     if JUNK.search(title) or NOT_PET.search(title): return None
+    if p['advertiserId'] in LOW_YIELD and not EXPLICIT_PET.search(title): return None
     if cat.startswith('Animals & Pet Supplies'): return 'category'
     if p['advertiserId'] == RAW_PAWS: return 'advertiser'
     if PET_WORD.search(title):
