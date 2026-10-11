@@ -61,7 +61,14 @@ print("\n=== voice / spelling ===")
 # Strip href values before checking: a merchant URL slug such as
 # ...carrier-kennel-material-grey~D00-080V02 is not prose we wrote.
 visible = re.sub(r'href="[^"]*"', 'href=""', h)
-brit = [w for w in ['mould','colour','behaviour','fertiliser','favourable','grey','litre','metre','practise','recognise'] if re.search(r'\b' + w, visible, re.I)]
+# 'grey' must not match Greyhound, which is the breed's spelling in American
+# English too. Same for metre/Metres in a brand name, hence the word boundary
+# on both ends for the short ones.
+BRIT = {'mould': r'\bmould', 'colour': r'\bcolour', 'behaviour': r'\bbehaviour',
+        'fertiliser': r'\bfertiliser', 'favourable': r'\bfavourable',
+        'grey': r'\bgrey\b', 'litre': r'\blitres?\b', 'metre': r'\bmetres?\b',
+        'practise': r'\bpractise', 'recognise': r'\brecognise'}
+brit = [w for w, rx in BRIT.items() if re.search(rx, visible, re.I)]
 chk("American spelling", not brit, f"British forms: {brit}")
 strongs = len(re.findall(r'<strong>', h))
 ff = re.findall(r'<div class="funfact">.*?</div>', h, re.S)
