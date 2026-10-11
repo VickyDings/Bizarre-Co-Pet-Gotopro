@@ -3,11 +3,26 @@
 // classifier tightened. Output is small enough to paste into a chat.
 //   node tools/cj/inspect.mjs pet-products.json [perBucket]
 //   node tools/cj/inspect.mjs pet-products.json 6 Aquatics Costumes
+//   node tools/cj/inspect.mjs pet-products.json --json costumes.json Costumes
+// writes just those buckets to a file, small enough to hand to someone else.
 import fs from 'fs';
-const [SRC, nArg, ...only] = process.argv.slice(2);
-if (!SRC) { console.error('usage: node inspect.mjs <pet-products.json> [perBucket] [species...]'); process.exit(1); }
+let argv = process.argv.slice(2);
+let JSON_OUT = null;
+const j = argv.indexOf('--json');
+if (j !== -1) { JSON_OUT = argv[j + 1]; argv = argv.filter((_, i) => i !== j && i !== j + 1); }
+const [SRC, nArg, ...only] = argv;
+if (!SRC) { console.error('usage: node inspect.mjs <pet-products.json> [--json out.json] [perBucket] [species...]'); process.exit(1); }
 const N = Number(nArg) || 5;
 const d = JSON.parse(fs.readFileSync(SRC, 'utf8'));
+
+if (JSON_OUT) {
+  const rows = only.length ? d.filter(x => only.includes(x.species)) : d;
+  fs.writeFileSync(JSON_OUT, JSON.stringify(rows, null, 1));
+  console.log(`wrote ${JSON_OUT} — ${rows.length} products`
+    + (only.length ? ` from ${only.join(', ')}` : '')
+    + `, ${Math.round(fs.statSync(JSON_OUT).size / 1024)} KB`);
+  process.exit(0);
+}
 
 const bySpecies = {};
 for (const x of d) (bySpecies[x.species] ||= []).push(x);
