@@ -14,7 +14,7 @@ const PID   = process.env.CJ_PID || '100786792';  // CJ tracking PID. Read off a
                                    // NOT the Website ID shown under Account.
                                    // Used to ask CJ for its own clickUrl per
                                    // product — hand-built wrappers do not work.
-const API   = 'https://ads.api.cj.com/query';
+const API   = process.env.CJ_API || 'https://ads.api.cj.com/query';  // CJ_API is for local testing
 
 const PARTNERS = {
   '7127091': 'Raw Paws Pet Food',
@@ -55,17 +55,52 @@ async function gql(query) {
 }
 const unwrap = t => { while (t && !t.name) t = t.ofType; return t?.name; };
 
+// Six levels of ofType. Three was not enough: a NON_NULL(LIST(NON_NULL(X)))
+// bottoms out past the depth we asked for, unwrap() then returns undefined and
+// the next __type lookup comes back null.
+const TYPE_REF = 'name kind ofType { name kind ofType { name kind ofType { name kind ofType { name kind ofType { name kind } } } } }';
+
+async function typeFields(name, label) {
+  if (!name) die(`could not resolve the type name for ${label}`);
+  console.log(`  ${label} -> type "${name}"`);
+  const t = (await gql(`{ __type(name:"${name}") { name fields { name args { name } type { ${TYPE_REF} } } } }`)).__type;
+  if (!t || !t.fields) die(`the schema has no fields on type "${name}" (${label})`);
+  return t;
+}
+function die(msg, extra) {
+  console.error(`\nSchema mismatch: ${msg}.`);
+  if (extra) console.error(extra);
+  console.error('\nCJ has changed the shape of its product query, or this script is');
+  console.error('reading it wrongly. Send back EVERYTHING printed above, including');
+  console.error('the "raw products field" dump, and it can be re-pointed.\n');
+  process.exit(3);
+}
+
 // --- learn the real shape of products(...) before asking for anything ---
 console.log('Reading the schema...');
-const qf = (await gql(`{ __schema { queryType { fields { name type { name kind ofType { name kind ofType { name kind } } } } } } }`))
-  .__schema.queryType.fields.find(f => f.name === 'products');
+const roots = (await gql(`{ __schema { queryType { fields { name type { ${TYPE_REF} } } } } }`)).__schema.queryType.fields;
+const qf = roots.find(f => f.name === 'products');
+if (!qf) {
+  console.error('\nNo products query on this schema. Root queries available:');
+  console.error('  ' + roots.map(f => f.name).join(', ') + '\n');
+  process.exit(3);
+}
 const resultTypeName = unwrap(qf.type);
+if (!resultTypeName) die('the products query has an unreadable return type',
+  '  raw products field: ' + JSON.stringify(qf, null, 2));
+const resultType = await typeFields(resultTypeName, 'the products(...) result');
 
-const resultType = (await gql(`{ __type(name:"${resultTypeName}") { fields { name type { name kind ofType { name kind ofType { name kind } } } } } }`)).__type;
-const listField = resultType.fields.find(f => /resultList|results|edges|items|nodes/i.test(f.name)) || resultType.fields.find(f => unwrap(f.type) && f.type.kind === 'LIST');
+const listField = resultType.fields.find(f => /resultList|results|edges|items|nodes/i.test(f.name))
+  || resultType.fields.find(f => unwrap(f.type) && f.type.kind === 'LIST');
+if (!listField) {
+  console.error(`\n${resultTypeName} has no list field. Its fields are:`);
+  console.error('  ' + resultType.fields.map(f => f.name).join(', ') + '\n');
+  process.exit(3);
+}
 const itemTypeName = unwrap(listField.type);
-
-const itemType = (await gql(`{ __type(name:"${itemTypeName}") { fields { name type { kind name ofType { kind name ofType { kind name } } } } } }`)).__type;
+if (!itemTypeName) die(`${resultTypeName}.${listField.name} has an unreadable element type`,
+  '  raw list field: ' + JSON.stringify(listField, null, 2));
+const itemType = await typeFields(itemTypeName, `${resultTypeName}.${listField.name}`);
 const have = new Map(itemType.fields.map(f => [f.name, f]));
 console.log(`products -> ${resultTypeName}.${listField.name} -> ${itemTypeName} (${itemType.fields.length} fields)`);
 
@@ -91,7 +126,7 @@ for (const [n, subs] of Object.entries(WANT_OBJECT)) {
 // constructing one. Field and argument names are read, not assumed.
 let linkSel = '', linkField = null, linkUrlKeys = [];
 {
-  const withArgs = (await gql(`{ __type(name:"${itemTypeName}") { fields { name args { name } type { kind name ofType { kind name ofType { kind name } } } } } }`)).__type;
+  const withArgs = itemType;   // already fetched with args and full type depth
   const cand = withArgs.fields.find(f => /^link_?code$/i.test(f.name))
             || withArgs.fields.find(f => f.args.length && /link|click|track/i.test(f.name));
   if (!cand) {
