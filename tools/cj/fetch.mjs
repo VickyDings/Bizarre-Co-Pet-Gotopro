@@ -78,13 +78,17 @@ function die(msg, extra) {
 
 // --- learn the real shape of products(...) before asking for anything ---
 console.log('Reading the schema...');
-const roots = (await gql(`{ __schema { queryType { fields { name type { ${TYPE_REF} } } } } }`)).__schema.queryType.fields;
+const roots = (await gql(`{ __schema { queryType { fields { name args { name type { ${TYPE_REF} } } type { ${TYPE_REF} } } } } }`)).__schema.queryType.fields;
 const qf = roots.find(f => f.name === 'products');
 if (!qf) {
   console.error('\nNo products query on this schema. Root queries available:');
   console.error('  ' + roots.map(f => f.name).join(', ') + '\n');
   process.exit(3);
 }
+// Paging stops dead at 10,000, so a server-side filter is the only way to see
+// everything a large advertiser sells. Print what products(...) will accept.
+console.log(`\nproducts(...) accepts: ${(qf.args||[]).map(a => a.name + ':' + (unwrap(a.type) || '?')).join(', ')}\n`);
+
 const resultTypeName = unwrap(qf.type);
 if (!resultTypeName) die('the products query has an unreadable return type',
   '  raw products field: ' + JSON.stringify(qf, null, 2));
@@ -106,7 +110,13 @@ console.log(`products -> ${resultTypeName}.${listField.name} -> ${itemTypeName} 
 
 // Pick the fields we want, but only the ones that exist on this schema.
 const WANT_SCALAR = ['id','title','description','link','imageLink','brand','availability',
-  'advertiserName','advertiserId','productType','currency','gtin','mpn','condition','adId'];
+  'advertiserName','advertiserId','productType','currency','gtin','mpn','condition','adId',
+  // No googleProductCategory on this schema. These are the fields that might
+  // carry category-ish text instead -- grab them all and let the data decide.
+  'catalogName','catalogId','itemListName','itemListId','sourceFeedType',
+  'customLabel0','customLabel1','customLabel2','customLabel3','customLabel4',
+  // and the housekeeping worth having
+  'isDeleted','targetCountry','discountPercentage'];
 // 'shipping' used to be requested here and then thrown away -- nothing
 // downstream reads it. It also broke the whole query, because shipping.price is
 // itself an object (ShippingAmountWithCurrency) and this builder only goes one
@@ -178,14 +188,19 @@ if (linkSel) sel.push(linkSel);
 const hasTotal = resultType.fields.some(f => f.name === 'totalCount');
 console.log(`asking for: ${sel.join(', ')}\n`);
 
+const PAGE = 1000, MAX_WINDOW = 10000;   // CJ's hard paging ceiling
 const num = v => (v && typeof v === 'object') ? [v.amount, v.currency].filter(Boolean).join(' ') : v;
 const out = [], seen = new Set();
 
 for (const [pid, name] of Object.entries(PARTNERS)) {
-  let offset = 0, kept = 0, total = 0, scanned = 0;
+  let offset = 0, kept = 0, total = 0, scanned = 0, capped = false;
   try {
     for (;;) {
-      const q = `{ products(companyId:"${CID}", partnerIds:["${pid}"], limit:1000, offset:${offset}) {
+      // CJ: "limit and offset may not add up to be greater than 10,000".
+      // Shrink the last page to land exactly on the wall, then stop.
+      const lim = Math.min(PAGE, MAX_WINDOW - offset);
+      if (lim <= 0) { capped = true; break; }
+      const q = `{ products(companyId:"${CID}", partnerIds:["${pid}"], limit:${lim}, offset:${offset}) {
         ${hasTotal ? 'totalCount' : ''} ${listField.name} { ${sel.join(' ')} } } }`;
       const node = (await gql(q)).products;
       const list = node[listField.name] || [];
@@ -193,7 +208,11 @@ for (const [pid, name] of Object.entries(PARTNERS)) {
       if (!list.length) break;
       scanned += list.length;
       for (const p of list) {
-        const hay = [p.title, p.description, p.productType, p.googleProductCategory?.name, p.brand].filter(Boolean).join(' ');
+        if (p.isDeleted === true || p.isDeleted === 'true') continue;   // delisted
+        const hay = [p.title, p.description, p.productType, p.googleProductCategory?.name,
+          p.brand, p.catalogName, p.itemListName,
+          p.customLabel0, p.customLabel1, p.customLabel2, p.customLabel3, p.customLabel4]
+          .filter(Boolean).join(' ');
         if (!ALL_PET.has(pid) && !rx.test(hay)) continue;
         const key = p.link || p.id; if (seen.has(key)) continue; seen.add(key);
         out.push({ advertiser:name, advertiserId:pid, title:p.title,
@@ -201,15 +220,21 @@ for (const [pid, name] of Object.entries(PARTNERS)) {
           price:num(p.price)||null, salePrice:num(p.salePrice)||null,
           brand:p.brand||null, availability:p.availability||null,
           category:p.googleProductCategory?.name||p.productType||null,
+          catalogName:p.catalogName||null, itemListName:p.itemListName||null,
+          sourceFeedType:p.sourceFeedType||null,
+          labels:[p.customLabel0,p.customLabel1,p.customLabel2,p.customLabel3,p.customLabel4]
+            .filter(Boolean),
           image:p.imageLink||null, link:p.link,
           clickUrl: (linkField && p[linkField])
             ? (linkUrlKeys.map(k => p[linkField][k]).find(Boolean) || null) : null });
         kept++;
       }
       offset += list.length;
-      if (list.length < 1000 || (hasTotal && offset >= total)) break;
+      if (list.length < lim || (hasTotal && offset >= total)) break;
     }
-    console.log(`${name.padEnd(22)} ${String(kept).padStart(5)} pet  (of ${scanned} scanned)`);
+    const note = capped ? `  [capped at ${MAX_WINDOW} of ${total}]`
+               : (hasTotal && total > scanned ? `  [${total} total]` : '');
+    console.log(`${name.padEnd(22)} ${String(kept).padStart(5)} pet  (of ${scanned} scanned)${note}`);
   } catch (e) {
     console.log(`${name.padEnd(22)}   --   ${e.message.slice(0,150)}`);
   }
