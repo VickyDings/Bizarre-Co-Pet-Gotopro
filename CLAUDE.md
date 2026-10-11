@@ -340,6 +340,12 @@ In order. Items marked *optional* appeared in one reference guide but not both.
 - Short sentences. Lead with what kills or harms the animal, and give the number.
 - Positions the author as a 12-year pet industry professional.
 - Say when a popular product is a bad idea, and why. Never invent review counts.
+- **Say no to a sale when the answer is no.** The Halloween guide tells readers
+  not to put costumes on rabbits, guinea pigs, birds or reptiles — gut stasis in
+  prey species, air sacs that need a free chest, fabric between a reptile and
+  its heat source — even though the advertiser sells to that end of the market.
+  Owner confirmed this stays, Oct 2026. Advice that costs a sale is the reason
+  the rest of the advice is worth reading.
 - Be explicit that a supplement is not a treatment and a symptom is not a diagnosis.
 
 ## Affiliate links
