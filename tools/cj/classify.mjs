@@ -26,13 +26,20 @@ const BOOK_TOPIC = /\bcare|training|train|guide|handbook|manual|breed|breeds|gro
    left that might carry category text, so they stand in for it. */
 const catOf = p => s(p.category) || s(p.catalogName) || s(p.itemListName) || s(p.labels);
 
+/* With the category gone there is nothing left saying "this is a book", and
+   Books-A-Million's cat books were landing in Cats alongside litter trays. An
+   ISBN as the last path segment is a reliable substitute: all nine of its books
+   carry one and its one real product, freeze-dried cat treats, does not. */
+const IS_BOOK_URL = /\/(97[89]\d{10}|\d{9}[\dX])\/?$/;
+
 function classify(p) {
   const title = s(p.title), cat = catOf(p);
   if (JUNK.test(title) || NOT_PET.test(title)) return null;
   if (cat.startsWith('Animals & Pet Supplies')) return 'category';
   if (p.advertiserId === RAW_PAWS) return 'advertiser';
   if (PET_WORD.test(title)) {
-    if (cat.startsWith('Media > Books')) return BOOK_TOPIC.test(title) ? 'book' : null;
+    if (cat.startsWith('Media > Books') || IS_BOOK_URL.test(s(p.link)))
+      return BOOK_TOPIC.test(title) ? 'book' : null;
     return (PET_THING.test(title) || PET_APPAREL.test(title)) ? 'title' : null;
   }
   return null;

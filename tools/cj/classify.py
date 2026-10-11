@@ -52,13 +52,19 @@ def cat_of(p):
     return (s(p.get('category')) or s(p.get('catalogName'))
             or s(p.get('itemListName')) or s(p.get('labels')))
 
+# With the category gone there is nothing left saying "this is a book", and
+# Books-A-Million's cat books were landing in Cats alongside litter trays. An
+# ISBN as the last path segment is a reliable substitute: all nine of its books
+# carry one and its one real product, freeze-dried cat treats, does not.
+IS_BOOK_URL = re.compile(r'/(97[89]\d{10}|\d{9}[\dX])/?$')
+
 def classify(p):
     title, cat = s(p['title']), cat_of(p)
     if JUNK.search(title) or NOT_PET.search(title): return None
     if cat.startswith('Animals & Pet Supplies'): return 'category'
     if p['advertiserId'] == RAW_PAWS: return 'advertiser'
     if PET_WORD.search(title):
-        if cat.startswith('Media > Books'):
+        if cat.startswith('Media > Books') or IS_BOOK_URL.search(s(p.get('link'))):
             return 'book' if BOOK_TOPIC.search(title) else None
         return 'title' if (PET_THING.search(title) or PET_APPAREL.search(title)) else None
     return None
