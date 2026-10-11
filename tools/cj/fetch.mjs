@@ -107,18 +107,47 @@ console.log(`products -> ${resultTypeName}.${listField.name} -> ${itemTypeName} 
 // Pick the fields we want, but only the ones that exist on this schema.
 const WANT_SCALAR = ['id','title','description','link','imageLink','brand','availability',
   'advertiserName','advertiserId','productType','currency','gtin','mpn','condition','adId'];
+// 'shipping' used to be requested here and then thrown away -- nothing
+// downstream reads it. It also broke the whole query, because shipping.price is
+// itself an object (ShippingAmountWithCurrency) and this builder only goes one
+// level deep. Dropped rather than made to recurse for a field nobody wants.
 const WANT_OBJECT = { price:['amount','currency'], salePrice:['amount','currency'],
-  googleProductCategory:['name'], shipping:['price'], };
+  googleProductCategory:['name'], };
 
-const sel = [];
-for (const n of WANT_SCALAR) if (have.has(n)) sel.push(n);
+// The category is the classifier's main signal, so if CJ renames it we need to
+// see that rather than silently losing it.
+const CATEGORY_ALIASES = ['googleProductCategory','productCategory','category',
+  'googleCategory','productType'];
+
+console.log(`\n${itemType.fields.length} fields on ${itemTypeName}:`);
+console.log('  ' + itemType.fields.map(f => f.name).join(', ') + '\n');
+
+// No type info means we cannot tell, so trust the hand-picked name -- every
+// sub-field named in WANT_OBJECT is a scalar on any sane schema.
+const isLeaf = t => { if (!t) return true;
+  const k = (() => { while (t && !t.name) t = t.ofType; return t; })();
+  return !k || !k.kind || k.kind === 'SCALAR' || k.kind === 'ENUM'; };
+
+const sel = [], missing = [];
+for (const n of WANT_SCALAR) have.has(n) ? sel.push(n) : missing.push(n);
 for (const [n, subs] of Object.entries(WANT_OBJECT)) {
-  const f = have.get(n); if (!f) continue;
+  const f = have.get(n); if (!f) { missing.push(n); continue; }
   const tn = unwrap(f.type);
-  const sub = (await gql(`{ __type(name:"${tn}") { fields { name } } }`)).__type;
+  const sub = (await gql(`{ __type(name:"${tn}") { fields { name type { ${TYPE_REF} } } } }`)).__type;
   if (!sub?.fields) { sel.push(n); continue; }
-  const ok = subs.filter(s => sub.fields.some(x => x.name === s));
-  sel.push(ok.length ? `${n} { ${ok.join(' ')} }` : n);
+  // Only take sub-fields that are scalars. One that is itself an object needs
+  // its own sub-selection, and asking for it bare fails the whole query.
+  const ok = subs.filter(x => sub.fields.some(y => y.name === x && isLeaf(y.type)));
+  // Never emit an object field bare -- that is what "must have a sub selection"
+  // means, and it fails the entire query, not just that field.
+  if (ok.length) sel.push(`${n} { ${ok.join(' ')} }`);
+  else { missing.push(`${n} (no usable scalar sub-field)`); }
+}
+if (missing.length) console.log(`! not on this schema, skipped: ${missing.join(', ')}`);
+if (!CATEGORY_ALIASES.some(a => have.has(a))) {
+  console.log('\n!! NO CATEGORY FIELD. The classifier keys off the Google product');
+  console.log('   category for most of its matches, so it will be far weaker.');
+  console.log('   Look for the right name in the field list above.\n');
 }
 // --- CJ's own tracked link, if this schema offers one -----------------------
 // A hand-built https://www.anrdoezrs.net/links/<pid>/type/dlg/<url> wrapper
