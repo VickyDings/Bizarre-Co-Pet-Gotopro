@@ -13,7 +13,7 @@ NOT_PET = re.compile(r'pet[- ]friendly|kid and pet|safe for (kids|pets)|cat lice
                      r'|tortoise(shell)? (glasses|frame)|blue light blocking', re.I)
 # things that are decor/apparel wearing a pet word
 JUNK = re.compile(r'\barea rug\b|fireplace|wallpaper|\bcurtain|medicine cabinet|\bwalker\b'
-                  r'|blocking glasses|\bt-?shirt\b|\bhoodie\b|funko|vinyl figure'
+                  r'|blocking glasses|funko|vinyl figure'
                   r'|ride[- ]on|chia pet|ace ventura|pet detective|all-region|blu-?ray'
                   r'|\bdvd\b|\bvhs\b|soundtrack|\bcd\b', re.I)
 PET_WORD = re.compile(r'\b(dog|dogs|puppy|puppies|cat|cats|kitten|pet|pets|bird|birds|reptile'
@@ -33,6 +33,13 @@ PET_THING = re.compile(r'\b(toy|toys|bed|beds|cage|cages|crate|kennel|hutch|coop
                        r'|heat(ing)? (lamp|mat|pad)|\buvb\b|filter|thermostat|hammock|tunnel'
                        r'|wheel|burrow|nest|aviary|run|fence|house|mat|pad|blanket|towel)\b', re.I)
 
+# Apparel needs the animal word ADJACENT, or every band T-shirt with an animal
+# in its name walks in. "Beetlejuice Pet Costume" yes, "Cat Power - T-Shirt" no.
+APPAREL = (r'costumes?|outfits?|hoodies?|sweaters?|jumpers?|jackets?|coats?|shirts?'
+           r'|bandanas?|scarves|scarfs?|capes?|tutus?|dresses|boots?|booties'
+           r'|hats?|caps?|bowties?|bow ties?|wigs?|pyjamas|pajamas|onesies?')
+PET_APPAREL = re.compile(r'\b(pet|dog|cat|puppy|kitten|doggie|kitty)s?[\s-]+(' + APPAREL + r')\b', re.I)
+
 # Pet-care books are worth having; a manga with a cat in the title is not.
 BOOK_TOPIC = re.compile(r'\bcare|training|train|guide|handbook|manual|breed|breeds|grooming'
                         r'|health|nutrition|feeding|veterinar|owner|raising|keeping|behaviou?r'
@@ -46,11 +53,12 @@ def classify(p):
     if PET_WORD.search(title):
         if cat.startswith('Media > Books'):
             return 'book' if BOOK_TOPIC.search(title) else None
-        return 'title' if PET_THING.search(title) else None
+        return 'title' if (PET_THING.search(title) or PET_APPAREL.search(title)) else None
     return None
 
 # order matters: first match wins, so the specific patterns come first
 SPECIES = [
+    ('Costumes',   r'\b(pet|dog|cat|puppy|kitten)s?[\s-]+(' + APPAREL + r')\b'),
     ('Poultry',    r'chicken|\bhen\b|\bhens\b|poultry|coop|rooster|duck house'),
     ('Reptiles',   r'reptile|gecko|\bsnake\b|python|\bboa\b|bearded dragon|tortoise|terrarium|vivarium|basking|\buvb\b'),
     ('Aquatics',   r'aquarium|fish tank|fishbowl|\bbetta\b|\bshrimp\b|aquatic'),
@@ -99,6 +107,7 @@ def species(p, why):
     title, hay = s(p['title']), s(p['title']) + ' || ' + s(p.get('category'))
     aud = [n for n, rx in AUDIENCE if rx.search(title)]
     if aud: return aud[0], aud
+    if PET_APPAREL.search(title): return 'Costumes', ['Costumes']
     own = [n for n, rx in OWNER if rx.search(title)]
     if own: return own[0], own
     for name, rx in SPECIES:

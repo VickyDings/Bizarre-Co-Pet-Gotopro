@@ -28,6 +28,7 @@ AIDS = {
     '129899':  '13599892',   # Books-A-Million
     '6185946': '15292997',   # UntilGone
     '7127091': '17234724',   # Raw Paws Pet Food
+    '7889430': '17278691',   # Abracadabra NYC
 }
 
 def sku_of(x):
@@ -48,6 +49,9 @@ def sku_of(x):
         return m.group(1) if m else None
     if adv == '6185946':                       # UntilGone: ...?sku=SKU10368659
         m = re.search(r'[?&]sku=([^&]+)', link)
+        return m.group(1) if m else None
+    if adv == '7889430':                       # Abracadabra: Shopify ?variant=<id>,
+        m = re.search(r'[?&]variant=(\d+)', link)   # and cjsku is that id verbatim
         return m.group(1) if m else None
     return None
 

@@ -20,7 +20,8 @@ Writes `cj.json`. **That raw feed is deliberately not committed** — it is ~1.8
 it goes stale within days, and this repo is public. Re-fetch instead of storing it.
 
 Advertisers currently pulled (Beckett excluded, per the owner):
-Aosom.com, Raw Paws Pet Food, UntilGone, Books-A-Million, 2nd & Charles, FYE.
+Aosom.com, Raw Paws Pet Food, UntilGone, Books-A-Million, 2nd & Charles, FYE,
+Abracadabra NYC.
 
 ## 2. Classify
 
@@ -43,6 +44,15 @@ Matching "pet" anywhere in the description admits an **electric fireplace**
 ("safe for kids, pets, and the elderly"). Matching the title admits **area rugs**
 ("Kid and Pet Friendly"). So `NOT_PET` drops the suitability phrasings and `JUNK`
 drops decor, apparel, DVDs and CDs that merely carry a pet word.
+
+Apparel needs the animal word **adjacent**. `PET_APPAREL` matches "Pet Costume"
+and "Dog Hoodie" but not "Cat Power - Sun T-Shirt", which is how a costume shop
+can be mined without letting band merch back in. Pet apparel lands in its own
+`Costumes` bucket rather than under whichever animal is named.
+
+Halloween is deliberately **not** a Costumes trigger: a Halloween-themed cat
+tree is a cat tree. Including it filed a Gothic cat tree and a throw blanket as
+costumes.
 
 An animal word on its own is still not enough. FYE is an entertainment retailer:
 49 of the 50 products it first matched were Doja Cat, Pet Shop Boys, Stray Cats,
@@ -139,6 +149,11 @@ Links, pick any link, copy the generated code, and read the second number out of
 | UntilGone | 6185946 | `15292997` | `?sku=` | 92 |
 | Books-A-Million | 129899 | `13599892` | last path segment | 10 |
 | FYE | 6446547 | `15513660` | `_aec-cen583029-2` | 1 |
+| Abracadabra NYC | 7889430 | `17278691` | Shopify `?variant=` | not fetched yet |
+
+CJ showed **8 active advertisers** in Oct 2026 and only seven are listed here, so
+one is still unaccounted for. Add it to `PARTNERS` in `fetch.mjs` and to `AIDS`
+when it turns up.
 
 All five collected, so **704 of 704 products are tracked** and the API route is
 no longer needed. Raw Paws puts no SKU in its URLs, so its links carry no

@@ -23,10 +23,12 @@ const PARTNERS = {
   '6423982': '2nd & Charles',
   '129899':  'Books-A-Million',
   '6446547': 'FYE',
+  '7889430': 'Abracadabra NYC',   // costumes — mostly human, a pet range in it
 };
 const ALL_PET = new Set(['7127091']);   // everything Raw Paws sells is pet
 
-const PET = ['dog','dogs','puppy','puppies','canine','cat','cats','kitten','kittens','feline',
+const PET = ['pet costume','dog costume','cat costume','pet hoodie','dog hoodie','pet bandana',
+ 'dog','dogs','puppy','puppies','canine','cat','cats','kitten','kittens','feline',
  'pet','pets','paw','paws','leash','collar','harness','muzzle','kennel','crate','litter box',
  'litter tray','scratching post','catnip','cat tree','pet bed','dog bed','aquarium','fish tank',
  'vivarium','terrarium','reptile','gecko','snake','python','bird cage','birdcage','parrot',
