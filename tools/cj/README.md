@@ -105,6 +105,24 @@ A product can serve more than one species. `species` is the primary bucket;
 Variants are collapsed on `(advertiserId, normalized title)` — Aosom lists the
 same cage in six colors.
 
+## The data in `data/cj/` is a snapshot, not the live catalog
+
+`data/cj/pet-products.json` here was built from the **old schema**, before CJ
+dropped `googleProductCategory` and before the keyword sweeps. It is 705
+products. The live pipeline runs on the owner's machine and produced **1,356**
+from 14,134 raw, across 11 species buckets, every one carrying a tracked link.
+
+Treat the committed copy as a worked example. Re-run the pipeline for current
+data; do not quote these numbers as current.
+
+### FYE is still the one to watch
+
+Every junk cluster so far has come from FYE, which is an entertainment
+retailer: 49 of its first 50 matches were records and films, then 20 albums by
+the band American Aquarium. It still shows 9 under Small Pets and a few each in
+Poultry, Reptiles and Birds. Those have not been eyeballed yet, and on past form
+they are media rather than products. `inspect.mjs` is how to check.
+
 ## 3. Build the browsable catalog
 
 ```
