@@ -44,10 +44,13 @@ if (!TOKEN || !CID) {
   process.exit(1);
 }
 
+const REQ_TIMEOUT_MS = 60000;   // a stalled response must not hang the whole run
+
 async function gql(query) {
   const r = await fetch(API, { method:'POST',
     headers:{ Authorization:`Bearer ${TOKEN}`, 'Content-Type':'application/json' },
-    body: JSON.stringify({ query }) });
+    body: JSON.stringify({ query }),
+    signal: AbortSignal.timeout(REQ_TIMEOUT_MS) });
   const t = await r.text();
   let j; try { j = JSON.parse(t); } catch { throw new Error(`HTTP ${r.status}: ${t.slice(0,300)}`); }
   if (j.errors) throw new Error(j.errors.map(e=>e.message).join(' | '));
@@ -192,49 +195,92 @@ const PAGE = 1000, MAX_WINDOW = 10000;   // CJ's hard paging ceiling
 const num = v => (v && typeof v === 'object') ? [v.amount, v.currency].filter(Boolean).join(' ') : v;
 const out = [], seen = new Set();
 
+/* Paging dies at 10,000 and FYE alone has 329,657 products, so pulling a whole
+   catalogue and filtering locally can never be complete. products(...) takes a
+   server-side `keywords` filter, so ask narrow questions instead: each keyword
+   is its own small result set, well inside the window, and the union is the
+   pet range rather than whichever 10,000 came back first. */
+const KEYWORDS = ['dog','puppy','cat','kitten','pet','bird','parrot','parakeet','cockatiel',
+  'reptile','gecko','snake','tortoise','turtle','aquarium','fish tank','hamster','gerbil',
+  'guinea pig','rabbit','bunny','ferret','chinchilla','hedgehog','chicken coop','litter box',
+  'leash','collar','kennel','crate','aviary','terrarium','vivarium','pet bed','pet food',
+  'pet toy','pet costume','grooming','catnip','scratching post','cat tree'];
+
+async function page(pid, args, offset, lim) {
+  const a = [`companyId:"${CID}"`, `partnerIds:["${pid}"]`, args,
+             `limit:${lim}`, `offset:${offset}`].filter(Boolean).join(', ');
+  const q = `{ products(${a}) { ${hasTotal ? 'totalCount' : ''} ${listField.name} { ${sel.join(' ')} } } }`;
+  return (await gql(q)).products;
+}
+
+function take(p, pid, name) {
+  if (p.isDeleted === true || p.isDeleted === 'true') return 0;
+  // keywords searches descriptions too, so the local test still earns its keep:
+  // it is what keeps "safe for kids, pets and the elderly" fireplaces out.
+  const hay = [p.title, p.description, p.productType, p.googleProductCategory?.name,
+    p.brand, p.catalogName, p.itemListName,
+    p.customLabel0, p.customLabel1, p.customLabel2, p.customLabel3, p.customLabel4]
+    .filter(Boolean).join(' ');
+  if (!ALL_PET.has(pid) && !rx.test(hay)) return 0;
+  const key = p.link || p.id; if (seen.has(key)) return 0; seen.add(key);
+  out.push({ advertiser:name, advertiserId:pid, title:p.title,
+    description:(p.description||'').replace(/\s+/g,' ').trim().slice(0,600),
+    price:num(p.price)||null, salePrice:num(p.salePrice)||null,
+    brand:p.brand||null, availability:p.availability||null,
+    category:p.googleProductCategory?.name||p.productType||null,
+    catalogName:p.catalogName||null, itemListName:p.itemListName||null,
+    sourceFeedType:p.sourceFeedType||null,
+    labels:[p.customLabel0,p.customLabel1,p.customLabel2,p.customLabel3,p.customLabel4]
+      .filter(Boolean),
+    image:p.imageLink||null, link:p.link,
+    clickUrl: (linkField && p[linkField])
+      ? (linkUrlKeys.map(k => p[linkField][k]).find(Boolean) || null) : null });
+  return 1;
+}
+
+// Pages one query to exhaustion (or to the wall) and returns what it kept.
+async function sweep(pid, name, args) {
+  let offset = 0, kept = 0, scanned = 0, capped = false, total = 0;
+  for (;;) {
+    const lim = Math.min(PAGE, MAX_WINDOW - offset);
+    if (lim <= 0) { capped = true; break; }
+    const node = await page(pid, args, offset, lim);
+    const list = node[listField.name] || [];
+    if (hasTotal) total = node.totalCount ?? 0;
+    if (!list.length) break;
+    scanned += list.length;
+    for (const p of list) kept += take(p, pid, name);
+    offset += list.length;
+    if (list.length < lim || (hasTotal && offset >= total)) break;
+  }
+  return { kept, scanned, capped, total };
+}
+
+console.log(`Sweeping ${KEYWORDS.length} keywords across ${Object.keys(PARTNERS).length} advertisers.`);
+console.log('"#" means that keyword found something, "." means it found nothing.');
+console.log('This takes a few minutes -- it is a few hundred queries.\n');
+
 for (const [pid, name] of Object.entries(PARTNERS)) {
-  let offset = 0, kept = 0, total = 0, scanned = 0, capped = false;
+  let kept = 0, scanned = 0, capped = 0;
   try {
-    for (;;) {
-      // CJ: "limit and offset may not add up to be greater than 10,000".
-      // Shrink the last page to land exactly on the wall, then stop.
-      const lim = Math.min(PAGE, MAX_WINDOW - offset);
-      if (lim <= 0) { capped = true; break; }
-      const q = `{ products(companyId:"${CID}", partnerIds:["${pid}"], limit:${lim}, offset:${offset}) {
-        ${hasTotal ? 'totalCount' : ''} ${listField.name} { ${sel.join(' ')} } } }`;
-      const node = (await gql(q)).products;
-      const list = node[listField.name] || [];
-      if (hasTotal) total = node.totalCount ?? 0;
-      if (!list.length) break;
-      scanned += list.length;
-      for (const p of list) {
-        if (p.isDeleted === true || p.isDeleted === 'true') continue;   // delisted
-        const hay = [p.title, p.description, p.productType, p.googleProductCategory?.name,
-          p.brand, p.catalogName, p.itemListName,
-          p.customLabel0, p.customLabel1, p.customLabel2, p.customLabel3, p.customLabel4]
-          .filter(Boolean).join(' ');
-        if (!ALL_PET.has(pid) && !rx.test(hay)) continue;
-        const key = p.link || p.id; if (seen.has(key)) continue; seen.add(key);
-        out.push({ advertiser:name, advertiserId:pid, title:p.title,
-          description:(p.description||'').replace(/\s+/g,' ').trim().slice(0,600),
-          price:num(p.price)||null, salePrice:num(p.salePrice)||null,
-          brand:p.brand||null, availability:p.availability||null,
-          category:p.googleProductCategory?.name||p.productType||null,
-          catalogName:p.catalogName||null, itemListName:p.itemListName||null,
-          sourceFeedType:p.sourceFeedType||null,
-          labels:[p.customLabel0,p.customLabel1,p.customLabel2,p.customLabel3,p.customLabel4]
-            .filter(Boolean),
-          image:p.imageLink||null, link:p.link,
-          clickUrl: (linkField && p[linkField])
-            ? (linkUrlKeys.map(k => p[linkField][k]).find(Boolean) || null) : null });
-        kept++;
-      }
-      offset += list.length;
-      if (list.length < lim || (hasTotal && offset >= total)) break;
+    // Does the category filter work? It is not a field on this schema, but it
+    // IS an argument, and a category sweep beats keyword guessing when it does.
+    let catNote = '';
+    try {
+      const r = await sweep(pid, name, 'googleProductCategoryIds:["1"]');
+      kept += r.kept; scanned += r.scanned; if (r.capped) capped++;
+      catNote = `  [category:${r.total || r.scanned}]`;
+    } catch { catNote = '  [no category filter]'; }
+
+    // ~40 sweeps per advertiser, so say something or it looks hung
+    process.stdout.write(`${name.padEnd(22)} `);
+    for (const kw of KEYWORDS) {
+      const r = await sweep(pid, name, `keywords:${JSON.stringify(kw)}`);
+      kept += r.kept; scanned += r.scanned; if (r.capped) capped++;
+      process.stdout.write(r.kept ? '#' : '.');
     }
-    const note = capped ? `  [capped at ${MAX_WINDOW} of ${total}]`
-               : (hasTotal && total > scanned ? `  [${total} total]` : '');
-    console.log(`${name.padEnd(22)} ${String(kept).padStart(5)} pet  (of ${scanned} scanned)${note}`);
+    const note = capped ? `  [${capped} sweep(s) hit the 10k wall]` : '';
+    console.log(`  ${String(kept).padStart(5)} pet  (of ${scanned} scanned)${catNote}${note}`);
   } catch (e) {
     console.log(`${name.padEnd(22)}   --   ${e.message.slice(0,150)}`);
   }
