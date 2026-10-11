@@ -10,9 +10,14 @@ let argv = process.argv.slice(2);
 let JSON_OUT = null;
 const j = argv.indexOf('--json');
 if (j !== -1) { JSON_OUT = argv[j + 1]; argv = argv.filter((_, i) => i !== j && i !== j + 1); }
-const [SRC, nArg, ...only] = argv;
+// The per-bucket count is optional, so only treat the second argument as one
+// when it is actually a number -- otherwise "Costumes" was being read as the
+// count and the species filter came out empty.
+const [SRC, ...rest] = argv;
 if (!SRC) { console.error('usage: node inspect.mjs <pet-products.json> [--json out.json] [perBucket] [species...]'); process.exit(1); }
-const N = Number(nArg) || 5;
+const hasCount = rest.length && /^\d+$/.test(rest[0]);
+const N = hasCount ? Number(rest[0]) : 5;
+const only = hasCount ? rest.slice(1) : rest;
 const d = JSON.parse(fs.readFileSync(SRC, 'utf8'));
 
 if (JSON_OUT) {
