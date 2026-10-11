@@ -14,7 +14,7 @@ NOT_PET = re.compile(r'pet[- ]friendly|kid and pet|safe for (kids|pets)|cat lice
 # things that are decor/apparel wearing a pet word
 JUNK = re.compile(r'\barea rug\b|fireplace|wallpaper|\bcurtain|medicine cabinet|\bwalker\b'
                   r'|blocking glasses|funko|vinyl figure'
-                  r'|ride[- ]on|chia pet|ace ventura|pet detective|all-region|blu-?ray'
+                  r'|ride[- ]on|chia pet|ace ventura|pet detective|all-region|blu-?ray|kitan club|blind box|gashapon|tumbler|car coasters'
                   r'|\bdvd\b|\bvhs\b|soundtrack|\bcd\b', re.I)
 PET_WORD = re.compile(r'\b(dog|dogs|puppy|puppies|cat|cats|kitten|pet|pets|bird|birds|reptile'
                       r'|aquarium|aquatic|hamster|gerbil|rabbit|bunny|guinea pig|ferret|chinchilla'
@@ -25,13 +25,13 @@ PET_WORD = re.compile(r'\b(dog|dogs|puppy|puppies|cat|cats|kitten|pet|pets|bird|
 # Cats and Pet Sematary; 49 of its 50 "pet products" were records and films. So
 # a title match also has to name a thing an animal actually uses.
 PET_THING = re.compile(r'\b(toy|toys|bed|beds|cage|cages|crate|kennel|hutch|coop|habitat'
-                       r'|enclosure|terrarium|vivarium|aquarium|tank|leash|lead|collar|harness'
+                       r'|enclosure|terrarium|vivarium|leash|lead|collar|harness'
                        r'|muzzle|treat|treats|chew|chews|food|kibble|feed|feeder|bowl|waterer'
                        r'|litter|bedding|hay|substrate|grooming|brush|clipper|shampoo|carrier'
                        r'|stroller|playpen|\bpen\b|gate|ramp|stairs|scratching|perch|nesting'
                        r'|supplement|dewormer|flea|tick|collar|tag|harness|muzzle|waste|poop'
                        r'|heat(ing)? (lamp|mat|pad)|\buvb\b|filter|thermostat|hammock|tunnel'
-                       r'|wheel|burrow|nest|aviary|run|fence|house|mat|pad|blanket|towel)\b', re.I)
+                       r'|wheel|burrow|nest|aviary|run|fence|house|mat|pad|blanket|towel|gravel|heater|pump|canister|siphon|skimmer|air stone|airstone|water conditioner|dechlorinator)\b', re.I)
 
 # Apparel needs the animal word ADJACENT, or every band T-shirt with an animal
 # in its name walks in. "Beetlejuice Pet Costume" yes, "Cat Power - T-Shirt" no.

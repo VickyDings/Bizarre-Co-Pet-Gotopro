@@ -75,6 +75,13 @@ Halloween is deliberately **not** a Costumes trigger: a Halloween-themed cat
 tree is a cat tree. Including it filed a Gothic cat tree and a throw blanket as
 costumes.
 
+**A word must not satisfy both tests.** `aquarium` was in `PET_WORD` and in
+`PET_THING`, so it passed as both the animal and the thing — and twenty albums
+by the band **American Aquarium** became pet products. `aquarium` and `tank` are
+out of `PET_THING`; real aquarium gear is named instead (filter, gravel, heater,
+pump, canister, siphon, skimmer, dechlorinator). Any future addition to
+`PET_THING` has to be checked against `PET_WORD` for the same overlap.
+
 An animal word on its own is still not enough. FYE is an entertainment retailer:
 49 of the 50 products it first matched were Doja Cat, Pet Shop Boys, Stray Cats,
 Pet Sematary and Slaughter Beach Dog. The survivor is a rope dog toy. So a title
