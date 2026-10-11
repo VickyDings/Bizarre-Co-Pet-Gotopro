@@ -1,5 +1,12 @@
 # Pet GoToPro — blog guides
 
+**Writing a guide? Read `docs/reference/writing-a-guide.md` first.** It is the
+end-to-end process — product export, generating the affiliate HTML rather than
+transcribing it, validating, render-checking at 390px, the printables, the
+handover files — plus the file-ownership rules that let several Claude Code
+sessions write guides at once without colliding. If more than one session is
+working in this repo, those rules are not optional.
+
 **Read `docs/reference/guide-template.html` before writing a post.** It is the
 canonical layout, derived from the two guides the owner confirmed in Sept 2026 as
 the house style: **ball-python-care-guide** and **hamster-care-guide**. Match it.
