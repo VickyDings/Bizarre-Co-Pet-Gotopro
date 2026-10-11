@@ -1,0 +1,27 @@
+{
+  // Pet-GoToPro — self-hosted CMS on Cloudflare Workers
+  "name": "petgotopro",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "routes": [
+    { "pattern": "pet-gotopro.com", "custom_domain": true },
+    { "pattern": "www.pet-gotopro.com", "custom_domain": true }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "petgotopro",
+      "database_id": "734cab56-b45b-414d-aa51-b462dec260ef"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  },
+  "rules": [
+    { "type": "Data", "globs": ["**/*.bin"], "fallthrough": true }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

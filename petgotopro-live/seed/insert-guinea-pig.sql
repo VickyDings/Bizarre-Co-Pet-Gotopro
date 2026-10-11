@@ -1,0 +1,322 @@
+INSERT INTO posts (slug, title, description, keywords, category, hero_image, body_html, status, created_at, updated_at) VALUES ('guinea-pig-cage-setup-care-guide','Guinea Pig Cage Setup & Care Guide 2026 (+ Free Printable)','The cage size pet shops get wrong, why guinea pigs need a friend, daily vitamin C amounts, safe bedding, health warning signs and a full shopping list with costs.','guinea pig cage setup, guinea pig cage size, C&C cage guinea pig, guinea pig care guide, guinea pig bedding safe, guinea pig vitamin C, guinea pig diet, guinea pig shopping list, best guinea pig cage 2026, guinea pigs in pairs','Small Pets', '','<p>Walk into almost any pet shop and you''ll find a cage labelled "guinea pig home" that is roughly half the size your guinea pig actually needs. That single fact causes more guinea pig health and behaviour problems than anything else — and it''s why this guide leads with the cage rather than treating it as an afterthought.</p>
+<p>Guinea pigs are wonderful pets: gentle, chatty, endlessly entertaining, and one of the very few small animals that genuinely enjoy human company rather than tolerating it. They don''t bite, they don''t climb out, they''ll squeal with delight when they hear the fridge door, and they''ll live happily alongside children in a way that hamsters simply won''t.</p>
+<p>But they come with three non-negotiable requirements that catch new owners out: <strong>far more floor space than pet shops sell</strong>, <strong>a companion of their own kind</strong>, and <strong>a daily source of vitamin C</strong>, because — like us — they can''t make their own. Get those three right and the rest is easy. This guide covers all of it, with a full cage setup walkthrough and a shopping list at the end.</p>
+
+<div class="quick-facts">
+  <h3>🐹 Guinea Pig at a Glance</h3>
+  <div class="qf-grid">
+    <div class="qf-item"><span class="qf-label">Also called</span><span class="qf-value">Cavy (<em>Cavia porcellus</em>)</span></div>
+    <div class="qf-item"><span class="qf-label">Adult size</span><span class="qf-value">8–12 inches, 700–1,200 g</span></div>
+    <div class="qf-item"><span class="qf-label">Lifespan</span><span class="qf-value">5–7 years (some reach 8+)</span></div>
+    <div class="qf-item"><span class="qf-label">Native to</span><span class="qf-value">The Andes — Peru, Bolivia, Ecuador</span></div>
+    <div class="qf-item"><span class="qf-label">Minimum cage (pair)</span><span class="qf-value">7.5 sq ft — 10.5 sq ft preferred</span></div>
+    <div class="qf-item"><span class="qf-label">Company</span><span class="qf-value">Must be kept in pairs or groups</span></div>
+    <div class="qf-item"><span class="qf-label">Room temperature</span><span class="qf-value">65–75°F (18–24°C)</span></div>
+    <div class="qf-item"><span class="qf-label">Diet</span><span class="qf-value">Unlimited hay + daily vitamin C</span></div>
+    <div class="qf-item"><span class="qf-label">Setup cost</span><span class="qf-value">$200–$400 for a proper pair setup</span></div>
+    <div class="qf-item"><span class="qf-label">Running cost</span><span class="qf-value">Roughly $40–$70 a month</span></div>
+  </div>
+</div>
+
+<h2>What to Expect Day to Day</h2>
+<p>Guinea pigs are <strong>ground-dwelling prey animals</strong>. They don''t climb, they can''t jump well, and they have no interest in tubes and towers — which is exactly why a wide, flat, open floor plan beats a tall multi-level cage every time.</p>
+<p>They''re awake in bursts throughout the day and night rather than being strictly nocturnal, so you''ll see plenty of them at reasonable hours. Expect 20 hours a week of hay-munching, a running commentary of squeaks, and a firm opinion about when dinner is late.</p>
+<h3>They''re vocal — genuinely vocal</h3>
+<p>Guinea pigs have a wide vocabulary and use it constantly. <strong>Wheeking</strong> is the loud, excited squeal reserved for food (they learn the sound of the fridge door and the rustle of a vegetable bag within days). <strong>Purring</strong> is contentment when low and slow, or annoyance when short and sharp. <strong>Rumbling</strong> is a courtship or dominance strut. <strong>Chattering teeth</strong> means genuinely angry — back off. A sudden <strong>shriek</strong> means pain or fear and needs checking immediately.</p>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #1</span>
+  <p>They''re <strong>not pigs, and they''re not from Guinea.</strong> Guinea pigs are rodents from the Andes mountains of South America, domesticated by around 5000 BC — thousands of years before cats. Nobody is entirely sure where either half of the English name came from; in Peru they''re called <em>cuy</em>, after the sound they make.</p>
+</div>
+
+<h3>Handling and temperament</h3>
+<p>Guinea pigs rarely bite. They''re skittish at first — being a prey animal will do that — but with daily gentle handling and food bribery most become genuinely affectionate within weeks. Always scoop with two hands, one under the chest and one supporting the bottom, and hold them close to your body. They are surprisingly heavy and surprisingly bad at judging edges, so sit on the floor with them rather than standing.</p>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #2</span>
+  <p>Happy guinea pigs <strong>"popcorn"</strong> — they leap straight up in the air, sometimes with a mid-air twist, and sprint off in a random direction. It''s pure joy, most common in young pigs, and it''s the single best sign you''ve got the setup right. Adults popcorn too; they''re just a bit more dignified about it.</p>
+</div>
+
+<h2>🏠 The Cage: Getting It Right</h2>
+<p>This is where most guinea pig welfare is won or lost, so we''ll take it properly.</p>
+
+<h3>Size — the number one mistake</h3>
+<p>Most cages marketed for guinea pigs are far too small. The floor space guidelines below come from the Humane Society''s housing standards and are widely echoed by exotics vets and rescues:</p>
+
+<div class="table-wrap">
+  <table class="compare">
+    <thead><tr><th>Number of pigs</th><th>Absolute minimum</th><th>Recommended</th><th>Rough dimensions</th></tr></thead>
+    <tbody>
+      <tr><td><b>1</b> (not advised — see below)</td><td>7.5 sq ft</td><td>7.5 sq ft</td><td>30" × 36"</td></tr>
+      <tr><td><b>2</b></td><td>7.5 sq ft</td><td><b>10.5 sq ft</b></td><td>30" × 50"</td></tr>
+      <tr><td><b>3</b></td><td>10.5 sq ft</td><td><b>13 sq ft</b></td><td>30" × 62"</td></tr>
+      <tr><td><b>4</b></td><td>13 sq ft</td><td><b>13+ sq ft</b></td><td>30" × 76"</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>For context: a typical pet shop "large guinea pig cage" is often around 4 sq ft — roughly <strong>half</strong> what a single pig needs and about a third of what a pair should have. Bigger cages are also easier to keep clean, because waste doesn''t concentrate in one area.</p>
+
+<div class="vet-tip">
+  <h4>💚 Why floor space matters so much</h4>
+  <p>Guinea pigs are built to graze and patrol on the move. In cramped cages we see the predictable consequences: obesity, muscle weakness, bumblefoot from constantly standing on soiled bedding, boredom-driven bar-chewing, and far more squabbling between cage mates. Give them room to sprint and popcorn and most "behaviour problems" simply evaporate.</p>
+</div>
+
+<h3>What NOT to buy</h3>
+<ul>
+  <li><strong>Wire-bottom cages</strong> — guinea pig feet are soft and unprotected. Wire floors cause sore hocks and bumblefoot, a painful infection that is difficult to treat.</li>
+  <li><strong>Glass aquariums or plastic tubs</strong> — dreadful ventilation, so ammonia from urine builds up and damages the respiratory system.</li>
+  <li><strong>Tall multi-level cages with tubes</strong> — that''s hamster architecture. Guinea pigs can''t climb, and falls from ramps cause injuries. If a cage has levels, count only the floor space they can actually walk on.</li>
+  <li><strong>Exercise wheels and exercise balls</strong> — never, for any guinea pig. Their spines don''t curve that way, and wheels and balls cause serious back injury. This is one of the most common and most damaging pet shop mis-sells.</li>
+</ul>
+
+<h3>The best options</h3>
+<p><strong>C&amp;C cages</strong> (short for "cubes and coroplast") are the gold standard among experienced keepers. Wire grid panels clip together around a corrugated plastic base, so you build exactly the size and shape you need, expand it later, and it costs less than a comparable pet shop cage. They fold flat and clean easily. Pre-made kits like the Midwest Guinea Habitat are the easiest ready-to-go route; brands like Kavee sell full C&amp;C kits with fleece included.</p>
+<p>Whatever you choose, sides should be at least <strong>12 inches high</strong>, ventilation good, and the floor solid and gentle underfoot.</p>
+
+<h3>Bedding — safe and dangerous</h3>
+<p><strong>Safe choices:</strong> paper-based bedding (laid 2–3 inches deep for absorption), fleece liners over an absorbent layer, or kiln-dried aspen shavings. Fleece works out cheapest long-term and looks smart, but must be washed twice weekly and needs an absorbent layer underneath — fleece alone just gets soggy.</p>
+
+<div class="vet-warning">
+  <h4>⚠️ Never use cedar or pine shavings</h4>
+  <p>Aromatic softwood shavings release phenol fumes that irritate a guinea pig''s airways and feet — a serious problem in an animal already prone to respiratory infection, and worse once the bedding is soiled. Avoid straw too (sharp stalks can injure eyes), and skip fluffy "cotton wool" style bedding, which causes intestinal blockages if eaten.</p>
+</div>
+
+<h3>Temperature — they overheat easily</h3>
+<p>Keep the room at <strong>65–75°F (18–24°C)</strong> with humidity between 30–60%. Guinea pigs cope poorly with heat and cannot pant efficiently: above about 80°F (27°C) heatstroke becomes a real risk, and it can kill within hours. Keep the cage out of direct sunlight and away from radiators, and in summer offer a ceramic tile or a wrapped frozen water bottle to lie against. They also shouldn''t live in unheated garages or sheds.</p>
+
+<h3>Laying the cage out</h3>
+<p>Guinea pigs like their space organised, and a good layout reduces squabbling:</p>
+<ul>
+  <li><strong>Hides — one per pig, plus one spare.</strong> Prey animals need somewhere to bolt to, and a spare prevents one pig cornering another. Choose hides with two exits so nobody gets trapped.</li>
+  <li><strong>Hay at one end, in a rack or a generous pile.</strong> Hay is 80% of the diet, so it needs to be constantly available and kept off soiled bedding.</li>
+  <li><strong>Water bottle on the side, checked daily.</strong> Sipper tubes clog easily; give it a squeeze each morning to confirm it''s flowing. A second bottle is sensible insurance.</li>
+  <li><strong>Heavy ceramic food bowl</strong> for pellets — plastic bowls get flipped and chewed.</li>
+  <li><strong>Open middle floor space</strong> for zoomies. Resist the urge to fill every inch with accessories.</li>
+  <li><strong>A litter tray in their chosen toilet corner</strong> — most guinea pigs pick one and stay loyal to it, which makes daily cleaning far quicker.</li>
+</ul>
+
+<h3>Cleaning routine</h3>
+<p><strong>Daily:</strong> remove soiled bedding from the toilet area, refresh hay, wash and refill the water bottle, remove uneaten fresh food. <strong>Twice weekly:</strong> change fleece liners, or spot-replace paper bedding. <strong>Weekly:</strong> full bedding change and wipe the base with a pet-safe cleaner or diluted white vinegar. A clean cage with good airflow is the best respiratory-infection prevention there is.</p>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #3</span>
+  <p>Guinea pigs are <strong>born ready to go</strong>. Pups arrive fully furred, with their eyes open and a complete set of teeth, and can walk and nibble solid food within a few hours of birth. Compare that with a newborn hamster — pink, blind and helpless — and you get a sense of how differently these two "small pets" are built.</p>
+</div>
+
+<h2>👯 Never Keep Just One</h2>
+<p>Guinea pigs are herd animals. In the wild they live in groups, and a solitary guinea pig is a stressed guinea pig — even with an attentive owner, since we cannot replicate the constant low-level chatter, grooming and body contact they get from their own kind. Lone pigs are more prone to depression-like withdrawal, boredom behaviours, and poorer appetite.</p>
+<p>This is taken seriously enough that <strong>in Switzerland it is illegal to keep a single guinea pig</strong> — social species must be kept in company, and there are even services that pair up pigs whose companion has died.</p>
+<p>Good pairings: two females (usually easiest), a neutered male with one or more females, or two males raised together with plenty of space and duplicate resources. Never house an un-neutered male with a female unless you want a great many guinea pigs. Always introduce new pigs on neutral ground with lots of hides, and expect some rumbling and chasing while they establish who''s in charge.</p>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #4</span>
+  <p>Guinea pigs have <strong>four toes on their front feet and three on the back</strong>, and their nails grow continuously like ours — needing a trim every 4–6 weeks. They also don''t have paw pads suited to wire, which is precisely why wire-floored cages cause so much damage.</p>
+</div>
+
+<h2>🥬 Diet: Hay, Veg, Pellets — In That Order</h2>
+<h3>Hay is 80% of the diet</h3>
+<p>Unlimited fresh grass hay — timothy, orchard or meadow — must be available 24 hours a day. A guinea pig should eat roughly <strong>its own body size in hay every day</strong>. This isn''t just filler: the long chewing action wears down teeth that grow continuously throughout life, and the fibre keeps the gut moving. Guinea pigs deprived of hay develop painful dental spurs and dangerous gut stasis.</p>
+<p>Alfalfa hay is different — it''s high in calcium and protein, suitable for pups under six months and pregnant sows, but it contributes to bladder stones in healthy adults. Adults get grass hay.</p>
+<h3>Fresh vegetables daily</h3>
+<p>Around <strong>one cup of fresh vegetables per pig per day</strong>, ideally split into two servings and rotated across many types. Bell peppers are the star — very high in vitamin C and popular with almost every guinea pig. Good staples include leafy greens, coriander, parsley and small amounts of cucumber and courgette.</p>
+<p>Rotate rather than repeating: variety supports urinary tract health. Limit high-calcium and high-oxalate greens such as spinach, kale and parsley to a few times a week rather than daily, since heavy feeding contributes to bladder stones — a common and painful guinea pig problem.</p>
+<h3>Pellets — a supplement, not a meal</h3>
+<p>Just <strong>1–2 tablespoons per pig per day</strong> of a plain, timothy-based, vitamin C-fortified guinea pig pellet. Avoid colourful muesli-style mixes with seeds and dried fruit: guinea pigs pick out the sugary bits and leave the healthy pellets, which causes obesity and dental disease. Buy pellets in small bags and store them cool and dark — the vitamin C in them degrades within about 90 days of manufacture.</p>
+<h3>Foods to avoid</h3>
+<p>Iceberg lettuce (no nutrition, causes diarrhoea), potato and potato tops, onion, garlic, leeks, chocolate, dairy, meat, nuts and seeds, bread and cereals, and anything sugary. Fruit and carrots are treats only — a thin slice a couple of times a week, not daily. Never feed grass clippings from a mower (they ferment fast), and never anything from a lawn treated with chemicals.</p>
+
+<h2>💊 Vitamin C: The One That Kills</h2>
+<p>Guinea pigs share an unusual trait with humans and primates: they lack the enzyme L-gulonolactone oxidase, so <strong>they cannot manufacture their own vitamin C</strong>. It must come from their diet every single day, and deficiency causes scurvy — the same disease that plagued sailors.</p>
+<div class="vet-tip">
+  <h4>💚 How much they need</h4>
+  <p><strong>Healthy adults:</strong> roughly 10–25 mg of vitamin C per kilogram of body weight daily.<br>
+  <strong>Young, pregnant, nursing or unwell pigs:</strong> 30 mg/kg or more.<br>
+  For a typical 1 kg adult, that''s about 10–25 mg a day — easily covered by a portion of bell pepper plus fresh pellets, or a dedicated chewable tablet.</p>
+</div>
+<p>Early scurvy is easy to miss and looks like general malaise: reluctance to move, a rough or puffed-up coat, swollen and painful joints, loss of appetite, weight loss, bleeding gums or loose teeth, poor wound healing, and diarrhoea. It progresses quickly and needs veterinary treatment.</p>
+
+<div class="vet-warning">
+  <h4>⚠️ Don''t put vitamin C drops in the water bottle</h4>
+  <p>It''s the most commonly sold solution and one of the worst. Vitamin C degrades rapidly in water and light, so the dose is unreliable, and it gives the water an unpleasant taste — so many guinea pigs simply drink less, risking dehydration and bladder problems on top of the deficiency you were trying to fix. Use fresh vitamin C-rich vegetables, fresh fortified pellets, or a chewable tablet given by hand instead.</p>
+</div>
+
+<h2>🩺 Health: What to Watch For</h2>
+<h3>Signs of a healthy guinea pig</h3>
+<ul>
+  <li>Bright, clear eyes and a clean nose</li>
+  <li>Eating hay constantly and producing plenty of firm, oval droppings</li>
+  <li>Smooth coat with no bald patches, scabs or crusty skin</li>
+  <li>Stable weight — weigh weekly on a digital kitchen scale</li>
+  <li>Moving freely, popcorning, vocal and curious</li>
+  <li>Clean, dry bottom and clean feet</li>
+</ul>
+<h3>Common problems</h3>
+<p><strong>Respiratory infection.</strong> Very common and can move fast. Watch for laboured or noisy breathing, discharge from nose or eyes, sneezing, crackly chest sounds and lethargy. Poor ventilation, ammonia build-up and dusty or aromatic bedding are the usual triggers. Needs a vet promptly.</p>
+<p><strong>Gut stasis.</strong> If a guinea pig stops eating, the digestive system can shut down within 12–24 hours. <strong>Not eating and not passing droppings is an emergency</strong>, not a wait-and-see.</p>
+<p><strong>Dental disease.</strong> Teeth grow continuously; without enough hay they overgrow and form spurs that cut the tongue and cheeks. Signs: drooling ("slobbers"), dropping food, weight loss, eating only soft food.</p>
+<p><strong>Bladder stones and sludge.</strong> Common, painful, and linked to excess calcium. Watch for blood-tinged urine, straining, or squeaking while urinating.</p>
+<p><strong>Bumblefoot (pododermatitis).</strong> Red, swollen or ulcerated foot pads, caused by wire floors, damp bedding or obesity. Difficult to treat once established, easy to prevent with a solid floor and clean, dry bedding.</p>
+<p><strong>Mites and fungal infection.</strong> Intense scratching, hair loss and scabbing, often flaring when the animal is stressed. Treatable, but needs proper veterinary diagnosis rather than pet-shop sprays.</p>
+
+<div class="vet-warning">
+  <h4>⚠️ See an exotics vet straight away if you see</h4>
+  <p>No eating or no droppings for 12 hours · laboured or open-mouth breathing · blood in urine or straining to urinate · a sudden shriek of pain · dragging back legs · a rapidly dropping weight on the scales · a lump anywhere on the body.</p>
+  <p><strong>Register with a guinea-pig-experienced vet before you need one.</strong> Guinea pigs hide illness until they''re genuinely unwell, so by the time symptoms show, time matters.</p>
+</div>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #5</span>
+  <p>Guinea pigs sleep in <strong>short naps totalling only around four to six hours a day</strong>, and frequently doze with their eyes wide open — another prey-animal adaptation. If you almost never catch yours sleeping, that''s completely normal.</p>
+</div>
+
+<h2>🛒 The Complete Guinea Pig Shopping List</h2>
+<p>Set the cage up fully <strong>before</strong> your guinea pigs come home. Prices assume a pair, which is how they should always be kept.</p>
+
+<div class="kit-section">
+  <h3>🔴 The Cage &amp; Bedding</h3>
+  <p class="kit-note">The biggest spend, and the one most worth doing properly.</p>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">1. C&amp;C cage or large habitat — 10.5 sq ft for a pair</span>
+    <span class="kit-why">Midwest Guinea Habitat kits are the easiest ready-made option; C&amp;C grid kits let you build any size and expand later. Sides at least 12 inches, solid floor, no wire bottom.</span><br>
+    <span class="kit-price">$70–$180</span><a class="kit-link" href="https://www.amazon.com/s?k=C%26C+guinea+pig+cage+midwest+guinea+habitat" target="_blank" rel="nofollow noopener sponsored">Shop cages on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">2. Fleece liners or paper bedding</span>
+    <span class="kit-why">Fleece is cheapest long-term and washable (buy two sets so one is always clean); paper bedding is simpler to start with — lay it 2–3 inches deep. Never cedar or pine.</span><br>
+    <span class="kit-price">$25–$50</span><a class="kit-link" href="https://www.amazon.com/s?k=guinea+pig+fleece+liner+cage+paper+bedding" target="_blank" rel="nofollow noopener sponsored">Shop bedding on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">3. Hides — one per pig, plus one spare</span>
+    <span class="kit-why">Two exits per hide so nobody gets cornered. Fleece tunnels, wooden houses and even sturdy cardboard boxes all work; rotate them to keep things interesting.</span><br>
+    <span class="kit-price">$20–$45</span><a class="kit-link" href="https://www.amazon.com/s?k=guinea+pig+hideout+tunnel+house" target="_blank" rel="nofollow noopener sponsored">Shop hides on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">4. Litter tray for the toilet corner</span>
+    <span class="kit-why">Most guinea pigs pick one corner and stick to it. A tray there, filled with paper bedding, cuts your daily cleaning down to a couple of minutes.</span><br>
+    <span class="kit-price">$10–$20</span><a class="kit-link" href="https://www.amazon.com/s?k=guinea+pig+litter+pan+corner+tray" target="_blank" rel="nofollow noopener sponsored">Shop litter trays on Amazon →</a>
+  </div></div>
+</div>
+
+<div class="kit-section">
+  <h3>🔴 Food &amp; Water</h3>
+  <p class="kit-note">Hay is the single most important purchase you will make, repeatedly, forever.</p>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">5. Timothy hay — buy the biggest box you can store</span>
+    <span class="kit-why">Unlimited, always available, 80% of the diet. Oxbow and Small Pet Select are the reliable names. Second-cut timothy is the usual sweet spot for softness and fibre.</span><br>
+    <span class="kit-price">$25–$45 per large box</span><a class="kit-link" href="https://www.amazon.com/s?k=timothy+hay+guinea+pig+oxbow+small+pet+select" target="_blank" rel="nofollow noopener sponsored">Shop hay on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">6. Vitamin C-fortified timothy pellets</span>
+    <span class="kit-why">Plain pellets only — no seeds, no dried fruit, no coloured bits. Buy small bags: the vitamin C degrades roughly 90 days after manufacture, so a giant sack is false economy.</span><br>
+    <span class="kit-price">$15–$25</span><a class="kit-link" href="https://www.amazon.com/s?k=oxbow+guinea+pig+pellets+timothy+vitamin+C" target="_blank" rel="nofollow noopener sponsored">Shop pellets on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">7. Hay rack or hay feeder</span>
+    <span class="kit-why">Keeps hay off soiled bedding so they''ll actually eat it. Avoid tall narrow racks with wide gaps — pigs have got their heads stuck in those.</span><br>
+    <span class="kit-price">$12–$25</span><a class="kit-link" href="https://www.amazon.com/s?k=guinea+pig+hay+rack+feeder" target="_blank" rel="nofollow noopener sponsored">Shop hay racks on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">8. Two water bottles + heavy ceramic bowl</span>
+    <span class="kit-why">Two bottles means a clogged sipper never leaves them without water. A weighted ceramic bowl for pellets survives being sat on, flipped and chewed.</span><br>
+    <span class="kit-price">$18–$30</span><a class="kit-link" href="https://www.amazon.com/s?k=guinea+pig+water+bottle+ceramic+bowl" target="_blank" rel="nofollow noopener sponsored">Shop bottles &amp; bowls on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">9. Chewable vitamin C tablets</span>
+    <span class="kit-why">Reliable daily insurance, given by hand as a treat. Far better than drops in the water bottle, which degrade and put pigs off drinking.</span><br>
+    <span class="kit-price">$10–$18</span><a class="kit-link" href="https://www.amazon.com/s?k=guinea+pig+vitamin+C+chewable+tablets" target="_blank" rel="nofollow noopener sponsored">Shop vitamin C on Amazon →</a>
+  </div></div>
+</div>
+
+<div class="kit-section">
+  <h3>🟢 Enrichment, Grooming &amp; Health Kit</h3>
+  <p class="kit-note">Not needed on day one, but every one of these earns its place quickly.</p>
+
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">10. Digital kitchen scale (0.1 g)</span>
+    <span class="kit-why">Weigh weekly and write it down. Guinea pigs hide illness expertly, and a steady weight drop is almost always the very first clue. The most valuable £10 in guinea pig keeping.</span><br>
+    <span class="kit-price">$10–$18</span><a class="kit-link" href="https://www.amazon.com/s?k=digital+kitchen+scale+grams+pet" target="_blank" rel="nofollow noopener sponsored">Shop scales on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">11. Small animal nail clippers</span>
+    <span class="kit-why">Nails grow continuously and need trimming every 4–6 weeks. Small clippers plus a styptic powder for accidents; ask your vet to demonstrate the first time.</span><br>
+    <span class="kit-price">$8–$15</span><a class="kit-link" href="https://www.amazon.com/s?k=small+animal+nail+clippers+guinea+pig+styptic" target="_blank" rel="nofollow noopener sponsored">Shop clippers on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">12. Chew toys — willow, apple sticks, hay tunnels</span>
+    <span class="kit-why">Safe wooden chews support dental wear and stop bar-biting. Skip anything with glue, paint, or dried fruit and seeds.</span><br>
+    <span class="kit-price">$12–$25</span><a class="kit-link" href="https://www.amazon.com/s?k=guinea+pig+chew+toys+willow+apple+sticks" target="_blank" rel="nofollow noopener sponsored">Shop chews on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">13. Playpen for floor time</span>
+    <span class="kit-why">Daily supervised floor time outside the cage is brilliant enrichment. A folding pen keeps them off cables and out from under the sofa.</span><br>
+    <span class="kit-price">$25–$45</span><a class="kit-link" href="https://www.amazon.com/s?k=small+animal+playpen+guinea+pig+folding" target="_blank" rel="nofollow noopener sponsored">Shop playpens on Amazon →</a>
+  </div></div>
+
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">14. Pet-safe cleaner &amp; grooming brush</span>
+    <span class="kit-why">A small-animal-safe disinfectant for weekly cage cleans, and a soft brush — essential for long-haired breeds like Peruvians and Silkies, who need daily grooming.</span><br>
+    <span class="kit-price">$15–$28</span><a class="kit-link" href="https://www.amazon.com/s?k=small+animal+safe+cage+cleaner+guinea+pig+brush" target="_blank" rel="nofollow noopener sponsored">Shop cleaning &amp; grooming on Amazon →</a>
+  </div></div>
+</div>
+
+<h3>What it all costs</h3>
+<div class="table-wrap">
+  <table class="compare">
+    <thead><tr><th>Category</th><th>Budget setup</th><th>Recommended setup</th></tr></thead>
+    <tbody>
+      <tr><td><b>Cage</b></td><td>$70</td><td>$150</td></tr>
+      <tr><td><b>Bedding &amp; liners</b></td><td>$25</td><td>$50</td></tr>
+      <tr><td><b>Hides &amp; litter tray</b></td><td>$30</td><td>$60</td></tr>
+      <tr><td><b>Hay, pellets, vitamin C</b></td><td>$50</td><td>$85</td></tr>
+      <tr><td><b>Bottles, bowls, hay rack</b></td><td>$30</td><td>$55</td></tr>
+      <tr><td><b>Scale, clippers, chews, pen</b></td><td>$30</td><td>$100</td></tr>
+      <tr><td><b>Two guinea pigs</b></td><td>$40–$80 (adopt a bonded pair)</td><td>$50–$120</td></tr>
+      <tr><td><b>Total to get started</b></td><td><b>~$280</b></td><td><b>~$570</b></td></tr>
+      <tr><td><b>Ongoing monthly</b></td><td colspan="2"><b>$40–$70</b> — hay, pellets, fresh vegetables, bedding</td></tr>
+    </tbody>
+  </table>
+</div>
+<p style="font-size:12px;font-style:italic">*Prices are indicative and subject to change. Always verify current pricing on Amazon. Please consider adopting a bonded pair from a rescue — there are always guinea pigs waiting.</p>
+
+<h2>&#128462; Free Printable: Guinea Pig Cage &amp; Care Sheet</h2><p>Every number in this guide on one printable page &mdash; cage sizes, daily food amounts, vitamin C doses, the things never to use, and the health signs to watch for. Click it to view full size, or download the original below.</p><figure class="pgp-figure img-full img-center"><img src="/img/guinea-pig-care-sheet.jpg" class="pgp-img" alt="Guinea pig cage and care sheet: minimum cage sizes from 7.5 to 13 square feet, housing essentials, daily diet amounts, vitamin C requirements, items never to use, signs of a healthy pig, and when to call a vet"><figcaption>Our printable guinea pig cage &amp; care sheet &mdash; free to download and share.</figcaption></figure><div class="download-card"><div class="dl-thumb"><img src="/img/guinea-pig-care-sheet.jpg" alt="Guinea pig care sheet" class="no-zoom"></div><div class="dl-body"><span class="dl-tag">Free download</span><h3>Guinea Pig Cage &amp; Care Sheet</h3><p>Cage sizes, daily diet, vitamin C doses, what never to use and the health warning signs &mdash; all on one printable page.</p><a class="dl-btn" href="/download/guinea-pig-care-sheet.jpg">&#11015;&#65039; Download free</a><span class="dl-note">Free for everyone &mdash; print it, pin it, share it. No sign-up, no email needed.</span></div></div><h2>More Fun Facts</h2>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #6</span>
+  <p>Guinea pigs are one of only a handful of mammals — alongside humans, other primates and fruit bats — that <strong>can''t produce their own vitamin C</strong>. That shared quirk is exactly why they became such widely used research animals, and why "guinea pig" entered English as a phrase for a test subject.</p>
+</div>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #7</span>
+  <p>They have <strong>terrible eyesight but excellent hearing and smell</strong>, and their eyes sit on the sides of the head for a nearly 340-degree field of view. They can''t see directly in front of their own nose — which is why a guinea pig will sniff your hand rather than look at it, and why you should always speak before reaching in.</p>
+</div>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact #8</span>
+  <p>A guinea pig''s <strong>teeth never stop growing</strong> — all twenty of them, including the back molars — at roughly 2–3 mm a week. Hay isn''t just food; the sideways grinding motion is the only thing keeping those teeth at a workable length. It''s the clearest possible example of diet being medicine.</p>
+</div>
+
+<h2>Frequently Asked Questions</h2>
+<details class="faq-item"><summary>Can I keep just one guinea pig if I spend lots of time with it?</summary><p>It''s strongly discouraged. Guinea pigs communicate constantly with each other in ways we can''t replicate, and lone pigs show more stress behaviours, lower appetite and less activity. Switzerland has made it illegal for exactly this reason. If your pig''s companion dies, most rescues will help you find and bond a new friend rather than leave one alone.</p></details>
+<details class="faq-item"><summary>Are guinea pigs good pets for children?</summary><p>They''re among the best small pets for families — they rarely bite, they''re big enough to hold safely, and they''re active during the day. But they''re fragile if dropped and they need genuinely committed care, so an adult must own the responsibility: cage cleaning, vet care, weekly weigh-ins and the daily vegetable prep. Children should sit on the floor when handling them.</p></details>
+<details class="faq-item"><summary>Do guinea pigs smell?</summary><p>The animals themselves are clean and largely odourless — they groom constantly. Any smell comes from the cage, and it''s a signal, not an inevitability: it means the bedding needs changing more often, the cage is too small, or ventilation is poor. A correctly sized cage cleaned on schedule shouldn''t smell noticeable.</p></details>
+<details class="faq-item"><summary>Can guinea pigs live with rabbits?</summary><p>No — this used to be common advice and it''s now firmly discouraged. Rabbits are far stronger and can injure a guinea pig with a single kick, they carry <em>Bordetella</em> that''s harmless to them but causes respiratory disease in guinea pigs, and their dietary needs differ. They also don''t speak the same social language. Guinea pigs should live with guinea pigs.</p></details>
+<details class="faq-item"><summary>How often should I bathe my guinea pig?</summary><p>Rarely — a few times a year at most, and only if genuinely dirty or on veterinary advice. Bathing strips the natural oils in their coat and is stressful. Long-haired breeds need regular brushing and bottom trims rather than baths. Spot-clean with a damp cloth for small messes.</p></details>
+<details class="faq-item"><summary>Do they need to go outside?</summary><p>Supervised time on clean, untreated grass in mild weather is excellent for them, but only when it''s between about 65–75°F, in shade, in a secure run, and never left unattended — they''re vulnerable to birds of prey, cats, foxes and heatstroke. Never leave them outdoors permanently, and check the grass has had no pesticides or fertiliser.</p></details>
+<details class="faq-item"><summary>Why does my guinea pig eat its own droppings?</summary><p>That''s completely normal and necessary. Guinea pigs produce special soft droppings called caecotrophs which they eat directly, absorbing B vitamins and other nutrients that require a second pass through the gut. A guinea pig that stops doing this — or one that''s too overweight to reach — can become deficient, so it''s a habit to be glad about, not discouraged.</p></details>
+
+<h2>The Bottom Line</h2>
+<p>Guinea pigs are genuinely rewarding pets, and they ask for surprisingly little: a big flat cage, a friend, endless hay, a daily source of vitamin C, and a bit of your time each day. What they can''t tolerate is the setup most pet shops sell — a small wire cage, a solitary pig, a muesli mix and a water bottle with drops in it.</p>
+<p>If you take one thing from this guide, make it the cage. <strong>Go bigger than you think you need</strong>, keep the floor solid and the bedding safe, and buy two pigs rather than one. Do that, and you''ll spend the next five to seven years being wheeked at every time you open the fridge — which is, honestly, one of the best sounds in pet keeping.</p>
+','draft','2026-08-13T14:00:00.000Z','2026-08-13T14:00:00.000Z');

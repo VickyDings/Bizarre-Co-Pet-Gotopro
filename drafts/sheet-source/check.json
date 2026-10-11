@@ -1,0 +1,48 @@
+{
+"eyebrow":"Vet-informed cat care",
+"t1":"Indoor Cat","t2":"Setup Checklist",
+"sub":"Everything in place before the carrier door opens — tick it off as you go",
+"cards":[
+ {"emoji":"🛒","title":"Buy Before They Arrive","checks":[
+  ["Litter boxes — one per cat, plus one","22–24 in interior. A storage tote works and is usually bigger."],
+  ["Unscented fine clumping litter","Buy whatever the shelter used first, change gradually later."],
+  ["A cat tree with a perch above 4 ft","Wide base, 14 in platforms, sisal posts."],
+  ["Scratching post, 32 in or taller","Tall enough for a full stretch, rigid enough not to rock."],
+  ["Wide shallow bowls, ceramic or steel","Never plastic — it scratches and causes chin acne."],
+  ["A top-opening hard carrier","You lower a frightened cat in, rather than posting it through a hole."],
+  ["Grooming brush for the coat type","Rubber pin brush for short, a comb for long."],
+  ["A wand toy","The only toy that produces a real hunting sequence."]]},
+ {"emoji":"🏠","title":"Set Up The Safe Room","checks":[
+  ["Pick one quiet room","A spare bedroom or office. A bathroom works."],
+  ["Box at one end, food and water at the other","Cats will not eliminate near where they eat."],
+  ["A hiding place at floor level","A box on its side is enough."],
+  ["A perch above it","Height is how a nervous cat feels safe."],
+  ["Close the windows, check the screens","Cats survive falls that should kill them, then arrive with chest injuries."],
+  ["Remove every lily from the house","Pollen alone causes acute kidney failure."],
+  ["Tape down or box up loose cables",""],
+  ["Have the vet's number and out-of-hours cover written down",""]]},
+ {"emoji":"📅","title":"The First Week","checks":[
+  ["Day 1 — open the carrier and walk away","Do not lift the cat out. Most come out within an hour of being left alone."],
+  ["Days 1–5 — expect hiding","Normal, not a problem. Keep feeding and scooping on schedule."],
+  ["Twice a day — sit in the room and ignore the cat","Read aloud, work. Let it approach you. A slow blink is the one gesture worth offering."],
+  ["When it eats in front of you — start wand play","Usually the moment things turn."],
+  ["Then — open the house one room at a time","Keep the safe room available for several weeks."],
+  ["Resident cat? Do not skip the scent stage","Swap bedding, then feed either side of a closed door, then brief visual contact."]]},
+ {"emoji":"❓","title":"Ask The Shelter","checks":[
+  ["Is this cat good with dogs, children, other cats?","They have watched it. This is worth more than a pedigree."],
+  ["What litter and food is it using now?","Change both gradually, not on day one."],
+  ["Is it spayed or neutered, chipped, vaccinated?",""],
+  ["Has it been FIV and FeLV tested?",""],
+  ["Any known medical history or medication?",""],
+  ["If a kitten — how old exactly?","Under 8 weeks is too young. Walk away, even if it is the one you want."]]}
+],
+"rules_pre":"","rules_hl":"5 Things","rules_post":"People Get Wrong In The First Month",
+"rules":[
+ ["Too much space, too soon.","A cat given the run of a house on day one has nowhere it understands, and hides under a bed for three weeks."],
+ ["Pulling the cat out to reassure it.","Being reached for is the thing it is afraid of. Sitting nearby and ignoring it works faster."],
+ ["One litter box, because two looks like a lot.","It is the leading behavioral reason cats end up back at the shelter."],
+ ["A spray bottle for scratching.","It teaches the cat to scratch when you are not in the room, and damages the trust you need for everything else."],
+ ["Assuming a hiding cat is unhappy.","Two to five days of hiding is a normal arrival. Not eating for 24 hours is not — that one is a vet call."]],
+"strip_h":"Day one, in order",
+"ticks":["Safe room ready","Carrier opened, left alone","Box shown once, gently","Food and water down","Door closed, lights low","You leave the room"]
+}

@@ -1,0 +1,13 @@
+.dev.vars
+.wrangler/
+__pycache__/
+node_modules/
+package-lock.json
+petgotopro-live/node_modules/
+
+# fetch.mjs writes these wherever it is run. They are either a live CJ pull
+# (large, stale within days, and the owner's advertiser data) or mock-test
+# output with fabricated products. Neither belongs in the repo -- the curated
+# result lives in data/cj/pet-products.json instead.
+cj-products.json
+cj-products.html
