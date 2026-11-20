@@ -67,7 +67,35 @@ visible = re.sub(r'href="[^"]*"', 'href=""', h)
 BRIT = {'mould': r'\bmould', 'colour': r'\bcolour', 'behaviour': r'\bbehaviour',
         'fertiliser': r'\bfertiliser', 'favourable': r'\bfavourable',
         'grey': r'\bgrey\b', 'litre': r'\blitres?\b', 'metre': r'\bmetres?\b',
-        'practise': r'\bpractise', 'recognise': r'\brecognise'}
+        'practise': r'\bpractise', 'recognise': r'\brecognise',
+        # Added Nov 2026 after "cupboard" shipped in four guides, including a
+        # published one, and the owner corrected it on the live site by hand.
+        'cupboard': r'\bcupboard', 'whilst': r'\bwhilst', 'amongst': r'\bamongst',
+        'aluminium': r'\baluminium', 'defence': r'\bdefence', 'licence': r'\blicence',
+        'programme': r'\bprogramme', 'storey': r'\bstorey', 'tyre': r'\btyres?\b',
+        'kerb': r'\bkerb', 'draught': r'\bdraught', 'plough': r'\bplough',
+        'neighbour': r'\bneighbour', 'flavour': r'\bflavour', 'odour': r'\bodour',
+        'humour': r'\bhumour', 'labour': r'\blabour', 'vapour': r'\bvapour',
+        'analyse': r'\banalyse', 'paralyse': r'\bparalyse', 'jewellery': r'\bjewellery',
+        'pyjamas': r'\bpyjamas', 'cosy': r'\bcosy\b', 'faeces': r'\bfaeces',
+        'diarrhoea': r'\bdiarrhoea', 'oesophag': r'\boesophag', 'anaemi': r'\banaemi',
+        'haemo': r'\bhaemo', 'oedema': r'\boedema', 'paediatric': r'\bpaediatric',
+        'moustache': r'\bmoustache', 'sceptic': r'\bsceptic'}
+
+# -ise/-isation endings are the other half of it, but plenty of -ise words are
+# correct in American English too, so match the ending and subtract those.
+US_ISE = {'advertise','advise','arise','chastise','circumcise','comprise','compromise',
+          'demise','despise','devise','disguise','enterprise','excise','exercise',
+          'franchise','improvise','incise','merchandise','premise','revise','rise',
+          'supervise','surmise','surprise','televise','wise','likewise','otherwise',
+          'clockwise','noise','poise','raise','praise','cruise','bruise','guise',
+          'concise','precise','paradise','promise','tortoise','porpoise','anise'}
+for m in re.finditer(r'\b([a-z]+is(?:e|ed|es|ing|ation|ations))\b', visible, re.I):
+    w = m.group(1).lower()
+    stem = re.sub(r'(d|s|ing|ation|ations)$', '', w)
+    if w in US_ISE or stem in US_ISE or stem + 'e' in US_ISE: continue
+    BRIT[w] = r'\b' + re.escape(w) + r'\b'
+
 brit = [w for w, rx in BRIT.items() if re.search(rx, visible, re.I)]
 chk("American spelling", not brit, f"British forms: {brit}")
 strongs = len(re.findall(r'<strong>', h))
