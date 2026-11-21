@@ -19,7 +19,9 @@ const AIDS = {
   '129899':  '13599892',   // Books-A-Million
   '6185946': '15291557',   // UntilGone — 15292997 came off a storefront
                            // creative and is wrong; CJ's own links use this one
-  '7127091': '17234724',   // Raw Paws Pet Food
+  '7127091': '15843773',   // Raw Paws — 17234724 is also a real Raw Paws ad
+                           // id, but it belongs to a storefront banner; this
+                           // is the one CJ's own product links use
   '7889430': '17278691',   // Abracadabra NYC
 };
 

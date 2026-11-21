@@ -181,35 +181,33 @@ https://www.tkqlhce.com/click-100786792-13998414?url=<encoded>&cjsku=D10-056
 CJ rotates the redirect domain (`tkqlhce.com`, `dpbolvw.net`, `anrdoezrs.net`,
 `jdoqocy.com`, `kqzyfj.com`); they are equivalent.
 
-### ⚠️ The LIVE cat guide uses a PID that CJ does not generate
+### Where the ad ids come from matters
 
-Resolved 21 Nov 2026 by a link generated fresh in CJ that day:
+Settled 21 Nov 2026 with two links generated fresh in CJ. **PID 100786792 is
+correct.** The published cat guide's 101894827 is the outlier and CJ is not
+issuing it — most likely those links were generated with a different website
+selected in CJ's link generator, which produces correct ad ids under the wrong
+property. Worth checking Account -> Websites, because that post is live.
 
-```
-https://www.dpbolvw.net/click-100786792-15291557?url=...&cjsku=SKU17739211
-```
+**Two of the ad ids collected in October were wrong, and both came from
+storefront banners.** A banner creative and a product link have different ad
+ids, and only the product one is meant to carry a `?url=` deep link.
 
-**PID 100786792 is correct** — it is what CJ produces now, and what this repo
-uses. The concern was the wrong way round.
+| Advertiser | correct | wrong, and where it came from |
+|---|---|---|
+| Aosom | `13998414` | — (this one came off a product link) |
+| UntilGone | `15291557` | `15292997`, a "Shop BestSelling Deals" banner |
+| Raw Paws | `15843773` | `17234724`, a "Shop now for pet food toppers" banner |
+| Books-A-Million | `13599892` | unverified |
+| FYE | `15513660` | unverified |
+| Abracadabra | `17278691` | — (came off a product link) |
 
-The published cat guide's 20 links carry **101894827**, which CJ is not issuing.
-Either the owner has a second property and those links point at it, or they came
-from somewhere else entirely. Until that is checked, treat the live cat guide's
-clicks as possibly unattributed. The catalog here is fine.
+So: **collect an ad id from a product link, never a storefront banner.**
 
-The same link also fixed UntilGone: its AID is **15291557**, not the 15292997
-read off a storefront creative in October. Both builders corrected.
-
-Still unknown: Raw Paws. This repo has **17234724**, the live post has
-**15843773**, and no fresh link has settled it. Generate one for Raw Paws and
-compare.
-
-| | this repo | live cat guide | verdict |
-|---|---|---|---|
-| PID | `100786792` | `101894827` | repo correct, live suspect |
-| Aosom | `13998414` | `13998414` | agree |
-| UntilGone | `15291557` | `15291557` | agree, repo was fixed |
-| Raw Paws | `17234724` | `15843773` | unresolved |
+The practical damage was small because `make_catalog` prefers CJ's own
+`clickUrl` and only falls back to a constructed link where one is missing —
+1,348 of the owner's 1,356 rows carry one. But the fallback was wrong, and the
+cat guide draft carried eight bad links until this was found.
 
 ### Collecting AIDs by hand
 
