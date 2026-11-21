@@ -1,0 +1,156 @@
+<!-- =============================================================
+  PET-GOTOPRO POST TEMPLATE
+  Every component below is copied from the live guinea pig
+  nutrition guide, so this is the real markup the site's theme
+  styles. Copy the blocks you need; delete the rest.
+
+  Paste into the post via the </> HTML button, and hit Update
+  WITHOUT switching back to the visual editor first (it strips
+  the custom markup).
+
+  IMAGES: every src="/media/00" is a placeholder. Upload the
+  photo in Admin -> Media, then swap 00 for the number it shows.
+  ============================================================= -->
+
+
+<!-- ---------- INTRO ---------- -->
+<h2>One-sentence hook: the thing that goes wrong, stated plainly.</h2>
+<h3>Second line expanding it: the specific failures and what causes them.</h3>
+<p>Third paragraph: why the internet gets this wrong, and what this guide does
+differently. Name any myths you will correct later.</p>
+
+
+<!-- ---------- QUICK FACTS PANEL ---------- -->
+<div class="quick-facts">
+  <h3>🥬 The Daily Plate, At a Glance</h3>
+  <div class="qf-grid">
+    <div class="qf-item"><span class="qf-label">Label</span><span class="qf-value">Value with the number in it</span></div>
+    <div class="qf-item"><span class="qf-label">Label</span><span class="qf-value">Value</span></div>
+  </div>
+</div>
+
+
+<!-- ---------- SECTION HEADING (always emoji + title) ---------- -->
+<h2>🌾 Section Title</h2>
+<p>Body copy.</p>
+
+<!-- inline image, floated right, wraps with the text -->
+<img class="pgp-img img-sm img-right" src="/media/00" alt="Describe the photo that goes here">
+
+<!-- full-width image, own line -->
+<img class="pgp-img img-full img-center" src="/media/00" alt="Describe the photo that goes here">
+
+<!-- full-width image with a border -->
+<img class="pgp-img img-full img-center img-frame" src="/media/00" alt="Describe the photo that goes here">
+
+<!-- size options: img-sm  img-md  img-lg  img-full
+     align options: img-left  img-right  img-center
+     extra: img-frame (border), no-zoom (disable lightbox) -->
+
+
+<!-- ---------- CALLOUTS ---------- -->
+<div class="vet-tip">
+  <h4>💚 Positive tip, technique or clarification</h4>
+  <p>Used for helpful guidance and for correcting myths.</p>
+</div>
+
+<div class="vet-warning">
+  <h4>⚠️ Danger, toxic food, or a hard "never do this"</h4>
+  <p>Used for anything that can hurt the animal.</p>
+</div>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact</span>
+  <p>One genuinely interesting piece of biology, tied back to care.</p>
+</div>
+
+
+<!-- ---------- TABLE ---------- -->
+<div class="table-wrap">
+  <table class="compare">
+    <thead><tr><th>When</th><th>What</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td><b>Morning</b></td><td>What to do</td><td>The reason</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!-- ---------- PRODUCT SHOP BLOCK ----------
+  Scoped style + cards. Change the #id per post (#gpshop, #bdshop...)
+  and update the selectors to match. Buttons use class="cta-btn",
+  which the site theme styles.
+-->
+<style>
+#xxshop{--ink:#1a1410;--ink-soft:#3d322a;--ink-mute:#6f6055;--cream:#faf6ef;--cream-deep:#f3ead9;--paper:#ffffff;--amber:#c8822b;--amber-deep:#a86618;--forest:#3d5c3a;--line:#e8dcc4;
+  max-width:860px;margin:0 auto;font-family:inherit;color:var(--ink);line-height:1.65}
+#xxshop *{box-sizing:border-box}
+#xxshop h2{font-size:25px;font-weight:800;letter-spacing:-.5px;margin:36px 0 6px}
+#xxshop .sec-sub{font-size:15.5px;color:var(--ink-mute);margin:0 0 18px}
+#xxshop .gp-card{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;margin:0 0 18px;box-shadow:0 2px 10px rgba(26,20,16,.05)}
+#xxshop .gp-badge{display:inline-block;background:var(--amber);color:#fff;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-bottom:12px}
+#xxshop .gp-badge.pick{background:var(--forest)}
+#xxshop .gp-img{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center;margin-bottom:14px}
+#xxshop .gp-img img{max-width:100%;max-height:260px;width:auto;height:auto;display:inline-block}
+#xxshop .gp-name{font-size:19px;font-weight:800;letter-spacing:-.3px;margin:0 0 4px}
+#xxshop .gp-price{font-size:16px;font-weight:800;color:var(--forest);margin:0 0 2px}
+#xxshop .gp-disc{font-size:12px;color:var(--ink-mute);font-style:italic;margin:0 0 10px}
+#xxshop .gp-card p{font-size:15.5px;color:var(--ink-soft);margin:0 0 12px}
+#xxshop .gp-onelink{font-size:12.5px;color:var(--ink-mute);margin:10px 0 0}
+</style>
+
+<div id="xxshop">
+
+<h2>🌾 Category heading</h2>
+<p class="sec-sub">One line on how to choose within this category.</p>
+
+<div class="gp-card">
+  <span class="gp-badge pick">✓ Our staple pick</span>
+  <div class="gp-img"><img class="pgp-img img-full img-center" src="/media/00" alt="Product name"></div>
+  <div class="gp-name">Exact Product Name (size)</div>
+  <div class="gp-price">$00–$00</div>
+  <div class="gp-disc">*Price starts from and is subject to change</div>
+  <p>Two or three sentences of real reasoning: what it does, who it suits, and one honest caveat.</p>
+  <a class="cta-btn" href="PASTE-AMZN-SITESTRIPE-LINK" target="_blank" rel="noopener">Shop on Amazon</a>
+  <p class="gp-onelink">Also available in Canada, France, Germany, Italy, Netherlands, Poland, Spain, Sweden, and the United Kingdom — Amazon OneLink will redirect you automatically.</p>
+</div>
+
+<!-- badge variants: class="gp-badge pick" (green, the recommendation)
+     class="gp-badge" (amber, a qualifier like "Fussy eaters" / "Under 6 months") -->
+
+</div>
+
+
+<!-- ---------- FREE PRINTABLE ---------- -->
+<h2>🗎 Free Printable: Chart Name</h2>
+<p>What is on it, and that it is free.</p>
+<figure class="pgp-figure img-full img-center">
+  <img src="/img/chart-name.jpg" class="pgp-img" alt="Full description of the chart contents">
+  <figcaption>Our printable chart name — free to download and share.</figcaption>
+</figure>
+<div class="download-card">
+  <div class="dl-thumb"><img src="/img/chart-name.jpg" alt="Chart name" class="no-zoom"></div>
+  <div class="dl-body">
+    <span class="dl-tag">Free download</span>
+    <h3>Chart Name</h3>
+    <p>One line on what it covers.</p>
+    <a class="dl-btn" href="/download/chart-name.jpg">⬇️ Download free</a>
+    <span class="dl-note">Free for everyone — print it, pin it, share it. No sign-up, no email needed.</span>
+  </div>
+</div>
+
+
+<!-- ---------- FAQ (native details, no JS) ---------- -->
+<h2>Frequently Asked Questions</h2>
+<details class="faq-item"><summary>Question phrased the way a reader would type it?</summary><p>Direct answer in the first sentence, then the detail.</p></details>
+
+
+<!-- ---------- CROSS-LINK + CLOSE ---------- -->
+<div class="vet-tip">
+  <h4>🐾 Setting up for the first time?</h4>
+  <p>Food is only half the picture — read our <a href="/blog/other-guide-slug">other guide</a> for the full checklist.</p>
+</div>
+
+<h2>The Bottom Line</h2>
+<p>The whole guide compressed into the handful of numbers that matter.</p>
+<p>Then the one action most owners skip, and why it matters.</p>

@@ -1,0 +1,108 @@
+INDOOR CAT SETUP GUIDE — what is needed before publishing
+=========================================================
+File: drafts/indoor-cat-setup-guide.cms.html
+6,900 words. Passes docs/reference/check-guide.py with no problems.
+
+1. AFFILIATE LINKS — DONE, nothing to fill in
+   All 16 links are live CJ tracked links, built from the real PID (100786792)
+   and the per-advertiser AIDs. No XXXXXXXXX placeholders anywhere.
+     Aosom     13998414   trees, litter boxes, fountain, bed, carrier, stairs, catio
+     UntilGone 15292997   kitten tree, playpen, treats
+     Raw Paws  17234724   brush, dematting comb, deshedding gloves
+   Every link carries rel="nofollow noopener sponsored".
+   NOT YET CLICK-TESTED — see point 4.
+
+2. PRODUCT CARD IMAGES — a decision for you
+   The eight cards use the merchant's own product photos straight from the CJ
+   feed (img-us.aosomcdn.com, cdn11.bigcommerce.com) rather than /media/NN.
+   That is why the cards work with no uploading.
+   House style says product images are /media/NN. This departs from it on
+   purpose, because a product feed supplies images for exactly this use.
+   If you would rather host them yourself, download the eight images, upload
+   them in Admin -> Media, and swap each src for /media/NN.
+
+3. HERO IMAGE AND SHARE IMAGE — paste this into the post's "Hero image" field
+
+   https://images.unsplash.com/photo-1758228147081-8cf6aaf9d72a?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=1200&h=630
+
+   One field does both jobs. hero_image is what shows on the blog index card and
+   at the top of the post, and public.js also feeds it to og:image, so it is the
+   picture that appears when the post is shared on Facebook, X, WhatsApp or
+   Slack. Cropped to 1200x630, which is the social card ratio.
+
+   It is a deliberately different photo from the in-body hero (two cats on a
+   tree). Using the same URL in both places would show the same picture twice
+   within one screen of each other.
+
+   NOTE: this needs the public.js fix in point 8 deployed first, or the share
+   image will be broken.
+
+4. THE TWO PRINTABLES — MADE, they just need registering
+
+   drafts/indoor-cat-care-sheet.png        1500 x 2570
+   drafts/indoor-cat-setup-checklist.png   1500 x 2751
+
+   Built to the house layout taken from your leopard-gecko-care-sheet.png,
+   in the current plum/magenta rather than the old brown.
+
+   No PDFs. Your free guides are images: serveGuide() reads the mime off the
+   media row and the existing ones are .jpg. One image is both the thumbnail
+   and the download, so there are no separate thumbnails to make either. The
+   post's download cards now point at /img/<file> and /download/<file> the way
+   your seed SQL does, with class="no-zoom" on the thumb.
+
+   To register them:
+     1. Admin -> Media -> upload both PNGs. Note the number each one gets.
+     2. Open drafts/indoor-cat-setup-guide.guides.sql, replace
+        <CARE_MEDIA_ID> and <CHECKLIST_MEDIA_ID> with those numbers.
+     3. Run it against D1:
+          npx wrangler d1 execute <your-db> --remote --file=guides.sql
+        (or paste the two INSERTs into the D1 console)
+
+   Both then appear on /free-guides automatically, and the cards in the post
+   start working.
+
+   The download cards are thumbnail-only now. The old .dl-btn was removed on
+   2026-10-10: the thumbnail already opens the platform lightbox with its own
+   Zoom in / Download free / Close, while the button 404'd. wireDownloadCards()
+   rewires the thumbnail and not the button, which is why one worked and the
+   other did not. The template and check-guide.py now both enforce this.
+
+   Source for the sheets is in drafts/sheet-source/ — data-driven, so the text
+   can be edited and re-rendered without redrawing anything.
+
+5. BEFORE IT GOES LIVE
+   Click one product link from each of the three advertisers, then check
+   CJ -> Reports -> Clicks about an hour later. If clicks register, the whole
+   catalog is good. If they do not, the links need rebuilding and it is better
+   to find that out now than after the post is indexed.
+
+6. CROSS-LINKS USED
+   /blog/hamster-care-guide and /blog/ball-python-care-guide.
+   Check both slugs are right before publishing.
+
+7. PHOTOS — Unsplash, four of them
+   hero/share  photo-1758228147081-8cf6aaf9d72a  cat on a sofa (the field above)
+   hero     photo-1718995398658-4469fd08cb04  two cats on a cat tree by a window
+   in-body  photo-1759165440303-40ef25cc6053  Siamese scratching a chair leg
+   closing  photo-1768055526025-dc779188e6fd  ginger cat in a window
+
+8. NO CODE CHANGES NEEDED — WITHDRAWN
+   An earlier version of this file claimed two bugs in public.js and theme.js.
+   Both were wrong. They came from the stale copy of your site committed in
+   this repo, not from your real code, which already handles both:
+     - public.js already returns an absolute hero URL unchanged (its own
+       comment explains why), so share images were never broken
+     - theme.js already emits twitter:image, plus twitter:image:alt and
+       og:image:alt, which the stale copy did not have
+   Nothing to deploy. Just set the hero image field in point 3.
+
+   Related: your platform already renders its own affiliate disclosure at the
+   top of any post containing CJ or Amazon links, and it detects all 24 CJ
+   links in this guide. The guide also ends with the house .disclosure block,
+   as the template requires, so the page carries two. That matches how your
+   existing guides already behave — flagging it only so it is not a surprise.
+
+9. HOW TO PASTE IT
+   Admin -> new post -> </> HTML view -> paste the whole file -> Update.
+   Do NOT switch back to the visual editor first; it strips the custom markup.

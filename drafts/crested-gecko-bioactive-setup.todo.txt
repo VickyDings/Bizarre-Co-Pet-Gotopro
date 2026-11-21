@@ -1,0 +1,56 @@
+OWNER TO-DO — crested-gecko-bioactive-setup
+============================================================
+
+1. AFFILIATE LINKS — 23 placeholders reading https://link.amazon/XXXXXXXXX
+   Replace each with the real OneLink short link. In page order:
+
+    1. Front-opening terrarium, 18 × 18 × 24 in
+    2. ABG mix bioactive substrate
+    3. Expanded clay aggregate (LECA)
+    4. Magnolia and sea grape leaf litter
+    5. Digital thermometer and hygrometer with probe
+    6. Complete crested gecko diet powder
+    7. Springtail culture and dwarf white isopods
+    8. Low-output T5 UVB, 2–7%, with reflector
+    9. Front-opening terrarium, 18 × 18 × 24 in
+   10. Expanded clay aggregate (LECA)
+   11. Fine synthetic mesh or window screen
+   12. ABG mix substrate
+   13. Magnolia and sea grape leaf litter
+   14. Springtail culture and dwarf white isopods
+   15. Cork bark, branches and live plants
+   16. Digital thermometer-hygrometer with probe
+   17. Complete crested gecko diet, two flavors
+   18. Ledge cups and a pressure sprayer
+   19. Low-output T5 UVB, 2–7%, with reflector
+   20. LED plant light bar
+   21. Plug-in timer
+   22. Digital kitchen scale in grams
+   23. Small dubia roaches and plain calcium powder
+
+2. PRODUCT IMAGES — 10 placeholders reading /media/00
+
+   8 product card images + 2 download-card thumbnails.
+   Upload in Admin -> Media, then swap each /media/00 for its number, in order:
+     1-2  terrarium, ABG mix
+     3-4  LECA, leaf litter
+     5    digital thermometer-hygrometer
+     6    complete crested gecko diet
+     7    springtails + isopods
+     8    low-output T5 UVB
+     9    Quick Care Sheet thumbnail
+    10    Setup Checklist thumbnail
+
+3. FREE DOWNLOADS — two PDFs referenced but not yet made:
+     /download/crested-gecko-care-sheet.pdf
+     /download/crested-gecko-bioactive-checklist.pdf
+   Either create them or delete the two .download-card blocks.
+
+4. EDITORIAL PHOTOS — 4 Unsplash images, already live URLs, nothing to do:
+     photo-1510921302580-852ad8ef2a79
+     photo-1781977972922-87a1fc3b1f6f
+     photo-1553722665-ed16a69677d6
+     photo-1661481072791-1df445889e4b
+
+SEO fields are in the HTML comment at the top of the file — copy them
+into the admin form (title, slug, category, meta description, keywords).

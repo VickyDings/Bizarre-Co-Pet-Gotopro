@@ -1,0 +1,58 @@
+{
+"eyebrow":"Vet-informed pet care",
+"t1":"Pet Costume","t2":"Fit & Safety Sheet",
+"sub":"Measure once, check four things, and know when to take it off",
+"cards":[
+ {"emoji":"📏","title":"Measure, Don't Guess","rows":[
+  ["Chest girth","Deepest point, behind front legs"],
+  ["Back length","Collar to base of tail"],
+  ["Neck","Where the collar sits"],
+  ["Between sizes","Always size UP"],
+  ["Fit test","Two fingers flat under every strap"],
+  ["Never size by","Breed or weight"]]},
+ {"emoji":"⏱️","title":"Wear Time","rows":[
+  ["Maximum indoors","20 minutes"],
+  ["Supervision","Always — never leave the room"],
+  ["Flat-faced breeds","The photo, and little more"],
+  ["Put it on","20 min before, not hours"],
+  ["Outdoors","Shorter again, and never warm days"],
+  ["Removal","Must come off in one pull"]]},
+ {"emoji":"🚫","title":"Must Stay Clear","list":[
+  "Eyes — a dog that cannot see cannot read other dogs",
+  "Ears — covering them removes early warning",
+  "Nose and mouth — panting is how dogs cool down",
+  "Full movement: walk, sit, lie, turn, squat",
+  "Nothing small enough to swallow: bells, buttons, eyes",
+  "No drawstrings, elastic or rubber bands"]},
+ {"emoji":"🐾","title":"By Species","rows":[
+  ["Dogs","Yes, if it fits and they accept it"],
+  ["Cats","Neck only — collar or bandana"],
+  ["Rabbits","Never — stress causes gut stasis"],
+  ["Guinea pigs","Never — same reason"],
+  ["Birds","Never — air sacs need the chest free"],
+  ["Reptiles","Never — it blocks their heat source"]]},
+ {"emoji":"💚","title":"Comfortable","list":[
+  "Moves at a normal pace, normal stride",
+  "Sits and lies down without hesitating",
+  "Loose body, tail carried as usual",
+  "Takes treats readily",
+  "Comes to you, or starts play",
+  "Ignores the costume rather than attending to it"]},
+ {"emoji":"⚠️","title":"Take It Off Now","warn":true,"list":[
+  "FREEZING — the most misread signal there is",
+  "Panting with no heat or exercise",
+  "Whale eye — whites showing at the side",
+  "Ears flat back, tail tucked, body low",
+  "Lip licking, repeated yawning, head turning away",
+  "Chewing a strap, or backing out of it"]}
+],
+"rules_pre":"The","rules_hl":"5 Rules","rules_post":"That Keep A Costume Safe",
+"rules":[
+ ["Measure the chest, not the dog.","A 25 lb beagle and a 25 lb whippet are the same on the scale and inches apart around the ribs."],
+ ["Never leave them alone in it.","A strap catches on a crate door, the pet panics, and a tangled animal can strangle or chew and swallow part of it."],
+ ["Freezing is distress, not good behavior.","Stillness is what an animal does when it cannot work out how to escape. Costume off."],
+ ["Two weeks of rehearsal, 30 seconds at a time.","A costume worn first on the night stacks three stressors at once."],
+ ["If they fail the towel test, buy a bandana.","It photographs better than a costume they are enduring, and there is no prize for the full outfit."]],
+"strip_h":"The two-week plan, in order",
+"ticks":["Days 1–2 on the floor","3–4 brief drapes","5–7 fastenings","8–10 movement","11–12 duration","13–14 dress rehearsal"]
+}

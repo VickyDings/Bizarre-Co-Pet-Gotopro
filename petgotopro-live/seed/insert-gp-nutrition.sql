@@ -1,0 +1,254 @@
+INSERT INTO posts (slug, title, description, keywords, category, hero_image, body_html, status, created_at, updated_at) VALUES ('guinea-pig-nutrition-feeding-guide','Guinea Pig Nutrition Guide 2026: What to Feed (+ Free Food Chart)','Exactly what to feed guinea pigs daily: hay, vegetables, pellets and vitamin C amounts, safe and toxic food lists, Oxbow recommendations, and why every owner needs Critical Care.','guinea pig nutrition, what can guinea pigs eat, guinea pig safe foods, guinea pig diet, guinea pig vitamin C, Oxbow guinea pig food, Oxbow Critical Care, guinea pig pellets how much, guinea pig vegetables list, foods toxic to guinea pigs','Small Pets', '','<p>Feeding a guinea pig properly is genuinely simple once you understand the proportions — and genuinely dangerous when you get them wrong. Almost every serious guinea pig health problem we see traces back to the food bowl: dental disease from too little hay, obesity and gut trouble from too many pellets, bladder stones from the wrong greens, and scurvy from missing vitamin C.</p>
+<p>The frustrating part is that the internet is full of contradictory guinea pig feeding charts, several of which are flatly wrong. This guide sticks to what veterinary sources actually say, tells you exactly what to put in the bowl each day, flags the two most common myths doing the rounds, and covers the emergency food every guinea pig owner should keep in the cupboard before they need it.</p>
+
+<div class="quick-facts">
+  <h3>🥬 The Daily Plate, At a Glance</h3>
+  <div class="qf-grid">
+    <div class="qf-item"><span class="qf-label">Grass hay</span><span class="qf-value">Unlimited — roughly 80% of the diet</span></div>
+    <div class="qf-item"><span class="qf-label">Fresh vegetables</span><span class="qf-value">1 cup per pig, per day</span></div>
+    <div class="qf-item"><span class="qf-label">Pellets</span><span class="qf-value">1 tablespoon per pig, per day</span></div>
+    <div class="qf-item"><span class="qf-label">Veg variety</span><span class="qf-value">5–6 different types daily</span></div>
+    <div class="qf-item"><span class="qf-label">Vitamin C (adult)</span><span class="qf-value">10–25 mg/kg every day</span></div>
+    <div class="qf-item"><span class="qf-label">Vitamin C (young/ill)</span><span class="qf-value">30+ mg/kg every day</span></div>
+    <div class="qf-item"><span class="qf-label">Fruit &amp; carrot</span><span class="qf-value">Treats only — 1–2× a week</span></div>
+    <div class="qf-item"><span class="qf-label">Fresh water</span><span class="qf-value">Always available, changed daily</span></div>
+  </div>
+</div>
+
+<h2>🌾 Hay: 80% of Everything</h2>
+<p>If you remember one thing from this guide, make it this: <strong>unlimited grass hay, available 24 hours a day, forever.</strong> A guinea pig should eat roughly its own body size in hay every single day, and a pile bigger than the pig itself is exactly right.</p>
+<p>Hay isn''t filler — it does two jobs nothing else can. Guinea pig teeth grow continuously at around 2–3 mm a week, and only the long sideways grinding motion of chewing hay wears them down; without it, teeth overgrow into spurs that cut the tongue and cheeks. Hay''s long fibre also keeps the gut physically moving, and a guinea pig gut that stops moving is a medical emergency.</p>
+
+<h3>Which hay?</h3>
+<ul>
+  <li><strong>Timothy hay</strong> — the standard staple for adults. Good fibre, correct calcium level. Second cutting is the usual sweet spot for softness versus stem.</li>
+  <li><strong>Orchard grass</strong> — softer and sweeter; excellent for fussy eaters and a good alternative for owners with a timothy allergy.</li>
+  <li><strong>Oat hay</strong> — crunchy with seed heads; brilliant as a variety hay mixed in, though not as a sole diet.</li>
+  <li><strong>Meadow hay</strong> — a natural mix of grasses, great for foraging enrichment.</li>
+  <li><strong>Alfalfa</strong> — <em>not</em> a daily hay for healthy adults. It''s a legume, very high in calcium and protein, appropriate only for pups under six months, pregnant or nursing sows, or underweight pigs on veterinary advice. Fed to healthy adults it contributes to bladder stones.</li>
+</ul>
+<p>Mixing two or three grass hays keeps things interesting and encourages more eating overall, which is exactly what you want.</p>
+
+<div class="vet-tip">
+  <h4>💚 A simple hay test</h4>
+  <p>Good hay smells sweet and grassy, feels slightly springy, and is green-to-pale-gold. Reject anything that smells musty or sour, looks grey or brown, or feels damp — mouldy hay causes serious respiratory and digestive illness. Store hay somewhere cool, dry and airy, never sealed in plastic.</p>
+</div>
+
+<h2>🥗 Fresh Food: One Cup Per Pig, Per Day</h2>
+<p>Each guinea pig should get <strong>about one cup of fresh vegetables daily</strong>, made up of small amounts of <strong>5–6 different types</strong>, and weighted heavily towards leafy greens. Variety matters more than quantity: rotating foods spreads the mineral load and supports urinary tract health, which is why "the same bowl of kale every day" is a genuinely poor plan even though kale is a good food.</p>
+
+<h3>✅ Daily staples — safe every single day</h3>
+<p>These form the bulk of the fresh portion. Low in calcium, low in sugar, high in the fibre and moisture guinea pigs thrive on:</p>
+<ul>
+  <li><strong>Romaine lettuce</strong> — the workhorse green</li>
+  <li><strong>Green leaf, red leaf and butter lettuce</strong></li>
+  <li><strong>Coriander / cilantro</strong> — almost universally adored</li>
+  <li><strong>Endive and escarole</strong></li>
+  <li><strong>Rocket / arugula</strong> — small amounts</li>
+  <li><strong>Cucumber and courgette / zucchini</strong> — hydrating, but in moderation; too much cucumber causes loose droppings</li>
+</ul>
+
+<h3>🌶️ Daily vitamin C stars</h3>
+<p>These are the ones actually doing the vitamin C work, and they should appear most days:</p>
+<ul>
+  <li><strong>Bell peppers — all colours.</strong> The single best daily vitamin C source, and most guinea pigs adore them. Red and yellow contain more vitamin C than green, but all are excellent. Remove the seeds and stalk.</li>
+  <li><strong>Cherry tomatoes</strong> — small amounts. Genuinely high in vitamin C (see the myth section below).</li>
+</ul>
+
+<h3>⚖️ A few times a week — not daily</h3>
+<p>All perfectly safe and nutritious, but high in calcium, oxalates or gas-producing compounds, so rotate rather than repeat:</p>
+<ul>
+  <li><strong>Kale, spinach, Swiss chard, spring greens, parsley</strong> — nutrient-dense and high in vitamin C, but the calcium and oxalate load contributes to bladder sludge and stones if fed daily</li>
+  <li><strong>Broccoli, cauliflower leaves and stalks, cabbage, Brussels sprouts</strong> — fine in small amounts; too much causes uncomfortable gas</li>
+  <li><strong>Pak choi, watercress, chicory, celery leaves, carrot tops, beetroot, asparagus, green beans, peas in the pod, parsnip</strong></li>
+  <li><strong>Herbs</strong> — basil, dill, mint, oregano, rosemary, sage, thyme. Small amounts, and brilliant for tempting a pig who''s gone off their food</li>
+</ul>
+
+<h3>🌿 Garden forage — free, natural and excellent</h3>
+<p>If you have access to a chemical-free garden, guinea pigs love foraged greens: dandelion (leaves and flowers), clover, chickweed, plantain, cleavers, yarrow, sow thistle, chamomile, calendula, and the leaves and twigs of apple, pear, willow, bramble, strawberry and raspberry.</p>
+<div class="vet-warning">
+  <h4>⚠️ Forage safety rules</h4>
+  <p>Never pick from roadside verges (exhaust residue), anywhere dogs walk, or from lawns treated with weedkiller, fertiliser or pesticide. Never feed grass clippings from a mower — they begin fermenting almost immediately and cause serious digestive upset. Wash everything, and introduce one new plant at a time. If you can''t identify it with certainty, don''t feed it.</p>
+</div>
+
+<h3>🍓 Treats only — once or twice a week</h3>
+<p>Guinea pigs have no off switch for sugar, and excess sugar drives obesity and gut imbalance. Keep these to a thin slice or a couple of berries, twice a week at most: apple (no seeds or pips), banana, strawberry, blueberry, melon, orange segment, grape, pear, and <strong>carrot</strong> — which surprises people, but carrots are high in sugar and are a treat, not a daily vegetable.</p>
+
+<h2>🚫 Never Feed These</h2>
+<div class="vet-warning">
+  <h4>⚠️ Genuinely dangerous</h4>
+  <p><strong>Toxic:</strong> rhubarb (leaves and stalk), avocado, chocolate, onion, garlic, leeks, chives, raw potato and potato tops, tomato <em>leaves and vines</em>, fruit seeds and pits, most houseplants and garden bulbs, and anything from a plant you can''t identify.</p>
+  <p><strong>Wrong for their digestive system:</strong> any meat, fish, eggs, dairy, peanut butter, nuts and seeds, bread, cereal, pasta, rice, crisps, and any processed human food.</p>
+  <p><strong>Useless or harmful:</strong> iceberg lettuce (nearly no nutrition and causes diarrhoea), muesli-style guinea pig mixes with seeds and coloured pieces, yoghurt drops, and anything sold as a "treat stick" glued together with honey and seeds.</p>
+</div>
+
+<h2>🔍 Two Feeding Myths Worth Correcting</h2>
+<p>You''ll find plenty of guinea pig feeding charts online, and two errors turn up again and again. Both matter.</p>
+
+<div class="vet-tip">
+  <h4>💚 Myth 1: "Guinea pigs can''t have tomatoes"</h4>
+  <p>Ripe tomato flesh is <strong>safe and genuinely high in vitamin C</strong> — the PDSA lists it among the vitamin C-rich vegetables, and cherry tomatoes in small amounts are a good addition to the rotation. What <em>is</em> toxic is the green part of the plant: the leaves, stems and vines contain solanine and should never be fed. Charts that ban tomatoes outright are confusing the fruit with the foliage. Give the flesh in moderation (it''s acidic and a bit sugary), and bin the green bits.</p>
+</div>
+
+<div class="vet-tip">
+  <h4>💚 Myth 2: "Pellets should be 20% of the diet"</h4>
+  <p>Several popular pie-chart graphics show pellets at 20% of a guinea pig''s intake. That''s far too much. Veterinary guidance — including the PDSA — is <strong>one tablespoon of pellets per guinea pig per day</strong>, which works out at roughly 5% of intake, with hay making up around 80% and fresh food the rest. Pellets are a supplement that guarantees vitamin C and trace minerals; they are not a meal. Over-feeding them displaces hay, and that''s how dental disease and obesity start.</p>
+</div>
+
+<h2>💊 Vitamin C: The Daily Non-Negotiable</h2>
+<p>Guinea pigs lack the enzyme L-gulonolactone oxidase, which means — exactly like humans — <strong>they cannot manufacture their own vitamin C</strong> and must eat it every single day. Without it they develop scurvy, and it is not a slow or gentle illness.</p>
+<div class="vet-tip">
+  <h4>💚 How much they need</h4>
+  <p><strong>Healthy adults:</strong> 10–25 mg per kilogram of body weight daily.<br>
+  <strong>Young, pregnant, nursing or unwell pigs:</strong> 30 mg/kg or more.<br>
+  For a typical 1 kg adult that''s about 10–25 mg a day — comfortably covered by a portion of bell pepper plus fresh fortified pellets. A supplement tablet adds certainty on top.</p>
+</div>
+<p>Early scurvy is easy to miss because it looks like general malaise: reluctance to move, a rough or puffed-up coat, swollen or painful joints, limping, poor appetite, weight loss, bleeding gums, loose teeth, slow wound healing and diarrhoea. It needs veterinary treatment.</p>
+<div class="vet-warning">
+  <h4>⚠️ Never use vitamin C drops in the water bottle</h4>
+  <p>They''re widely sold and they''re the worst option available. Vitamin C degrades quickly in water and light, so the dose is unreliable, and the drops taste unpleasant — so many guinea pigs simply drink less, risking dehydration and bladder problems on top of the deficiency you were trying to prevent. Use fresh peppers, fresh pellets, or a chewable tablet given by hand.</p>
+</div>
+
+<h2>🥕 Pellets: Small, Plain and Fresh</h2>
+<p>One tablespoon per pig per day, of a plain, uniform, grass-hay-based pellet fortified with stabilised vitamin C. That''s it.</p>
+<p><strong>Adults</strong> need a timothy-based pellet with calcium in the 0.35–0.75% range. <strong>Pups under six months</strong>, and pregnant or nursing sows, need an alfalfa-based "young" formula for the extra calcium and protein — then switch across to the adult food at six months.</p>
+<div class="vet-warning">
+  <h4>⚠️ Avoid muesli-style mixes entirely</h4>
+  <p>Colourful mixes with seeds, flakes and dried fruit invite <strong>selective feeding</strong> — guinea pigs pick out the sweet bits and leave the fortified pellets behind. The result is an unbalanced diet, obesity and dental disease. Buy plain pellets where every piece looks identical, so there''s nothing to pick around.</p>
+</div>
+<p>Buy pellets in <strong>small bags</strong> and store them cool and dark. The vitamin C in pellets degrades over roughly 90 days from manufacture, so a bargain sack is false economy — you end up feeding a vitamin C supplement that no longer contains much vitamin C.</p>
+
+<h2>🌟 Our Oxbow Recommendations</h2>
+<p>We recommend Oxbow throughout this guide for a straightforward reason: it''s the brand most commonly stocked and recommended by exotics vets, the formulas are plain rather than muesli-style, and the hay quality is consistently good. Here''s how the range breaks down, so you can pick the right one rather than guessing at the shelf.</p>
+
+<div class="kit-section">
+  <h3>🌾 Hay — the foundation</h3>
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">Oxbow Western Timothy Hay</span>
+    <span class="kit-why">The default staple for adult guinea pigs. Buy the largest box you have space to store dry — you''ll get through more than you expect, and that''s a good thing.</span><br>
+    <span class="kit-price">$25–$45</span><a class="kit-link" href="https://www.amazon.com/s?k=Oxbow+Western+Timothy+Hay+guinea+pig" target="_blank" rel="nofollow noopener sponsored">Shop on Amazon →</a>
+  </div></div>
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">Oxbow Orchard Grass &amp; Oat Hay</span>
+    <span class="kit-why">Softer and sweeter than timothy — ideal for fussy eaters, senior pigs, or owners with a timothy allergy. Mixing two or three hays reliably increases how much they eat.</span><br>
+    <span class="kit-price">$18–$35</span><a class="kit-link" href="https://www.amazon.com/s?k=Oxbow+orchard+grass+oat+hay+small+animal" target="_blank" rel="nofollow noopener sponsored">Shop on Amazon →</a>
+  </div></div>
+</div>
+
+<div class="kit-section">
+  <h3>🥣 Pellets — pick one line and stick to it</h3>
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">Oxbow Essentials Adult Guinea Pig Food</span>
+    <span class="kit-why">The classic timothy-based adult formula with stabilised vitamin C and correct adult calcium levels (0.35–0.75%). If you want one straightforward answer, this is it.</span><br>
+    <span class="kit-price">$15–$28</span><a class="kit-link" href="https://www.amazon.com/s?k=Oxbow+Essentials+Adult+Guinea+Pig+Food" target="_blank" rel="nofollow noopener sponsored">Shop on Amazon →</a>
+  </div></div>
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">Oxbow Garden Select Adult Guinea Pig Food</span>
+    <span class="kit-why">A premium timothy/orchard/oat blend with garden ingredients like rosemary and thyme — non-GMO, and free of soy, wheat and cane molasses. Worth trying if your pig turns their nose up at plain pellets.</span><br>
+    <span class="kit-price">$18–$32</span><a class="kit-link" href="https://www.amazon.com/s?k=Oxbow+Garden+Select+Adult+Guinea+Pig+Food" target="_blank" rel="nofollow noopener sponsored">Shop on Amazon →</a>
+  </div></div>
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">Oxbow Essentials Young Guinea Pig Food</span>
+    <span class="kit-why">Alfalfa-based, for pups under six months and pregnant or nursing sows only. Switch to the adult formula at six months to avoid bladder stone risk.</span><br>
+    <span class="kit-price">$15–$28</span><a class="kit-link" href="https://www.amazon.com/s?k=Oxbow+Essentials+Young+Guinea+Pig+Food" target="_blank" rel="nofollow noopener sponsored">Shop on Amazon →</a>
+  </div></div>
+</div>
+
+<div class="kit-section">
+  <h3>💊 Supplements — the Natural Science line</h3>
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">Oxbow Natural Science Vitamin C Support</span>
+    <span class="kit-why">Hay-based tablets with a minimum of 25 mg stabilised vitamin C each. <strong>One tablet per day</strong> covers a guinea pig of any weight — reliable insurance if your pig is fussy about peppers, or your pellets are getting old.</span><br>
+    <span class="kit-price">$12–$20</span><a class="kit-link" href="https://www.amazon.com/s?k=Oxbow+Natural+Science+Vitamin+C+Support" target="_blank" rel="nofollow noopener sponsored">Shop on Amazon →</a>
+  </div></div>
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">Oxbow Natural Science Urinary Support</span>
+    <span class="kit-why">Formulated to support urinary tract health with cranberry and dandelion. Worth discussing with your vet if your guinea pig has a history of bladder sludge or stones — common in this species.</span><br>
+    <span class="kit-price">$14–$22</span><a class="kit-link" href="https://www.amazon.com/s?k=Oxbow+Natural+Science+Urinary+Support" target="_blank" rel="nofollow noopener sponsored">Shop on Amazon →</a>
+  </div></div>
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">Oxbow Natural Science Digestive &amp; Papaya Support</span>
+    <span class="kit-why">Papaya-based digestive support, often used to help things keep moving in long-haired pigs prone to ingesting fur during grooming. A support, not a treatment — a pig that stops eating needs a vet, not a supplement.</span><br>
+    <span class="kit-price">$12–$20</span><a class="kit-link" href="https://www.amazon.com/s?k=Oxbow+Natural+Science+digestive+papaya+support" target="_blank" rel="nofollow noopener sponsored">Shop on Amazon →</a>
+  </div></div>
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">Oxbow Simple Rewards treats</span>
+    <span class="kit-why">Single-ingredient freeze-dried treats — a far better hand-feeding reward than seed sticks and yoghurt drops. Still a treat: a couple of pieces, not a handful.</span><br>
+    <span class="kit-price">$8–$15</span><a class="kit-link" href="https://www.amazon.com/s?k=Oxbow+Simple+Rewards+guinea+pig+treats" target="_blank" rel="nofollow noopener sponsored">Shop on Amazon →</a>
+  </div></div>
+</div>
+
+<h2>🚨 Critical Care: The Thing to Buy Before You Need It</h2>
+<p>This is the most important product recommendation on this page, and the one most owners have never heard of until an emergency.</p>
+<p><strong>Oxbow Critical Care</strong> is a complete assisted-feeding formula for herbivores that have stopped eating — because of illness, dental problems, pain, or recovery from surgery. It''s a timothy-based powder that you mix with water into a slurry and feed by syringe, keeping the gut moving and the animal nourished while the underlying problem is treated.</p>
+
+<div class="vet-warning">
+  <h4>⚠️ Why this matters so much for guinea pigs</h4>
+  <p>A guinea pig that stops eating can develop <strong>gut stasis within 12–24 hours</strong> — the digestive system slows and then shuts down, which is painful and can be fatal. Because guinea pigs are prey animals that hide illness expertly, you often notice only once things are already serious. Having Critical Care already in the cupboard, rather than trying to source it at 9pm on a Sunday, genuinely saves lives.</p>
+</div>
+
+<h3>How it''s used</h3>
+<ul>
+  <li><strong>Mixing:</strong> roughly 2 parts water to 1 part powder for syringe feeding; about 1.5 parts water to 1 part powder for spoon feeding. Mix only what you''re about to use — reconstitute fresh at each feed.</li>
+  <li><strong>Amount:</strong> for a mammal still eating some food of its own, roughly <strong>3 tablespoons per kilogram of body weight per day</strong>. If the animal is eating nothing at all, your vet will work from the full-feeding charts.</li>
+  <li><strong>Frequency:</strong> divide the daily total into <strong>4–6 small feeds</strong> across the day rather than one or two large ones.</li>
+  <li><strong>Flavours:</strong> Anise and Apple-Banana are the common herbivore versions; there''s also a Fine Grind formulation for feeding through narrower syringes and tubes.</li>
+</ul>
+
+<div class="vet-warning">
+  <h4>⚠️ Critical Care is a veterinary product, not a home remedy</h4>
+  <p>Oxbow themselves are explicit that it should be used <strong>under the supervision of a veterinarian</strong>. Loss of appetite is a <em>symptom</em>, not a diagnosis — it nearly always signals an underlying problem such as dental disease, bladder stones, infection or pain, and syringe feeding alone treats none of those. Keep it in the cupboard, start it on veterinary advice, and get the underlying cause diagnosed. Syringe feeding also needs care to avoid aspiration, so ask your vet to show you the technique before you''re doing it in a panic.</p>
+</div>
+
+<div class="kit-section">
+  <div class="kit-item essential"><div class="kit-check">✓</div><div class="kit-body">
+    <span class="kit-name">Oxbow Critical Care Herbivore — keep a bag in the cupboard</span>
+    <span class="kit-why">Available in Anise and Apple-Banana. Buy it now, before you need it, and check the expiry date occasionally. Add a couple of 1 ml and 5 ml syringes to the same shelf — you don''t want to be hunting for those in an emergency either.</span><br>
+    <span class="kit-price">$15–$28</span><a class="kit-link" href="https://www.amazon.com/s?k=Oxbow+Critical+Care+Herbivore" target="_blank" rel="nofollow noopener sponsored">Shop on Amazon →</a>
+  </div></div>
+  <div class="kit-item optional"><div class="kit-check">+</div><div class="kit-body">
+    <span class="kit-name">Feeding syringes (1 ml and 5 ml, no needle)</span>
+    <span class="kit-why">Wide-mouth syringes handle the slurry better than narrow ones. Keep a few spares — they wear out and split with repeated use.</span><br>
+    <span class="kit-price">$8–$14</span><a class="kit-link" href="https://www.amazon.com/s?k=pet+feeding+syringe+set+1ml+5ml+small+animal" target="_blank" rel="nofollow noopener sponsored">Shop on Amazon →</a>
+  </div></div>
+</div>
+
+<h2>📅 A Sample Feeding Day</h2>
+<div class="table-wrap">
+  <table class="compare">
+    <thead><tr><th>When</th><th>What</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td><b>Morning</b></td><td>Top up hay generously · half the day''s fresh veg (leafy greens plus bell pepper) · 1 tbsp pellets · fresh water</td><td>The vitamin C portion lands early; pellets given once avoids grazing on them all day</td></tr>
+      <tr><td><b>Midday</b></td><td>Check hay, refill if flattened · remove any uneaten fresh food</td><td>Wilted veg spoils fast and attracts flies</td></tr>
+      <tr><td><b>Evening</b></td><td>Second half of the fresh veg (a different mix from the morning) · top up hay again</td><td>Splitting the cup spreads the sugar and mineral load, and gives more variety per day</td></tr>
+      <tr><td><b>Weekly</b></td><td>Weigh on a digital scale and record it · a treat portion of fruit once or twice</td><td>Weight loss shows up on the scale long before you can see it</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h2>🔄 Changing Foods Safely</h2>
+<p>Guinea pig digestive systems dislike sudden change. When you switch pellet brands, introduce a new hay, or add a vegetable they''ve never had:</p>
+<ul>
+  <li><strong>New pellets:</strong> mix over 7–14 days, starting at roughly a quarter new to three quarters old and shifting the ratio gradually.</li>
+  <li><strong>New vegetables:</strong> one at a time, in a small amount, and wait 24–48 hours before adding another. That way if droppings go soft you know exactly which food caused it.</li>
+  <li><strong>New guinea pigs:</strong> ask what they''ve been eating and continue it at first, changing only after they''ve settled in.</li>
+</ul>
+
+<div class="funfact">
+  <span class="ff-label">🎉 Fun Fact</span>
+  <p>Guinea pigs produce two kinds of droppings, and they eat one of them. <strong>Caecotrophs</strong> are soft, nutrient-rich pellets taken directly from the source and swallowed whole — a second pass through the gut that unlocks B vitamins and protein the first pass missed. A pig too overweight or arthritic to reach can become genuinely deficient, which is one more reason to keep them lean and mobile.</p>
+</div>
+
+<h2>&#128462; Free Printable: Guinea Pig Safe Food Chart</h2><p>Everything above on one page you can stick to the fridge &mdash; daily foods, weekly foods, treats, the never-feed list, vitamin C amounts, and the two myths corrected. Click it to view full size, or download the original below.</p><figure class="pgp-figure img-full img-center"><img src="/img/guinea-pig-safe-foods.jpg" class="pgp-img" alt="Guinea pig safe food chart: the daily plate of 80 percent hay, one cup fresh vegetables and one tablespoon pellets; lists of foods safe daily, a few times a week, treats only, and never to feed; vitamin C requirements; and corrections to two common feeding myths"><figcaption>Our printable guinea pig safe food chart &mdash; free to download and share.</figcaption></figure><div class="download-card"><div class="dl-thumb"><img src="/img/guinea-pig-safe-foods.jpg" alt="Guinea pig safe food chart" class="no-zoom"></div><div class="dl-body"><span class="dl-tag">Free download</span><h3>Guinea Pig Safe Food Chart</h3><p>Daily, weekly, treat and never-feed lists, plus vitamin C amounts and the myths corrected &mdash; on one printable page.</p><a class="dl-btn" href="/download/guinea-pig-safe-foods.jpg">&#11015;&#65039; Download free</a><span class="dl-note">Free for everyone &mdash; print it, pin it, share it. No sign-up, no email needed.</span></div></div><h2>Frequently Asked Questions</h2>
+<details class="faq-item"><summary>Can guinea pigs eat tomatoes or not? The charts disagree.</summary><p>They can. Ripe tomato flesh is safe and high in vitamin C — the PDSA lists it among the vitamin C-rich vegetables. Feed cherry tomatoes in small amounts as part of the rotation, since they''re mildly acidic and sugary. What you must never feed is the green part of the plant: leaves, stems and vines contain solanine and are toxic. Charts that ban tomatoes outright are conflating the two.</p></details>
+<details class="faq-item"><summary>How much are pellets really meant to be?</summary><p>One tablespoon per guinea pig per day — roughly 5% of total intake. Charts showing pellets at 20% are wrong and lead to obesity, dental disease and reduced hay intake. Hay should be about 80% of what they eat, fresh vegetables the remainder.</p></details>
+<details class="faq-item"><summary>Can guinea pigs eat rabbit food?</summary><p>No. Rabbit pellets contain little or no vitamin C, because rabbits produce their own — feed them to a guinea pig and you''re heading for scurvy. Always buy food labelled specifically for guinea pigs, and check the vitamin C is listed as a stabilised form.</p></details>
+<details class="faq-item"><summary>My guinea pig has stopped eating. What do I do right now?</summary><p>Treat it as an emergency and phone your vet today — gut stasis can develop within 12–24 hours. While arranging the appointment, offer their most tempting foods (fresh coriander, bell pepper), make sure the water bottle is actually flowing, and if you have Critical Care and your vet advises it, begin syringe feeding. Don''t wait until tomorrow to see if things improve.</p></details>
+<details class="faq-item"><summary>Do I need to give vitamin C if I feed good pellets?</summary><p>Fresh, well-stored pellets plus daily bell pepper usually covers it. But pellet vitamin C degrades within about 90 days of manufacture, and you rarely know how long a bag sat in a warehouse — so a daily tablet is cheap certainty, and it becomes genuinely important for pregnant, young, elderly or unwell pigs whose requirements are higher.</p></details>
+<details class="faq-item"><summary>Is spinach or kale bad for guinea pigs?</summary><p>Neither is bad — both are nutritious and high in vitamin C. The issue is frequency. They''re high in calcium and oxalates, which contribute to bladder sludge and stones when fed every day. Include them a few times a week within a rotation of 5–6 different vegetables rather than as a daily staple.</p></details>
+<details class="faq-item"><summary>How do I get a fussy guinea pig to eat more hay?</summary><p>Offer two or three different grass hays side by side, place hay in more than one spot (including inside a hide, where nervous pigs feel safer eating), keep it off soiled bedding in a rack, and cut pellet quantity back to the correct tablespoon — pigs filling up on pellets have no appetite for hay. Fresh herbs scattered into the hay pile also work surprisingly well.</p></details>
+
+<div class="vet-tip"><h4>&#128062; Setting up for the first time?</h4><p>Food is only half the picture &mdash; cage size, safe bedding and companionship matter just as much. Read our <a href="/blog/guinea-pig-cage-setup-care-guide">complete guinea pig cage setup &amp; care guide</a> for the full checklist.</p></div><h2>The Bottom Line</h2>
+<p>Guinea pig nutrition comes down to four numbers: <strong>unlimited hay, one cup of fresh vegetables per pig, one tablespoon of pellets per pig, and vitamin C every single day.</strong> Get those right, rotate the greens rather than repeating them, and keep fruit and carrot as occasional treats.</p>
+<p>Then do the one thing most owners don''t: <strong>buy a bag of Critical Care before you ever need it.</strong> Guinea pigs go downhill fast when they stop eating, and having it already in the cupboard — alongside the phone number of a guinea-pig-experienced vet — is the difference between a manageable problem and an emergency you''re not equipped for.</p>
+','draft','2026-08-13T15:00:00.000Z','2026-08-13T15:00:00.000Z');

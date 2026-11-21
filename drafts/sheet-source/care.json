@@ -1,0 +1,58 @@
+{
+"eyebrow":"Vet-informed cat care",
+"t1":"Indoor Cat","t2":"Quick Care Sheet",
+"sub":"Print it, pin it on the fridge — every number from the setup guide on one page",
+"cards":[
+ {"emoji":"🚽","title":"Litter Boxes","rows":[
+  ["How many","One per cat, plus one"],
+  ["Interior length","1.5× the cat — 22–24 in"],
+  ["Litter depth","2–3 in"],
+  ["Litter type","Unscented, fine clumping"],
+  ["Entry height","Under 4 in for seniors"],
+  ["Liners","None — claws tear them"]]},
+ {"emoji":"🪜","title":"Vertical Space","rows":[
+  ["Perch height","Above 4 ft, per cat"],
+  ["Platform depth","14 in minimum"],
+  ["Base width","Over 16 in, or it rocks"],
+  ["Wall strap","Anything over 5 ft"],
+  ["Scratching post","32 in, for a full stretch"],
+  ["Post surface","Sisal, never carpet"]]},
+ {"emoji":"💧","title":"Food & Water","rows":[
+  ["Daily water","~4 oz per 5 lb body weight"],
+  ["Diet base","Wet food, every day"],
+  ["Bowls","Wide, shallow, never plastic"],
+  ["Water placement","Away from the food"],
+  ["Treats","Under 10% of daily calories"],
+  ["Never","Vegetarian diets — taurine"]]},
+ {"emoji":"🩺","title":"Vitals","rows":[
+  ["Lifespan indoors","12–18 years"],
+  ["Lifespan outdoors","2–5 years"],
+  ["Adult weight","8–12 lb"],
+  ["Sleep","12–16 hours a day"],
+  ["Breathing at rest","20–30 a minute"],
+  ["Urination","2–4 times a day"]]},
+ {"emoji":"💚","title":"A Healthy Cat","list":[
+  "Stable weight, waist visible from above",
+  "Clear eyes and nose, no squinting",
+  "Smooth coat, no mats or bald patches",
+  "Jumps to its usual heights without pausing",
+  "Firm, well-covered clumps in the box",
+  "Eats keenly and finishes meals"]},
+ {"emoji":"⚠️","title":"Call a Vet","warn":true,"list":[
+  "Straining with no urine — GO TONIGHT",
+  "Open-mouth breathing or panting",
+  "Not eating for 24 hours",
+  "Any lily, antifreeze or paracetamol contact",
+  "Sudden refusal to use the back legs",
+  "New house soiling — medical until proven not"]}
+],
+"rules_pre":"The","rules_hl":"5 Rules","rules_post":"That Prevent Almost Every Problem",
+"rules":[
+ ["Two boxes for one cat.","One per cat plus one. It is the single highest-return decision you can make, and the one owners resist most."],
+ ["Buy the box bigger than looks sensible.","A cat that cannot turn and dig will stand half out, and the floor pays for it."],
+ ["Wet food every day.","Cats have a weak thirst drive. Chronic mild dehydration is what drives kidney and urinary disease later."],
+ ["Give every cat a perch above four feet.","Height is where cats feel safe and how they avoid each other. A counter-surfing cat is solving a problem you gave it."],
+ ["Never declaw.","It is amputation of the last toe bone. Every scratching problem has a furniture answer instead."]],
+"strip_h":"Toxic — keep these out of the house entirely",
+"ticks":["Lilies (every part, even pollen)","Onion, garlic, chives, leeks","Grapes and raisins","Chocolate and xylitol","Paracetamol — one tablet kills","Antifreeze","Raw dough and alcohol"]
+}

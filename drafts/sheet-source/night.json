@@ -1,0 +1,59 @@
+{
+"eyebrow":"Vet-informed pet care",
+"t1":"Halloween Night","t2":"Pet Safety Checklist",
+"sub":"The costume is the small risk — these are the ones that fill clinics",
+"cards":[
+ {"emoji":"🍫","title":"Toxic — Call, Don't Wait","rows":[
+  ["Xylitol / birch sugar","EMERGENCY before symptoms"],
+  ["Chocolate","Keep the wrapper for the dose"],
+  ["Grapes and raisins","Kidney injury, dose unpredictable"],
+  ["Wrappers and sticks","Obstruction — often surgery"],
+  ["Macadamia nuts","Weakness, tremors, vomiting"],
+  ["Alcohol in punch","Toxic at small volumes"]]},
+ {"emoji":"🚪","title":"The Front Door","rows":[
+  ["Risk","This is the night pets get out"],
+  ["Before the first knock","Pet in a closed back room"],
+  ["In that room","TV on, water, something to chew"],
+  ["Microchip","Check details are current TODAY"],
+  ["Collar tag","Readable, and on"],
+  ["Recent photo","On your phone, just in case"]]},
+ {"emoji":"🎃","title":"Decorations To Move","list":[
+  "Real candles in pumpkins — tails knock them over",
+  "Glow sticks and glow necklaces — bitter, and the casing obstructs",
+  "Fake cobweb — ingestion and entanglement",
+  "Electrical cords at chewing height",
+  "Small props a pet can swallow",
+  "Dry ice — burns and displaces air at floor level"]},
+ {"emoji":"☎️","title":"Write These Down Now","rows":[
+  ["Your vet","________________"],
+  ["Out-of-hours clinic","________________"],
+  ["Pet Poison Helpline","(855) 764-7661"],
+  ["ASPCA Poison Control","(888) 426-4435"],
+  ["Microchip number","________________"],
+  ["Pet's weight","________ for dosing"]]},
+ {"emoji":"✅","title":"Before The First Knock","checks":[
+  "Candy bowl out of reach, not on a low table",
+  "Pet in the back room with the TV on",
+  "Doors and gates checked, windows shut",
+  "Collar on, tag readable, chip details current",
+  "Vet and out-of-hours numbers in your phone",
+  "A long walk or hard play session this afternoon",
+  "Costume on late, 20 minutes, supervised"]},
+ {"emoji":"⚠️","title":"Call A Vet Tonight","warn":true,"list":[
+  "ANY xylitol or birch sugar — before symptoms",
+  "Chocolate, grapes or raisins eaten",
+  "Repeated vomiting, tremors, collapse or seizures",
+  "Retching with nothing coming up, hard belly — bloat",
+  "Any swallowed wrapper, stick or costume part",
+  "Open-mouth breathing in a cat"]}
+],
+"rules_pre":"","rules_hl":"5 Things","rules_post":"People Get Wrong On The Night",
+"rules":[
+ ["Leaving the candy bowl at pet height.","It is the single most dangerous object in the house that evening, and it sits where a dog can reach it all night."],
+ ["Assuming xylitol is less serious than chocolate.","It is more urgent. A few pieces of sugar-free gum can crash a dog's blood sugar and damage the liver."],
+ ["Taking the dog trick-or-treating.","Crowds, masks at face height, children running and dropped candy on every sidewalk. This is the night dogs bolt."],
+ ["Thinking a sociable dog will be fine with masks.","Dogs read faces using eyes and mouth together. A mask removes the mouth and leaves something human-shaped and wrong."],
+ ["Looking up the emergency number at 10pm.","With a distressed animal in your arms is the worst possible time. Write it down this afternoon."]],
+"strip_h":"If the worst happens, in order",
+"ticks":["Stay calm","Remove what is left","Note the time and amount","Keep the packaging","Phone — do not wait","Follow their instruction"]
+}

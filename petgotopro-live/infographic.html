@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1a1410;--ink-soft:#3d322a;--cream:#faf6ef;--cream-deep:#f3ead9;--amber:#c8822b;--amber-deep:#a86618;--clay:#b8533a;--forest:#3d5c3a;--moss:#6b8a5c;--line:#e8dcc4}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1000px;font-family:'Source Serif Pro',Georgia,serif;background:var(--cream);color:var(--ink)}
+.wrap{padding:0 0 36px}
+.head{background:linear-gradient(135deg,#2d241a 0%,var(--ink) 100%);color:var(--cream);text-align:center;padding:44px 40px 36px;border-bottom:5px solid var(--amber)}
+.head .kicker{display:inline-block;font-size:15px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+.head h1{font-family:'Playfair Display',Georgia,serif;font-size:46px;line-height:1.12}
+.head h1 .hl{color:var(--amber)}
+.head .sub{font-style:italic;color:#d9cdb4;font-size:19px;margin-top:12px}
+.tips{padding:34px 44px 6px}
+.tip{display:flex;gap:22px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 26px;margin-bottom:16px;box-shadow:0 2px 10px rgba(26,20,16,.05)}
+.num{flex-shrink:0;width:58px;height:58px;border-radius:50%;background:var(--amber);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',Georgia,serif;font-size:28px;font-weight:700;border:3px solid var(--cream-deep);box-shadow:0 3px 8px rgba(200,130,43,.35)}
+.tip:nth-child(even) .num{background:var(--forest)}
+.tip h2{font-family:'Playfair Display',Georgia,serif;font-size:24px;margin-bottom:5px}
+.tip h2 .emo{font-size:22px;margin-right:6px}
+.tip p{font-size:16.5px;color:var(--ink-soft);line-height:1.55}
+.warn{margin:22px 44px;background:#fbeeea;border:1px solid #eccfc5;border-left:6px solid var(--clay);border-radius:0 14px 14px 0;padding:24px 28px}
+.warn h3{font-family:'Playfair Display',Georgia,serif;font-size:22px;color:var(--clay);margin-bottom:10px}
+.warn ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:7px 24px}
+.warn li{font-size:15.5px;color:var(--ink-soft);padding-left:22px;position:relative}
+.warn li::before{content:'⚠';position:absolute;left:0;color:var(--clay);font-size:13px}
+.warn .act{margin-top:12px;font-size:15px;font-weight:700;color:var(--ink)}
+.payoff{margin:0 44px;background:#eef5ea;border:1px solid #d5e3cd;border-left:6px solid var(--moss);border-radius:0 14px 14px 0;padding:20px 28px}
+.payoff h3{font-family:'Playfair Display',Georgia,serif;font-size:20px;color:var(--forest);margin-bottom:8px}
+.payoff span{display:inline-block;font-size:15px;color:var(--ink-soft);margin-right:18px}
+.payoff span b{color:var(--forest)}
+.foot{text-align:center;margin-top:28px;color:var(--ink-soft)}
+.foot .brand{font-family:'Playfair Display',Georgia,serif;font-size:21px;font-weight:700;color:var(--ink)}
+.foot .brand .paw{color:var(--amber)}
+.foot .tag{font-style:italic;font-size:14px;color:var(--amber-deep);margin-top:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <span class="kicker">🐾 Vet-Informed Cat Care</span>
+    <h1>5 Hydration Tips Every<br><span class="hl">Cat Owner</span> Should Know</h1>
+    <div class="sub">Good hydration supports digestion, immunity and energy — hydrated cat, happy cat!</div>
+  </div>
+  <div class="tips">
+    <div class="tip"><div class="num">1</div><div><h2><span class="emo">💧</span>Fresh Water Every Day</h2><p>Change water 2–3 times daily and wash the bowl itself — clean, fresh-tasting water is the single easiest way to encourage cats to drink more.</p></div></div>
+    <div class="tip"><div class="num">2</div><div><h2><span class="emo">🥫</span>Feed Wet Food Regularly</h2><p>Wet food is roughly 75% moisture and does the hydration heavy-lifting, helping maintain healthy kidneys and urinary flow from the inside.</p></div></div>
+    <div class="tip"><div class="num">3</div><div><h2><span class="emo">🍪</span>Don't Rely on Dry Food Alone</h2><p>Kibble is only ~10% moisture. A dry-only diet can quietly lead to chronic dehydration — balance is the key.</p></div></div>
+    <div class="tip"><div class="num">4</div><div><h2><span class="emo">⛲</span>Use a Pet Water Fountain</h2><p>Moving, filtered water attracts cats instinctively and encourages them to drink noticeably more — see our tested fountain picks below.</p></div></div>
+    <div class="tip"><div class="num">5</div><div><h2><span class="emo">❄️</span>Keep Them Cool</h2><p>Heat drives water loss. Keep your cat's resting spots cool and offer extra water stations in summer, especially for kittens and seniors.</p></div></div>
+  </div>
+  <div class="warn">
+    <h3>⚠️ Watch for Signs of Dehydration</h3>
+    <ul>
+      <li>Dry or sticky gums</li>
+      <li>Sunken eyes</li>
+      <li>Low energy or lethargy</li>
+      <li>Loss of appetite</li>
+      <li>Skin stays "tented" when gently lifted</li>
+      <li>Concentrated, strong-smelling urine</li>
+    </ul>
+    <div class="act">Notice any of these? Offer fresh water and contact your vet if it doesn't improve quickly.</div>
+  </div>
+  <div class="payoff">
+    <h3>A little care today, a healthier cat tomorrow</h3>
+    <span><b>✓</b> Stronger immune system</span>
+    <span><b>✓</b> Better digestion</span>
+    <span><b>✓</b> Healthier kidneys</span>
+    <span><b>✓</b> More energy &amp; play</span>
+  </div>
+  <div class="foot">
+    <div class="brand"><span class="paw">🐾</span> Pet-GoToPro</div>
+    <div class="tag">Get trusted information from the Pet Pros · pet-gotopro.com</div>
+  </div>
+</div>
+</body>
+</html>

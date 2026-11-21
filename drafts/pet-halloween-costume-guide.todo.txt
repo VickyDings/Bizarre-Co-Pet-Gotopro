@@ -1,0 +1,47 @@
+PET HALLOWEEN COSTUME GUIDE — what is needed before publishing
+==============================================================
+File: drafts/pet-halloween-costume-guide.cms.html
+5,795 words. Passes docs/reference/check-guide.py with no problems.
+TIME-SENSITIVE: Halloween is 20 days out as of 11 Oct 2026.
+
+1. AFFILIATE LINKS — DONE
+   17 live CJ links, all taken from CJ's own clickUrl in the feed rather than
+   built by hand, so they carry whatever ad id CJ assigned.
+     Abracadabra NYC  AID 17278691   15 links
+     UntilGone        AID 15291557    2 links
+   Note UntilGone's clickUrl uses 15291557, NOT the 15292997 from the storefront
+   link you sent earlier. Both are valid; CJ's own is the one being used.
+   Every link carries rel="nofollow noopener sponsored".
+
+2. PRODUCT CARD IMAGES — the merchant's own, straight from the feed
+   Same decision as the cat guide: cdn.shopify.com URLs rather than /media/NN,
+   so the cards work with no uploading. Swap them if you would rather self-host.
+
+3. THE TWO PRINTABLES — MADE
+   drafts/pet-costume-fit-sheet.png            1500 x 2545
+   drafts/halloween-pet-safety-checklist.png   1500 x 2752
+   Register them with drafts/pet-halloween-costume-guide.guides.sql after
+   uploading both in Admin -> Media and filling in the two media ids.
+
+4. PRICES ARE A SNAPSHOT
+   Taken from the feed on 11 Oct 2026 and shown as whole-dollar ranges with the
+   usual subject-to-change line. Halloween stock moves fast; worth re-running
+   the pipeline and re-checking the eight cards before you publish.
+
+5. CROSS-LINKS USED
+   /blog/indoor-cat-set-up-guide and /blog/hamster-care-guide.
+   The cat one matches the slug you published. Check the hamster slug.
+
+6. PHOTOS — Unsplash, three
+   hero     photo-1633025094151-6fc996255e28  dog in a ghost costume by a pumpkin
+   in-body  photo-1768587575494-a0744367e7d2  orange cat in a cowboy hat
+   closing  photo-1728866980867-54a73f5df37e  small dog in costume
+
+7. HERO / SHARE IMAGE for the post field
+   https://images.unsplash.com/photo-1633025094151-6fc996255e28?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&q=80&w=1200&h=630
+
+8. EXOTICS SECTION — CONFIRMED, KEEP IT
+   Owner confirmed 11 Oct 2026. The guide tells readers not to put costumes on
+   rabbits, guinea pigs, birds or reptiles, with the physiology for each. It
+   costs a few sales from the small-pet end of Abracadabra's range and it is
+   staying. Do not quietly soften it in a later edit.
