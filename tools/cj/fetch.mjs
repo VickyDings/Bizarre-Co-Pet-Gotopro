@@ -9,11 +9,16 @@ import fs from 'node:fs';
 const TOKEN = process.env.CJ_TOKEN;
 const CID   = process.env.CJ_CID;  // CJ publisher company ID — kept out of this
                                    // file because the repo is public.
-const PID   = process.env.CJ_PID || '100786792';  // CJ tracking PID. Read off a
-                                   // link CJ generated: click-<PID>-<AID>. It is
-                                   // NOT the Website ID shown under Account.
-                                   // Used to ask CJ for its own clickUrl per
-                                   // product — hand-built wrappers do not work.
+const PID   = process.env.CJ_PID || '101894827';  // CJ Promotional Property.
+                                   // This account has more than one; 101894827
+                                   // is the one named "Pet-GoToPro". 100786792
+                                   // is a different property — its links track,
+                                   // they just credit the wrong site.
+                                   // Passed to linkCode(pid:) so CJ builds its
+                                   // own clickUrl per product, with the ad id
+                                   // that matches this property. Hand-built
+                                   // wrappers do not work. NOT the Website ID
+                                   // shown under Account.
 const API   = process.env.CJ_API || 'https://ads.api.cj.com/query';  // CJ_API is for local testing
 
 const PARTNERS = {

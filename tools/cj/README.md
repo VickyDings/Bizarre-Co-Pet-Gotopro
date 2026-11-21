@@ -153,45 +153,81 @@ a schema does not have it.
 ```
 set CJ_TOKEN=your_personal_access_token
 set CJ_CID=your_cj_company_id
-set CJ_PID=5930903
+set CJ_PID=101894827
 node tools/cj/fetch.mjs
 ```
 
-`100786792` is the **CJ tracking PID**. Read it off any link CJ generates, which
-has the shape `click-<PID>-<AID>`. Three different numbers are in play and only
-this one belongs in a link:
+### The account has more than one promotional property
+
+This is the thing that took three attempts to get right, so it is written out in
+full. CJ calls a site a **Promotional Property**, and this account has at least
+two, each with its own PID.
+
+| Property | PID | Use |
+|---|---|---|
+| **Pet-GoToPro** | `101894827` | **the correct one for pet-gotopro.com** |
+| (a second property) | `100786792` | a different site on the same account |
+
+Settled 21 Nov 2026 from CJ's own link generator, which names the property it is
+generating for. On an Aosom product page with **Pet-GoToPro** selected it
+produced `click-101894827-14020036`.
+
+**Ad ids are not property-specific — only the PID is.** This was guessed wrong
+once, so here is the evidence. CJ emitted `click-101894827-13998414` and
+`click-101894827-15291557` on `kqzyfj.com`, a redirect domain nothing in this
+repo ever writes. So the ad ids collected in October under the other property
+work unchanged under Pet-GoToPro, and **only the PID had to change.**
+
+An advertiser can have several valid ad ids, one per creative. Aosom answers to
+both `13998414` (what the live guide uses) and `14020036` (what CJ's browser
+link generator hands out). Either tracks.
+
+Three numbers are in play and only the PID belongs in a link:
 
 | Number | What it is | Where it comes from |
 |---|---|---|
 | `6386969` | company ID | pairs with the API token — kept out of this repo |
-| `5930903` | Website ID under Account | **not** the tracking PID; links built with it fail |
-| `100786792` | tracking PID | the first number in a CJ-generated `click-PID-AID` link |
+| `5930903` | Website ID under Account | **not** a PID; links built with it fail |
+| `101894827` | Pet-GoToPro's PID | the first number in a `click-PID-AID` link |
 
 The PID is fine in this public repo because it appears in every affiliate link on
 the live site anyway.
 
-The second number, the **AID**, is a per-advertiser link ID — `13998414` is
-Aosom.com. It is not in the product feed, which is the whole reason links cannot
-be constructed from feed data alone. A full manual link looks like:
+A full manual link looks like:
 
 ```
-https://www.tkqlhce.com/click-100786792-13998414?url=<encoded>&cjsku=D10-056
+https://www.kqzyfj.com/click-101894827-14020036?url=<encoded>&cjsku=D10-056
 ```
 
 CJ rotates the redirect domain (`tkqlhce.com`, `dpbolvw.net`, `anrdoezrs.net`,
 `jdoqocy.com`, `kqzyfj.com`); they are equivalent.
 
-### Where the ad ids come from matters
+### Don't collect ad ids by hand if you can avoid it
 
-Settled 21 Nov 2026 with two links generated fresh in CJ. **PID 100786792 is
-correct.** The published cat guide's 101894827 is the outlier and CJ is not
-issuing it — most likely those links were generated with a different website
-selected in CJ's link generator, which produces correct ad ids under the wrong
-property. Worth checking Account -> Websites, because that post is live.
+`fetch.mjs` passes `CJ_PID` into the schema's `linkCode(pid:)` field, so CJ
+builds each product's link itself with the ad id that matches that property.
+Those arrive as `clickUrl` and `make_catalog` always prefers them. When that
+works, no ad id ever needs collecting.
+
+Watch the line `fetch.mjs` prints at the end:
+
+```
+N of M carry a CJ tracked clickUrl
+```
+
+If N is M, the fallback map is irrelevant. If N is 0 — which is the case for the
+`data/cj/` snapshot in this repo — every link is built from the fallback map
+instead, which is why that map still has to be right. The catalog's footer
+reports how many rows went out untracked; it should read zero.
+
+### Where a hand-collected ad id comes from matters
 
 **Two of the ad ids collected in October were wrong, and both came from
 storefront banners.** A banner creative and a product link have different ad
 ids, and only the product one is meant to carry a `?url=` deep link.
+
+Collected in October under PID `100786792`, and all still valid under
+`101894827` (the PID is the only part that changed):
 
 | Advertiser | correct | wrong, and where it came from |
 |---|---|---|
@@ -202,7 +238,8 @@ ids, and only the product one is meant to carry a `?url=` deep link.
 | FYE | `15513660` | unverified |
 | Abracadabra | `17278691` | — (came off a product link) |
 
-So: **collect an ad id from a product link, never a storefront banner.**
+So: **collect an ad id from a product link, never a storefront banner — and note
+which property was selected when you collected it.**
 
 The practical damage was small because `make_catalog` prefers CJ's own
 `clickUrl` and only falls back to a constructed link where one is missing —

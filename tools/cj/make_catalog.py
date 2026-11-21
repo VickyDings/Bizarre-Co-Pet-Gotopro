@@ -11,26 +11,41 @@ was tried and returns ERR_TOO_MANY_REDIRECTS, encoded or raw. A product without
 a clickUrl falls back to the plain merchant URL, which earns nothing, so the page
 counts those and warns.
 """
-import json, sys, re, html, collections, urllib.parse as up
+import json, sys, os, re, html, collections, urllib.parse as up
 
 SRC, OUT = sys.argv[1], sys.argv[2]
 d = json.load(open(SRC))
 
-# CJ tracking PID for pet-gotopro.com, read off a link CJ generated. It is NOT
-# the Website ID shown under Account — that one produces links that never track.
-PID = '100786792'
+# CJ promotional property (PID). CJ calls these "Promotional Properties" and
+# this account has more than one; 101894827 is the one named "Pet-GoToPro".
+# 100786792 is a DIFFERENT property of the same account — links built on it
+# still resolve, they just credit the wrong site. Confirmed 21 Nov 2026 from
+# CJ's own link generator.
+PID = os.environ.get('CJ_PID') or '101894827'
 
 # Per-advertiser link ID, the second number in a CJ click-PID-AID link. Absent
-# from the product feed, so each one is read off a link generated in CJ's UI.
+# from the product feed, so each one is read off a link CJ generated.
+#
+# These are NOT property-specific. CJ issued click-101894827-13998414 and
+# click-101894827-15291557 on kqzyfj.com, so the ids collected in October work
+# unchanged under Pet-GoToPro. An advertiser can have several valid ad ids —
+# Aosom answers to both 13998414 and 14020036 — because each creative has its
+# own. Only the PID identifies the property.
+#
+# This map is a fallback. fetch.mjs asks CJ for linkCode(pid:) and any row that
+# comes back with its own clickUrl uses that instead.
 AIDS = {
-    '5360120': '13998414',   # Aosom.com
-    '6446547': '15513660',   # FYE — recorded, but FYE has no pet products left
+    '5360120': '13998414',   # Aosom.com — confirmed live under 101894827.
+                             # 14020036 is also Aosom and also valid; it is what
+                             # CJ's browser link generator hands out.
+    '6446547': '15513660',   # FYE
     '129899':  '13599892',   # Books-A-Million
-    '6185946': '15291557',   # UntilGone — 15292997 came off a storefront
-                             # creative and is wrong; CJ's own links use this one
-    '7127091': '15843773',   # Raw Paws — 17234724 is also a real Raw Paws ad
-                             # id, but it belongs to a storefront banner; this
-                             # is the one CJ's own product links use
+    '6185946': '15291557',   # UntilGone — confirmed live under 101894827.
+                             # 15292997 came off a storefront creative and is
+                             # wrong; CJ's own links use this one
+    '7127091': '15843773',   # Raw Paws — confirmed live under 101894827.
+                             # 17234724 is also a real Raw Paws ad id, but it
+                             # belongs to a storefront banner
     '7889430': '17278691',   # Abracadabra NYC
 }
 
