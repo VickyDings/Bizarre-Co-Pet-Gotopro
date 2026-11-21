@@ -26,7 +26,8 @@ AIDS = {
     '5360120': '13998414',   # Aosom.com
     '6446547': '15513660',   # FYE — recorded, but FYE has no pet products left
     '129899':  '13599892',   # Books-A-Million
-    '6185946': '15292997',   # UntilGone
+    '6185946': '15291557',   # UntilGone — 15292997 came off a storefront
+                             # creative and is wrong; CJ's own links use this one
     '7127091': '17234724',   # Raw Paws Pet Food
     '7889430': '17278691',   # Abracadabra NYC
 }
