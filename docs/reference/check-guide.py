@@ -30,11 +30,17 @@ chk("ol.method-list used", ml >= 2, f"{ml} lists")
 # Two affiliate programs are in use. Amazon guides say "Check price on Amazon";
 # guides built from the CJ catalog name the merchant, because the link goes to
 # Aosom or Raw Paws and promising Amazon would be a lie.
-cj = 'anrdoezrs.net/click-' in h or 'tkqlhce.com/click-' in h
+# CJ rotates its click domain. Knowing only two of them under-counted a real
+# guide's links 9 out of 20.
+CJ_DOMAINS = ('anrdoezrs.net', 'tkqlhce.com', 'kqzyfj.com', 'jdoqocy.com',
+              'dpbolvw.net', 'qksrv.net', 'awltovhc.com', 'ftjcfx.com',
+              'lduhtrp.net', 'tqlkg.com')
+cj = any(d + '/click-' in h for d in CJ_DOMAINS)
 cta_ok = ('Check price on Amazon' in h) or (cj and re.search(r'>Check price at [A-Z]', h))
 chk("CTA names where the link goes", bool(cta_ok) and 'Shop on Amazon' not in h,
     'CJ' if cj else 'Amazon')
-n_az, n_cj = h.count('https://link.amazon/'), len(re.findall(r'(?:anrdoezrs\.net|tkqlhce\.com)/click-\d+-\d+', h))
+n_az = h.count('https://link.amazon/')
+n_cj = len(re.findall(r'(?:' + '|'.join(d.replace('.', r'\.') for d in CJ_DOMAINS) + r')/click-\d+-\d+', h))
 chk("affiliate links are OneLink or CJ, no search URLs",
     (n_az + n_cj) > 0 and 'amazon.com/s?k=' not in h, f"{n_az} OneLink, {n_cj} CJ")
 prods = h.count('class=' + Q + 'pgp-prod' + Q)
